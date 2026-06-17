@@ -52,7 +52,7 @@ export const RestoreTrashButton: React.FC = () => {
         onClick={handleRestore}
         disabled={loading}
         style={{
-          background: '#5984c4',
+          background: '#008B8B',
           color: 'white',
           padding: '12px 24px',
           border: 'none',
@@ -75,3 +75,4 @@ export const RestoreTrashButton: React.FC = () => {
     </div>
   )
 }
+

@@ -75,7 +75,7 @@ export default function FAQPage() {
             <Input 
               type="text" 
               placeholder="Search for an answer..." 
-              className="w-full h-14 pl-14 pr-6 rounded-full bg-white border-transparent shadow-sm hover:shadow-md focus:border-[#5984c4] focus:ring-1 focus:ring-[#5984c4] transition-all duration-300 text-lg placeholder:text-gray-400"
+              className="w-full h-14 pl-14 pr-6 rounded-full bg-white border-transparent shadow-sm hover:shadow-md focus:border-[#008B8B] focus:ring-1 focus:ring-[#008B8B] transition-all duration-300 text-lg placeholder:text-gray-400"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -99,15 +99,15 @@ export default function FAQPage() {
               {filteredCategories.map((category) => (
                 <div key={category.title} className="bg-white rounded-[1.5rem] lg:rounded-[2rem] p-6 lg:p-10 shadow-sm">
                   <div className="flex items-center gap-3 mb-8">
-                    <div className="w-8 h-8 rounded-full bg-[#5984c4]/10 flex items-center justify-center shrink-0">
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#5984c4]" />
+                    <div className="w-8 h-8 rounded-full bg-[#008B8B]/10 flex items-center justify-center shrink-0">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#008B8B]" />
                     </div>
                     <h2 className="text-2xl lg:text-3xl font-bold text-ink tracking-tight">{category.title}</h2>
                   </div>
                   <Accordion type="multiple" className="w-full">
                     {category.items.map((item, i) => (
                       <AccordionItem key={i} value={`${category.title}-${i}`} className="border-b border-gray-100 last:border-0">
-                        <AccordionTrigger className="text-lg md:text-xl font-medium text-ink hover:text-[#5984c4] transition-colors duration-300 py-6 text-left">
+                        <AccordionTrigger className="text-lg md:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors duration-300 py-6 text-left">
                           {item.q}
                         </AccordionTrigger>
                         <AccordionContent className="text-base md:text-lg text-gray-500 leading-relaxed pb-8 font-light">
@@ -125,3 +125,4 @@ export default function FAQPage() {
     </main>
   )
 }
+

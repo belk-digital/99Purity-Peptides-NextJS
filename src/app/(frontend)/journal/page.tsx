@@ -44,7 +44,7 @@ export default function JournalIndexPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-label-md uppercase tracking-widest text-[#5984c4] mb-4 sm:mb-8 font-bold"
+            className="text-label-md uppercase tracking-widest text-[#008B8B] mb-4 sm:mb-8 font-bold"
           >
             Science Journal
           </motion.h2>
@@ -70,7 +70,7 @@ export default function JournalIndexPage() {
                  className="object-cover object-center"
                  priority
                />
-               <div className="absolute inset-0 bg-[#5984c4]/30 group-hover:bg-[#5984c4]/10 transition-colors duration-700" />
+               <div className="absolute inset-0 bg-[#008B8B]/30 group-hover:bg-[#008B8B]/10 transition-colors duration-700" />
              </motion.div>
              
              {/* Center Overlay Text inside Window */}
@@ -102,7 +102,7 @@ export default function JournalIndexPage() {
       <section className="px-4 md:px-6 mb-12 md:mb-16 max-w-[1280px] mx-auto">
         <FadeUp delay={0.1}>
           <div className="mb-6 px-2 lg:px-4">
-            <h2 className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-[#5984c4]">Featured Article</h2>
+            <h2 className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-[#008B8B]">Featured Article</h2>
           </div>
           <Link href="/journal/the-case-for-nad-in-mitochondrial-research" className="group block relative w-full bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 lg:p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
             <div className="relative w-full h-[35vh] min-h-[250px] md:h-[50vh] md:min-h-[400px] rounded-2xl md:rounded-3xl overflow-hidden mb-6 md:mb-8">
@@ -191,3 +191,4 @@ export default function JournalIndexPage() {
     </main>
   )
 }
+

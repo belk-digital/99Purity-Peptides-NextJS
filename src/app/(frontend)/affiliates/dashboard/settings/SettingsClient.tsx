@@ -76,7 +76,7 @@ export function SettingsClient({ initialCurrency }: SettingsClientProps) {
             </div>
 
             <div className="pt-4 flex justify-end">
-              <Button type="button" className="rounded-xl h-12 px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#5984c4] hover:bg-blue-600 text-white border-none shadow-md">
+              <Button type="button" className="rounded-xl h-12 px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#008B8B] hover:bg-blue-600 text-white border-none shadow-md">
                 <Save size={16} />
                 Save Preferences
               </Button>
@@ -87,3 +87,4 @@ export function SettingsClient({ initialCurrency }: SettingsClientProps) {
     </motion.div>
   )
 }
+

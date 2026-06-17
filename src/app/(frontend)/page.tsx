@@ -4,7 +4,11 @@ import { FeaturedProductsSection } from '@/components/home/FeaturedProductsSecti
 import { CategoriesSection } from '@/components/home/CategoriesSection'
 import { TrustBadges } from '@/components/shared/TrustBadges'
 import { FaqSection } from '@/components/home/FaqSection'
+import { BlogSection } from '@/components/home/BlogSection'
+import { ParallaxImageSection } from '@/components/home/ParallaxImageSection'
 import { WhatSetsUsApart } from '@/components/home/WhatSetsUsApart'
+import { WhyChooseUs } from '@/components/home/WhyChooseUs'
+import { BestSellerSection } from '@/components/home/BestSellerSection'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -31,9 +35,13 @@ export default async function Homepage() {
         <div className="flex flex-col w-full min-h-screen relative z-10 bg-black">
           <Hero />
           <TrustBadges />
+          <BestSellerSection products={products} />
           <FeaturedProductsSection products={products} />
           <WhatSetsUsApart />
           <CategoriesSection />
+          <ParallaxImageSection />
+          <WhyChooseUs />
+          <BlogSection />
           <FaqSection />
         </div>
       </HomePreloaderWrapper>

@@ -54,25 +54,25 @@ const AnimatedHUDCard = ({
           <motion.div 
             variants={lineVariants}
             style={{ transformOrigin: isLeft ? 'right center' : 'left center' }}
-            className={`absolute top-1/2 h-[1px] bg-[#5984c4]/40 group-hover:bg-[#5984c4]/80 transition-colors duration-500 z-0 ${isLeft ? 'left-[240px] right-[150px]' : 'left-[150px] right-[240px]'}`} 
+            className={`absolute top-1/2 h-[1px] bg-[#008B8B]/40 group-hover:bg-[#008B8B]/80 transition-colors duration-500 z-0 ${isLeft ? 'left-[240px] right-[150px]' : 'left-[150px] right-[240px]'}`} 
           >
             {/* Single dot at the start (closest to the vial) */}
-            <div className={`absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#5984c4]/80 group-hover:bg-[#5984c4] transition-colors duration-500 ${isLeft ? 'right-0' : 'left-0'}`} />
+            <div className={`absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#008B8B]/80 group-hover:bg-[#008B8B] transition-colors duration-500 ${isLeft ? 'right-0' : 'left-0'}`} />
           </motion.div>
           
           {/* The Box */}
           <motion.div 
             variants={boxVariants}
             title={tooltip}
-            className="relative z-10 shrink-0 mx-0 w-[240px] bg-white/80 border border-[#5984c4]/20 backdrop-blur-md rounded-2xl overflow-hidden shadow-sm"
+            className="relative z-10 shrink-0 mx-0 w-[240px] bg-white/80 border border-[#008B8B]/20 backdrop-blur-md rounded-2xl overflow-hidden shadow-sm"
           >
             {/* Hover Effects */}
             <div className="absolute inset-0 bg-white/0 group-hover:bg-white transition-colors duration-500 pointer-events-none" />
-            <div className="absolute inset-0 border border-[#5984c4]/0 group-hover:border-[#5984c4]/50 rounded-2xl transition-colors duration-500 pointer-events-none" />
+            <div className="absolute inset-0 border border-[#008B8B]/0 group-hover:border-[#008B8B]/50 rounded-2xl transition-colors duration-500 pointer-events-none" />
             
             {/* Inner Content */}
             <motion.div variants={contentVariants} className="p-5 lg:p-6 w-full h-full relative z-20">
-              <div className="w-10 h-10 rounded-full bg-[#5984c4]/10 flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-full bg-[#008B8B]/10 flex items-center justify-center mb-4">
                 {icon}
               </div>
               <h4 className="text-sm font-bold uppercase tracking-wider mb-2 text-ink">{title}</h4>
@@ -102,7 +102,7 @@ const MobileAnimatedCard = ({ icon, title, desc, delay, tooltip }: { icon: React
           }
         }}
         title={tooltip}
-        className="relative z-10 w-full bg-white/80 border border-[#5984c4]/20 backdrop-blur-md rounded-2xl overflow-hidden shadow-sm"
+        className="relative z-10 w-full bg-white/80 border border-[#008B8B]/20 backdrop-blur-md rounded-2xl overflow-hidden shadow-sm"
       >
         <motion.div 
           variants={{
@@ -114,7 +114,7 @@ const MobileAnimatedCard = ({ icon, title, desc, delay, tooltip }: { icon: React
           }}
           className="p-5 w-full h-full relative z-20"
         >
-          <div className="w-10 h-10 rounded-full bg-[#5984c4]/10 flex items-center justify-center mb-4">
+          <div className="w-10 h-10 rounded-full bg-[#008B8B]/10 flex items-center justify-center mb-4">
             {icon}
           </div>
           <h4 className="text-sm font-bold uppercase tracking-wider mb-2 text-ink">{title}</h4>
@@ -154,7 +154,7 @@ export function CoaSection() {
     >
        {/* Aesthetic Ambient Background Glow */}
        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
-          <div className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[700px] lg:h-[700px] rounded-full bg-gradient-to-tr from-[#5984c4]/5 to-[#5984c4]/10 blur-[80px] lg:blur-[140px] transform translate-y-16 transform-gpu will-change-transform opacity-60" />
+          <div className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[700px] lg:h-[700px] rounded-full bg-gradient-to-tr from-[#008B8B]/5 to-[#008B8B]/10 blur-[80px] lg:blur-[140px] transform translate-y-16 transform-gpu will-change-transform opacity-60" />
        </div>
        
        <Container size="wide" className="relative z-10">
@@ -162,7 +162,7 @@ export function CoaSection() {
          {/* Header */}
          <div className="text-center mb-8 lg:mb-16">
             <FadeUp>
-              <span className="text-label-md uppercase tracking-widest text-[#5984c4] mb-4 lg:mb-6 block font-bold">
+              <span className="text-label-md uppercase tracking-widest text-[#008B8B] mb-4 lg:mb-6 block font-bold">
                 ABSOLUTE TRANSPARENCY
               </span>
             </FadeUp>
@@ -200,7 +200,7 @@ export function CoaSection() {
               direction="left"
               delay={0.1}
               positionClass="top-[40%] left-[5%] xl:left-[10%] right-[50%]"
-              icon={<CheckCircle2 className="w-5 h-5 text-[#5984c4]" strokeWidth={1.5} />}
+              icon={<CheckCircle2 className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
               title="≥99% HPLC Purity"
               desc="Stringent chromatographic isolation for every compound — verified before any order ships."
               tooltip="HPLC separates compound mixtures by molecular polarity, confirming concentration and purity to ≥99%."
@@ -211,7 +211,7 @@ export function CoaSection() {
               direction="right"
               delay={0.4}
               positionClass="top-[15%] right-[5%] xl:right-[10%] left-[50%]"
-              icon={<FileSearch className="w-5 h-5 text-[#5984c4]" strokeWidth={1.5} />}
+              icon={<FileSearch className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
               title="Mass Spectrometry (LC-MS)"
               desc="Exact molecular weight verification confirms you are receiving the compound on the label."
               tooltip="LC-MS cross-references molecular mass against known peptide databases. Cannot be faked."
@@ -222,7 +222,7 @@ export function CoaSection() {
               direction="right"
               delay={0.7}
               positionClass="bottom-[20%] right-[5%] xl:right-[10%] left-[50%]"
-              icon={<ShieldCheck className="w-5 h-5 text-[#5984c4]" strokeWidth={1.5} />}
+              icon={<ShieldCheck className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
               title="Endotoxin-Free"
               desc="Limulus Amebocyte Lysate (LAL) testing confirms endotoxin levels below research-safe thresholds."
               tooltip="Endotoxin contamination invalidates in-vitro research results. We test and confirm absence."
@@ -234,21 +234,21 @@ export function CoaSection() {
          <div className="flex lg:hidden flex-col gap-4 w-full max-w-sm mx-auto mt-8 relative z-30 px-4">
             <MobileAnimatedCard 
               delay={0.1}
-              icon={<CheckCircle2 className="w-5 h-5 text-[#5984c4]" strokeWidth={1.5} />}
+              icon={<CheckCircle2 className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
               title="≥99% HPLC Purity"
               desc="Stringent chromatographic isolation for every compound — verified before any order ships."
               tooltip="HPLC separates compound mixtures by molecular polarity, confirming concentration and purity to ≥99%."
             />
             <MobileAnimatedCard 
               delay={0.4}
-              icon={<FileSearch className="w-5 h-5 text-[#5984c4]" strokeWidth={1.5} />}
+              icon={<FileSearch className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
               title="Mass Spectrometry (LC-MS)"
               desc="Exact molecular weight verification confirms you are receiving the compound on the label."
               tooltip="LC-MS cross-references molecular mass against known peptide databases. Cannot be faked."
             />
             <MobileAnimatedCard 
               delay={0.7}
-              icon={<ShieldCheck className="w-5 h-5 text-[#5984c4]" strokeWidth={1.5} />}
+              icon={<ShieldCheck className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
               title="Endotoxin-Free"
               desc="Limulus Amebocyte Lysate (LAL) testing confirms endotoxin levels below research-safe thresholds."
               tooltip="Endotoxin contamination invalidates in-vitro research results. We test and confirm absence."
@@ -258,7 +258,7 @@ export function CoaSection() {
          {/* Call to action */}
          <div className="mt-12 lg:mt-16 flex justify-center px-4">
            <FadeUp delay={1.2}>
-             <a href="/certificates" className="group bg-transparent border border-[#5984c4]/30 text-ink hover:bg-[#5984c4] hover:border-[#5984c4] hover:text-white rounded-full px-6 lg:px-8 py-4 uppercase tracking-widest text-[10px] md:text-xs font-bold transition-all duration-300 flex items-center gap-3">
+             <a href="/certificates" className="group bg-transparent border border-[#008B8B]/30 text-ink hover:bg-[#008B8B] hover:border-[#008B8B] hover:text-white rounded-full px-6 lg:px-8 py-4 uppercase tracking-widest text-[10px] md:text-xs font-bold transition-all duration-300 flex items-center gap-3">
                VIEW COA LIBRARY
                <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
              </a>
@@ -269,3 +269,4 @@ export function CoaSection() {
     </section>
   )
 }
+

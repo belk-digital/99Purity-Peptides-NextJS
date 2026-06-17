@@ -123,7 +123,7 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
             <p className="text-gray-400 text-sm">Funds cleared and ready to withdraw.</p>
           </div>
           <div className="mt-8">
-            <span className="text-5xl font-black text-[#5984c4] tracking-tight">{formatMoney(availableBalance)}</span>
+            <span className="text-5xl font-black text-[#008B8B] tracking-tight">{formatMoney(availableBalance)}</span>
           </div>
         </motion.div>
 
@@ -265,3 +265,4 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
     </motion.div>
   )
 }
+

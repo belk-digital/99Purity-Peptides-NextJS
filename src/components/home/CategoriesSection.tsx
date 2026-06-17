@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -17,68 +17,81 @@ const CATEGORIES = [
 ]
 
 const CATEGORY_IMAGES = [
-  '/Featured%20Images/tb-500-water-splash.webp', // Recovery
-  '/Featured%20Images/clear-dropper-side-profile.webp', // Receptor Agonist
-  '/Featured%20Images/vials-on-magazine.webp', // Metabolic
-  '/Featured%20Images/microscopic-liquid-drops.webp', // Growth Factor
-  '/Featured%20Images/white-blue-dna-helix.webp', // Cognitive Function
-  '/Featured%20Images/blue-petri-dishes.webp', // Cellular Health
-  '/Featured%20Images/glass-dna-strand.webp', // Bioregulators
-  '/Featured%20Images/mt-2-water-ripple.webp', // Essentials
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_42_37 AM.webp',
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_43_44 AM.webp',
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_46_17 AM.webp',
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_47_16 AM.webp',
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_49_29 AM.webp',
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_50_28 AM.webp',
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_52_11 AM.webp',
+  '/99 Images/ChatGPT Image Jun 15, 2026, 04_53_07 AM.webp',
 ]
 
 export function CategoriesSection() {
+  const targetRef = useRef<HTMLDivElement>(null)
+  
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end end"]
+  })
+
+  // Translate the flex container to the left as we scroll down.
+  // We use a function to return a dynamic calc() string because framer-motion cannot interpolate between 0% and calc() strings automatically.
+  const x = useTransform(scrollYProgress, (value) => `calc(-${value * 100}% + ${value * 100}vw)`)
+
   return (
-    <section className="bg-black w-full py-0 relative z-30 font-sans border-t border-white/5 overflow-hidden">
+    <section ref={targetRef} className="bg-cream w-full relative z-30 font-sans border-t border-ink/5 h-[300vh]">
       
-      {/* Section Header */}
-      <div className="container mx-auto px-4 md:px-10 pt-32 pb-16 max-w-7xl">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="flex flex-col md:flex-row justify-between items-end"
-        >
-          <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-white leading-none tracking-tighter uppercase w-full md:w-1/2">
-            RESEARCH<br />CATEGORIES.
-          </h2>
-          <p className="text-gray-400 text-base md:text-lg max-w-md text-left md:text-right mt-6 md:mt-0 leading-relaxed font-medium">
-            Explore our specialized catalogue of high-purity peptides synthesized for specific research pathways and biological systems.
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Horizontal Scrolling Vertical Slice Gallery */}
-      <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar w-full h-[60vh] min-h-[500px] max-h-[700px] cursor-grab active:cursor-grabbing">
-        {CATEGORIES.map((category, index) => (
-          <Link 
-            href={`/shop?category=${encodeURIComponent(category.name)}`}
-            key={category.slug} 
-            className="snap-center shrink-0 w-[85vw] sm:w-[45vw] md:w-[33.333vw] lg:w-[25vw] h-full relative group overflow-hidden border-r border-white/5 cursor-pointer block"
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
+        {/* Section Header */}
+        <div className="container mx-auto px-4 md:px-10 mb-8 max-w-7xl shrink-0">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-50px" }}
+            className="flex flex-col md:flex-row justify-between items-end"
           >
-            {/* Background Image */}
-            <div className="absolute inset-0 w-full h-full bg-black">
-              <Image 
-                src={CATEGORY_IMAGES[index]} 
-                alt={category.name} 
-                fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-70 group-hover:opacity-100"
-              />
-              {/* Subtle bottom gradient for text readability */}
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none transition-opacity duration-700" />
-            </div>
+            <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-ink leading-none tracking-tighter uppercase w-full md:w-1/2">
+              RESEARCH<br />CATEGORIES.
+            </h2>
+            <p className="text-slate-500 text-base md:text-lg max-w-md text-left md:text-right mt-6 md:mt-0 leading-relaxed font-medium">
+              Explore our specialized catalogue of high-purity peptides synthesized for specific research pathways and biological systems.
+            </p>
+          </motion.div>
+        </div>
 
-            {/* Bottom Centered Text */}
-            <div className="absolute inset-x-0 bottom-12 flex justify-center pointer-events-none px-4">
-                <h3 
-                  className="font-heading text-2xl md:text-3xl lg:text-4xl font-semibold text-white tracking-tight text-center drop-shadow-xl transition-all duration-500 group-hover:-translate-y-2 uppercase"
-                >
-                  {category.name}
-                </h3>
-            </div>
-          </Link>
-        ))}
+        {/* Horizontal Scrolling Vertical Slice Gallery */}
+        <motion.div style={{ x }} className="flex w-max h-[60vh] min-h-[400px] max-h-[700px]">
+          {CATEGORIES.map((category, index) => (
+            <Link 
+              href={`/shop?category=${encodeURIComponent(category.name)}`}
+              key={category.slug} 
+              className="shrink-0 w-[85vw] sm:w-[45vw] md:w-[33.333vw] lg:w-[25vw] h-full relative group overflow-hidden border-r border-ink/5 cursor-pointer block"
+            >
+              {/* Background Image */}
+              <div className="absolute inset-0 w-full h-full bg-cream">
+                <Image 
+                  src={CATEGORY_IMAGES[index]} 
+                  alt={category.name} 
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-70 group-hover:opacity-100"
+                />
+                {/* Subtle bottom gradient for text readability */}
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-cream/90 via-cream/40 to-transparent pointer-events-none transition-opacity duration-700" />
+              </div>
+
+              {/* Bottom Centered Text */}
+              <div className="absolute inset-x-0 bottom-12 flex justify-center pointer-events-none px-4">
+                  <h3 
+                    className="font-heading text-2xl md:text-3xl lg:text-4xl font-semibold text-ink tracking-tight text-center drop-shadow-xl transition-all duration-500 group-hover:-translate-y-2 uppercase"
+                  >
+                    {category.name}
+                  </h3>
+              </div>
+            </Link>
+          ))}
+        </motion.div>
       </div>
       
     </section>

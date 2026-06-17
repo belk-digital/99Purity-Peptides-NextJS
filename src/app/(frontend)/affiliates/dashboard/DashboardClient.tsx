@@ -127,7 +127,7 @@ export function DashboardClient({ stats, recentConversions }: DashboardClientPro
         <motion.div variants={itemVars} className="flex flex-col gap-6">
           <div className="flex items-center justify-between border-b border-gray-200 pb-4">
             <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-black">Recent Conversions</h3>
-            <Link href="/affiliates/dashboard/conversions" className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#5984c4] hover:text-blue-700 transition-colors bg-blue-50 px-3 py-1.5 rounded-full hover:bg-blue-100">
+            <Link href="/affiliates/dashboard/conversions" className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#008B8B] hover:text-blue-700 transition-colors bg-blue-50 px-3 py-1.5 rounded-full hover:bg-blue-100">
               View All
             </Link>
           </div>
@@ -206,12 +206,12 @@ export function DashboardClient({ stats, recentConversions }: DashboardClientPro
               <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500">Your Coupon Code (15% Off)</span>
               <div className="bg-gradient-to-br from-[#f8faff] to-[#eef4ff] p-4 rounded-2xl border border-blue-100 shadow-sm flex flex-col gap-3 relative overflow-hidden">
                 <div className="absolute -right-4 -top-4 w-24 h-24 bg-blue-500/5 rounded-full blur-xl" />
-                <div className="bg-white rounded-xl px-4 py-3 text-lg font-mono font-bold text-[#5984c4] text-center border border-blue-100/50 relative z-10">
+                <div className="bg-white rounded-xl px-4 py-3 text-lg font-mono font-bold text-[#008B8B] text-center border border-blue-100/50 relative z-10">
                   {stats.couponCode}
                 </div>
                 <Button 
                   onClick={() => handleCopy(stats.couponCode, 'code')}
-                  className="w-full rounded-xl h-10 text-xs font-bold uppercase tracking-widest gap-2 bg-[#5984c4] hover:bg-blue-600 text-white border-none shadow-md"
+                  className="w-full rounded-xl h-10 text-xs font-bold uppercase tracking-widest gap-2 bg-[#008B8B] hover:bg-blue-600 text-white border-none shadow-md"
                 >
                   {copiedCode ? <Check size={14} /> : <Copy size={14} />}
                   {copiedCode ? 'Copied!' : 'Copy Code'}
@@ -225,3 +225,4 @@ export function DashboardClient({ stats, recentConversions }: DashboardClientPro
     </motion.div>
   )
 }
+

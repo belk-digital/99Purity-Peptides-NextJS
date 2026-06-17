@@ -77,7 +77,7 @@ export function WhyChooseUs() {
           <div className="flex flex-col w-full h-full z-20 order-2">
             
             <FadeUp>
-              <h2 className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-[#5984c4] mb-6 lg:mb-12 font-bold mt-4 lg:mt-0">The Gold Standard</h2>
+              <h2 className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-[#008B8B] mb-6 lg:mb-12 font-bold mt-4 lg:mt-0">The Gold Standard</h2>
             </FadeUp>
             
             {/* Top area: Dynamic Content */}
@@ -116,9 +116,9 @@ export function WhyChooseUs() {
                       key={pillar.id}
                       onMouseEnter={() => setActiveIndex(index)}
                       onClick={() => setActiveIndex(index)}
-                      className="group border-b border-slate-200 py-4 lg:py-8 flex items-center justify-between text-left transition-colors duration-500 hover:border-[#5984c4]/30 w-full"
+                      className="group border-b border-slate-200 py-4 lg:py-8 flex items-center justify-between text-left transition-colors duration-500 hover:border-[#008B8B]/30 w-full"
                     >
-                      <span className={`text-xl md:text-2xl lg:text-3xl font-serif tracking-tight transition-colors duration-500 pr-4 ${isActive ? 'text-[#5984c4]' : 'text-ink/50 group-hover:text-ink/80'}`}>
+                      <span className={`text-xl md:text-2xl lg:text-3xl font-serif tracking-tight transition-colors duration-500 pr-4 ${isActive ? 'text-[#008B8B]' : 'text-ink/50 group-hover:text-ink/80'}`}>
                         {pillar.title}
                       </span>
                       
@@ -131,7 +131,7 @@ export function WhyChooseUs() {
                           opacity: isActive ? 1 : 0.3
                         }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="text-[#5984c4] shrink-0"
+                        className="text-[#008B8B] shrink-0"
                       >
                         <svg width="20" height="20" className="lg:w-6 lg:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                       </motion.div>
@@ -147,3 +147,4 @@ export function WhyChooseUs() {
     </section>
   )
 }
+

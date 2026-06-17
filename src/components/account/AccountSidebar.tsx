@@ -105,9 +105,9 @@ export function AccountSidebar({
         {affiliateStatus === 'approved' && (
           <Link
             href="/affiliates/dashboard"
-            className="relative flex items-center justify-center lg:justify-start gap-3 shrink-0 px-4 py-3.5 rounded-2xl text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-[#5984c4] hover:bg-blue-50/50 bg-blue-50 lg:bg-transparent group"
+            className="relative flex items-center justify-center lg:justify-start gap-3 shrink-0 px-4 py-3.5 rounded-2xl text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-[#008B8B] hover:bg-blue-50/50 bg-blue-50 lg:bg-transparent group"
           >
-            <BarChart3 size={16} className="relative z-10 transition-colors duration-300 text-[#5984c4] group-hover:text-blue-600" />
+            <BarChart3 size={16} className="relative z-10 transition-colors duration-300 text-[#008B8B] group-hover:text-blue-600" />
             <span className="relative z-10 group-hover:text-blue-600">Affiliate Dashboard</span>
           </Link>
         )}
@@ -155,12 +155,12 @@ export function AccountSidebar({
             <Users size={80} />
           </div>
           <div className="relative z-10 flex flex-col gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#5984c4]">Partner Program</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#008B8B]">Partner Program</span>
             <p className="text-[11px] text-blue-900/80 leading-relaxed font-medium">
               Earn <strong className="text-blue-900 font-bold">15% commission</strong> by referring researchers.
             </p>
           </div>
-          <Link href="/affiliates" className="relative z-10 mt-2 bg-white text-[#5984c4] hover:bg-blue-50 hover:text-blue-600 border border-blue-100 rounded-xl px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-center shadow-sm">
+          <Link href="/affiliates" className="relative z-10 mt-2 bg-white text-[#008B8B] hover:bg-blue-50 hover:text-blue-600 border border-blue-100 rounded-xl px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-center shadow-sm">
             Apply Now
           </Link>
         </div>
@@ -179,3 +179,4 @@ export function AccountSidebar({
     </aside>
   )
 }
+

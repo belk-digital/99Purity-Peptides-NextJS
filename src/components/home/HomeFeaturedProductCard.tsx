@@ -63,7 +63,7 @@ export function HomeFeaturedProductCard({ product, id, index = 0 }: HomeFeatured
       <div className="flex flex-col items-center text-center w-full z-20 px-2 pointer-events-none">
         
         {/* Product Name */}
-        <h3 className="text-[14px] sm:text-[16px] font-bold text-black mb-1 leading-tight tracking-tight">
+        <h3 className="text-[14px] sm:text-[16px] font-bold text-cream mb-1 leading-tight tracking-tight">
           {product.name}
         </h3>
         
@@ -73,12 +73,12 @@ export function HomeFeaturedProductCard({ product, id, index = 0 }: HomeFeatured
         </span>
         
         {/* Price */}
-        <span className="text-[12px] sm:text-[14px] font-bold text-black mb-6">
+        <span className="text-[12px] sm:text-[14px] font-bold text-cream mb-6">
           {product.priceRange}
         </span>
         
         {/* Add to Cart Button */}
-        <button className="pointer-events-auto px-6 py-2.5 sm:px-8 sm:py-3 rounded-none bg-white border border-slate-300 text-black hover:bg-black hover:text-white hover:border-black transition-all duration-300 font-bold tracking-[0.15em] uppercase text-[9px] sm:text-[10px] w-full max-w-[180px]">
+        <button className="pointer-events-auto px-6 py-2.5 sm:px-8 sm:py-3 rounded-none bg-ink border border-slate-300 text-cream hover:bg-cream hover:text-ink hover:border-black transition-all duration-300 font-bold tracking-[0.15em] uppercase text-[9px] sm:text-[10px] w-full max-w-[180px]">
           ADD TO CART
         </button>
       </div>

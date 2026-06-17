@@ -6,28 +6,41 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Mail } from 'lucide-react'
 
 const FooterContent = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+
   return (
     <footer className="bg-[#050505] w-full relative z-30 font-sans border-t border-white/5 overflow-hidden text-white">
 
       {/* Pre-Footer CTA */}
-      <div className="relative border-b border-white/5 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 pointer-events-none opacity-30"
+      <div ref={sectionRef} className="relative border-b border-white/5 overflow-hidden">
+        {/* Background Image with Parallax */}
+        <motion.div 
+          className="absolute inset-0 w-full h-[140%] -top-[20%] bg-cover bg-center bg-no-repeat z-0 pointer-events-none opacity-50"
           style={{ 
-            backgroundImage: `url('https://res.cloudinary.com/dgrrovta3/image/upload/v1781300102/ChatGPT_Image_Jun_11_2026_09_09_54_PM_zvfy8c.png')`
+            backgroundImage: `url('/99 Images/vial-closeup.webp')`,
+            y
           }}
         />
         
-        <div className="container relative z-10 mx-auto px-4 md:px-10 py-16 md:py-24 max-w-7xl">
+        <div className="container relative z-10 mx-auto px-4 md:px-10 pt-16 md:pt-24 pb-32 md:pb-48 max-w-[1600px]">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="bg-black/60 backdrop-blur-md border border-white/5 rounded-3xl py-8 px-6 md:py-12 md:px-16 relative overflow-hidden max-w-5xl mx-auto shadow-2xl"
+            className="bg-white/5 backdrop-blur-2xl border border-white/10 border-t-white/20 rounded-[2.5rem] py-10 px-6 md:py-16 md:px-16 relative overflow-hidden max-w-5xl mx-auto shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]"
           >
-            <div className="relative z-10 flex flex-col items-center justify-center gap-6 text-center">
+            {/* Subtle inner top glow for glass edge */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            
+            <div className="relative z-10 flex flex-col items-center justify-center gap-8 text-center">
               <div className="max-w-3xl">
                 <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black text-white leading-[1.1] tracking-tight uppercase mb-4 w-full">
                   <span className="block whitespace-nowrap">Ready to elevate</span>
@@ -54,68 +67,113 @@ const FooterContent = () => {
       </div>
 
       {/* Main Footer Links */}
-      <div className="container mx-auto px-4 md:px-10 pt-24 pb-12 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
-          <div className="md:col-span-2">
-            <div className="font-heading text-2xl font-black text-white tracking-tight uppercase mb-6 flex items-center gap-3">
-              <svg viewBox="0 0 200 300" className="w-6 h-6 sm:w-8 sm:h-auto fill-[#d90429]">
-                <path d="M94.02,228.41c-5.98-3.52-19.52-15.64-19.13-22.16l3.19-52.86-55.56-24.18c-.45,9.37,1.22,17.33,2.88,25.78,2.03,13.88,15.02,16.75,26.2,22.56,3.74,2.15,9.43,5.67,9.43,11.05v94.56S2.59,206.44,2.59,206.44c-2.8-3.68-2.25-8.49-2.59-12.84l.17-90.97c.02-10.06,3.04-19.08,8.62-27.26,17.61-25.3,57.52-45.01,84.79-58.71,28.42,14.43,62.61,31.25,82.58,55.75,5.71,7.74,10.53,15.88,10.55,26.07l.26,101.36c-1.24,3.84-2.61,6.9-5,10.05l-55.98,73.44-.54-89.59c-.04-5.96.76-11.19,6.44-14.24l17.88-9.14c6.75-3.45,11.37-9.02,11.89-16.81,1.64-8.05,3.33-15.91,2.67-24.57l-55.92,24.83,3.16,54.98c-2.32,8.15-11.11,13.39-17.57,19.62Z" />
-              </svg>
-              SPARTA LABS
+      <div className="w-full mx-auto px-4 md:px-8 lg:px-12 pb-12 max-w-[1920px] -mt-20 md:-mt-32 relative z-20">
+        {/* The Big Rounded Card */}
+        <div className="bg-[#111111] rounded-[2.5rem] p-10 md:p-16 lg:p-24 relative overflow-hidden flex flex-col justify-between min-h-[500px] lg:min-h-[700px]">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 relative z-10 mb-32">
+            
+            {/* Left Brand Text */}
+            <div className="lg:col-span-4 pr-8">
+              <img src="/99 Images/99pp-Logo.png" alt="99 Purity Peptides Logo" className="h-16 lg:h-20 w-auto object-contain mb-8" />
+              <h3 className="text-white text-2xl lg:text-3xl font-medium leading-tight tracking-tight">
+                Join research laboratories and universities nationwide relying on 99PurityPeptides.
+              </h3>
             </div>
-            <p className="text-gray-400 text-sm max-w-sm leading-relaxed mb-8">
-              Precision-engineered peptides synthesized for absolute clarity. Supplying the world's most demanding independent researchers and private laboratories.
-            </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg>
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all">
-                <Mail className="w-4 h-4" />
-              </a>
+
+            {/* Explore / Quick Links */}
+            <div className="lg:col-span-2">
+              <h4 className="text-white font-medium mb-6">Explore</h4>
+              <ul className="space-y-3 text-gray-400 text-sm">
+                <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/shop" className="hover:text-white transition-colors">Shop</Link></li>
+                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link href="/medical-disclaimer" className="hover:text-white transition-colors">Medical Disclaimer</Link></li>
+              </ul>
+            </div>
+
+            {/* Contact Pills */}
+            <div className="lg:col-span-3">
+              <h4 className="text-white font-medium mb-6">Contact</h4>
+              <div className="flex flex-col gap-3 items-start">
+                <a href="mailto:orders@99puritypeptides.com" className="flex items-center gap-3 bg-[#1a1a1a] hover:bg-white/10 rounded-full px-4 py-2 transition-colors w-fit group">
+                  <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
+                    <Mail className="w-3 h-3" />
+                  </div>
+                  <span className="text-xs text-white tracking-wide">orders@99puritypeptides.com</span>
+                </a>
+                <a href="mailto:support@99puritypeptides.com" className="flex items-center gap-3 bg-[#1a1a1a] hover:bg-white/10 rounded-full px-4 py-2 transition-colors w-fit group">
+                  <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
+                    <Mail className="w-3 h-3" />
+                  </div>
+                  <span className="text-xs text-white tracking-wide">support@99puritypeptides.com</span>
+                </a>
+                <a href="tel:8437439007" className="flex items-center gap-3 bg-[#1a1a1a] hover:bg-white/10 rounded-full px-4 py-2 transition-colors w-fit group">
+                  <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  </div>
+                  <span className="text-xs text-white tracking-wide">843 743 9007</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right CTAs */}
+            <div className="lg:col-span-3 flex flex-col">
+              <Link href="/contact" className="group border-b border-white/5 pb-6 mb-6 block">
+                <div className="flex justify-between items-center text-white mb-2">
+                  <h3 className="text-xl font-medium text-primary transition-colors">Contact Us</h3>
+                  <div className="w-6 h-6 rounded-full bg-primary text-black flex items-center justify-center transition-transform group-hover:scale-110">
+                    <ArrowRight className="w-3 h-3 -rotate-45" />
+                  </div>
+                </div>
+                <p className="text-gray-500 text-xs">Reach out to our support team</p>
+              </Link>
+
+              <Link href="/shop" className="group block">
+                <div className="flex justify-between items-center text-white mb-2">
+                  <h3 className="text-xl font-medium group-hover:text-white transition-colors">Shop Catalogue</h3>
+                  <div className="w-6 h-6 rounded-full bg-[#1a1a1a] text-white flex items-center justify-center transition-all group-hover:bg-white group-hover:text-black">
+                    <ArrowRight className="w-3 h-3 -rotate-45" />
+                  </div>
+                </div>
+                <p className="text-gray-500 text-xs">View all research peptides</p>
+              </Link>
             </div>
           </div>
 
-          <div>
-            <h4 className="font-bold text-white uppercase tracking-widest text-[10px] mb-6">Catalogue</h4>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li><Link href="/shop" className="hover:text-primary transition-colors">All Products</Link></li>
-              <li><Link href="/shop" className="hover:text-primary transition-colors">GLP-1 Agonists</Link></li>
-              <li><Link href="/shop" className="hover:text-primary transition-colors">Growth Hormone</Link></li>
-              <li><Link href="/shop" className="hover:text-primary transition-colors">BPC / TB-500</Link></li>
-              <li><Link href="/shop" className="hover:text-primary transition-colors">Cosmetic Peptides</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-white uppercase tracking-widest text-[10px] mb-6">Support</h4>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li><Link href="/contact" className="hover:text-primary transition-colors">Track Order</Link></li>
-              <li><Link href="/shipping" className="hover:text-primary transition-colors">Shipping Policy</Link></li>
-              <li><Link href="/refund" className="hover:text-primary transition-colors">Return Policy</Link></li>
-              <li><Link href="/certificates" className="hover:text-primary transition-colors">Independent COAs</Link></li>
-              <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
-            </ul>
+          {/* Bottom Massive Text */}
+          <div className="absolute bottom-0 left-0 right-0 w-full translate-y-[28%] select-none pointer-events-none flex justify-center px-4">
+            <h1 className="font-heading text-[clamp(4rem,12.5vw,260px)] w-full leading-none font-black text-white text-center tracking-tighter lowercase">
+              99purity
+            </h1>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-gray-500 text-xs">
-          <p>&copy; {new Date().getFullYear()} Sparta Labs. All rights reserved. Not for human consumption.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+        {/* Bottom Area Outside the Card */}
+        <div className="mt-8 px-4 md:px-8 flex flex-col gap-6">
+          <p className="text-gray-500 text-[10px] leading-relaxed max-w-6xl mx-auto text-center">
+            <span className="font-bold text-gray-400 uppercase tracking-wider mr-2">Disclaimer:</span> 
+            The content on this website has not been evaluated or approved by the U.S. Food and Drug Administration (FDA). Products sold by 99 Purity Peptides are offered for research and laboratory purposes only and are not intended to diagnose, treat, cure, or prevent any disease. 99 Purity Peptides is not a compounding pharmacy and does not operate as a chemical compounding facility as defined under Section 503A of the Federal Food, Drug, and Cosmetic Act. Products are not for human or veterinary use, and are not intended for ingestion, injection, or any form of administration. Purity levels may vary by product and lot; certain items may test below 99% purity.
+          </p>
+          <div className="flex flex-col lg:flex-row justify-between items-center text-gray-500 text-[11px] font-medium pt-4 border-t border-white/5 pb-4">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-4 lg:mb-0">
+              <span className="text-gray-400">99Purity Peptides &copy; {new Date().getFullYear()}</span>
+              <span className="hidden sm:inline">·</span>
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <span className="hidden sm:inline">·</span>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+              <span className="hidden sm:inline">·</span>
+              <Link href="/refund" className="hover:text-white transition-colors">Refund Policy</Link>
+              <span className="hidden sm:inline">·</span>
+              <Link href="/shipping" className="hover:text-white transition-colors">Shipping Policy</Link>
+            </div>
+            <div className="flex items-center gap-2 text-center lg:text-right">
+              <span>Designed & Developed by <a href="https://belkdigital.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 font-bold hover:text-primary transition-colors">Belk Digital</a></span>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Giant Typography Watermark */}
-      <div className="w-full overflow-hidden leading-none select-none pointer-events-none mt-10 flex justify-center pb-12">
-        <h1 className="font-heading text-[14vw] sm:text-[16vw] font-black text-[#d90429] text-center uppercase tracking-tighter whitespace-nowrap px-4">
-          SPARTA
-        </h1>
       </div>
     </footer>
   );

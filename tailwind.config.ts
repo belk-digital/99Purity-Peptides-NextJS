@@ -7,8 +7,8 @@ const config: Config = {
       colors: {
         background: '#000000',
         primary: {
-          DEFAULT: '#e63946',
-          dark: '#c32f3a',
+          DEFAULT: '#008B8B', // Deep Cyan
+          dark: '#006666',
         },
         'card-bg': 'rgba(255, 255, 255, 0.05)',
         // Backgrounds
@@ -42,9 +42,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Bodoni 72', 'Didot', 'Cormorant Garamond', 'serif'],
-        sans: ['var(--font-sans)', '"Geist Placeholder"', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-heading)', 'var(--font-big-shoulders)', 'sans-serif'],
+        sans: ['Inter', '"Geist Placeholder"', 'sans-serif'],
+        heading: ['Michroma', '"Big Shoulders Display"', 'sans-serif'],
+        display: ['"Space Grotesk"', 'sans-serif'],
       },
       fontSize: {
         // Display

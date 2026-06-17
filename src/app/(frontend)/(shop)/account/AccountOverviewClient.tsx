@@ -190,11 +190,11 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
                       <BarChart3 size={16} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#5984c4]">Affiliate Dashboard</span>
+                      <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#008B8B]">Affiliate Dashboard</span>
                       <span className="text-xs text-blue-900/60 mt-0.5">Manage links and payouts</span>
                     </div>
                   </div>
-                  <ArrowRight size={16} className="text-[#5984c4] group-hover:translate-x-2 transition-all duration-300 relative z-10" />
+                  <ArrowRight size={16} className="text-[#008B8B] group-hover:translate-x-2 transition-all duration-300 relative z-10" />
                 </Link>
               )}
               
@@ -256,3 +256,4 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
     </motion.div>
   )
 }
+

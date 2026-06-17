@@ -6,7 +6,7 @@ export interface WishlistItem {
   id: string
   name: string
   slug: string
-  image: string
+  image: string | { url: string }
   priceRange?: string
 }
 

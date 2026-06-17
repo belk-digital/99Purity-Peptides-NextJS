@@ -44,7 +44,7 @@ export function AboutTeaser() {
           {/* Light color overlay to soften the image */}
           <div className="absolute inset-0 bg-white/10" />
           {/* Sky blue color tint overlay */}
-          <div className="absolute inset-0 bg-[#5984c4]/20 mix-blend-color" />
+          <div className="absolute inset-0 bg-[#008B8B]/20 mix-blend-color" />
           {/* Vignette & Gradient for readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/20 to-transparent" />
         </motion.div>
@@ -67,7 +67,7 @@ export function AboutTeaser() {
           style={{ y: textY, willChange: 'transform' }}
           className="relative z-10 w-full flex flex-col items-center justify-center text-center px-6 pointer-events-none transform-gpu"
         >
-          <span className="text-label-md uppercase tracking-widest text-[#5984c4] mb-6 md:mb-8 block font-bold">
+          <span className="text-label-md uppercase tracking-widest text-[#008B8B] mb-6 md:mb-8 block font-bold">
             THE LAB
           </span>
           <h2 className="text-[10vw] sm:text-[8vw] md:text-[6vw] font-display text-ink leading-[0.9] tracking-tight max-w-[95%] md:max-w-[70%] drop-shadow-sm">
@@ -77,7 +77,7 @@ export function AboutTeaser() {
             We synthesize ultra-pure research peptides using advanced solid-phase peptide synthesis (SPPS) in US-based, ISO-certified facilities. Every compound undergoes independent third-party LC-MS and HPLC analysis to verify both molecular identity and ≥99% purity before it reaches your bench. No overseas raw powders. No shortcuts. Just verifiable science.
           </p>
           <div className="pointer-events-auto mt-10">
-            <Button variant="outline" asChild className="border-slate-300 text-ink hover:bg-[#5984c4] hover:text-white hover:border-[#5984c4] rounded-[1.5rem] px-8 py-6 backdrop-blur-md transition-all duration-300 uppercase tracking-widest text-[10px] font-bold shadow-sm transform-gpu">
+            <Button variant="outline" asChild className="border-slate-300 text-ink hover:bg-[#008B8B] hover:text-white hover:border-[#008B8B] rounded-[1.5rem] px-8 py-6 backdrop-blur-md transition-all duration-300 uppercase tracking-widest text-[10px] font-bold shadow-sm transform-gpu">
               <Link href="/about">Read About Us →</Link>
             </Button>
           </div>
@@ -102,8 +102,8 @@ export function AboutTeaser() {
       <section className="w-full max-w-[90%] mx-auto mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 relative z-10 px-4">
         
         <div className="flex flex-col text-center md:text-left">
-          <div className="w-12 h-12 rounded-full bg-[#5984c4]/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
-            <span className="text-[#5984c4] font-bold">01</span>
+          <div className="w-12 h-12 rounded-full bg-[#008B8B]/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
+            <span className="text-[#008B8B] font-bold">01</span>
           </div>
           <h3 className="text-xl font-display font-bold text-ink mb-4">
             ≥99% HPLC Purity — Every Batch, No Exceptions
@@ -114,8 +114,8 @@ export function AboutTeaser() {
         </div>
 
         <div className="flex flex-col text-center md:text-left">
-          <div className="w-12 h-12 rounded-full bg-[#5984c4]/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
-            <span className="text-[#5984c4] font-bold">02</span>
+          <div className="w-12 h-12 rounded-full bg-[#008B8B]/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
+            <span className="text-[#008B8B] font-bold">02</span>
           </div>
           <h3 className="text-xl font-display font-bold text-ink mb-4">
             LC-MS Verified Peptide Identity
@@ -126,8 +126,8 @@ export function AboutTeaser() {
         </div>
 
         <div className="flex flex-col text-center md:text-left">
-          <div className="w-12 h-12 rounded-full bg-[#5984c4]/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
-            <span className="text-[#5984c4] font-bold">03</span>
+          <div className="w-12 h-12 rounded-full bg-[#008B8B]/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
+            <span className="text-[#008B8B] font-bold">03</span>
           </div>
           <h3 className="text-xl font-display font-bold text-ink mb-4">
             COA with Every Order — Full Transparency
@@ -141,3 +141,4 @@ export function AboutTeaser() {
     </div>
   )
 }
+

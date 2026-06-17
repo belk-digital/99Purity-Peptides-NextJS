@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react'
 import '@/app/globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
-import { fontDisplay, fontSans, fontHeading, fontBigShoulders } from '@/app/fonts'
 import { LayoutClientWrapper } from '@/components/shared/LayoutClientWrapper'
 import { Header } from '@/components/shared/Header'
 import { Footer } from '@/components/shared/Footer'
@@ -18,10 +17,14 @@ export const metadata = {
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`min-h-screen ${fontDisplay.variable} ${fontSans.variable} ${fontHeading.variable} ${fontBigShoulders.variable}`} suppressHydrationWarning>
-        <head />
+      <html lang="en" className="min-h-screen" suppressHydrationWarning>
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Michroma&family=Space+Grotesk:wght@300..700&family=Big+Shoulders+Display:wght@100..900&display=swap" rel="stylesheet" />
+        </head>
         <body
-          className="min-h-screen bg-cream text-ink antialiased"
+          className="min-h-screen bg-cream text-ink font-sans antialiased"
           suppressHydrationWarning
         >
           <React.Suspense fallback={null}>

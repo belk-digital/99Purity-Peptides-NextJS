@@ -53,7 +53,7 @@ export function AffiliateSidebar({
           </div>
           <div className="flex flex-col">
             <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-blue-500">Current Status</span>
-            <span className="text-xl font-bold text-[#5984c4] leading-none mt-1 capitalize">{tier} Tier</span>
+            <span className="text-xl font-bold text-[#008B8B] leading-none mt-1 capitalize">{tier} Tier</span>
           </div>
         </div>
       </div>
@@ -140,3 +140,4 @@ export function AffiliateSidebar({
     </aside>
   )
 }
+

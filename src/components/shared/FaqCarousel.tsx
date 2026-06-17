@@ -150,7 +150,7 @@ export function FaqCarousel({
         {/* Custom Cursor Bubble (Desktop Only) */}
         <motion.div
           className={`pointer-events-none absolute z-50 hidden xl:flex items-center justify-center w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-xl border border-white/20 ${
-            isDark ? 'bg-[#5984c4]/90 backdrop-blur-md text-white' : 'bg-white/90 backdrop-blur-md text-[#5984c4]'
+            isDark ? 'bg-[#008B8B]/90 backdrop-blur-md text-white' : 'bg-white/90 backdrop-blur-md text-[#008B8B]'
           }`}
           style={{
             x: cursorXSpring,
@@ -186,7 +186,7 @@ export function FaqCarousel({
           <div className="mb-12 lg:mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
             <FadeUp className="max-w-2xl">
               {sectionLabel && (
-                <span className={`text-label-md uppercase tracking-widest mb-4 block font-bold ${isDark ? 'text-gold' : 'text-[#5984c4]'}`}>
+                <span className={`text-label-md uppercase tracking-widest mb-4 block font-bold ${isDark ? 'text-gold' : 'text-[#008B8B]'}`}>
                   {sectionLabel}
                 </span>
               )}
@@ -315,3 +315,4 @@ export function FaqCarousel({
     </section>
   )
 }
+

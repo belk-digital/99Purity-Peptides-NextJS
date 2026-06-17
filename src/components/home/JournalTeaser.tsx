@@ -71,13 +71,13 @@ export function JournalTeaser() {
           fill
           className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-[#5984c4]/5 group-hover:bg-transparent transition-colors duration-500 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-[#008B8B]/5 group-hover:bg-transparent transition-colors duration-500 mix-blend-multiply" />
       </div>
       <div className="flex flex-col px-1 md:px-2">
-        <span className="text-[10px] md:text-label-sm uppercase tracking-widest text-[#5984c4] mb-2 md:mb-4 font-bold">
+        <span className="text-[10px] md:text-label-sm uppercase tracking-widest text-[#008B8B] mb-2 md:mb-4 font-bold">
           {post.category}
         </span>
-        <h3 className="text-xl md:text-3xl font-display text-ink mb-2 md:mb-4 group-hover:text-[#5984c4] transition-colors duration-500 leading-tight">
+        <h3 className="text-xl md:text-3xl font-display text-ink mb-2 md:mb-4 group-hover:text-[#008B8B] transition-colors duration-500 leading-tight">
           {post.title}
         </h3>
         <div className="mt-auto">
@@ -97,7 +97,7 @@ export function JournalTeaser() {
         
         {/* Left / Top Panel: Solid Sticky Block (Slides over the cards) */}
         <div className="absolute top-0 left-0 w-full h-[40vh] xl:w-[40vw] xl:h-screen bg-white z-20 flex flex-col justify-center px-6 sm:px-12 xl:pl-16 2xl:pl-24 shadow-[20px_0_40px_-20px_rgba(0,0,0,0.05)] border-r border-slate-100">
-           <span className="text-[10px] xl:text-label-md uppercase tracking-widest text-[#5984c4] mb-2 xl:mb-6 block font-bold">
+           <span className="text-[10px] xl:text-label-md uppercase tracking-widest text-[#008B8B] mb-2 xl:mb-6 block font-bold">
              SCIENCE JOURNAL
            </span>
            <h2 className="text-4xl sm:text-5xl xl:text-6xl 2xl:text-7xl font-display text-ink leading-[0.9] tracking-tight mb-4 xl:mb-8 max-w-[90%] drop-shadow-sm">
@@ -109,20 +109,20 @@ export function JournalTeaser() {
            
            {/* Interactive Scroll Prompt */}
            <div className="flex items-center gap-3 mb-6 xl:mb-12">
-             <div className="w-5 h-8 rounded-full border-[1.5px] border-[#5984c4]/30 flex justify-center pt-1.5 shrink-0 scale-75 xl:scale-100 origin-left">
+             <div className="w-5 h-8 rounded-full border-[1.5px] border-[#008B8B]/30 flex justify-center pt-1.5 shrink-0 scale-75 xl:scale-100 origin-left">
                <motion.div 
                  animate={{ y: [0, 8, 0], opacity: [1, 0, 1] }} 
                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                 className="w-1 h-1.5 bg-[#5984c4] rounded-full"
+                 className="w-1 h-1.5 bg-[#008B8B] rounded-full"
                />
              </div>
-             <span className="text-[8px] xl:text-[9px] font-sans uppercase tracking-[0.25em] font-bold text-[#5984c4]">
+             <span className="text-[8px] xl:text-[9px] font-sans uppercase tracking-[0.25em] font-bold text-[#008B8B]">
                Scroll to Explore
              </span>
            </div>
 
            <div>
-            <Button variant="outline" asChild className="border-slate-300 text-ink hover:bg-[#5984c4] hover:border-[#5984c4] hover:text-white rounded-full px-6 xl:px-8 py-4 uppercase tracking-widest text-[10px] xl:text-xs font-bold transition-all duration-300 shadow-sm">
+            <Button variant="outline" asChild className="border-slate-300 text-ink hover:bg-[#008B8B] hover:border-[#008B8B] hover:text-white rounded-full px-6 xl:px-8 py-4 uppercase tracking-widest text-[10px] xl:text-xs font-bold transition-all duration-300 shadow-sm">
                <Link href="/journal">View the Full Journal →</Link>
              </Button>
            </div>
@@ -147,3 +147,4 @@ export function JournalTeaser() {
     </section>
   )
 }
+

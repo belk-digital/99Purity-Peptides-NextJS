@@ -168,7 +168,7 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-label-md uppercase tracking-widest text-[#5984c4] mb-4 sm:mb-8 font-bold"
+            className="text-label-md uppercase tracking-widest text-[#008B8B] mb-4 sm:mb-8 font-bold"
           >
             Our Catalog
           </motion.h2>
@@ -194,7 +194,7 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
                  className="object-cover object-center"
                  priority
                />
-               <div className="absolute inset-0 bg-[#5984c4]/20 group-hover:bg-[#5984c4]/10 transition-colors duration-700" />
+               <div className="absolute inset-0 bg-[#008B8B]/20 group-hover:bg-[#008B8B]/10 transition-colors duration-700" />
              </motion.div>
              
              {/* Center Overlay Text inside Window */}
@@ -354,3 +354,4 @@ export function ShopClient(props: ShopClientProps) {
     </Suspense>
   )
 }
+

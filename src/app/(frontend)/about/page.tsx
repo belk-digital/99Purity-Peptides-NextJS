@@ -127,7 +127,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-label-md uppercase tracking-widest text-[#5984c4] mb-4 sm:mb-8 font-bold"
+            className="text-label-md uppercase tracking-widest text-[#008B8B] mb-4 sm:mb-8 font-bold"
           >
             Established 2024
           </motion.h2>
@@ -153,7 +153,7 @@ export default function AboutPage() {
                  className="object-cover object-[75%_center] md:object-center"
                  priority
                />
-               <div className="absolute inset-0 bg-[#5984c4]/20 group-hover:bg-[#5984c4]/10 transition-colors duration-700" />
+               <div className="absolute inset-0 bg-[#008B8B]/20 group-hover:bg-[#008B8B]/10 transition-colors duration-700" />
              </motion.div>
              
              {/* Center Overlay Text inside Window */}
@@ -241,7 +241,7 @@ export default function AboutPage() {
         <div className="max-w-[900px] mx-auto relative z-10">
           
           <FadeUp className="text-center mb-24 lg:mb-40">
-            <h2 className="text-label-md uppercase tracking-widest text-[#5984c4] mb-6 font-bold">Our Pillars</h2>
+            <h2 className="text-label-md uppercase tracking-widest text-[#008B8B] mb-6 font-bold">Our Pillars</h2>
             <h3 className="text-4xl lg:text-6xl font-serif text-ink tracking-tight">The Foundation of The Lab</h3>
           </FadeUp>
 
@@ -268,7 +268,7 @@ export default function AboutPage() {
                 {/* Left: Editorial Number & Icon */}
                 <div className="flex flex-row md:flex-col justify-between items-end md:items-start border-b md:border-b-0 md:border-r border-ink/10 pb-6 md:pb-0 md:pr-8">
                   <span className="text-5xl lg:text-8xl font-serif text-ink tracking-tighter leading-none">01</span>
-                  <Microscope className="w-8 h-8 lg:w-12 lg:h-12 text-[#5984c4]/40 mt-0 md:mt-12" strokeWidth={1} />
+                  <Microscope className="w-8 h-8 lg:w-12 lg:h-12 text-[#008B8B]/40 mt-0 md:mt-12" strokeWidth={1} />
                 </div>
                 
                 {/* Right: Content */}
@@ -302,7 +302,7 @@ export default function AboutPage() {
                 {/* Left: Editorial Number & Icon */}
                 <div className="flex flex-row md:flex-col justify-between items-end md:items-start border-b md:border-b-0 md:border-r border-ink/10 pb-6 md:pb-0 md:pr-8">
                   <span className="text-5xl lg:text-8xl font-serif text-ink tracking-tighter leading-none">02</span>
-                  <ShieldCheck className="w-8 h-8 lg:w-12 lg:h-12 text-[#5984c4]/40 mt-0 md:mt-12" strokeWidth={1} />
+                  <ShieldCheck className="w-8 h-8 lg:w-12 lg:h-12 text-[#008B8B]/40 mt-0 md:mt-12" strokeWidth={1} />
                 </div>
                 
                 {/* Right: Content */}
@@ -336,7 +336,7 @@ export default function AboutPage() {
                 {/* Left: Editorial Number & Icon */}
                 <div className="flex flex-row md:flex-col justify-between items-end md:items-start border-b md:border-b-0 md:border-r border-ink/10 pb-6 md:pb-0 md:pr-8">
                   <span className="text-5xl lg:text-8xl font-serif text-ink tracking-tighter leading-none">03</span>
-                  <FlaskConical className="w-8 h-8 lg:w-12 lg:h-12 text-[#5984c4]/40 mt-0 md:mt-12" strokeWidth={1} />
+                  <FlaskConical className="w-8 h-8 lg:w-12 lg:h-12 text-[#008B8B]/40 mt-0 md:mt-12" strokeWidth={1} />
                 </div>
                 
                 {/* Right: Content */}
@@ -387,7 +387,7 @@ export default function AboutPage() {
           <FadeUp>
             <div className="mb-12 lg:mb-24 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
               <div>
-                <h2 className="text-xs uppercase tracking-[0.2em] text-[#5984c4] mb-4 font-bold">
+                <h2 className="text-xs uppercase tracking-[0.2em] text-[#008B8B] mb-4 font-bold">
                   Capabilities
                 </h2>
                 <h3 className="text-4xl lg:text-6xl font-serif text-ink tracking-tight">Our Services</h3>
@@ -416,7 +416,7 @@ export default function AboutPage() {
               
               {/* Custom Cursor Bubble (Desktop Only) */}
               <motion.div
-                className="pointer-events-none absolute z-50 hidden md:flex items-center justify-center w-20 h-20 lg:w-24 lg:h-24 bg-[#5984c4]/90 backdrop-blur-md rounded-full shadow-xl border border-white/20 text-white"
+                className="pointer-events-none absolute z-50 hidden md:flex items-center justify-center w-20 h-20 lg:w-24 lg:h-24 bg-[#008B8B]/90 backdrop-blur-md rounded-full shadow-xl border border-white/20 text-white"
                 style={{
                   x: cursorXSpring,
                   y: cursorYSpring,
@@ -450,13 +450,13 @@ export default function AboutPage() {
                         }`}
                       >
                         <div className="flex flex-col items-start gap-2 lg:gap-3">
-                          <span className="text-[10px] lg:text-xs font-mono font-bold text-[#5984c4] tracking-widest">[{service.id}]</span>
+                          <span className="text-[10px] lg:text-xs font-mono font-bold text-[#008B8B] tracking-widest">[{service.id}]</span>
                           <span className="text-xl lg:text-4xl font-serif text-ink text-left leading-tight">
                             {service.title}
                           </span>
                         </div>
                         {/* Interactive Arrow */}
-                        <div className={`transition-all duration-500 transform ${isActive ? 'translate-x-0 opacity-100 text-[#5984c4]' : 'translate-x-0 lg:-translate-x-8 opacity-0 text-ink'}`}>
+                        <div className={`transition-all duration-500 transform ${isActive ? 'translate-x-0 opacity-100 text-[#008B8B]' : 'translate-x-0 lg:-translate-x-8 opacity-0 text-ink'}`}>
                           <svg width="24" height="24" className="lg:w-8 lg:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </div>
                       </button>
@@ -522,7 +522,7 @@ export default function AboutPage() {
       {/* 6. CTA section - Redesigned for Premium Aesthetic */}
       <section className="py-24 px-6 lg:px-12 bg-white relative overflow-hidden">
         <FadeUp>
-          <div className="relative w-full max-w-[1400px] mx-auto bg-gradient-to-b from-[#f4f7fb] to-white border border-[#eef3fb] rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl shadow-[#5984c4]/10 px-6 py-24 lg:py-40 flex flex-col items-center justify-center text-center">
+          <div className="relative w-full max-w-[1400px] mx-auto bg-gradient-to-b from-[#f4f7fb] to-white border border-[#eef3fb] rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl shadow-[#008B8B]/10 px-6 py-24 lg:py-40 flex flex-col items-center justify-center text-center">
             
             {/* Ambient Glows (Optimized: Using radial gradients instead of expensive CSS blurs) */}
             <div 
@@ -538,7 +538,7 @@ export default function AboutPage() {
             <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
               
               {/* Subtle Dot Grid */}
-              <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(#5984c4 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+              <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(#008B8B 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
               
               {/* Floating Transparent Vial 1 */}
               <motion.div
@@ -564,25 +564,25 @@ export default function AboutPage() {
               <motion.div 
                 animate={{ rotate: 360 }}
                 transition={{ duration: 200, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] border-[1px] border-[#5984c4]/10 rounded-full"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] border-[1px] border-[#008B8B]/10 rounded-full"
                 style={{ willChange: 'transform' }}
               />
               <motion.div 
                 animate={{ rotate: -360 }}
                 transition={{ duration: 250, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] md:w-[1000px] md:h-[1000px] border-[1px] border-[#5984c4]/10 rounded-full border-dashed"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] md:w-[1000px] md:h-[1000px] border-[1px] border-[#008B8B]/10 rounded-full border-dashed"
                 style={{ willChange: 'transform' }}
               />
             </div>
 
             <div className="relative z-10 w-full max-w-4xl flex flex-col items-center gap-8">
-              <span className="text-[#5984c4] font-mono tracking-[0.2em] text-xs lg:text-sm uppercase font-bold bg-[#5984c4]/10 px-6 py-2 rounded-full">
+              <span className="text-[#008B8B] font-mono tracking-[0.2em] text-xs lg:text-sm uppercase font-bold bg-[#008B8B]/10 px-6 py-2 rounded-full">
                 Initiate Your Guideline
               </span>
               
               <h2 className="text-5xl md:text-6xl lg:text-8xl font-serif text-ink leading-[1.1] tracking-tight">
                 Advance your <br/>
-                <span className="italic font-light text-[#5984c4]">research.</span>
+                <span className="italic font-light text-[#008B8B]">research.</span>
               </h2>
               
               <p className="text-lg lg:text-2xl text-ink/60 font-light max-w-2xl mx-auto mt-2 lg:mt-4">
@@ -591,13 +591,13 @@ export default function AboutPage() {
               
               <div className="flex flex-col sm:flex-row gap-4 mt-8 lg:mt-12 w-full sm:w-auto">
                 <Link href="/shop" className="w-full sm:w-auto group">
-                  <Button className="w-full rounded-full px-12 py-8 bg-ink text-white hover:bg-[#5984c4] transition-colors duration-500 shadow-xl font-medium text-lg flex items-center justify-center gap-3">
+                  <Button className="w-full rounded-full px-12 py-8 bg-ink text-white hover:bg-[#008B8B] transition-colors duration-500 shadow-xl font-medium text-lg flex items-center justify-center gap-3">
                     Shop Collection
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
                 <Link href="/certificates" className="w-full sm:w-auto group">
-                  <Button variant="outline" className="w-full rounded-full px-12 py-8 border-slate-200 text-ink hover:border-[#5984c4] hover:bg-slate-50 transition-colors duration-500 text-lg bg-white shadow-sm flex items-center justify-center gap-3">
+                  <Button variant="outline" className="w-full rounded-full px-12 py-8 border-slate-200 text-ink hover:border-[#008B8B] hover:bg-slate-50 transition-colors duration-500 text-lg bg-white shadow-sm flex items-center justify-center gap-3">
                     View COAs
                   </Button>
                 </Link>
@@ -610,3 +610,4 @@ export default function AboutPage() {
     </main>
   )
 }
+

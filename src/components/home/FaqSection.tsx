@@ -1,112 +1,90 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
 
 const faqs = [
-  {
-    question: "What is the purity standard for your research peptides?",
-    answer: "Every research peptide sold by The Looksmaxxing Lab must meet or exceed a strictly enforced ≥99% purity threshold. We verify this standard through independent, third-party High-Performance Liquid Chromatography (HPLC) and Liquid Chromatography–Mass Spectrometry (LC-MS) testing for every production batch — not random samples. Any batch that tests below this threshold is immediately discarded."
-  },
-  {
-    question: "How can I access the Certificate of Analysis (COA) for my order?",
-    answer: "Lot-specific Certificates of Analysis for every active batch are publicly available in our COA Library at /certificates. Every order also includes a batch number that corresponds directly to that batch's test documentation. You can verify purity, molecular identity, and endotoxin status for every compound you receive."
-  },
-  {
-    question: "Are these products intended for human consumption?",
-    answer: "No. All products sold by The Looksmaxxing Lab are strictly for laboratory and research use only. They are not intended to diagnose, treat, cure, or prevent any disease, and are not for human or animal consumption. These statements have not been evaluated by the FDA."
-  },
-  {
-    question: "What are your shipping and fulfillment times?",
-    answer: "All orders are fulfilled from our US-based facilities. We offer standard shipping (3–5 business days) and expedited 2-day shipping on orders over $300. Orders placed before 2 PM EST typically ship same day. All peptides are dispatched using validated cold-chain packaging to maintain molecular integrity in transit."
-  },
-  {
-    question: "What is looksmaxxing — and how do peptides relate to it?",
-    answer: "Looksmaxxing is the practice of systematically optimizing one's physical appearance through controllable factors such as skincare, fitness, grooming, and diet. Research peptides are studied in the context of skin collagen, tissue recovery, body composition, and hair density — areas directly relevant to appearance optimization. Our compounds are for research use only and are not offered as cosmetic or medical products."
-  },
-  {
-    question: "How are your research peptides synthesized?",
-    answer: "We utilize advanced solid-phase peptide synthesis (SPPS) in US-based, ISO-certified laboratories. This method assembles amino acid chains sequentially on a resin support, allowing precise control over sequence fidelity and molecular structure. Post-synthesis purification removes truncated sequences and impurities to meet our ≥99% purity floor. Every batch is independently verified before fulfillment."
-  },
-  {
-    question: "Do you offer bulk or wholesale pricing for research institutions?",
-    answer: "Yes. We offer tiered wholesale pricing for qualified research institutions, university labs, clinical facilities, and approved wholesale accounts. Contact our support team to apply for an institutional account. Pricing scales with volume, and bulk orders still receive lot-specific COA documentation."
-  },
-  {
-    question: "How do I verify that a peptide vendor is legitimate and properly tested?",
-    answer: "The three non-negotiable markers of a legitimate research peptide supplier are: (1) independent third-party HPLC and LC-MS testing — not in-house testing — for every batch; (2) a publicly accessible COA library with lot-traceable documentation; and (3) US-based synthesis, not merely US-based fulfillment of overseas-sourced raw powders. The Looksmaxxing Lab meets all three criteria on every order."
-  }
+  { question: "What is a research-use-only (RUO) peptide?", answer: "A research-use-only peptide is a laboratory-grade reagent designated exclusively for non-clinical research applications. RUO peptides are used in assay development, mechanistic studies, and analytical testing but are not intended for diagnostic, therapeutic, or human consumption purposes. This designation ensures clarity in laboratory research contexts." },
+  { question: "What purity level is considered research-grade for peptides?", answer: "Research-grade peptides typically meet ≥99% purity as verified by reversed-phase HPLC. This purity threshold ensures minimal interference from impurities in sensitive laboratory applications including immunoassays, receptor binding studies, and enzyme-kinetic assays. All 99PurityPeptides products include HPLC chromatograms documenting purity levels." },
+  { question: "What information should a peptide certificate of analysis include?", answer: "A comprehensive peptide COA should document HPLC purity percentages, mass spectrometry identity confirmation, peptide molecular weight, amino acid sequence, analytical test methods used, storage recommendations, and batch-specific impurity profiles. This documentation supports experimental validation and research protocol requirements in laboratory settings." },
+  { question: "How do you verify peptide identity using mass spectrometry?", answer: "Peptide identity is verified through liquid chromatography-mass spectrometry (LC-MS), which measures the peptide's molecular weight and confirms it matches the expected value based on amino acid sequence. This analytical method detects sequence errors, modifications, or contamination that could affect research outcomes and assay reliability." },
+  { question: "What storage conditions are recommended for lyophilized peptides?", answer: "Lyophilized research peptides should be stored at −20°C in sealed containers with desiccant to prevent moisture absorption. This maintains peptide stability and prevents degradation during long-term storage. Upon reconstitution, peptide solutions should be aliquoted to minimize freeze-thaw cycles and stored according to specific peptide characteristics and experimental requirements." },
+  { question: "How do peptide reagents support assay development in labs?", answer: "Peptide reagents serve as substrates, controls, standards, and target molecules in laboratory assay development. Applications include enzyme-kinetic assays using peptide substrates, immunoassay development with peptide antigens, receptor binding studies with peptide ligands, and epitope mapping using peptide fragments. Research-grade purity ensures reproducible assay performance." },
+  { question: "What are common impurities in synthetic research peptides?", answer: "Common impurities in synthetic peptides include truncated sequences (deletion peptides), peptides with substitution errors, residual coupling reagents, salts from synthesis and purification, and moisture content. HPLC purity testing identifies and quantifies these impurities, while certificates of analysis document impurity profiles for research transparency and quality assessment." },
+  { question: "How can laboratories ensure peptide batch-to-batch consistency?", answer: "Laboratories ensure peptide consistency by verifying each batch's certificate of analysis, comparing HPLC chromatograms across orders, confirming mass spectrometry data matches specifications, and conducting initial validation testing before integration into experimental protocols. Reputable suppliers maintain controlled synthesis and quality control processes to minimize batch variation." },
+  { question: "How do peptide reagents support receptor-binding studies?", answer: "Peptide reagents function as ligands, competitors, or probes in receptor-binding assays. Synthetic peptides enable investigation of receptor-ligand interactions, binding affinity determination, structure-activity relationship (SAR) studies, and signaling pathway research. High-purity peptides reduce non-specific binding and improve assay sensitivity in laboratory receptor research applications." },
+  { question: "What questions should a research lab ask a peptide vendor?", answer: "Research laboratories should ask peptide vendors about: analytical testing methods used (HPLC, MS specifications), what's included in certificates of analysis, peptide synthesis methodology, storage and handling recommendations, batch-to-batch consistency protocols, documentation provided with shipments, and technical support availability for application-specific guidance. Reputable vendors provide transparent analytical data and research-focused customer service." }
 ];
 
 const FaqItem = ({ faq, index }: { faq: { question: string; answer: string }; index: number }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const num = (index + 1).toString().padStart(2, '0');
 
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="border-b border-white/10 last:border-0"
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      className="border-t border-ink/20 py-8 lg:py-12 group cursor-default transition-colors duration-300 hover:bg-ink/[0.02]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-8 flex items-center justify-between text-left focus:outline-none group cursor-pointer"
-      >
-        <span className="font-heading text-lg md:text-xl font-bold text-white group-hover:text-primary transition-colors tracking-wide">
-          {faq.question}
-        </span>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="ml-4 flex-shrink-0 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:border-primary/50 transition-colors"
-        >
-          <ChevronDown className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" />
-        </motion.div>
-      </button>
-      
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
+      <div className="container mx-auto px-4 md:px-10 max-w-[1600px] flex flex-col lg:flex-row w-full gap-6 lg:gap-8 justify-between items-start">
+        
+        {/* Left: Num + Question */}
+        <div className="flex flex-1 gap-6 md:gap-12 lg:gap-32 items-start w-full lg:w-1/2">
+          <span className="font-heading text-2xl lg:text-3xl font-medium text-ink/40 group-hover:text-primary transition-colors duration-300">
+            {num}
+          </span>
+          <h3 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-ink leading-[1.1] max-w-lg">
+            {faq.question}
+          </h3>
+        </div>
+
+        {/* Right: Answer + Arrow */}
+        <div className="w-full lg:w-5/12 flex justify-between items-start gap-8">
+          <motion.div 
+             initial={{ height: 0, opacity: 0 }}
+             animate={{ height: isHovered ? 'auto' : 0, opacity: isHovered ? 1 : 0 }}
+             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+             className="overflow-hidden flex-1"
           >
-            <p className="pb-8 text-gray-400 text-sm md:text-base leading-relaxed pr-12">
+            <p className="text-ink/80 text-base md:text-lg leading-relaxed pt-2 lg:pt-0 pr-4">
               {faq.answer}
             </p>
           </motion.div>
-        )}
-      </AnimatePresence>
+          <div className="hidden md:block flex-shrink-0">
+            <ArrowUpRight className={`w-8 h-8 text-primary transition-transform duration-500 transform ${isHovered ? 'translate-x-1 -translate-y-1' : ''}`} />
+          </div>
+        </div>
+
+      </div>
     </motion.div>
   );
 };
 
 export function FaqSection() {
   return (
-    <section className="bg-[#0a0a0a] w-full py-32 px-4 md:px-10 relative z-30 font-sans border-t border-white/5">
-      <div className="container mx-auto max-w-4xl">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <p className="text-primary text-[10px] tracking-[0.2em] uppercase mb-4 font-bold">Inquiries</p>
-          <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight uppercase">
-            Frequently Asked.
+    <section className="bg-cream w-full py-32 relative z-30 font-sans">
+      <div className="container mx-auto px-4 md:px-10 max-w-[1600px] mb-24 md:mb-32">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full">
+          <p className="text-ink/50 text-sm font-bold tracking-widest uppercase hidden md:block mb-6 md:mb-0">
+            (faqs)
+          </p>
+          <h2 className="font-heading text-[clamp(3rem,9vw,140px)] font-black text-ink text-left md:text-right uppercase leading-[0.85] tracking-tighter w-full">
+            FREQUENTLY<br />ASKED
           </h2>
-        </motion.div>
-
-        <div className="bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-12 shadow-2xl">
-          {faqs.map((faq, index) => (
-            <FaqItem key={index} faq={faq} index={index} />
-          ))}
         </div>
+      </div>
+
+      <div className="w-full">
+        {faqs.map((faq, index) => (
+          <FaqItem key={index} faq={faq} index={index} />
+        ))}
+        {/* Final border bottom */}
+        <div className="border-t border-ink/20 w-full" />
       </div>
     </section>
   );

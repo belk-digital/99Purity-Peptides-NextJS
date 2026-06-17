@@ -87,7 +87,7 @@ export default function ContactPage() {
                     <div className="space-y-2">
                       <Label htmlFor="department" className="text-sm font-semibold text-ink ml-1">Department</Label>
                       <Select defaultValue="general" name="department">
-                        <SelectTrigger id="department" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4">
+                        <SelectTrigger id="department" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4">
                           <SelectValue placeholder="Select a department" />
                         </SelectTrigger>
                         <SelectContent className="rounded-xl">
@@ -102,30 +102,30 @@ export default function ContactPage() {
                     {/* Name & Email Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="name" className="text-sm font-semibold text-ink ml-1">Full Name <span className="text-[#5984c4]">*</span></Label>
-                        <Input id="name" name="name" required placeholder="Dr. John Smith" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                        <Label htmlFor="name" className="text-sm font-semibold text-ink ml-1">Full Name <span className="text-[#008B8B]">*</span></Label>
+                        <Input id="name" name="name" required placeholder="Dr. John Smith" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="email" className="text-sm font-semibold text-ink ml-1">Email Address <span className="text-[#5984c4]">*</span></Label>
-                        <Input id="email" name="email" type="email" required placeholder="john@example.com" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                        <Label htmlFor="email" className="text-sm font-semibold text-ink ml-1">Email Address <span className="text-[#008B8B]">*</span></Label>
+                        <Input id="email" name="email" type="email" required placeholder="john@example.com" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                       </div>
                     </div>
 
                     {/* Subject */}
                     <div className="space-y-2">
-                      <Label htmlFor="subject" className="text-sm font-semibold text-ink ml-1">Subject <span className="text-[#5984c4]">*</span></Label>
-                      <Input id="subject" name="subject" required placeholder="Order #12345 Inquiry" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Label htmlFor="subject" className="text-sm font-semibold text-ink ml-1">Subject <span className="text-[#008B8B]">*</span></Label>
+                      <Input id="subject" name="subject" required placeholder="Order #12345 Inquiry" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
 
                     {/* Message */}
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="text-sm font-semibold text-ink ml-1">Message <span className="text-[#5984c4]">*</span></Label>
+                      <Label htmlFor="message" className="text-sm font-semibold text-ink ml-1">Message <span className="text-[#008B8B]">*</span></Label>
                       <Textarea 
                         id="message" 
                         name="message"
                         required 
                         placeholder="How can we assist you?" 
-                        className="min-h-[160px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] p-4 resize-none"
+                        className="min-h-[160px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] p-4 resize-none"
                       />
                     </div>
 
@@ -155,7 +155,7 @@ export default function ContactPage() {
                 <div className="space-y-10">
                   <div>
                     <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Order Support</span>
-                    <a href="mailto:support@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#5984c4] transition-colors underline underline-offset-4">
+                    <a href="mailto:support@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
                       support@looksmaxxinglab.com
                     </a>
                     <p className="text-sm text-gray-500 mt-2">
@@ -165,7 +165,7 @@ export default function ContactPage() {
 
                   <div>
                     <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Quality & COAs</span>
-                    <a href="mailto:quality@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#5984c4] transition-colors underline underline-offset-4">
+                    <a href="mailto:quality@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
                       quality@looksmaxxinglab.com
                     </a>
                     <p className="text-sm text-gray-500 mt-2">
@@ -175,7 +175,7 @@ export default function ContactPage() {
 
                   <div>
                     <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Wholesale</span>
-                    <a href="mailto:wholesale@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#5984c4] transition-colors underline underline-offset-4">
+                    <a href="mailto:wholesale@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
                       wholesale@looksmaxxinglab.com
                     </a>
                     <p className="text-sm text-gray-500 mt-2">
@@ -211,3 +211,4 @@ export default function ContactPage() {
     </main>
   )
 }
+

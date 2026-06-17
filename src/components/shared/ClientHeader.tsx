@@ -153,7 +153,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
         >
           {/* Announcement Bar */}
           {!announcementClosed && (
-            <div className="w-full bg-[#d90429] text-white h-[32px] flex items-center justify-center pointer-events-auto overflow-hidden relative">
+            <div className="w-full bg-[#008B8B] text-white h-[32px] flex items-center justify-center pointer-events-auto overflow-hidden relative">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={announcementIndex}
@@ -161,7 +161,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -20, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="text-[9px] font-bold tracking-[0.2em] uppercase absolute text-center w-full px-4"
+                  className="text-[11px] font-bold tracking-[0.2em] uppercase absolute text-center w-full px-4"
                 >
                   {ANNOUNCEMENTS[announcementIndex]}
                 </motion.p>
@@ -180,12 +180,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           {/* Left: Logo */}
           <div className="flex-1 xl:flex-none flex justify-start">
             <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2">
-              <svg viewBox="0 0 200 300" className="w-6 h-6 sm:w-7 sm:h-auto fill-[#d90429]">
-                <path d="M94.02,228.41c-5.98-3.52-19.52-15.64-19.13-22.16l3.19-52.86-55.56-24.18c-.45,9.37,1.22,17.33,2.88,25.78,2.03,13.88,15.02,16.75,26.2,22.56,3.74,2.15,9.43,5.67,9.43,11.05v94.56S2.59,206.44,2.59,206.44c-2.8-3.68-2.25-8.49-2.59-12.84l.17-90.97c.02-10.06,3.04-19.08,8.62-27.26,17.61-25.3,57.52-45.01,84.79-58.71,28.42,14.43,62.61,31.25,82.58,55.75,5.71,7.74,10.53,15.88,10.55,26.07l.26,101.36c-1.24,3.84-2.61,6.9-5,10.05l-55.98,73.44-.54-89.59c-.04-5.96.76-11.19,6.44-14.24l17.88-9.14c6.75-3.45,11.37-9.02,11.89-16.81,1.64-8.05,3.33-15.91,2.67-24.57l-55.92,24.83,3.16,54.98c-2.32,8.15-11.11,13.39-17.57,19.62Z" />
-              </svg>
-              <span className="text-sm tracking-widest font-heading font-bold uppercase mt-1 whitespace-nowrap hidden sm:block">
-                SPARTA LABS
-              </span>
+              <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-12 sm:h-16 w-auto object-contain" />
             </Link>
           </div>
 
@@ -195,7 +190,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
               const getNavLinkClass = (path: string) => {
                 const targetPath = path.replace('/en', '');
                 const isActive = targetPath === '' ? pathname === '/en' || pathname === '/' : pathname.includes(targetPath);
-                return `text-[9px] xl:text-[10px] font-sans tracking-[0.2em] uppercase transition-all h-full flex items-center py-2 ${
+                return `text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full flex items-center py-2 ${
                   isActive 
                     ? `font-bold text-primary opacity-100` 
                     : `font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`
@@ -213,7 +208,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                     onMouseEnter={() => setIsMegaMenuOpen(true)}
                     onMouseLeave={() => setIsMegaMenuOpen(false)}
                   >
-                    <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[9px] xl:text-[10px] font-sans tracking-[0.2em] uppercase transition-all h-full py-2 font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
+                    <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full py-2 font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
                       CATEGORIES
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
                     </Link>
@@ -244,12 +239,6 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
 
           {/* Right: Search, SHOP NOW Button & Cart */}
           <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-5 flex-1 xl:flex-none text-sm">
-            {/* EN Flag / Region Selection */}
-            <div className="hidden md:flex items-center text-gray-300 hover:text-white cursor-pointer transition-colors text-[10px] sm:text-xs font-bold tracking-wider">
-              <img src="https://flagcdn.com/us.svg" alt="EN" className="w-4 h-3 mr-1.5 rounded-[2px] object-cover" />
-              EN
-            </div>
-
             {/* Search Button */}
             <button 
               onClick={() => setIsSearchOpen(true)}
@@ -285,7 +274,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
               ) : null}
             </div>
             
-            <Link href="/shop" className={`hidden md:inline-flex border rounded-full px-5 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase transition-all ${textColor} ${buttonBorder}`}>
+            <Link href="/shop" className={`hidden md:inline-flex border rounded-full px-8 py-4 text-[13px] font-semibold tracking-[0.2em] uppercase transition-all ${textColor} ${buttonBorder} xl:-mr-2`}>
               SHOP NOW
             </Link>
 

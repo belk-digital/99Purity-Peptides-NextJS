@@ -16,7 +16,7 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
   }
 
   return (
-    <section className="bg-black w-full py-24 px-4 md:px-10 relative z-30 font-sans border-t border-white/5">
+    <section className="bg-cream w-full py-24 px-4 md:px-10 relative z-30 font-sans border-t border-ink/5">
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <motion.div 
@@ -26,10 +26,10 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
           viewport={{ once: true, margin: "-50px" }}
           className="flex flex-col md:flex-row justify-between items-end mb-16"
         >
-          <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter uppercase w-full md:w-1/2">
+          <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-ink leading-[0.9] tracking-tighter uppercase w-full md:w-1/2">
             SELECTED<br />REFERENCES<span className="text-primary">.</span>
           </h2>
-          <p className="text-white text-base md:text-[20px] max-w-md text-left md:text-right mt-6 md:mt-0 leading-relaxed font-medium">
+          <p className="text-ink text-base md:text-[20px] max-w-md text-left md:text-right mt-6 md:mt-0 leading-relaxed font-medium">
             A small catalogue of research-grade peptides. Each batch independently verified, sealed and traceable to the milligram.
           </p>
         </motion.div>
@@ -37,10 +37,10 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
         {/* Grid */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Featured Card (Left) */}
-          <Link href={`/products/${featuredProduct.slug}`} className="bg-white/[0.03] backdrop-blur-md border border-white/5 rounded-2xl p-8 w-full lg:w-1/2 flex flex-col justify-between relative overflow-hidden shadow-2xl group hover:bg-white/[0.05] transition-colors">
-            <div className="flex justify-between items-center text-[10px] font-bold text-gray-400 tracking-widest uppercase z-10">
+          <Link href={`/products/${featuredProduct.slug}`} className="bg-ink/[0.03] backdrop-blur-md border border-ink/5 rounded-2xl p-8 w-full lg:w-1/2 flex flex-col justify-between relative overflow-hidden shadow-2xl group hover:bg-ink/[0.05] transition-colors">
+            <div className="flex justify-between items-center text-[10px] font-bold text-slate-500 tracking-widest uppercase z-10">
               <span>{featuredProduct.sku || 'NXP-FEATURED'}</span>
-              <span className="flex items-center text-white"><span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span> IN STOCK</span>
+              <span className="flex items-center text-ink"><span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span> IN STOCK</span>
             </div>
             
             {/* Giant Background Spartan Helmet Icon */}
@@ -65,10 +65,10 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
             <div className="flex justify-between items-end z-10 relative">
               <div>
                 <p className="text-primary text-[10px] tracking-widest uppercase mb-1 font-bold">FEATURED</p>
-                <h3 className="font-heading text-3xl font-bold text-white uppercase mb-1 tracking-tight">{featuredProduct.name}</h3>
-                <p className="text-gray-400 text-[10px] tracking-widest uppercase font-semibold">{featuredProduct.descriptor || 'RESEARCH USE ONLY'}</p>
+                <h3 className="font-heading text-3xl font-bold text-ink uppercase mb-1 tracking-tight">{featuredProduct.name}</h3>
+                <p className="text-slate-500 text-[10px] tracking-widest uppercase font-semibold">{featuredProduct.descriptor || 'RESEARCH USE ONLY'}</p>
               </div>
-              <div className="text-2xl font-bold text-white font-heading tracking-tight">
+              <div className="text-2xl font-bold text-ink font-heading tracking-tight">
                 ${featuredProduct.price}
               </div>
             </div>
@@ -77,18 +77,18 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
           {/* List (Right) */}
           <div className="w-full lg:w-1/2 flex flex-col gap-6">
             {listProducts.map((product, idx) => (
-              <Link href={`/products/${product.slug}`} key={idx} className="bg-white/[0.03] backdrop-blur-md border border-white/5 rounded-2xl p-6 flex items-center shadow-2xl relative overflow-hidden group hover:bg-white/[0.05] transition-colors">
-                <div className="w-32 h-32 bg-white/5 border border-white/5 rounded-xl overflow-hidden shrink-0 flex items-center justify-center relative">
+              <Link href={`/products/${product.slug}`} key={idx} className="bg-ink/[0.03] backdrop-blur-md border border-ink/5 rounded-2xl p-6 flex items-center shadow-2xl relative overflow-hidden group hover:bg-ink/[0.05] transition-colors">
+                <div className="w-32 h-32 bg-ink/5 border border-ink/5 rounded-xl overflow-hidden shrink-0 flex items-center justify-center relative">
                   <Image src={getImageUrl(product)} alt={product.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div className="ml-6 flex-1">
-                  <p className="text-gray-400 text-[10px] tracking-widest uppercase mb-1 font-semibold">{product.sku || `NXP-0${idx + 1}`}</p>
-                  <h3 className="font-heading text-xl font-bold text-white uppercase mb-1 tracking-tight">{product.name}</h3>
-                  <p className="text-gray-400 text-[10px] tracking-widest uppercase font-semibold">{product.descriptor || 'RESEARCH USE ONLY'}</p>
+                  <p className="text-slate-500 text-[10px] tracking-widest uppercase mb-1 font-semibold">{product.sku || `NXP-0${idx + 1}`}</p>
+                  <h3 className="font-heading text-xl font-bold text-ink uppercase mb-1 tracking-tight">{product.name}</h3>
+                  <p className="text-slate-500 text-[10px] tracking-widest uppercase font-semibold">{product.descriptor || 'RESEARCH USE ONLY'}</p>
                 </div>
                 <div className="flex flex-col items-end justify-between h-24">
-                  <div className="text-lg font-bold text-white font-heading tracking-tight">${product.price}</div>
-                  <button className="bg-white hover:bg-gray-200 text-black text-[9px] font-bold px-6 py-2 rounded-full uppercase tracking-widest transition-all shadow-md mt-auto">
+                  <div className="text-lg font-bold text-ink font-heading tracking-tight">${product.price}</div>
+                  <button className="bg-ink hover:bg-slate-700 text-cream text-[9px] font-bold px-6 py-2 rounded-full uppercase tracking-widest transition-all shadow-md mt-auto">
                     View
                   </button>
                 </div>
@@ -99,7 +99,7 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
 
         {/* Footer Button */}
         <div className="flex justify-center mt-12">
-          <Link href="/shop" className="bg-white hover:bg-gray-200 text-black text-[10px] font-bold px-10 py-4 rounded-full uppercase tracking-widest transition-colors shadow-lg backdrop-blur-md">
+          <Link href="/shop" className="bg-ink hover:bg-slate-700 text-cream text-[10px] font-bold px-10 py-4 rounded-full uppercase tracking-widest transition-colors shadow-lg backdrop-blur-md">
             View Full Catalogue
           </Link>
         </div>

@@ -280,7 +280,7 @@ export function CartClient() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="w-32 h-32 rounded-full bg-[#f4f7fb] flex items-center justify-center mb-8 text-[#5984c4]"
+          className="w-32 h-32 rounded-full bg-[#f4f7fb] flex items-center justify-center mb-8 text-[#008B8B]"
         >
           <ShoppingBag size={48} strokeWidth={1} />
         </motion.div>
@@ -329,7 +329,7 @@ export function CartClient() {
                 <div className="flex flex-col flex-1 justify-between py-1 sm:py-0">
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-4">
                     <div className="flex flex-col gap-1 sm:gap-1.5 pr-4 sm:pr-0">
-                      <Link href={`/products/${item.productId}`} className={`text-base sm:text-xl md:text-2xl font-bold text-ink hover:text-[#5984c4] transition-colors leading-tight ${spaceGrotesk.className}`}>
+                      <Link href={`/products/${item.productId}`} className={`text-base sm:text-xl md:text-2xl font-bold text-ink hover:text-[#008B8B] transition-colors leading-tight ${spaceGrotesk.className}`}>
                         {item.product?.name}
                       </Link>
                       {(item.variantTitle || item.variantSku) && !['DEFAULT', 'DEFAULT TITLE'].includes((item.variantTitle || item.variantSku || '').toUpperCase()) && (
@@ -401,7 +401,7 @@ export function CartClient() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="flex justify-between items-center text-[#5984c4] overflow-hidden"
+                    className="flex justify-between items-center text-[#008B8B] overflow-hidden"
                   >
                     <span className="font-medium flex items-center gap-2">
                       Discount
@@ -467,7 +467,7 @@ export function CartClient() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className={`text-sm font-medium mt-1 ${couponState === 'error' ? 'text-red-500' : 'text-[#5984c4]'}`}
+                    className={`text-sm font-medium mt-1 ${couponState === 'error' ? 'text-red-500' : 'text-[#008B8B]'}`}
                   >
                     {couponMessage}
                   </motion.div>
@@ -511,7 +511,7 @@ export function CartClient() {
       {relatedProducts.length > 0 && (
         <div className="mt-32 pt-24 border-t border-slate-100">
           <div className="mb-12">
-            <span className="text-[#5984c4] text-[11px] uppercase tracking-[0.2em] font-bold mb-3 block">Complete Your Research</span>
+            <span className="text-[#008B8B] text-[11px] uppercase tracking-[0.2em] font-bold mb-3 block">Complete Your Research</span>
             <h2 className={`text-4xl md:text-5xl font-bold tracking-tight text-ink ${spaceGrotesk.className}`}>
               Also Considered.
             </h2>
@@ -530,3 +530,4 @@ export function CartClient() {
     </Container>
   )
 }
+

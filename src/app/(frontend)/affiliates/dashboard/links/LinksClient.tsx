@@ -126,9 +126,9 @@ export function LinksClient({ referralLink, couponCode: initialCouponCode, custo
         <div className="absolute -right-12 -top-12 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl" />
         
         <div className="flex flex-col gap-1 relative z-10">
-          <h3 className="text-lg font-bold text-[#5984c4]">Your Custom Coupon Code</h3>
+          <h3 className="text-lg font-bold text-[#008B8B]">Your Custom Coupon Code</h3>
           <p className="text-sm text-blue-900/60">
-            Share this coupon code with your audience. They get <strong className="text-[#5984c4]">{customerDiscount}% off</strong>, and you earn <strong className="text-[#5984c4]">{commissionRate}% commission</strong>.
+            Share this coupon code with your audience. They get <strong className="text-[#008B8B]">{customerDiscount}% off</strong>, and you earn <strong className="text-[#008B8B]">{commissionRate}% commission</strong>.
           </p>
         </div>
         
@@ -148,7 +148,7 @@ export function LinksClient({ referralLink, couponCode: initialCouponCode, custo
                   onChange={(e) => setNewCode(e.target.value.toUpperCase())}
                   placeholder="e.g. JOHN20"
                   maxLength={20}
-                  className="w-full bg-white rounded-xl px-4 py-3.5 text-lg font-mono font-bold text-[#5984c4] border-2 border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all shadow-inner"
+                  className="w-full bg-white rounded-xl px-4 py-3.5 text-lg font-mono font-bold text-[#008B8B] border-2 border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all shadow-inner"
                   autoFocus
                 />
                 {error && <span className="text-xs font-medium text-red-500 bg-red-50 px-3 py-1.5 rounded-lg w-fit">{error}</span>}
@@ -159,7 +159,7 @@ export function LinksClient({ referralLink, couponCode: initialCouponCode, custo
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="flex-1 bg-white rounded-xl px-4 py-3.5 text-lg font-mono font-bold text-[#5984c4] border border-blue-100/50 flex items-center justify-between shadow-sm"
+                className="flex-1 bg-white rounded-xl px-4 py-3.5 text-lg font-mono font-bold text-[#008B8B] border border-blue-100/50 flex items-center justify-between shadow-sm"
               >
                 <span>{couponCode}</span>
                 <button 
@@ -193,7 +193,7 @@ export function LinksClient({ referralLink, couponCode: initialCouponCode, custo
                 <Button 
                   onClick={handleSaveCode}
                   disabled={isSaving}
-                  className="flex-1 sm:w-32 rounded-xl h-full px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#5984c4] hover:bg-blue-600 text-white border-none shadow-md"
+                  className="flex-1 sm:w-32 rounded-xl h-full px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#008B8B] hover:bg-blue-600 text-white border-none shadow-md"
                 >
                   {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
                   {isSaving ? 'Saving' : 'Save'}
@@ -209,7 +209,7 @@ export function LinksClient({ referralLink, couponCode: initialCouponCode, custo
               >
                 <Button 
                   onClick={() => handleCopy(couponCode, 'code')}
-                  className="w-full rounded-xl h-full px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#5984c4] hover:bg-blue-600 text-white border-none shadow-md"
+                  className="w-full rounded-xl h-full px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#008B8B] hover:bg-blue-600 text-white border-none shadow-md"
                 >
                   {copiedCode ? <Check size={16} /> : <Copy size={16} />}
                   {copiedCode ? 'Copied!' : 'Copy Code'}
@@ -223,3 +223,4 @@ export function LinksClient({ referralLink, couponCode: initialCouponCode, custo
     </motion.div>
   )
 }
+

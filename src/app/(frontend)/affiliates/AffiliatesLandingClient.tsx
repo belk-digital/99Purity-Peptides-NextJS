@@ -102,7 +102,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-label-md uppercase tracking-widest text-[#5984c4] mb-4 sm:mb-8 font-bold"
+            className="text-label-md uppercase tracking-widest text-[#008B8B] mb-4 sm:mb-8 font-bold"
           >
             Affiliate Program
           </motion.h2>
@@ -128,7 +128,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                  className="object-cover object-center"
                  priority
                />
-               <div className="absolute inset-0 bg-[#5984c4]/30 group-hover:bg-[#5984c4]/10 transition-colors duration-700" />
+               <div className="absolute inset-0 bg-[#008B8B]/30 group-hover:bg-[#008B8B]/10 transition-colors duration-700" />
              </motion.div>
              
              {/* Center Overlay Text inside Window */}
@@ -168,23 +168,23 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
         <div className="max-w-[1280px] mx-auto px-4 md:px-6">
           <StaggerChildren className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center divide-x divide-gray-200">
             <motion.div variants={staggerItemVariants} className="px-4">
-              <span className="block text-3xl font-black text-[#5984c4] mb-2">15%</span>
+              <span className="block text-3xl font-black text-[#008B8B] mb-2">15%</span>
               <p className="text-sm text-gray-500">Commission on sales</p>
             </motion.div>
             <motion.div variants={staggerItemVariants} className="px-4 border-l-0 md:border-l border-gray-200">
-              <span className="block text-3xl font-black text-[#5984c4] mb-2">15%</span>
+              <span className="block text-3xl font-black text-[#008B8B] mb-2">15%</span>
               <p className="text-sm text-gray-500">Customer discount</p>
             </motion.div>
             <motion.div variants={staggerItemVariants} className="px-4 border-l-0 md:border-l border-gray-200">
-              <span className="block text-3xl font-black text-[#5984c4] mb-2">7 Days</span>
+              <span className="block text-3xl font-black text-[#008B8B] mb-2">7 Days</span>
               <p className="text-sm text-gray-500">Cookie duration</p>
             </motion.div>
             <motion.div variants={staggerItemVariants} className="px-4 border-l-0 md:border-l border-gray-200">
-              <span className="block text-3xl font-black text-[#5984c4] mb-2">Real-time</span>
+              <span className="block text-3xl font-black text-[#008B8B] mb-2">Real-time</span>
               <p className="text-sm text-gray-500">Commission tracking</p>
             </motion.div>
             <motion.div variants={staggerItemVariants} className="px-4 col-span-2 md:col-span-1 border-l-0 md:border-l border-gray-200 pt-6 md:pt-0">
-              <span className="block text-3xl font-black text-[#5984c4] mb-2">Monthly</span>
+              <span className="block text-3xl font-black text-[#008B8B] mb-2">Monthly</span>
               <p className="text-sm text-gray-500">Reliable payouts</p>
             </motion.div>
           </StaggerChildren>
@@ -203,25 +203,25 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
             
             <StaggerChildren staggerDelay={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
               <motion.div variants={staggerItemVariants} className="flex flex-col items-center text-center group">
-                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#5984c4] group-hover:text-white transition-all duration-300">1</div>
+                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#008B8B] group-hover:text-white transition-all duration-300">1</div>
                 <h3 className="text-xl font-bold text-ink mb-3 tracking-tight">Join the Program</h3>
                 <p className="text-gray-500 text-sm font-light leading-relaxed">Complete our simple registration form. Approval is typically instant. No technical setup required.</p>
               </motion.div>
               
               <motion.div variants={staggerItemVariants} className="flex flex-col items-center text-center group">
-                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#5984c4] group-hover:text-white transition-all duration-300">2</div>
+                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#008B8B] group-hover:text-white transition-all duration-300">2</div>
                 <h3 className="text-xl font-bold text-ink mb-3 tracking-tight">Get Your Links</h3>
                 <p className="text-gray-500 text-sm font-light leading-relaxed">Access your dashboard to generate custom referral links and personalized discount codes.</p>
               </motion.div>
               
               <motion.div variants={staggerItemVariants} className="flex flex-col items-center text-center group">
-                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#5984c4] group-hover:text-white transition-all duration-300">3</div>
+                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#008B8B] group-hover:text-white transition-all duration-300">3</div>
                 <h3 className="text-xl font-bold text-ink mb-3 tracking-tight">Share Your Links</h3>
                 <p className="text-gray-500 text-sm font-light leading-relaxed">Promote through your website, blog, email list, social media, or scientific community platforms.</p>
               </motion.div>
 
               <motion.div variants={staggerItemVariants} className="flex flex-col items-center text-center group">
-                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#5984c4] group-hover:text-white transition-all duration-300">4</div>
+                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl font-black text-ink mb-6 group-hover:scale-110 group-hover:bg-[#008B8B] group-hover:text-white transition-all duration-300">4</div>
                 <h3 className="text-xl font-bold text-ink mb-3 tracking-tight">Earn Commissions</h3>
                 <p className="text-gray-500 text-sm font-light leading-relaxed">Earn 15% commission on every purchase. Track clicks, conversions, and payouts in real-time.</p>
               </motion.div>
@@ -243,7 +243,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {/* Commission Example */}
                 <div className="bg-white p-6 rounded-2xl border border-gray-100 flex flex-col h-full shadow-sm">
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-[#5984c4] mb-6">Commission Example</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-[#008B8B] mb-6">Commission Example</h3>
                   <div className="space-y-4 text-sm flex-1">
                     <div className="flex justify-between items-center border-b border-gray-100 pb-2">
                       <span className="text-gray-500">Customer Order Value</span>
@@ -259,14 +259,14 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                     </div>
                     <div className="flex justify-between items-center pt-2">
                       <span className="text-ink font-bold max-w-[120px]">Your Commission (15% of $200)</span>
-                      <span className="font-black text-2xl text-[#5984c4]">$30</span>
+                      <span className="font-black text-2xl text-[#008B8B]">$30</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Realistic Monthly Earnings */}
                 <div className="bg-white p-6 rounded-2xl border border-gray-100 flex flex-col h-full shadow-sm">
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-[#5984c4] mb-6">Realistic Earnings</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-[#008B8B] mb-6">Realistic Earnings</h3>
                   <div className="space-y-4 flex-1">
                     <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
                       <div>
@@ -282,12 +282,12 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                       </div>
                       <div className="font-black text-lg text-green-600">$562.5</div>
                     </div>
-                    <div className="flex justify-between items-center bg-blue-50 p-3 rounded-lg border border-[#5984c4]/30">
+                    <div className="flex justify-between items-center bg-blue-50 p-3 rounded-lg border border-[#008B8B]/30">
                       <div>
                         <div className="font-bold text-ink text-sm">50 referrals/mo</div>
-                        <div className="text-[10px] text-[#5984c4]/70 uppercase tracking-wider">@ $150 avg order</div>
+                        <div className="text-[10px] text-[#008B8B]/70 uppercase tracking-wider">@ $150 avg order</div>
                       </div>
-                      <div className="font-black text-lg text-[#5984c4]">$1,125</div>
+                      <div className="font-black text-lg text-[#008B8B]">$1,125</div>
                     </div>
                   </div>
                 </div>
@@ -299,25 +299,25 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
           <div className="lg:col-span-5 grid grid-cols-2 gap-6">
             <FadeUp delay={0.1} className="h-full">
               <div className="bg-white rounded-[2rem] p-6 h-full shadow-sm flex flex-col justify-center group hover:-translate-y-1 transition-transform duration-300 border border-gray-100">
-                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#5984c4] transition-colors">7</span>
+                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#008B8B] transition-colors">7</span>
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Day Cookie Duration</span>
               </div>
             </FadeUp>
             <FadeUp delay={0.2} className="h-full">
               <div className="bg-white rounded-[2rem] p-6 h-full shadow-sm flex flex-col justify-center group hover:-translate-y-1 transition-transform duration-300 border border-gray-100">
-                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#5984c4] transition-colors">$30</span>
+                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#008B8B] transition-colors">$30</span>
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Payout Threshold</span>
               </div>
             </FadeUp>
             <FadeUp delay={0.3} className="h-full">
               <div className="bg-white rounded-[2rem] p-6 h-full shadow-sm flex flex-col justify-center group hover:-translate-y-1 transition-transform duration-300 border border-gray-100">
-                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#5984c4] transition-colors">14</span>
+                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#008B8B] transition-colors">14</span>
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Day Protection</span>
               </div>
             </FadeUp>
             <FadeUp delay={0.4} className="h-full">
               <div className="bg-white rounded-[2rem] p-6 h-full shadow-sm flex flex-col justify-center group hover:-translate-y-1 transition-transform duration-300 border border-gray-100">
-                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#5984c4] transition-colors">Dual</span>
+                <span className="block text-4xl md:text-5xl font-black text-ink mb-3 tracking-tighter group-hover:text-[#008B8B] transition-colors">Dual</span>
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Tracking System</span>
               </div>
             </FadeUp>
@@ -337,7 +337,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
               <div className="space-y-6 mt-8">
                 <div className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                    <Clock className="w-6 h-6 text-[#5984c4]" />
+                    <Clock className="w-6 h-6 text-[#008B8B]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-ink">7-Day Cookie Duration</h4>
@@ -346,7 +346,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                 </div>
                 <div className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                    <LinkIcon className="w-6 h-6 text-[#5984c4]" />
+                    <LinkIcon className="w-6 h-6 text-[#008B8B]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-ink">Dual Attribution System</h4>
@@ -355,7 +355,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                 </div>
                 <div className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                    <Activity className="w-6 h-6 text-[#5984c4]" />
+                    <Activity className="w-6 h-6 text-[#008B8B]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-ink">Real-Time Commission Tracking</h4>
@@ -364,7 +364,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                 </div>
                 <div className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                    <DollarSign className="w-6 h-6 text-[#5984c4]" />
+                    <DollarSign className="w-6 h-6 text-[#008B8B]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-ink">Flexible Payment Options</h4>
@@ -382,7 +382,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
               
               <div className="space-y-8">
                 <div>
-                  <h4 className="font-bold text-ink flex items-center gap-2 mb-3"><BarChart3 className="w-5 h-5 text-[#5984c4]" /> Performance Analytics</h4>
+                  <h4 className="font-bold text-ink flex items-center gap-2 mb-3"><BarChart3 className="w-5 h-5 text-[#008B8B]" /> Performance Analytics</h4>
                   <ul className="text-sm text-gray-500 space-y-1.5 list-disc pl-8">
                     <li>Real-time traffic and conversion data</li>
                     <li>Click-through rates by link</li>
@@ -391,7 +391,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-bold text-ink flex items-center gap-2 mb-3"><LinkIcon className="w-5 h-5 text-[#5984c4]" /> Link & Discount Management</h4>
+                  <h4 className="font-bold text-ink flex items-center gap-2 mb-3"><LinkIcon className="w-5 h-5 text-[#008B8B]" /> Link & Discount Management</h4>
                   <ul className="text-sm text-gray-500 space-y-1.5 list-disc pl-8">
                     <li>Referral link generator for any product or page</li>
                     <li>Create unlimited custom links & track performance</li>
@@ -400,7 +400,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-bold text-ink flex items-center gap-2 mb-3"><FileText className="w-5 h-5 text-[#5984c4]" /> Commission Reports & Resources</h4>
+                  <h4 className="font-bold text-ink flex items-center gap-2 mb-3"><FileText className="w-5 h-5 text-[#008B8B]" /> Commission Reports & Resources</h4>
                   <ul className="text-sm text-gray-500 space-y-1.5 list-disc pl-8">
                     <li>Detailed transaction history (pending vs. approved)</li>
                     <li>Monthly earnings summaries & downloadable reports</li>
@@ -433,7 +433,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
               { title: "Dedicated Support", desc: "Our affiliate management team provides assistance with strategy, compliance questions, and technical support. You're never alone." }
             ].map((feature, i) => (
               <motion.div key={i} variants={staggerItemVariants} className="p-8 rounded-2xl bg-[#f3f4f6] border border-gray-100 hover:shadow-lg transition-all duration-300">
-                <CheckCircle2 className="w-8 h-8 text-[#5984c4] mb-4" />
+                <CheckCircle2 className="w-8 h-8 text-[#008B8B] mb-4" />
                 <h4 className="font-bold text-ink mb-2 text-lg">{feature.title}</h4>
                 <p className="text-sm text-gray-500 leading-relaxed">{feature.desc}</p>
               </motion.div>
@@ -492,14 +492,14 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
             {userStatus === 'affiliate_approved' ? (
               <div className="text-center py-12">
                 <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8">
-                  <Activity className="w-12 h-12 text-[#5984c4]" strokeWidth={1.5} />
+                  <Activity className="w-12 h-12 text-[#008B8B]" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-3xl font-bold text-ink mb-4 tracking-tight">You are an active partner!</h3>
                 <p className="text-lg text-gray-500 max-w-md mx-auto leading-relaxed mb-10">
                   Your affiliate account is active and ready. Access your dashboard to view your links, stats, and payouts.
                 </p>
                 <Link href="/affiliates/dashboard">
-                  <Button size="lg" className="h-14 px-10 rounded-full bg-[#5984c4] text-white hover:bg-blue-600 hover:shadow-lg transition-all duration-300 font-bold tracking-wider uppercase text-sm border-none">
+                  <Button size="lg" className="h-14 px-10 rounded-full bg-[#008B8B] text-white hover:bg-blue-600 hover:shadow-lg transition-all duration-300 font-bold tracking-wider uppercase text-sm border-none">
                     Go to Dashboard
                   </Button>
                 </Link>
@@ -538,12 +538,12 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="displayName" className="text-sm font-semibold text-ink ml-1">Display Name <span className="text-[#5984c4]">*</span></Label>
-                      <Input id="displayName" name="displayName" required placeholder="John Doe or Channel Name" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Label htmlFor="displayName" className="text-sm font-semibold text-ink ml-1">Display Name <span className="text-[#008B8B]">*</span></Label>
+                      <Input id="displayName" name="displayName" required placeholder="John Doe or Channel Name" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="websiteUrl" className="text-sm font-semibold text-ink ml-1">Website URL</Label>
-                      <Input id="websiteUrl" name="websiteUrl" type="url" placeholder="https://example.com" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Input id="websiteUrl" name="websiteUrl" type="url" placeholder="https://example.com" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                   </div>
                 </div>
@@ -554,9 +554,9 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="platform" className="text-sm font-semibold text-ink ml-1">Platform <span className="text-[#5984c4]">*</span></Label>
+                      <Label htmlFor="platform" className="text-sm font-semibold text-ink ml-1">Platform <span className="text-[#008B8B]">*</span></Label>
                       <Select defaultValue="youtube" required name="platform">
-                        <SelectTrigger id="platform" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4">
+                        <SelectTrigger id="platform" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4">
                           <SelectValue placeholder="Select platform" />
                         </SelectTrigger>
                         <SelectContent className="rounded-xl">
@@ -569,8 +569,8 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="socialUrl" className="text-sm font-semibold text-ink ml-1">Profile URL <span className="text-[#5984c4]">*</span></Label>
-                      <Input id="socialUrl" name="socialUrl" type="url" required placeholder="https://youtube.com/c/..." className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Label htmlFor="socialUrl" className="text-sm font-semibold text-ink ml-1">Profile URL <span className="text-[#008B8B]">*</span></Label>
+                      <Input id="socialUrl" name="socialUrl" type="url" required placeholder="https://youtube.com/c/..." className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                   </div>
                 </div>
@@ -581,9 +581,9 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="reach" className="text-sm font-semibold text-ink ml-1">Estimated Monthly Reach <span className="text-[#5984c4]">*</span></Label>
+                      <Label htmlFor="reach" className="text-sm font-semibold text-ink ml-1">Estimated Monthly Reach <span className="text-[#008B8B]">*</span></Label>
                       <Select defaultValue="1k-10k" required name="reach">
-                        <SelectTrigger id="reach" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4">
+                        <SelectTrigger id="reach" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4">
                           <SelectValue placeholder="Select reach" />
                         </SelectTrigger>
                         <SelectContent className="rounded-xl">
@@ -596,18 +596,18 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="niche" className="text-sm font-semibold text-ink ml-1">Your Niche</Label>
-                      <Input id="niche" name="niche" placeholder="e.g. Biohacking, Fitness, Longevity" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Input id="niche" name="niche" placeholder="e.g. Biohacking, Fitness, Longevity" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="methods" className="text-sm font-semibold text-ink ml-1">Promotion Methods <span className="text-[#5984c4]">*</span></Label>
+                    <Label htmlFor="methods" className="text-sm font-semibold text-ink ml-1">Promotion Methods <span className="text-[#008B8B]">*</span></Label>
                     <Textarea 
                       id="methods" 
                       name="methods"
                       required 
                       placeholder="How do you plan to promote our products?" 
-                      className="min-h-[120px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] p-4 resize-none"
+                      className="min-h-[120px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] p-4 resize-none"
                     />
                   </div>
                 </div>
@@ -661,7 +661,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                   Become an Affiliate Now
                 </Button>
               </Link>
-              <p className="text-sm text-gray-400">Questions? Contact us at <a href="mailto:affiliates@thelooksmaxxinglab.com" className="text-[#5984c4] hover:underline">affiliates@thelooksmaxxinglab.com</a></p>
+              <p className="text-sm text-gray-400">Questions? Contact us at <a href="mailto:affiliates@thelooksmaxxinglab.com" className="text-[#008B8B] hover:underline">affiliates@thelooksmaxxinglab.com</a></p>
             </div>
           </div>
         </FadeUp>
@@ -676,3 +676,4 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
     </main>
   )
 }
+

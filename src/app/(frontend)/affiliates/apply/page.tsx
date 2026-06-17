@@ -74,12 +74,12 @@ export default function AffiliateApplyPage() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="displayName" className="text-sm font-semibold text-ink ml-1">Display Name <span className="text-[#5984c4]">*</span></Label>
-                      <Input id="displayName" required placeholder="John Doe or Channel Name" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Label htmlFor="displayName" className="text-sm font-semibold text-ink ml-1">Display Name <span className="text-[#008B8B]">*</span></Label>
+                      <Input id="displayName" required placeholder="John Doe or Channel Name" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="websiteUrl" className="text-sm font-semibold text-ink ml-1">Website URL</Label>
-                      <Input id="websiteUrl" type="url" placeholder="https://example.com" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Input id="websiteUrl" type="url" placeholder="https://example.com" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                   </div>
                 </div>
@@ -90,9 +90,9 @@ export default function AffiliateApplyPage() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="platform" className="text-sm font-semibold text-ink ml-1">Platform <span className="text-[#5984c4]">*</span></Label>
+                      <Label htmlFor="platform" className="text-sm font-semibold text-ink ml-1">Platform <span className="text-[#008B8B]">*</span></Label>
                       <Select defaultValue="youtube" required>
-                        <SelectTrigger id="platform" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4">
+                        <SelectTrigger id="platform" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4">
                           <SelectValue placeholder="Select platform" />
                         </SelectTrigger>
                         <SelectContent className="rounded-xl">
@@ -105,8 +105,8 @@ export default function AffiliateApplyPage() {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="socialUrl" className="text-sm font-semibold text-ink ml-1">Profile URL <span className="text-[#5984c4]">*</span></Label>
-                      <Input id="socialUrl" type="url" required placeholder="https://youtube.com/c/..." className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Label htmlFor="socialUrl" className="text-sm font-semibold text-ink ml-1">Profile URL <span className="text-[#008B8B]">*</span></Label>
+                      <Input id="socialUrl" type="url" required placeholder="https://youtube.com/c/..." className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                   </div>
                 </div>
@@ -117,9 +117,9 @@ export default function AffiliateApplyPage() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="reach" className="text-sm font-semibold text-ink ml-1">Estimated Monthly Reach <span className="text-[#5984c4]">*</span></Label>
+                      <Label htmlFor="reach" className="text-sm font-semibold text-ink ml-1">Estimated Monthly Reach <span className="text-[#008B8B]">*</span></Label>
                       <Select defaultValue="1k-10k" required>
-                        <SelectTrigger id="reach" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4">
+                        <SelectTrigger id="reach" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4">
                           <SelectValue placeholder="Select reach" />
                         </SelectTrigger>
                         <SelectContent className="rounded-xl">
@@ -132,17 +132,17 @@ export default function AffiliateApplyPage() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="niche" className="text-sm font-semibold text-ink ml-1">Your Niche</Label>
-                      <Input id="niche" placeholder="e.g. Biohacking, Fitness, Longevity" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] px-4" />
+                      <Input id="niche" placeholder="e.g. Biohacking, Fitness, Longevity" className="h-14 rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] px-4" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="methods" className="text-sm font-semibold text-ink ml-1">Promotion Methods <span className="text-[#5984c4]">*</span></Label>
+                    <Label htmlFor="methods" className="text-sm font-semibold text-ink ml-1">Promotion Methods <span className="text-[#008B8B]">*</span></Label>
                     <Textarea 
                       id="methods" 
                       required 
                       placeholder="How do you plan to promote our products?" 
-                      className="min-h-[120px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] p-4 resize-none"
+                      className="min-h-[120px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] p-4 resize-none"
                     />
                   </div>
 
@@ -151,7 +151,7 @@ export default function AffiliateApplyPage() {
                     <Textarea 
                       id="whyJoin" 
                       placeholder="Tell us a little bit about yourself and why our lab is a good fit." 
-                      className="min-h-[120px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#5984c4] p-4 resize-none"
+                      className="min-h-[120px] rounded-xl bg-gray-50 border-transparent focus:ring-1 focus:ring-[#008B8B] p-4 resize-none"
                     />
                   </div>
                 </div>
@@ -184,3 +184,4 @@ export default function AffiliateApplyPage() {
     </main>
   )
 }
+

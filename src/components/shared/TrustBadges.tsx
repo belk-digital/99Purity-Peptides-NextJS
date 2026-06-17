@@ -53,7 +53,7 @@ export function TrustBadges() {
                 loop 
                 muted 
                 playsInline 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover hue-rotate-[180deg]"
               >
                 <source src="https://res.cloudinary.com/denskvdyt/video/upload/v1781140181/animate_this_make_it_looped_no_pzkjaz.mp4" type="video/mp4" />
               </video>
