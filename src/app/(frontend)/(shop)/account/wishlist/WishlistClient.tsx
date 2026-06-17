@@ -85,7 +85,7 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
                       className="w-full h-full relative"
                     >
                       <Image
-                        src={product.image}
+                        src={typeof product.image === 'string' ? product.image : product.image?.url || '/99 Images/placeholder.webp'}
                         alt={product.name}
                         fill
                         className="object-cover"
