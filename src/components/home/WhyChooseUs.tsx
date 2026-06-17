@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { ArrowRight, ShieldCheck, Award, FileCheck } from 'lucide-react'
 import Link from 'next/link'
 
@@ -30,7 +30,7 @@ const CHOOSE_US_DATA = [
 ]
 
 export function WhyChooseUs() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -38,7 +38,7 @@ export function WhyChooseUs() {
     }
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
     visible: { 
       opacity: 1, 

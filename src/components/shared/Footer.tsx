@@ -181,7 +181,7 @@ const FooterContent = () => {
 
 export function Footer() {
   const [footerHeight, setFooterHeight] = useState(0)
-  const footerRef = useRef<HTMLElement>(null)
+  const footerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!footerRef.current) return

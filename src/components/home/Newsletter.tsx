@@ -54,7 +54,7 @@ export function Newsletter() {
               required
               className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
             />
-            <Button type="submit" variant="default" size="md" className="shrink-0 w-full md:w-auto bg-primary text-black hover:bg-white hover:text-black font-bold tracking-widest uppercase text-xs">
+            <Button type="submit" variant="primary" size="md" className="shrink-0 w-full md:w-auto bg-primary text-black hover:bg-white hover:text-black font-bold tracking-widest uppercase text-xs">
               SUBSCRIBE
             </Button>
           </form>
