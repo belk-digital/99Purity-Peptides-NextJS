@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { ArrowRight, Microscope, Activity, FileText, FlaskConical } from 'lucide-react'
 import Link from 'next/link'
 
@@ -29,7 +29,7 @@ const ADVANTAGES = [
 ]
 
 export function WhatSetsUsApart() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -37,7 +37,7 @@ export function WhatSetsUsApart() {
     }
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
     visible: { 
       opacity: 1, 
