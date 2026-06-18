@@ -11,6 +11,7 @@ import { useCartStore } from '@/lib/cart/store'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import dynamic from 'next/dynamic'
 import { SearchOverlay } from './SearchOverlay'
+import GlassSurface from '@/components/ui/GlassSurface'
 
 const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod => mod.CartDrawer), { ssr: false })
 
@@ -134,7 +135,6 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   const textHoverColor = 'hover:text-primary transition-colors'
   const iconColor = '#ffffff'
   const buttonBorder = 'border-white/20 hover:bg-white/10'
-
   const headerClasses = `flex items-center justify-between pointer-events-auto transition-all duration-300 w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto mt-4 px-6 py-3 bg-black/40 backdrop-blur-xl border border-white/10 rounded-full text-white shadow-2xl`
 
   return (
@@ -176,114 +176,131 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
             </div>
           )}
 
-          <header className={headerClasses}>
-          {/* Left: Logo */}
-          <div className="flex-1 xl:flex-none flex justify-start">
-            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2">
-              <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-12 sm:h-16 w-auto object-contain" />
-            </Link>
-          </div>
-
-          {/* Center: Nav */}
-          <nav className="hidden xl:flex items-center justify-center gap-4 xl:gap-8 flex-1 h-full">
-            {(() => {
-              const getNavLinkClass = (path: string) => {
-                const targetPath = path.replace('/en', '');
-                const isActive = targetPath === '' ? pathname === '/en' || pathname === '/' : pathname.includes(targetPath);
-                return `text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full flex items-center py-2 ${
-                  isActive 
-                    ? `font-bold text-primary opacity-100` 
-                    : `font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`
-                }`;
-              };
-
-              return (
-                <>
-                  <Link href="/shop" className={getNavLinkClass('/shop')}>
-                    SHOP
+          <div className="w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto mt-4 relative pointer-events-auto shadow-2xl rounded-full">
+            <GlassSurface
+              width="100%"
+              height="auto"
+              borderRadius={999}
+              brightness={40}
+              opacity={4}
+              blur={10}
+              displace={6}
+              distortionScale={-80}
+              redOffset={2}
+              greenOffset={5}
+              blueOffset={10}
+              className="w-full !bg-black/20 border border-white/10"
+            >
+              <div className="flex items-center justify-between transition-all duration-300 px-6 py-2 w-full text-white">
+                {/* Left: Logo */}
+                <div className="flex-1 xl:flex-none flex justify-start">
+                  <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2">
+                    <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-12 sm:h-16 w-auto object-contain" />
                   </Link>
-                  
-                  <div 
-                    className="h-full flex items-center cursor-pointer"
-                    onMouseEnter={() => setIsMegaMenuOpen(true)}
-                    onMouseLeave={() => setIsMegaMenuOpen(false)}
+                </div>
+
+                {/* Center: Nav */}
+                <nav className="hidden xl:flex items-center justify-center gap-4 xl:gap-8 flex-1 h-full">
+                  {(() => {
+                    const getNavLinkClass = (path: string) => {
+                      const targetPath = path.replace('/en', '');
+                      const isActive = targetPath === '' ? pathname === '/en' || pathname === '/' : pathname.includes(targetPath);
+                      return `text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full flex items-center py-2 ${
+                        isActive 
+                          ? `font-bold text-primary opacity-100` 
+                          : `font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`
+                      }`;
+                    };
+
+                    return (
+                      <>
+                        <Link href="/shop" className={getNavLinkClass('/shop')}>
+                          SHOP
+                        </Link>
+                        
+                        <div 
+                          className="h-full flex items-center cursor-pointer"
+                          onMouseEnter={() => setIsMegaMenuOpen(true)}
+                          onMouseLeave={() => setIsMegaMenuOpen(false)}
+                        >
+                          <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full py-2 font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
+                            CATEGORIES
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
+                          </Link>
+                        </div>
+                        
+                        <Link href="/peptide-calculator" className={getNavLinkClass('/peptide-calculator')}>
+                          CALCULATOR
+                        </Link>
+                        <Link href="/about" className={getNavLinkClass('/about')}>
+                          ABOUT
+                        </Link>
+                        <Link href="/journal" className={getNavLinkClass('/journal')}>
+                          JOURNAL
+                        </Link>
+                        <Link href="/faq" className={getNavLinkClass('/faq')}>
+                          FAQ
+                        </Link>
+                        <Link href="/contact" className={getNavLinkClass('/contact')}>
+                          CONTACT
+                        </Link>
+                        <Link href="/affiliates" className={getNavLinkClass('/affiliates')}>
+                          AFFILIATES
+                        </Link>
+                      </>
+                    )
+                  })()}
+                </nav>
+
+                {/* Right: Search, SHOP NOW Button & Cart */}
+                <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-5 flex-1 xl:flex-none text-sm relative z-20">
+                  {/* Search Button */}
+                  <button 
+                    onClick={() => setIsSearchOpen(true)}
+                    className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}
+                    aria-label="Open search"
                   >
-                    <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full py-2 font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
-                      CATEGORIES
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
-                    </Link>
+                    <Search size={18} strokeWidth={1.5} />
+                  </button>
+
+                  <button onClick={cartStore.openCart} className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}>
+                    <ShoppingBag size={18} strokeWidth={1.5} />
+                    <AnimatePresence>
+                      {activeCartCount > 0 && (
+                        <motion.span 
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{ scale: 0 }}
+                          className={`absolute -top-1 -right-1 text-[9px] font-bold w-[14px] h-[14px] flex items-center justify-center rounded-full bg-primary text-white`}
+                        >
+                          {activeCartCount}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                  
+                  <div className="flex items-center justify-center">
+                    {mounted ? (
+                      isLoggedIn ? (
+                        <Link href="/account" className={`p-1.5 transition-colors flex items-center justify-center ${textColor} ${textHoverColor}`}>
+                          <User size={18} strokeWidth={1.5} />
+                        </Link>
+                      ) : null
+                    ) : null}
                   </div>
                   
-                  <Link href="/peptide-calculator" className={getNavLinkClass('/peptide-calculator')}>
-                    CALCULATOR
+                  <Link href="/shop" className={`hidden md:inline-flex border rounded-full px-8 py-3 text-[13px] font-semibold tracking-[0.2em] uppercase transition-all ${textColor} ${buttonBorder} xl:-mr-2`}>
+                    SHOP NOW
                   </Link>
-                  <Link href="/about" className={getNavLinkClass('/about')}>
-                    ABOUT
-                  </Link>
-                  <Link href="/journal" className={getNavLinkClass('/journal')}>
-                    JOURNAL
-                  </Link>
-                  <Link href="/faq" className={getNavLinkClass('/faq')}>
-                    FAQ
-                  </Link>
-                  <Link href="/contact" className={getNavLinkClass('/contact')}>
-                    CONTACT
-                  </Link>
-                  <Link href="/affiliates" className={getNavLinkClass('/affiliates')}>
-                    AFFILIATES
-                  </Link>
-                </>
-              )
-            })()}
-          </nav>
 
-          {/* Right: Search, SHOP NOW Button & Cart */}
-          <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-5 flex-1 xl:flex-none text-sm">
-            {/* Search Button */}
-            <button 
-              onClick={() => setIsSearchOpen(true)}
-              className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}
-              aria-label="Open search"
-            >
-              <Search size={18} strokeWidth={1.5} />
-            </button>
-
-            <button onClick={cartStore.openCart} className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}>
-              <ShoppingBag size={18} strokeWidth={1.5} />
-              <AnimatePresence>
-                {activeCartCount > 0 && (
-                  <motion.span 
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className={`absolute -top-1 -right-1 text-[9px] font-bold w-[14px] h-[14px] flex items-center justify-center rounded-full bg-primary text-white`}
-                  >
-                    {activeCartCount}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </button>
-            
-            <div className="flex items-center justify-center">
-              {mounted ? (
-                isLoggedIn ? (
-                  <Link href="/account" className={`p-1.5 transition-colors flex items-center justify-center ${textColor} ${textHoverColor}`}>
-                    <User size={18} strokeWidth={1.5} />
-                  </Link>
-                ) : null
-              ) : null}
-            </div>
-            
-            <Link href="/shop" className={`hidden md:inline-flex border rounded-full px-8 py-4 text-[13px] font-semibold tracking-[0.2em] uppercase transition-all ${textColor} ${buttonBorder} xl:-mr-2`}>
-              SHOP NOW
-            </Link>
-
-            {/* Mobile Hamburger */}
-            <button onClick={() => setMobileMenuOpen(true)} className={`xl:hidden p-1 -mr-1 transition-colors ${textColor} hover:text-primary`}>
-              <Menu size={20} strokeWidth={1.5} />
-            </button>
+                  {/* Mobile Hamburger */}
+                  <button onClick={() => setMobileMenuOpen(true)} className={`xl:hidden p-1 -mr-1 transition-colors ${textColor} hover:text-primary`}>
+                    <Menu size={20} strokeWidth={1.5} />
+                  </button>
+                </div>
+              </div>
+            </GlassSurface>
           </div>
-          </header>
         </motion.div>
 
       </div>

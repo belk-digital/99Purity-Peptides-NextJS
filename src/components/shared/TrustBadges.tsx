@@ -5,6 +5,22 @@ import { ArrowRight, ShieldCheck, FlaskConical, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function TrustBadges() {
+  const cardContainerVariants: any = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 } 
+    }
+  };
+
+  const cardVariants: any = {
+    hidden: { opacity: 0, y: 60, rotateX: -15, scale: 0.95, filter: 'blur(10px)' },
+    visible: { 
+      opacity: 1, y: 0, rotateX: 0, scale: 1, filter: 'blur(0px)', 
+      transition: { type: "spring", damping: 20, stiffness: 100 } 
+    }
+  };
+
   return (
     <section className="bg-[#0a0a0a] px-4 md:px-10 py-24 border-t border-white/5 w-full relative z-30">
       <div className="max-w-[88rem] mx-auto">
@@ -17,7 +33,7 @@ export function TrustBadges() {
           className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 md:gap-0"
         >
           <div className="w-full md:w-1/2">
-            <p className="text-primary text-sm tracking-[0.2em] uppercase mb-4 font-bold">The Sparta Standard</p>
+            <p className="text-primary text-sm tracking-[0.2em] uppercase mb-4 font-bold">The 99 Purity Standard</p>
             <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter uppercase mb-0 md:mb-8">
               ENGINEERED FOR <br /> ABSOLUTE PRECISION<span className="text-primary">.</span>
             </h2>
@@ -37,9 +53,19 @@ export function TrustBadges() {
         </motion.div>
 
         {/* Row 2 - Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <motion.div 
+          variants={cardContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
           {/* Card 1 */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-2 bg-black border border-white/5 rounded-2xl p-7 min-h-[350px] flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors">
+          <motion.div 
+            variants={cardVariants}
+            style={{ perspective: 1000 }}
+            className="col-span-1 sm:col-span-2 lg:col-span-2 bg-black border border-white/5 rounded-2xl p-7 min-h-[350px] flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors"
+          >
             {/* Background Video */}
             <div 
               className="absolute inset-y-0 right-0 w-full md:w-1/2 z-0 opacity-60 mix-blend-screen pointer-events-none"
@@ -77,10 +103,14 @@ export function TrustBadges() {
                 We don't rely on manufacturer claims. Every single batch is independently tested by accredited third-party laboratories in the USA to guarantee minimum 99% purity before it ever reaches our inventory.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2 */}
-          <div className="bg-black border border-white/5 rounded-2xl p-7 min-h-[350px] flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors">
+          <motion.div 
+            variants={cardVariants}
+            style={{ perspective: 1000 }}
+            className="bg-black border border-white/5 rounded-2xl p-7 min-h-[350px] flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors"
+          >
             <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-[60px] transition-opacity duration-700 opacity-0 group-hover:opacity-100"></div>
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div>
@@ -95,10 +125,14 @@ export function TrustBadges() {
                 Our peptides are lyophilized (freeze-dried) under vacuum to ensure long-term molecular stability during transit and storage.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 3 */}
-          <div className="bg-black border border-white/5 rounded-2xl p-7 min-h-[350px] flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors">
+          <motion.div 
+            variants={cardVariants}
+            style={{ perspective: 1000 }}
+            className="bg-black border border-white/5 rounded-2xl p-7 min-h-[350px] flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors"
+          >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/5 rounded-full blur-[50px] transition-opacity duration-700 opacity-0 group-hover:opacity-100"></div>
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div>
@@ -113,8 +147,8 @@ export function TrustBadges() {
                 Precision is paramount. We guarantee exact milligram content per vial, completely eliminating the guesswork from your research.
               </p>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

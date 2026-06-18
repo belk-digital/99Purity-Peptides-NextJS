@@ -8,6 +8,15 @@ body {
   min-height: 100%;
 }
 
+/* Hide Native Scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 @layer utilities {
   @keyframes marquee {
     0% { transform: translateX(0); }
@@ -20,6 +29,19 @@ body {
 
   .animate-marquee:hover {
     animation-play-state: paused;
+  }
+
+  @keyframes vibrate {
+    0% { transform: translate(0) rotate(0deg); }
+    20% { transform: translate(-3px, 2px) rotate(-2deg); }
+    40% { transform: translate(-3px, -2px) rotate(2deg); }
+    60% { transform: translate(3px, 2px) rotate(0deg); }
+    80% { transform: translate(3px, -2px) rotate(2deg); }
+    100% { transform: translate(0) rotate(0deg); }
+  }
+
+  .animate-vibrate {
+    animation: vibrate 0.08s linear infinite;
   }
 
   /* Hide scrollbar */

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
@@ -17,7 +17,17 @@ const faqs = [
   { question: "What questions should a research lab ask a peptide vendor?", answer: "Research laboratories should ask peptide vendors about: analytical testing methods used (HPLC, MS specifications), what's included in certificates of analysis, peptide synthesis methodology, storage and handling recommendations, batch-to-batch consistency protocols, documentation provided with shipments, and technical support availability for application-specific guidance. Reputable vendors provide transparent analytical data and research-focused customer service." }
 ];
 
-const FaqItem = ({ faq, index }: { faq: { question: string; answer: string }; index: number }) => {
+const FaqItem = ({ 
+  faq, 
+  index,
+  onHoverStart,
+  onHoverEnd
+}: { 
+  faq: { question: string; answer: string }; 
+  index: number;
+  onHoverStart: () => void;
+  onHoverEnd: () => void;
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const num = (index + 1).toString().padStart(2, '0');
 
@@ -27,9 +37,15 @@ const FaqItem = ({ faq, index }: { faq: { question: string; answer: string }; in
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="border-t border-ink/20 py-8 lg:py-12 group cursor-default transition-colors duration-300 hover:bg-ink/[0.02]"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="border-t border-ink/20 py-8 lg:py-12 group cursor-none transition-colors duration-300 hover:bg-ink/[0.02]"
+      onMouseEnter={() => {
+        setIsHovered(true);
+        onHoverStart();
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        onHoverEnd();
+      }}
     >
       <div className="container mx-auto px-4 md:px-10 max-w-[1600px] flex flex-col lg:flex-row w-full gap-6 lg:gap-8 justify-between items-start">
         
@@ -66,8 +82,42 @@ const FaqItem = ({ faq, index }: { faq: { question: string; answer: string }; in
 };
 
 export function FaqSection() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHoveringFaq, setIsHoveringFaq] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   return (
     <section className="bg-cream w-full py-32 relative z-30 font-sans">
+      
+      {/* Custom Cursor */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
+        animate={{
+          x: mousePosition.x - 50,
+          y: mousePosition.y - 50,
+          scale: isHoveringFaq ? 1 : 0,
+          opacity: isHoveringFaq ? 1 : 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 28,
+          mass: 0.5,
+        }}
+        style={{ width: 100, height: 100 }}
+      >
+        <span className="max-w-[70px] leading-tight text-sm">READ</span>
+      </motion.div>
+
       <div className="container mx-auto px-4 md:px-10 max-w-[1600px] mb-24 md:mb-32">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full">
           <p className="text-ink/50 text-sm font-bold tracking-widest uppercase hidden md:block mb-6 md:mb-0">
@@ -81,7 +131,13 @@ export function FaqSection() {
 
       <div className="w-full">
         {faqs.map((faq, index) => (
-          <FaqItem key={index} faq={faq} index={index} />
+          <FaqItem 
+            key={index} 
+            faq={faq} 
+            index={index} 
+            onHoverStart={() => setIsHoveringFaq(true)}
+            onHoverEnd={() => setIsHoveringFaq(false)}
+          />
         ))}
         {/* Final border bottom */}
         <div className="border-t border-ink/20 w-full" />

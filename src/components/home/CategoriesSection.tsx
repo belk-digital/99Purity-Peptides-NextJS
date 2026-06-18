@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -17,18 +17,30 @@ const CATEGORIES = [
 ]
 
 const CATEGORY_IMAGES = [
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_42_37 AM.webp',
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_43_44 AM.webp',
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_46_17 AM.webp',
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_47_16 AM.webp',
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_49_29 AM.webp',
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_50_28 AM.webp',
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_52_11 AM.webp',
-  '/99 Images/ChatGPT Image Jun 15, 2026, 04_53_07 AM.webp',
+  '/99 Images/category-1.webp',
+  '/99 Images/category-2.webp',
+  '/99 Images/category-3.webp',
+  '/99 Images/category-4.webp',
+  '/99 Images/category-5.webp',
+  '/99 Images/category-6.webp',
+  '/99 Images/category-7.webp',
+  '/99 Images/category-8.webp',
 ]
 
 export function CategoriesSection() {
   const targetRef = useRef<HTMLDivElement>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHoveringCategory, setIsHoveringCategory] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -40,8 +52,28 @@ export function CategoriesSection() {
   const x = useTransform(scrollYProgress, (value) => `calc(-${value * 100}% + ${value * 100}vw)`)
 
   return (
-    <section ref={targetRef} className="bg-cream w-full relative z-30 font-sans border-t border-ink/5 h-[300vh]">
+    <section ref={targetRef} className="bg-cream w-full relative z-30 font-sans h-[300vh]">
       
+      {/* Custom Cursor */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
+        animate={{
+          x: mousePosition.x - 50,
+          y: mousePosition.y - 50,
+          scale: isHoveringCategory ? 1 : 0,
+          opacity: isHoveringCategory ? 1 : 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 28,
+          mass: 0.5,
+        }}
+        style={{ width: 100, height: 100 }}
+      >
+        <span className="max-w-[70px] leading-tight text-[11px] font-bold">EXPLORE</span>
+      </motion.div>
+
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
         {/* Section Header */}
         <div className="container mx-auto px-4 md:px-10 mb-8 max-w-7xl shrink-0">
@@ -67,7 +99,9 @@ export function CategoriesSection() {
             <Link 
               href={`/shop?category=${encodeURIComponent(category.name)}`}
               key={category.slug} 
-              className="shrink-0 w-[85vw] sm:w-[45vw] md:w-[33.333vw] lg:w-[25vw] h-full relative group overflow-hidden border-r border-ink/5 cursor-pointer block"
+              className="shrink-0 w-[85vw] sm:w-[45vw] md:w-[33.333vw] lg:w-[25vw] h-full relative group overflow-hidden border-r border-ink/5 cursor-none block"
+              onMouseEnter={() => setIsHoveringCategory(true)}
+              onMouseLeave={() => setIsHoveringCategory(false)}
             >
               {/* Background Image */}
               <div className="absolute inset-0 w-full h-full bg-cream">
@@ -75,16 +109,16 @@ export function CategoriesSection() {
                   src={CATEGORY_IMAGES[index]} 
                   alt={category.name} 
                   fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-70 group-hover:opacity-100"
+                  className="object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-70 group-hover:opacity-100"
                 />
                 {/* Subtle bottom gradient for text readability */}
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-cream/90 via-cream/40 to-transparent pointer-events-none transition-opacity duration-700" />
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none transition-opacity duration-700 opacity-80 group-hover:opacity-100" />
               </div>
 
               {/* Bottom Centered Text */}
-              <div className="absolute inset-x-0 bottom-12 flex justify-center pointer-events-none px-4">
+              <div className="absolute inset-x-0 bottom-12 flex justify-center pointer-events-none px-4 z-10">
                   <h3 
-                    className="font-heading text-2xl md:text-3xl lg:text-4xl font-semibold text-ink tracking-tight text-center drop-shadow-xl transition-all duration-500 group-hover:-translate-y-2 uppercase"
+                    className="font-heading text-2xl md:text-3xl lg:text-4xl font-semibold text-white tracking-tight text-center drop-shadow-md transition-all duration-500 group-hover:-translate-y-2 uppercase"
                   >
                     {category.name}
                   </h3>
@@ -92,6 +126,27 @@ export function CategoriesSection() {
             </Link>
           ))}
         </motion.div>
+
+        {/* Keep Scrolling Indicator */}
+        <motion.div 
+          className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-40 group cursor-pointer"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => {
+            window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+          }}
+        >
+          <div className="opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="w-6 h-10 rounded-full border-2 border-ink/20 flex justify-center p-1.5 group-hover:border-ink/40 group-hover:shadow-md transition-all duration-300 relative overflow-hidden bg-cream/80 backdrop-blur-md">
+              <motion.div 
+                animate={{ y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                className="w-1.5 h-2.5 bg-ink/50 rounded-full group-hover:bg-ink/80 transition-colors duration-300"
+              />
+            </div>
+          </div>
+        </motion.div>
+
       </div>
       
     </section>

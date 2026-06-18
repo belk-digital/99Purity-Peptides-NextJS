@@ -7,6 +7,7 @@ import { Footer } from '@/components/shared/Footer'
 import { SmoothScroll } from '@/components/shared/SmoothScroll'
 import { Toaster } from '@/components/ui/sonner'
 import { GlobalNavigationSpinner } from '@/components/shared/GlobalNavigationSpinner'
+import { CustomScrollbar } from '@/components/shared/CustomScrollbar'
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
@@ -31,6 +32,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
             <GlobalNavigationSpinner />
           </React.Suspense>
           <SmoothScroll>
+            <CustomScrollbar />
             <LayoutClientWrapper header={<Header />} footer={<Footer />}>
               {children}
             </LayoutClientWrapper>

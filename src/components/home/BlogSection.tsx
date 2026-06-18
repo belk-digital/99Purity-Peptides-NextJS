@@ -29,7 +29,30 @@ const BLOG_POSTS = [
     date: 'SEP 15, 2026',
     category: 'Logistics',
     image: '/99 Images/ChatGPT Image Jun 15, 2026, 05_03_53 AM.webp',
-    slug: 'cold-chain-logistics'
+  },
+  {
+    title: 'GHK-Cu: The Copper Peptide Revolution',
+    excerpt: 'Exploring the regenerative properties of GHK-Cu in skin remodeling and wound healing.',
+    date: 'AUG 10, 2026',
+    category: 'Regeneration',
+    image: '/99 Images/ChatGPT Image Jun 15, 2026, 04_57_45 AM.webp',
+    slug: 'ghk-cu-copper-peptide'
+  },
+  {
+    title: 'The Pharmacokinetics of TB-500',
+    excerpt: 'Understanding the systemic distribution and actin-binding mechanisms of Thymosin Beta-4.',
+    date: 'JUL 22, 2026',
+    category: 'Science',
+    image: '/99 Images/ChatGPT Image Jun 15, 2026, 05_03_53 AM.webp',
+    slug: 'pharmacokinetics-tb-500'
+  },
+  {
+    title: 'Maximizing Bioavailability in Administration',
+    excerpt: 'Comparing subcutaneous injection, nasal sprays, and oral routes for research peptide delivery.',
+    date: 'JUN 05, 2026',
+    category: 'Administration',
+    image: '/99 Images/ChatGPT Image Jun 15, 2026, 04_56_02 AM.webp',
+    slug: 'maximizing-bioavailability'
   }
 ]
 
@@ -45,16 +68,39 @@ export function BlogSection() {
     }
   }
 
+  const scatterData = [
+    { x: -200, y: -150, rotate: -10 },
+    { x: 150, y: -250, rotate: 15 },
+    { x: 250, y: 150, rotate: -5 },
+    { x: -150, y: 200, rotate: 12 },
+    { x: -300, y: 50, rotate: -8 },
+    { x: 200, y: -100, rotate: 5 },
+    { x: 100, y: 250, rotate: -15 },
+    { x: -250, y: -200, rotate: 10 }
+  ]
+
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 60, scale: 0.95, filter: 'blur(10px)' },
+    hidden: (i: number) => ({ 
+      opacity: 0, 
+      x: scatterData[i % scatterData.length]?.x || 0,
+      y: scatterData[i % scatterData.length]?.y || 60,
+      rotate: scatterData[i % scatterData.length]?.rotate || 0,
+      scale: 0.85, 
+      filter: 'blur(15px)' 
+    }),
     visible: { 
       opacity: 1, 
+      x: 0,
       y: 0, 
+      rotate: 0,
       scale: 1, 
       filter: 'blur(0px)',
       transition: { 
-        duration: 1, 
-        ease: [0.16, 1, 0.3, 1] 
+        type: 'spring',
+        damping: 25,
+        stiffness: 100,
+        mass: 1.5,
+        duration: 1.2,
       } 
     }
   }
@@ -106,7 +152,7 @@ export function BlogSection() {
         >
           {/* Left Column */}
           <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+            <motion.div custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
               <Link href={`/journal/${BLOG_POSTS[0].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[0].image} 
@@ -123,12 +169,12 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-            <motion.div variants={itemVariants} className="w-[80%] aspect-square self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
+            <motion.div custom={1} variants={itemVariants} className="w-[80%] aspect-square self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
           </div>
 
           {/* Middle Column */}
           <div className="md:col-span-6 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-[400px] md:h-[600px] bg-white/5 border border-white/10 w-full">
+            <motion.div custom={2} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-[400px] md:h-[600px] bg-white/5 border border-white/10 w-full">
               <Link href={`/journal/${BLOG_POSTS[1].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[1].image} 
@@ -149,8 +195,8 @@ export function BlogSection() {
 
           {/* Right Column */}
           <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div variants={itemVariants} className="w-[80%] aspect-square self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
-            <motion.div variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+            <motion.div custom={3} variants={itemVariants} className="w-[80%] aspect-square self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
+            <motion.div custom={4} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
               <Link href={`/journal/${BLOG_POSTS[2].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[2].image} 
@@ -167,6 +213,80 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Second Row of Posts (Alternating Layout) */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 mt-4 md:mt-6"
+        >
+          {/* Left Column (Alternated: Spacer first) */}
+          <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
+            <motion.div custom={5} variants={itemVariants} className="w-[80%] aspect-square self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
+            <motion.div custom={6} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+              <Link href={`/journal/${BLOG_POSTS[3].slug}`} className="block w-full h-full relative">
+                <Image 
+                  src={BLOG_POSTS[3].image} 
+                  alt={BLOG_POSTS[3].title} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end">
+                  <h3 className="text-white text-sm md:text-base font-medium leading-snug group-hover:text-primary transition-colors">
+                    {BLOG_POSTS[3].title}
+                  </h3>
+                </div>
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Middle Column */}
+          <div className="md:col-span-6 flex flex-col gap-4 md:gap-6 h-full">
+            <motion.div custom={7} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-[400px] md:h-[600px] bg-white/5 border border-white/10 w-full">
+              <Link href={`/journal/${BLOG_POSTS[4].slug}`} className="block w-full h-full relative">
+                <Image 
+                  src={BLOG_POSTS[4].image} 
+                  alt={BLOG_POSTS[4].title} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col justify-end">
+                  <h3 className="text-white text-lg md:text-2xl font-medium leading-snug group-hover:text-primary transition-colors">
+                    {BLOG_POSTS[4].title}
+                  </h3>
+                </div>
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right Column (Alternated: Post first) */}
+          <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
+            <motion.div custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+              <Link href={`/journal/${BLOG_POSTS[5].slug}`} className="block w-full h-full relative">
+                <Image 
+                  src={BLOG_POSTS[5].image} 
+                  alt={BLOG_POSTS[5].title} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end">
+                  <h3 className="text-white text-sm md:text-base font-medium leading-snug group-hover:text-primary transition-colors">
+                    {BLOG_POSTS[5].title}
+                  </h3>
+                </div>
+              </Link>
+            </motion.div>
+            <motion.div custom={1} variants={itemVariants} className="w-[80%] aspect-square self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
           </div>
         </motion.div>
       </div>

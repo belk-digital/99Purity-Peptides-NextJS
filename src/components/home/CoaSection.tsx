@@ -15,7 +15,7 @@ const AnimatedHUDCard = ({
 }) => {
   const isLeft = direction === 'left'
   
-  const lineVariants = {
+  const lineVariants: any = {
     hidden: { scaleX: 0, opacity: 0 },
     visible: { 
       scaleX: 1, 
@@ -25,7 +25,7 @@ const AnimatedHUDCard = ({
   }
 
   // Wipe the box into existence from the side the line touches it
-  const boxVariants = {
+  const boxVariants: any = {
     hidden: { clipPath: isLeft ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)', opacity: 0 },
     visible: { 
       clipPath: 'inset(0% 0% 0% 0%)',
@@ -34,7 +34,7 @@ const AnimatedHUDCard = ({
     }
   }
 
-  const contentVariants = {
+  const contentVariants: any = {
     hidden: { opacity: 0, filter: 'blur(4px)', y: 5 },
     visible: { 
       opacity: 1, filter: 'blur(0px)', y: 0,

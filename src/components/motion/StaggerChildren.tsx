@@ -32,7 +32,7 @@ export function StaggerChildren({
   )
 }
 
-export const staggerItemVariants = {
+export const staggerItemVariants: any = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1, y: 0,

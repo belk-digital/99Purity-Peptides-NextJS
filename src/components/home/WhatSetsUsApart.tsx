@@ -1,9 +1,41 @@
 'use client'
 
-import React from 'react'
-import { motion, Variants } from 'framer-motion'
-import { ArrowRight, Microscope, Activity, FileText, FlaskConical } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
+import { ArrowRight, Microscope, Activity, FileText, FlaskConical, Hexagon } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
+
+// Custom hook for the scramble/decode text effect
+const ScrambleText = ({ text, activeIndex }: { text: string, activeIndex: number }) => {
+  const [displayText, setDisplayText] = useState(text);
+  
+  useEffect(() => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+{}[]|<>?';
+    let frame = 0;
+    const maxFrames = 12; // Controls duration of the scramble
+    
+    const interval = setInterval(() => {
+      frame++;
+      if (frame >= maxFrames) {
+        clearInterval(interval);
+        setDisplayText(text);
+      } else {
+        const scrambled = text.split('').map(char => {
+          if (char === ' ' || char === '\n') return char;
+          // As frames progress, lock in correct characters left to right
+          if (Math.random() < frame / maxFrames) return char;
+          return chars[Math.floor(Math.random() * chars.length)];
+        }).join('');
+        setDisplayText(scrambled);
+      }
+    }, 30); // Speed of character changes
+    
+    return () => clearInterval(interval);
+  }, [text, activeIndex]);
+
+  return <span>{displayText}</span>;
+}
 
 const ADVANTAGES = [
   {
@@ -29,95 +61,295 @@ const ADVANTAGES = [
 ]
 
 export function WhatSetsUsApart() {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 }
-    }
-  }
+  const [activeIndex, setActiveIndex] = useState(0)
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: 'blur(0px)',
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+  // Custom Cursor Logic
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const cursorX = useSpring(mouseX, { stiffness: 400, damping: 28, mass: 0.5 })
+  const cursorY = useSpring(mouseY, { stiffness: 400, damping: 28, mass: 0.5 })
+  
+  const [isHoveringSection, setIsHoveringSection] = useState(false)
+  const [isHoveringClickable, setIsHoveringClickable] = useState(false)
+
+  // Auto-cycle through the nodes every 6 seconds
+  useEffect(() => {
+    if (isHoveringSection) return; // Pause auto-rotation when user is interacting
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % ADVANTAGES.length)
+    }, 6000)
+    
+    return () => clearInterval(interval)
+  }, [activeIndex, isHoveringSection])
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX - 50)
+      mouseY.set(e.clientY - 50)
     }
-  }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [mouseX, mouseY])
+
+  // Node coordinates pushed outwards to fill the space, combined with precise 45-degree circuit paths
+  const nodes = [
+    { x: '15%', y: '15%', path: 'M 50 50 L 35 50 L 15 30 L 15 15' }, // Top Left
+    { x: '85%', y: '20%', path: 'M 50 50 L 50 35 L 65 20 L 85 20' }, // Top Right
+    { x: '20%', y: '85%', path: 'M 50 50 L 50 65 L 30 85 L 20 85' }, // Bottom Left
+    { x: '85%', y: '85%', path: 'M 50 50 L 70 50 L 85 65 L 85 85' }, // Bottom Right
+  ]
+  const center = { x: '50%', y: '50%' }
+
+  const activeAdvantage = ADVANTAGES[activeIndex]
+  const ActiveIcon = activeAdvantage.icon
 
   return (
-    <section className="bg-[#050505] py-24 md:py-32 relative z-30 font-sans overflow-hidden border-t border-white/5">
-      {/* Background glow */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3 z-0" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3 z-0" />
+    <section 
+      onMouseEnter={() => setIsHoveringSection(true)}
+      onMouseLeave={() => setIsHoveringSection(false)}
+      className={`bg-gradient-to-b from-white to-cream py-24 md:py-32 relative z-30 font-sans overflow-hidden min-h-screen flex items-center ${!isHoveringClickable ? 'cursor-none' : 'cursor-auto'}`}
+    >
+      {/* Custom Cursor matching Categories section */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[100] hidden md:flex items-center justify-center rounded-full bg-primary text-white font-bold text-[10px] uppercase tracking-widest text-center shadow-[0_10px_40px_rgba(0,139,139,0.4)]"
+        style={{ width: 100, height: 100, x: cursorX, y: cursorY }}
+        animate={{ 
+          scale: isHoveringSection && !isHoveringClickable ? 1 : 0,
+          opacity: isHoveringSection && !isHoveringClickable ? 1 : 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 28,
+          mass: 0.5,
+        }}
+      >
+        <span className="max-w-[70px] leading-tight text-[11px] font-bold">CLICK ON<br/>THE NODES</span>
+      </motion.div>
 
-      <div className="container mx-auto px-4 md:px-10 max-w-7xl relative z-10">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+      <div className="w-full mx-auto px-4 sm:px-12 md:px-16 max-w-[120rem] relative z-10">
+        
+        <div className="flex flex-col items-center text-center mb-16 lg:mb-24 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block border border-primary/20 rounded-full px-4 py-1.5 mb-6 bg-white shadow-sm"
+          >
+            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">Advantage</span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-heading text-5xl md:text-7xl font-black text-ink leading-none tracking-tighter uppercase mb-6"
+          >
+            What Sets<br />Us Apart.
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-ink-muted text-lg leading-relaxed max-w-4xl font-medium"
+          >
+            <strong className="text-ink">99PurityPeptides</strong> specializes in high-purity synthetic peptides engineered specifically for research laboratory environments. Our commitment to analytical rigor and documentation transparency addresses the core needs of scientific research:
+          </motion.p>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
-          {/* Left Column (Sticky Intro) */}
-          <div className="w-full lg:w-5/12">
-            <div className="lg:sticky lg:top-32">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div className="inline-block border border-white/10 rounded-full px-4 py-1.5 mb-6 bg-white/5 backdrop-blur-sm">
-                  <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">Advantage</span>
-                </div>
-                
-                <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[0.9] tracking-tighter uppercase mb-8">
-                  What Sets<br />Us Apart.
-                </h2>
-                
-                <p className="text-white/70 text-lg leading-relaxed mb-10 font-medium">
-                  <strong className="text-white">99PurityPeptides</strong> specializes in high-purity synthetic peptides engineered specifically for research laboratory environments. Our commitment to analytical rigor and documentation transparency addresses the core needs of scientific research:
-                </p>
+          {/* Left: Interactive Molecular Diagram */}
+          <div className="w-full lg:w-1/2 relative aspect-square max-w-[800px] mx-auto z-10">
+            
+            {/* SVG Connecting Fiber Optics & Web */}
+            <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible">
+              
+              {/* Background intricate web elements */}
+              <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(0,0,0,0.03)" strokeWidth="0.3" />
+              <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(0,0,0,0.02)" strokeWidth="0.2" strokeDasharray="1 1.5" />
+              <path d="M 25 50 A 25 25 0 0 1 50 25" fill="none" stroke="rgba(0,139,139,0.15)" strokeWidth="0.4" />
+              <path d="M 75 50 A 25 25 0 0 1 50 75" fill="none" stroke="rgba(0,139,139,0.15)" strokeWidth="0.4" />
+              <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(0,0,0,0.02)" strokeWidth="0.1" />
+              <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(0,0,0,0.02)" strokeWidth="0.1" />
 
-                <Link href="/about" className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                  Learn More About Us <ArrowRight size={18} />
-                </Link>
-              </motion.div>
+              {nodes.map((n, i) => {
+                const isActive = activeIndex === i;
+                return (
+                  <g key={`bond-${i}`}>
+                    {/* Inactive Fiber Base (looks like a clear physical tube) */}
+                    <path 
+                      d={n.path}
+                      fill="none"
+                      stroke="rgba(0,0,0,0.04)" 
+                      strokeWidth="1.2" 
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path 
+                      d={n.path}
+                      fill="none"
+                      stroke="rgba(255,255,255,0.8)" 
+                      strokeWidth="0.4" 
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+
+                    {/* Active Solid Connection Line */}
+                    {isActive && (
+                      <motion.path 
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        d={n.path}
+                        fill="none"
+                        stroke="#008B8B" 
+                        strokeWidth="0.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    )}
+                    
+                    {/* Data Pulses */}
+                    <motion.path 
+                      d={n.path}
+                      fill="none"
+                      stroke={isActive ? "rgba(0,139,139,1)" : "rgba(255,255,255,0.6)"} 
+                      strokeWidth={isActive ? "0.8" : "0.4"}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeDasharray={isActive ? "2 12" : "1 25"}
+                      initial={{ strokeDashoffset: 0 }}
+                      animate={{ strokeDashoffset: -100 }}
+                      transition={{ 
+                        repeat: Infinity, 
+                        ease: "linear", 
+                        duration: isActive ? 1.5 : 4 
+                      }}
+                    />
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Center Core (Physical Glass Dial) */}
+            <div className="absolute z-10 w-28 h-28 lg:w-36 lg:h-36 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-full flex flex-col items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,1),_0_12px_40px_rgba(0,0,0,0.08)]" style={{ top: center.y, left: center.x, transform: 'translate(-50%, -50%)' }}>
+              {/* Inner metallic/glass rim */}
+              <div className="absolute inset-2 border-2 border-white/50 rounded-full shadow-[inset_0_0_10px_rgba(0,0,0,0.05)] flex items-center justify-center">
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-1 border-[1.5px] border-primary/40 rounded-full border-dashed"
+                />
+              </div>
+              
+              <div className="relative z-10 w-16 h-16 lg:w-24 lg:h-24 -ml-3">
+                <Image 
+                  src="/99 Images/99pp-Logo-small.png" 
+                  alt="99 Purity Peptides Logo" 
+                  fill 
+                  className="object-contain"
+                />
+              </div>
             </div>
+
+            {/* Orbiting Nodes (Frosted Lenses) */}
+            {ADVANTAGES.map((adv, i) => {
+              const n = nodes[i];
+              const isActive = activeIndex === i;
+              return (
+                <div 
+                  key={`node-${i}`}
+                  className="absolute z-20 w-16 h-16 lg:w-20 lg:h-20"
+                  style={{ top: n.y, left: n.x, transform: 'translate(-50%, -50%)' }}
+                >
+                  {/* Pulse Ring Affordance for Inactive Nodes */}
+                  {!isActive && (
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1.8, opacity: [0, 0.4, 0] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: i * 0.2 }}
+                      className="absolute inset-0 rounded-full border border-primary pointer-events-none"
+                    />
+                  )}
+
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setActiveIndex(i)}
+                    onMouseEnter={() => setIsHoveringClickable(true)}
+                    onMouseLeave={() => setIsHoveringClickable(false)}
+                    className={`absolute inset-0 w-full h-full flex items-center justify-center rounded-full transition-all duration-500 backdrop-blur-2xl ${
+                      isActive 
+                        ? 'bg-primary border-4 border-white shadow-[0_12px_30px_rgba(0,139,139,0.25)] scale-110 z-10' 
+                        : 'bg-white/40 border border-white/50 shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_8px_20px_rgba(0,0,0,0.06)] hover:bg-white/60 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_12px_30px_rgba(0,0,0,0.1)] z-10'
+                    }`}
+                  >
+                    <adv.icon className={`w-6 h-6 lg:w-8 lg:h-8 transition-colors duration-500 relative z-20 ${isActive ? 'text-white' : 'text-ink-muted'}`} />
+                  </motion.button>
+                  
+                  {/* Node Label */}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-32 text-center pointer-events-none z-30">
+                    <span className={`inline-block px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-white/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-[10px] uppercase tracking-widest font-bold transition-colors duration-500 ${isActive ? 'text-primary' : 'text-ink-muted'}`}>
+                      {adv.title.split(' ')[0]}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          {/* Right Column (Scrolling Cards) */}
-          <div className="w-full lg:w-7/12">
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-col gap-6"
-            >
-              {ADVANTAGES.map((adv, index) => (
-                <motion.div 
-                  key={index}
-                  variants={itemVariants}
-                  className="group relative bg-white/5 border border-white/10 rounded-[32px] p-8 md:p-10 overflow-hidden hover:bg-white/10 transition-colors duration-500 cursor-default"
-                >
-                  {/* Subtle hover gradient background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-500">
-                      <adv.icon className="w-8 h-8 text-white group-hover:text-primary transition-colors duration-500" />
-                    </div>
-                    
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
-                      {adv.title}
-                    </h3>
-                    
-                    <p className="text-white/60 leading-relaxed text-base md:text-lg">
-                      {adv.description}
-                    </p>
+          {/* Right: Content Display */}
+          <div className="w-full lg:w-1/2 relative min-h-[400px] flex flex-col justify-center z-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, filter: 'brightness(2) contrast(1.5)', scale: 0.98 }}
+                animate={{ opacity: 1, filter: 'brightness(1) contrast(1)', scale: 1 }}
+                exit={{ opacity: 0, filter: 'brightness(0) contrast(2)', scale: 0.98 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="relative bg-white/40 border border-white/60 rounded-[40px] p-8 md:p-12 backdrop-blur-[40px] shadow-[0_24px_64px_rgba(0,0,0,0.06),_inset_0_1px_1px_rgba(255,255,255,1)] overflow-hidden"
+              >
+                {/* Ultra-premium glass reflection line */}
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
+                
+                {/* Huge faded background icon */}
+                <div className="absolute -right-10 -bottom-10 opacity-[0.02] pointer-events-none mix-blend-overlay">
+                  <ActiveIcon className="w-64 h-64 text-ink" />
+                </div>
+
+                <div className="flex items-center gap-4 mb-8 relative z-10">
+                  <div className="w-12 h-12 rounded-full bg-white/50 border border-white shadow-sm flex items-center justify-center backdrop-blur-md">
+                    <ActiveIcon className="w-6 h-6 text-primary" />
                   </div>
-                </motion.div>
-              ))}
-            </motion.div>
+                  <span className="text-primary font-mono text-xs tracking-widest uppercase font-bold bg-white/50 px-3 py-1 rounded-full border border-white shadow-sm">
+                    Node 0{activeIndex + 1}
+                  </span>
+                </div>
+
+                <h3 className="text-3xl md:text-4xl font-bold text-ink mb-6 tracking-tight relative z-10 drop-shadow-sm font-mono tracking-tighter">
+                  <ScrambleText text={activeAdvantage.title} activeIndex={activeIndex} />
+                </h3>
+                
+                <p className="text-ink-muted leading-relaxed text-lg md:text-xl font-medium relative z-10 font-mono tracking-tight">
+                  <ScrambleText text={activeAdvantage.description} activeIndex={activeIndex} />
+                </p>
+
+                <div className="mt-12 pt-8 border-t border-white/60 relative z-10 flex items-center justify-between">
+                  <Link 
+                    href="/about" 
+                    onMouseEnter={() => setIsHoveringClickable(true)}
+                    onMouseLeave={() => setIsHoveringClickable(false)}
+                    className="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors uppercase tracking-[0.2em] text-xs font-bold group"
+                  >
+                    View Protocol Data 
+                    <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                      <ArrowRight size={12} />
+                    </div>
+                  </Link>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
         </div>
