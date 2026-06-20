@@ -36,7 +36,7 @@ export default async function Homepage() {
     <>
       <IdleMewingCursor />
       <HomePreloaderWrapper>
-        <div className="flex flex-col w-full min-h-screen relative z-10 bg-black">
+        <div className="flex flex-col w-full min-h-screen relative z-10 bg-black overflow-x-clip">
           <Hero />
           <TrustBadges />
           <BestSellerSection products={products} />

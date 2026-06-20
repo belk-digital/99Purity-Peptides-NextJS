@@ -97,21 +97,24 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   const isHome = pathname === '/' || pathname === '/en'
 
   useEffect(() => {
-    const isClosed = sessionStorage.getItem('announcement_closed') === 'true'
-    setAnnouncementClosed(isClosed)
     setMounted(true)
-    
-    if (!isClosed) {
-      const timer = setInterval(() => {
-        setAnnouncementIndex((prev) => (prev + 1) % ANNOUNCEMENTS.length)
-      }, 4000)
-      return () => clearInterval(timer)
-    }
   }, [])
+
+  useEffect(() => {
+    // Reset announcement state on route change
+    setAnnouncementClosed(false)
+    document.body.classList.remove('announcement-closed')
+    
+    const timer = setInterval(() => {
+      setAnnouncementIndex((prev) => (prev + 1) % ANNOUNCEMENTS.length)
+    }, 4000)
+    
+    return () => clearInterval(timer)
+  }, [pathname])
 
   const closeAnnouncement = () => {
     setAnnouncementClosed(true)
-    sessionStorage.setItem('announcement_closed', 'true')
+    document.body.classList.add('announcement-closed')
   }
   
   const { scrollY } = useScroll()
@@ -135,7 +138,116 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   const textHoverColor = 'hover:text-primary transition-colors'
   const iconColor = '#ffffff'
   const buttonBorder = 'border-white/20 hover:bg-white/10'
-  const headerClasses = `flex items-center justify-between pointer-events-auto transition-all duration-300 w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto mt-4 px-6 py-3 bg-black/40 backdrop-blur-xl border border-white/10 rounded-full text-white shadow-2xl`
+
+  const headerContent = (
+    <div className={`flex items-center justify-between transition-all duration-300 px-6 w-full text-white ${isHome && !isScrolled ? 'py-4' : 'py-2'}`}>
+      {/* Left: Logo */}
+      <div className="flex-1 xl:flex-none flex justify-start">
+        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2">
+          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-12 sm:h-16 w-auto object-contain" />
+        </Link>
+      </div>
+
+      {/* Center: Nav */}
+      <nav className="hidden xl:flex items-center justify-center gap-4 xl:gap-8 flex-1 h-full">
+        {(() => {
+          const getNavLinkClass = (path: string) => {
+            const targetPath = path.replace('/en', '');
+            const isActive = targetPath === '' ? pathname === '/en' || pathname === '/' : pathname.includes(targetPath);
+            return `text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full flex items-center py-2 ${
+              isActive 
+                ? `font-bold text-primary opacity-100` 
+                : `font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`
+            }`;
+          };
+
+          return (
+            <>
+              <Link href="/shop" className={getNavLinkClass('/shop')}>
+                SHOP
+              </Link>
+              
+              <div 
+                className="h-full flex items-center cursor-pointer"
+                onMouseEnter={() => setIsMegaMenuOpen(true)}
+                onMouseLeave={() => setIsMegaMenuOpen(false)}
+              >
+                <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full py-2 font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
+                  CATEGORIES
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
+                </Link>
+              </div>
+              
+              <Link href="/peptide-calculator" className={getNavLinkClass('/peptide-calculator')}>
+                CALCULATOR
+              </Link>
+              <Link href="/about" className={getNavLinkClass('/about')}>
+                ABOUT
+              </Link>
+              <Link href="/journal" className={getNavLinkClass('/journal')}>
+                JOURNAL
+              </Link>
+              <Link href="/faq" className={getNavLinkClass('/faq')}>
+                FAQ
+              </Link>
+              <Link href="/contact" className={getNavLinkClass('/contact')}>
+                CONTACT
+              </Link>
+              <Link href="/affiliates" className={getNavLinkClass('/affiliates')}>
+                AFFILIATES
+              </Link>
+            </>
+          )
+        })()}
+      </nav>
+
+      {/* Right: Search, SHOP NOW Button & Cart */}
+      <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-5 flex-1 xl:flex-none text-sm relative z-20">
+        <button 
+          onClick={() => setIsSearchOpen(true)}
+          className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}
+          aria-label="Open search"
+        >
+          <Search size={18} strokeWidth={1.5} />
+        </button>
+
+        <button onClick={cartStore.openCart} className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}>
+          <ShoppingBag size={18} strokeWidth={1.5} />
+          <AnimatePresence>
+            {activeCartCount > 0 && (
+              <motion.span 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                className={`absolute -top-1 -right-1 text-[9px] font-bold w-[14px] h-[14px] flex items-center justify-center rounded-full bg-primary text-white`}
+              >
+                {activeCartCount}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
+        
+        <div className="flex items-center justify-center">
+          {mounted ? (
+            isLoggedIn ? (
+              <Link href="/account" className={`p-1.5 transition-colors flex items-center justify-center ${textColor} ${textHoverColor}`}>
+                <User size={18} strokeWidth={1.5} />
+              </Link>
+            ) : null
+          ) : null}
+        </div>
+        
+        <Link href="/shop" className={`hidden md:inline-flex border rounded-full px-8 py-3 text-[13px] font-semibold tracking-[0.2em] uppercase transition-all ${textColor} ${buttonBorder} xl:-mr-2`}>
+          SHOP NOW
+        </Link>
+
+        {/* Mobile Hamburger */}
+        <button onClick={() => setMobileMenuOpen(true)} className={`xl:hidden p-1 -mr-1 transition-colors ${textColor} hover:text-primary`}>
+          <Menu size={20} strokeWidth={1.5} />
+        </button>
+      </div>
+    </div>
+  )
 
   return (
     <>
@@ -152,165 +264,70 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           className="w-full flex flex-col"
         >
           {/* Announcement Bar */}
-          {!announcementClosed && (
-            <div className="w-full bg-[#008B8B] text-white h-[32px] flex items-center justify-center pointer-events-auto overflow-hidden relative">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={announcementIndex}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -20, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-[11px] font-bold tracking-[0.2em] uppercase absolute text-center w-full px-4"
-                >
-                  {ANNOUNCEMENTS[announcementIndex]}
-                </motion.p>
-              </AnimatePresence>
-              <button 
-                onClick={closeAnnouncement}
-                className="absolute right-4 text-white/70 hover:text-white transition-colors"
-                aria-label="Close announcement"
+          <AnimatePresence>
+            {!announcementClosed && (
+              <motion.div 
+                initial={{ height: 32, opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full bg-[#008B8B] text-white flex items-center justify-center pointer-events-auto overflow-hidden relative"
               >
-                <X size={14} strokeWidth={2} />
-              </button>
-            </div>
-          )}
-
-          <div className="w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto mt-4 relative pointer-events-auto shadow-2xl rounded-full">
-            <GlassSurface
-              width="100%"
-              height="auto"
-              borderRadius={999}
-              brightness={40}
-              opacity={4}
-              blur={10}
-              displace={6}
-              distortionScale={-80}
-              redOffset={2}
-              greenOffset={5}
-              blueOffset={10}
-              className="w-full !bg-black/20 border border-white/10"
-            >
-              <div className="flex items-center justify-between transition-all duration-300 px-6 py-2 w-full text-white">
-                {/* Left: Logo */}
-                <div className="flex-1 xl:flex-none flex justify-start">
-                  <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2">
-                    <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-12 sm:h-16 w-auto object-contain" />
-                  </Link>
-                </div>
-
-                {/* Center: Nav */}
-                <nav className="hidden xl:flex items-center justify-center gap-4 xl:gap-8 flex-1 h-full">
-                  {(() => {
-                    const getNavLinkClass = (path: string) => {
-                      const targetPath = path.replace('/en', '');
-                      const isActive = targetPath === '' ? pathname === '/en' || pathname === '/' : pathname.includes(targetPath);
-                      return `text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full flex items-center py-2 ${
-                        isActive 
-                          ? `font-bold text-primary opacity-100` 
-                          : `font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`
-                      }`;
-                    };
-
-                    return (
-                      <>
-                        <Link href="/shop" className={getNavLinkClass('/shop')}>
-                          SHOP
-                        </Link>
-                        
-                        <div 
-                          className="h-full flex items-center cursor-pointer"
-                          onMouseEnter={() => setIsMegaMenuOpen(true)}
-                          onMouseLeave={() => setIsMegaMenuOpen(false)}
-                        >
-                          <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full py-2 font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
-                            CATEGORIES
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
-                          </Link>
-                        </div>
-                        
-                        <Link href="/peptide-calculator" className={getNavLinkClass('/peptide-calculator')}>
-                          CALCULATOR
-                        </Link>
-                        <Link href="/about" className={getNavLinkClass('/about')}>
-                          ABOUT
-                        </Link>
-                        <Link href="/journal" className={getNavLinkClass('/journal')}>
-                          JOURNAL
-                        </Link>
-                        <Link href="/faq" className={getNavLinkClass('/faq')}>
-                          FAQ
-                        </Link>
-                        <Link href="/contact" className={getNavLinkClass('/contact')}>
-                          CONTACT
-                        </Link>
-                        <Link href="/affiliates" className={getNavLinkClass('/affiliates')}>
-                          AFFILIATES
-                        </Link>
-                      </>
-                    )
-                  })()}
-                </nav>
-
-                {/* Right: Search, SHOP NOW Button & Cart */}
-                <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-5 flex-1 xl:flex-none text-sm relative z-20">
-                  {/* Search Button */}
-                  <button 
-                    onClick={() => setIsSearchOpen(true)}
-                    className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}
-                    aria-label="Open search"
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={announcementIndex}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-[11px] font-bold tracking-[0.2em] uppercase absolute text-center w-full px-4"
                   >
-                    <Search size={18} strokeWidth={1.5} />
-                  </button>
+                    {ANNOUNCEMENTS[announcementIndex]}
+                  </motion.p>
+                </AnimatePresence>
+                <button 
+                  onClick={closeAnnouncement}
+                  className="absolute right-4 text-white/70 hover:text-white transition-colors z-10"
+                  aria-label="Close announcement"
+                >
+                  <X size={14} strokeWidth={2} />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-                  <button onClick={cartStore.openCart} className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}>
-                    <ShoppingBag size={18} strokeWidth={1.5} />
-                    <AnimatePresence>
-                      {activeCartCount > 0 && (
-                        <motion.span 
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                          className={`absolute -top-1 -right-1 text-[9px] font-bold w-[14px] h-[14px] flex items-center justify-center rounded-full bg-primary text-white`}
-                        >
-                          {activeCartCount}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </button>
-                  
-                  <div className="flex items-center justify-center">
-                    {mounted ? (
-                      isLoggedIn ? (
-                        <Link href="/account" className={`p-1.5 transition-colors flex items-center justify-center ${textColor} ${textHoverColor}`}>
-                          <User size={18} strokeWidth={1.5} />
-                        </Link>
-                      ) : null
-                    ) : null}
-                  </div>
-                  
-                  <Link href="/shop" className={`hidden md:inline-flex border rounded-full px-8 py-3 text-[13px] font-semibold tracking-[0.2em] uppercase transition-all ${textColor} ${buttonBorder} xl:-mr-2`}>
-                    SHOP NOW
-                  </Link>
-
-                  {/* Mobile Hamburger */}
-                  <button onClick={() => setMobileMenuOpen(true)} className={`xl:hidden p-1 -mr-1 transition-colors ${textColor} hover:text-primary`}>
-                    <Menu size={20} strokeWidth={1.5} />
-                  </button>
-                </div>
+          <div className={`w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto relative pointer-events-auto rounded-full transition-all duration-500 ${isHome && !isScrolled ? 'mt-4 sm:mt-5 md:mt-8 shadow-none' : 'mt-4 shadow-2xl'}`}>
+            {isHome && !isScrolled ? (
+              <div className="w-full transition-all duration-500 border border-transparent rounded-full">
+                {headerContent}
               </div>
-            </GlassSurface>
+            ) : (
+              <GlassSurface
+                width="100%"
+                height="auto"
+                borderRadius={999}
+                brightness={40}
+                opacity={4}
+                blur={10}
+                displace={6}
+                distortionScale={-80}
+                redOffset={2}
+                greenOffset={5}
+                blueOffset={10}
+                className="w-full !bg-black/20 border border-white/10"
+              >
+                {headerContent}
+              </GlassSurface>
+            )}
           </div>
         </motion.div>
 
       </div>
 
       {/* Render the Mega Menu OUTSIDE the motion.div wrapper so backdrop-filter is NOT broken by the stacking context! */}
-      {/* Dynamic top calculation: adjust for the floating pill */}
       <div 
         className="fixed inset-x-0 z-[45] transition-transform duration-300 ease-out"
         style={{ 
-          top: announcementClosed ? '85px' : '117px',
+          top: announcementClosed ? '53px' : '85px',
           transform: hidden ? 'translateY(-100px)' : 'translateY(0)'
         }}
       >

@@ -71,7 +71,7 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
     : [...sourceProducts, ...sourceProducts, ...sourceProducts, ...sourceProducts].slice(0, 8); // fallback loop
 
   return (
-    <section ref={sectionRef} className="bg-cream py-24 md:py-32 font-sans relative z-30 border-t border-ink/5 overflow-hidden">
+    <section ref={sectionRef} className="bg-cream py-24 md:py-32 font-sans relative z-30 overflow-hidden">
       <div className="container mx-auto px-4 md:px-10 max-w-[1600px] relative z-10">
         
         {/* Centered Header */}
@@ -91,7 +91,7 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
         </div>
 
         {/* 4-Column Masonry/Staggered Grid with Parallax */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 justify-items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 justify-items-center">
           {displayProducts.map((product, idx) => {
             // Apply y1 to even columns (0, 2) and y2 to odd columns (1, 3)
             const isEvenColumn = idx % 2 === 0;
@@ -105,31 +105,31 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                 className="w-full max-w-[380px] will-change-transform"
               >
                 {/* CSS Transition wrapped element MUST be separate from motion.div */}
-                <div className={`w-full h-full bg-white rounded-[32px] p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl hover:-translate-y-2 ${rotationClass}`}>
+                <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl hover:-translate-y-2 ${rotationClass}`}>
                   <Link href={`/product/${product.slug}`} className="absolute inset-0 z-20" aria-label={`View ${product.name}`} />
                   
                   {/* Top Text Content & Wishlist */}
-                  <div className="px-5 pt-5 pb-5 flex flex-col gap-3 relative">
-                    <div className="absolute top-5 right-5 z-30">
+                  <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative">
+                    <div className="absolute top-3 sm:top-5 right-3 sm:right-5 z-30">
                       <button className="text-ink/30 hover:text-red-500 hover:scale-110 transition-all duration-300">
-                        <Heart className="w-5 h-5" />
+                        <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
                     </div>
-                    <div className="pr-8">
-                      <h3 className="text-2xl font-semibold text-ink tracking-tight line-clamp-1">
+                    <div className="pr-6 sm:pr-8">
+                      <h3 className="text-sm sm:text-2xl font-semibold text-ink tracking-tight line-clamp-1">
                         {product.name}
                       </h3>
-                      <p className="text-primary text-[10px] font-bold uppercase tracking-[0.2em] mt-1">
+                      <p className="text-primary text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 sm:mt-1">
                         {product.categories?.[0]?.title || 'Research Peptide'}
                       </p>
                     </div>
-                    <p className="text-ink/60 text-[13px] leading-relaxed line-clamp-2">
+                    <p className="text-ink/60 text-[9px] sm:text-[13px] leading-tight sm:leading-relaxed line-clamp-2">
                       {product.meta?.description || 'Highly purified synthetic peptide prepared for rigorous laboratory research.'}
                     </p>
                   </div>
 
                   {/* Inner Image Container */}
-                  <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-ink/5">
+                  <div className="relative w-full aspect-[4/5] rounded-[14px] sm:rounded-[24px] overflow-hidden bg-ink/5">
                     <Image 
                       src={getImageUrl(product)}
                       alt={`${product.name} Best Seller`}
@@ -141,15 +141,15 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
 
                     {/* Price */}
-                    <div className="absolute bottom-5 left-5 z-10">
-                      <span className="text-white text-3xl font-light tracking-tighter">
+                    <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-10">
+                      <span className="text-white text-lg sm:text-3xl font-light tracking-tighter">
                         ${product.price}
                       </span>
                     </div>
 
                     {/* Action Button */}
-                    <div className="absolute bottom-5 right-5 w-12 h-12 bg-white rounded-full flex items-center justify-center transition-all duration-300 shadow-xl group-hover:scale-110 z-10 hover:bg-ink hover:text-white">
-                      <ShoppingCart className="w-5 h-5 text-current transition-colors" />
+                    <div className="absolute bottom-2 right-2 sm:bottom-5 sm:right-5 w-8 h-8 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center transition-all duration-300 shadow-xl group-hover:scale-110 z-10 hover:bg-ink hover:text-white">
+                      <ShoppingCart className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-current transition-colors" />
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Sparkles, Globe2 } from 'lucide-react';
@@ -19,6 +19,8 @@ const MERCH_ITEMS = [
 ];
 
 export function MerchandiseSection() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section className="bg-cream py-24 md:py-32 relative z-30 font-sans overflow-hidden border-t border-ink/5">
       <div className="container mx-auto px-4 md:px-10 max-w-[100rem]">
@@ -34,25 +36,42 @@ export function MerchandiseSection() {
 
         {/* Bento Box Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[300px] gap-4 md:gap-6">
-          {MERCH_ITEMS.map((item, i) => (
-            <motion.div 
-              key={i}
-              whileHover={{ scale: 0.98 }}
-              className={`relative rounded-[32px] overflow-hidden bg-white border border-ink/5 group cursor-pointer shadow-sm hover:shadow-md transition-shadow ${item.class}`}
-            >
-              <Image 
-                src={item.image} 
-                alt={item.name} 
-                fill 
-                className="object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
-              
-              <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="text-white font-bold tracking-widest uppercase text-sm drop-shadow-md">{item.name}</h3>
-              </div>
-            </motion.div>
-          ))}
+          {MERCH_ITEMS.map((item, i) => {
+            const isHovered = hoveredIndex === i;
+            const isOthersHovered = hoveredIndex !== null && hoveredIndex !== i;
+            
+            return (
+              <motion.div 
+                key={i}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                animate={{
+                  scale: isHovered ? 1.05 : isOthersHovered ? 0.95 : 1,
+                  opacity: isOthersHovered ? 0.5 : 1,
+                  zIndex: isHovered ? 50 : 1
+                }}
+                transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                className={`relative rounded-[32px] overflow-hidden bg-white border border-ink/5 group cursor-pointer shadow-sm hover:shadow-2xl hover:ring-2 hover:ring-primary/20 ${item.class}`}
+              >
+                <Image 
+                  src={item.image} 
+                  alt={item.name} 
+                  fill 
+                  className="object-cover transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+                
+                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:-translate-y-2 transition-transform duration-500 ease-out">
+                  <h3 className="text-white font-bold tracking-widest uppercase text-sm drop-shadow-md mb-1">{item.name}</h3>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 h-0 group-hover:h-auto overflow-hidden">
+                    <span className="text-primary text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 mt-2">
+                      Explore Gear &rarr;
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Footer Bar */}

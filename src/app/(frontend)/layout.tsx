@@ -8,6 +8,7 @@ import { SmoothScroll } from '@/components/shared/SmoothScroll'
 import { Toaster } from '@/components/ui/sonner'
 import { GlobalNavigationSpinner } from '@/components/shared/GlobalNavigationSpinner'
 import { CustomScrollbar } from '@/components/shared/CustomScrollbar'
+import { AgeGate } from '@/components/shared/AgeGate'
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
@@ -28,6 +29,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           className="min-h-screen bg-cream text-ink font-sans antialiased"
           suppressHydrationWarning
         >
+          <AgeGate />
           <React.Suspense fallback={null}>
             <GlobalNavigationSpinner />
           </React.Suspense>

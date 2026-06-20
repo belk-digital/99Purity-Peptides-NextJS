@@ -145,7 +145,7 @@ export function DifferenceSection() {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-[#003333] to-[#001111] py-24 px-4 md:px-10 overflow-hidden relative font-sans w-full min-h-[800px] flex items-center justify-center border-t border-primary/20">
+    <section className="bg-gradient-to-br from-[#003333] to-[#001111] py-24 px-4 md:px-10 overflow-hidden relative font-sans w-full min-h-[800px] flex items-center justify-center">
       
       {/* Background Tech Pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
