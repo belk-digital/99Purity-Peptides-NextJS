@@ -11,7 +11,7 @@ import { useCartStore } from '@/lib/cart/store'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import dynamic from 'next/dynamic'
 import { SearchOverlay } from './SearchOverlay'
-import GlassSurface from '@/components/ui/GlassSurface'
+
 
 const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod => mod.CartDrawer), { ssr: false })
 
@@ -149,12 +149,12 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       </div>
 
       {/* Center: Nav */}
-      <nav className="hidden xl:flex items-center justify-center gap-4 xl:gap-8 flex-1 h-full">
+      <nav className="hidden xl:flex items-center justify-center gap-2.5 2xl:gap-6 flex-1 h-full min-w-0">
         {(() => {
           const getNavLinkClass = (path: string) => {
             const targetPath = path.replace('/en', '');
             const isActive = targetPath === '' ? pathname === '/en' || pathname === '/' : pathname.includes(targetPath);
-            return `text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full flex items-center py-2 ${
+            return `text-[8px] 2xl:text-[10px] font-heading tracking-normal 2xl:tracking-[0.1em] uppercase transition-all h-full flex items-center py-2 whitespace-nowrap ${
               isActive 
                 ? `font-bold text-primary opacity-100` 
                 : `font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`
@@ -172,7 +172,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                 onMouseEnter={() => setIsMegaMenuOpen(true)}
                 onMouseLeave={() => setIsMegaMenuOpen(false)}
               >
-                <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[11px] xl:text-[12px] font-sans tracking-[0.2em] uppercase transition-all h-full py-2 font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
+                <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[8px] 2xl:text-[10px] font-heading tracking-normal 2xl:tracking-[0.1em] uppercase transition-all h-full py-2 font-medium whitespace-nowrap ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
                   CATEGORIES
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
                 </Link>
@@ -202,7 +202,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       </nav>
 
       {/* Right: Search, SHOP NOW Button & Cart */}
-      <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-5 flex-1 xl:flex-none text-sm relative z-20">
+      <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-4 2xl:gap-6 flex-none shrink-0 text-sm relative z-20">
         <button 
           onClick={() => setIsSearchOpen(true)}
           className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}
@@ -237,7 +237,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           ) : null}
         </div>
         
-        <Link href="/shop" className={`hidden md:inline-flex border rounded-full px-8 py-3 text-[13px] font-semibold tracking-[0.2em] uppercase transition-all ${textColor} ${buttonBorder} xl:-mr-2`}>
+        <Link href="/shop" className={`hidden md:inline-flex border border-white/30 hover:border-white bg-transparent hover:bg-white text-white hover:text-black rounded-full px-4 py-2 2xl:px-6 2xl:py-2.5 text-[8.5px] 2xl:text-[11px] font-heading font-bold tracking-normal 2xl:tracking-[0.1em] uppercase transition-colors duration-300 whitespace-nowrap`}>
           SHOP NOW
         </Link>
 
@@ -301,22 +301,10 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                 {headerContent}
               </div>
             ) : (
-              <GlassSurface
-                width="100%"
-                height="auto"
-                borderRadius={999}
-                brightness={40}
-                opacity={4}
-                blur={10}
-                displace={6}
-                distortionScale={-80}
-                redOffset={2}
-                greenOffset={5}
-                blueOffset={10}
-                className="w-full !bg-black/20 border border-white/10"
-              >
+              <div className="w-full transition-all duration-500 rounded-full bg-black/30 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent pointer-events-none rounded-full" />
                 {headerContent}
-              </GlassSurface>
+              </div>
             )}
           </div>
         </motion.div>

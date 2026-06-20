@@ -13,6 +13,7 @@ import { FaqCarousel, FaqItem } from '@/components/shared/FaqCarousel'
 import { WhyChooseUs } from '@/components/about/WhyChooseUs'
 import { SwipeCarousel } from '@/components/shared/SwipeCarousel'
 import { getFeaturedProducts } from '@/app/(frontend)/actions/getFeaturedProducts'
+import { FluidButton } from '@/components/ui/fluid-button'
 
 const ABOUT_FAQS: FaqItem[] = [
   {
@@ -590,12 +591,7 @@ export default function AboutPage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mt-8 lg:mt-12 w-full sm:w-auto">
-                <Link href="/shop" className="w-full sm:w-auto group">
-                  <Button className="w-full rounded-full px-12 py-8 bg-ink text-white hover:bg-[#008B8B] transition-colors duration-500 shadow-xl font-medium text-lg flex items-center justify-center gap-3">
-                    Shop Collection
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
+                <FluidButton href="/shop" text="Shop Collection" />
                 <Link href="/certificates" className="w-full sm:w-auto group">
                   <Button variant="outline" className="w-full rounded-full px-12 py-8 border-slate-200 text-ink hover:border-[#008B8B] hover:bg-slate-50 transition-colors duration-500 text-lg bg-white shadow-sm flex items-center justify-center gap-3">
                     View COAs

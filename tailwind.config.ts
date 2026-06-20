@@ -42,7 +42,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Inter', '"Geist Placeholder"', 'sans-serif'],
+        sans: ['Outfit', 'Inter', '"Geist Placeholder"', 'sans-serif'],
         heading: ['Michroma', '"Big Shoulders Display"', 'sans-serif'],
         display: ['"Space Grotesk"', 'sans-serif'],
       },

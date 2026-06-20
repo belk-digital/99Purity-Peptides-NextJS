@@ -4,6 +4,7 @@ import React from 'react';
 import { ArrowRight, ShieldCheck, FlaskConical, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PinterestGlassCard } from '../home/PinterestGlassCard';
+import { FluidButton } from '@/components/ui/fluid-button';
 
 export function TrustBadges() {
   const cardContainerVariants: any = {
@@ -41,12 +42,7 @@ export function TrustBadges() {
           </div>
           
           <div className="flex flex-col items-start md:items-end gap-6 sm:gap-8 max-w-md mt-2 sm:mt-6 md:mt-0">
-            <button className="inline-flex items-center gap-3 bg-zinc-900 text-cream text-sm sm:text-base font-medium pl-6 sm:pl-8 pr-2 py-2 rounded-full hover:bg-primary transition-all duration-300 shadow-xl group">
-              Discover Quality
-              <div className="bg-cream rounded-full p-2 group-hover:bg-zinc-900 transition-colors">
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-900 group-hover:text-cream transition-colors" />
-              </div>
-            </button>
+            <FluidButton href="/about" text="Discover Quality" className="relative z-10" />
             <p className="text-zinc-600 text-sm sm:text-base md:text-lg text-left md:text-right leading-relaxed font-medium">
               Every compound is synthesized under strict laboratory conditions, independently verified via third-party analysis, and sealed to ensure maximum stability.
             </p>

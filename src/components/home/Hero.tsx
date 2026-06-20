@@ -4,6 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, ShoppingCart, ShieldCheck, FlaskConical, Award } from 'lucide-react'
 import Link from 'next/link'
+import { FluidButton } from '@/components/ui/fluid-button'
 
 export function Hero() {
   return (
@@ -26,7 +27,7 @@ export function Hero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
         >
-          <source src="/videos/99Purity Peptides hero video.mp4" type="video/mp4" />
+          <source src="/videos/homepage-hero-video.webm" type="video/webm" />
         </video>
 
         {/* Dark Gradient Overlay inside card */}
@@ -46,12 +47,7 @@ export function Hero() {
               className="absolute bottom-0 -right-[calc(3rem-1px)] w-12 h-12 md:-right-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none"
               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 0v100h100A100 100 0 0 1 0 0Z' fill='%23FAF7F2'/%3E%3C/svg%3E")` }}
             />
-            <Link href="/shop" className="group flex items-center justify-between gap-4 md:gap-8 text-sm sm:text-base md:text-lg text-white bg-black rounded-full pl-8 pr-2.5 py-2.5 md:pl-10 md:pr-3 md:py-3 hover:bg-zinc-900 transition-all font-bold uppercase tracking-wider hover:-translate-y-1 duration-300 relative z-10">
-              <span>View Research Peptides</span>
-              <div className="bg-cream text-black rounded-full p-3 md:p-4 group-hover:bg-primary transition-colors">
-                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:-rotate-45 transition-transform duration-300" />
-              </div>
-            </Link>
+            <FluidButton href="/shop" text="View Research Peptides" className="relative z-10" />
           </div>
         </div>
 
@@ -62,10 +58,9 @@ export function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            <h1 className="font-heading text-[10vw] sm:text-5xl md:text-[75px] lg:text-[90px] xl:text-[100px] leading-[0.95] md:leading-[0.9] text-white tracking-tighter uppercase font-black drop-shadow-2xl max-w-4xl mb-4 md:mb-6">
-              THE FUTURE<br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-300">OF PEPTIDE</span><br/>
-              SCIENCE.
+            <h1 className="font-heading text-[9vw] sm:text-4xl md:text-[60px] lg:text-[70px] xl:text-[80px] leading-[1.1] md:leading-[1.05] text-white tracking-tighter uppercase font-black drop-shadow-2xl max-w-4xl mb-1 md:mb-2">
+              HIGH-PURITY<br/>
+              RESEARCH PEPTIDES
             </h1>
           </motion.div>
 
@@ -73,9 +68,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-gray-300 text-xs sm:text-sm md:text-lg max-w-[260px] sm:max-w-md font-medium leading-relaxed tracking-wide drop-shadow-md border-l-2 border-primary pl-4 md:pl-5"
+            className="mt-2 md:mt-4 text-white/60 text-sm sm:text-base md:text-xl max-w-[280px] sm:max-w-xl font-light leading-relaxed tracking-wide"
           >
-            Precision-engineered peptides for researchers demanding the highest standards of purity and performance.
+            Precision-engineered peptides for researchers demanding the highest standards of <span className="text-white">purity</span> and <span className="text-white">performance</span>.
           </motion.p>
         </div>
 
