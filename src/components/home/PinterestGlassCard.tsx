@@ -13,22 +13,24 @@ interface PinterestGlassCardProps {
 
 export function PinterestGlassCard({ title, description, icon, tag, className = '' }: PinterestGlassCardProps) {
   return (
-    <div className={`relative w-full rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-[#003333]/95 to-[#001111]/95 backdrop-blur-2xl border border-primary/20 p-6 sm:p-8 md:p-6 lg:p-8 overflow-visible group ${className}`}>
+    <div className={`relative w-full rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-[#003333]/95 to-[#001111]/95 backdrop-blur-md border border-primary/20 p-6 sm:p-8 md:p-6 lg:p-8 overflow-visible group ${className}`}>
       
       {/* Premium Background Decor */}
       <div className="absolute inset-0 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden z-0 pointer-events-none">
         {/* Top Right Glow */}
         <motion.div 
-          animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.8, 0.3] }}
+          animate={{ opacity: [0.3, 0.7, 0.3] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-20 -right-20 w-64 h-64 bg-primary/40 rounded-full blur-[80px]" 
+          className="absolute -top-20 -right-20 w-64 h-64 bg-primary/40 rounded-full blur-[80px] pointer-events-none" 
+          style={{ willChange: "opacity" }}
         />
         
         {/* Bottom Left Glow */}
         <motion.div 
-          animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.6, 0.2] }}
+          animate={{ opacity: [0.2, 0.5, 0.2] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute -bottom-24 -left-10 w-56 h-56 bg-emerald-500/30 rounded-full blur-[64px]" 
+          style={{ willChange: "opacity" }}
         />
         
         {/* Precision Dot Pattern (GPU Accelerated Translation) */}
@@ -36,12 +38,12 @@ export function PinterestGlassCard({ title, description, icon, tag, className = 
           animate={{ x: [0, -24], y: [0, -24] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           className="absolute -top-[24px] -left-[24px] w-[calc(100%+48px)] h-[calc(100%+48px)] opacity-[0.12]" 
-          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}
+          style={{ willChange: "transform", backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}
         />
 
         {/* Fine Noise Texture for Frosted Glass feel */}
         <div 
-          className="absolute inset-0 opacity-[0.15] mix-blend-overlay"
+          className="absolute inset-0 opacity-[0.06] pointer-events-none"
           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
         />
 
@@ -50,6 +52,7 @@ export function PinterestGlassCard({ title, description, icon, tag, className = 
           animate={{ x: ['-200%', '200%'] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 4 }}
           className="absolute inset-0 w-[150%] bg-gradient-to-r from-transparent via-white/[0.25] to-transparent skew-x-[-45deg]" 
+          style={{ willChange: "transform" }}
         />
         
         {/* Inner Glass Highlight */}

@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
-import { motion, Variants } from 'framer-motion'
+import React, { useState } from 'react'
+import { motion, Variants, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
@@ -57,6 +57,9 @@ const BLOG_POSTS = [
 ]
 
 export function BlogSection() {
+  const [hoveredCol, setHoveredCol] = useState<number | null>(null);
+  const [hoveredCol2, setHoveredCol2] = useState<number | null>(null);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -116,9 +119,12 @@ export function BlogSection() {
           className="flex flex-col md:flex-row justify-between items-end mb-16"
         >
           <div className="w-full md:w-2/3">
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black text-white leading-none tracking-tighter uppercase">
-              Latest<br />Intelligence.
+            <h2 className="font-heading text-[2.2rem] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter uppercase break-words mb-4">
+              Latest Peptide<br />Research Resources
             </h2>
+            <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-xl">
+              Insights from the lab and the field
+            </p>
           </div>
           <div className="w-full md:w-1/3 flex justify-start md:justify-end mt-6 md:mt-0">
             <Link href="/journal" className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors uppercase tracking-[0.2em] text-xs font-bold">
@@ -148,17 +154,25 @@ export function BlogSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6"
+          className="flex flex-col md:flex-row gap-4 md:gap-6 w-full md:h-[600px]"
         >
           {/* Left Column */}
-          <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+          <motion.div 
+            layout
+            onMouseEnter={() => setHoveredCol(0)}
+            onMouseLeave={() => setHoveredCol(null)}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
+              hoveredCol === 0 ? 'md:w-1/2' : (hoveredCol === null ? 'md:w-1/4' : 'md:w-1/4')
+            }`}
+          >
+            <motion.div layout custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
               <Link href={`/journal/${BLOG_POSTS[0].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[0].image} 
                   alt={BLOG_POSTS[0].title} 
                   fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
@@ -169,12 +183,20 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-            <motion.div custom={1} variants={itemVariants} className="w-[80%] aspect-square self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
-          </div>
+            <motion.div layout custom={1} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
+          </motion.div>
 
           {/* Middle Column */}
-          <div className="md:col-span-6 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div custom={2} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-[400px] md:h-[600px] bg-white/5 border border-white/10 w-full">
+          <motion.div 
+            layout
+            onMouseEnter={() => setHoveredCol(1)}
+            onMouseLeave={() => setHoveredCol(null)}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
+              hoveredCol === 1 ? 'md:w-1/2' : (hoveredCol === null ? 'md:w-1/2' : 'md:w-1/4')
+            }`}
+          >
+            <motion.div layout custom={2} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-full bg-white/5 border border-white/10 w-full">
               <Link href={`/journal/${BLOG_POSTS[1].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[1].image} 
@@ -191,18 +213,26 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Right Column */}
-          <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div custom={3} variants={itemVariants} className="w-[80%] aspect-square self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
-            <motion.div custom={4} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+          <motion.div 
+            layout
+            onMouseEnter={() => setHoveredCol(2)}
+            onMouseLeave={() => setHoveredCol(null)}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
+              hoveredCol === 2 ? 'md:w-1/2' : (hoveredCol === null ? 'md:w-1/4' : 'md:w-1/4')
+            }`}
+          >
+            <motion.div layout custom={3} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
+            <motion.div layout custom={4} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
               <Link href={`/journal/${BLOG_POSTS[2].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[2].image} 
                   alt={BLOG_POSTS[2].title} 
                   fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
@@ -213,7 +243,7 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Second Row of Posts (Alternating Layout) */}
@@ -222,18 +252,26 @@ export function BlogSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 mt-4 md:mt-6"
+          className="flex flex-col md:flex-row gap-4 md:gap-6 w-full md:h-[600px] mt-4 md:mt-6"
         >
           {/* Left Column (Alternated: Spacer first) */}
-          <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div custom={5} variants={itemVariants} className="w-[80%] aspect-square self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
-            <motion.div custom={6} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+          <motion.div 
+            layout
+            onMouseEnter={() => setHoveredCol2(0)}
+            onMouseLeave={() => setHoveredCol2(null)}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
+              hoveredCol2 === 0 ? 'md:w-1/2' : (hoveredCol2 === null ? 'md:w-1/4' : 'md:w-1/4')
+            }`}
+          >
+            <motion.div layout custom={5} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
+            <motion.div layout custom={6} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
               <Link href={`/journal/${BLOG_POSTS[3].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[3].image} 
                   alt={BLOG_POSTS[3].title} 
                   fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
@@ -244,11 +282,19 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Middle Column */}
-          <div className="md:col-span-6 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div custom={7} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-[400px] md:h-[600px] bg-white/5 border border-white/10 w-full">
+          <motion.div 
+            layout
+            onMouseEnter={() => setHoveredCol2(1)}
+            onMouseLeave={() => setHoveredCol2(null)}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
+              hoveredCol2 === 1 ? 'md:w-1/2' : (hoveredCol2 === null ? 'md:w-1/2' : 'md:w-1/4')
+            }`}
+          >
+            <motion.div layout custom={7} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-full bg-white/5 border border-white/10 w-full">
               <Link href={`/journal/${BLOG_POSTS[4].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[4].image} 
@@ -265,17 +311,25 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Right Column (Alternated: Post first) */}
-          <div className="md:col-span-3 flex flex-col gap-4 md:gap-6 h-full">
-            <motion.div custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full min-h-[300px]">
+          <motion.div 
+            layout
+            onMouseEnter={() => setHoveredCol2(2)}
+            onMouseLeave={() => setHoveredCol2(null)}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
+              hoveredCol2 === 2 ? 'md:w-1/2' : (hoveredCol2 === null ? 'md:w-1/4' : 'md:w-1/4')
+            }`}
+          >
+            <motion.div layout custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
               <Link href={`/journal/${BLOG_POSTS[5].slug}`} className="block w-full h-full relative">
                 <Image 
                   src={BLOG_POSTS[5].image} 
                   alt={BLOG_POSTS[5].title} 
                   fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
@@ -286,8 +340,8 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-            <motion.div custom={1} variants={itemVariants} className="w-[80%] aspect-square self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
-          </div>
+            <motion.div layout custom={1} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
+          </motion.div>
         </motion.div>
       </div>
 

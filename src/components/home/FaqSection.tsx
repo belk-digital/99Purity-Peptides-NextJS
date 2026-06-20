@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
 const faqs = [
@@ -50,11 +50,11 @@ const FaqItem = ({
       <div className="container mx-auto px-4 md:px-10 max-w-[1600px] flex flex-col lg:flex-row w-full gap-6 lg:gap-8 justify-between items-start">
         
         {/* Left: Num + Question */}
-        <div className="flex flex-1 gap-6 md:gap-12 lg:gap-32 items-start w-full lg:w-1/2">
-          <span className="font-heading text-2xl lg:text-3xl font-medium text-ink/40 group-hover:text-primary transition-colors duration-300">
+        <div className="flex flex-1 gap-4 sm:gap-6 md:gap-12 lg:gap-32 items-start w-full lg:w-1/2">
+          <span className="font-heading text-xl sm:text-2xl lg:text-3xl font-medium text-ink/40 group-hover:text-primary transition-colors duration-300">
             {num}
           </span>
-          <h3 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-ink leading-[1.1] max-w-lg">
+          <h3 className="font-heading text-[1.2rem] sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-ink leading-tight max-w-full sm:max-w-lg break-words">
             {faq.question}
           </h3>
         </div>
@@ -82,18 +82,26 @@ const FaqItem = ({
 };
 
 export function FaqSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHoveringFaq, setIsHoveringFaq] = useState(false);
+
+  // Use MotionValues to prevent React re-renders on mousemove (fixes scroll lag)
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  const springConfig = { damping: 28, stiffness: 400, mass: 0.5 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX - 50);
+      cursorY.set(e.clientY - 50);
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [cursorX, cursorY]);
 
   return (
     <section className="bg-cream w-full py-32 relative z-30 font-sans">
@@ -101,19 +109,17 @@ export function FaqSection() {
       {/* Custom Cursor */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
+        style={{ 
+          x: cursorXSpring, 
+          y: cursorYSpring,
+          width: 100, 
+          height: 100 
+        }}
         animate={{
-          x: mousePosition.x - 50,
-          y: mousePosition.y - 50,
           scale: isHoveringFaq ? 1 : 0,
           opacity: isHoveringFaq ? 1 : 0,
         }}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 28,
-          mass: 0.5,
-        }}
-        style={{ width: 100, height: 100 }}
+        transition={{ duration: 0.2 }}
       >
         <span className="max-w-[70px] leading-tight text-sm">READ</span>
       </motion.div>
@@ -123,7 +129,7 @@ export function FaqSection() {
           <p className="text-ink/50 text-sm font-bold tracking-widest uppercase hidden md:block mb-6 md:mb-0">
             (faqs)
           </p>
-          <h2 className="font-heading text-[clamp(3rem,9vw,140px)] font-black text-ink text-left md:text-right uppercase leading-[0.85] tracking-tighter w-full">
+          <h2 className="font-heading text-[2.5rem] sm:text-[clamp(3rem,9vw,140px)] font-black text-ink text-left md:text-right uppercase leading-[0.85] tracking-tighter w-full break-words">
             FREQUENTLY<br />ASKED
           </h2>
         </div>

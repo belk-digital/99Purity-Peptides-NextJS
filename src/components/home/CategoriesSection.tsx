@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -29,18 +29,26 @@ const CATEGORY_IMAGES = [
 
 export function CategoriesSection() {
   const targetRef = useRef<HTMLDivElement>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHoveringCategory, setIsHoveringCategory] = useState(false);
+
+  // Use MotionValues for high-performance cursor tracking without React re-renders
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { damping: 28, stiffness: 400, mass: 0.5 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX - 50);
+      cursorY.set(e.clientY - 50);
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [cursorX, cursorY]);
   
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -57,19 +65,17 @@ export function CategoriesSection() {
       {/* Custom Cursor */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
+        style={{ 
+          x: cursorXSpring, 
+          y: cursorYSpring,
+          width: 100, 
+          height: 100 
+        }}
         animate={{
-          x: mousePosition.x - 50,
-          y: mousePosition.y - 50,
           scale: isHoveringCategory ? 1 : 0,
           opacity: isHoveringCategory ? 1 : 0,
         }}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 28,
-          mass: 0.5,
-        }}
-        style={{ width: 100, height: 100 }}
+        transition={{ duration: 0.2 }}
       >
         <span className="max-w-[70px] leading-tight text-[11px] font-bold">EXPLORE</span>
       </motion.div>
@@ -82,12 +88,12 @@ export function CategoriesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, margin: "-50px" }}
-            className="flex flex-col md:flex-row justify-between items-end"
+            className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 md:gap-0"
           >
-            <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-ink leading-none tracking-tighter uppercase w-full md:w-1/2">
+            <h2 className="font-heading text-[2rem] sm:text-3xl md:text-5xl lg:text-6xl font-black text-ink leading-[0.9] tracking-tighter uppercase w-full md:w-1/2 break-words">
               RESEARCH<br />CATEGORIES.
             </h2>
-            <p className="text-slate-500 text-base md:text-lg max-w-md text-left md:text-right mt-6 md:mt-0 leading-relaxed font-medium">
+            <p className="text-slate-500 text-sm sm:text-base md:text-lg max-w-md text-left md:text-right leading-relaxed font-medium">
               Explore our specialized catalogue of high-purity peptides synthesized for specific research pathways and biological systems.
             </p>
           </motion.div>
@@ -118,7 +124,7 @@ export function CategoriesSection() {
               {/* Bottom Centered Text */}
               <div className="absolute inset-x-0 bottom-12 flex justify-center pointer-events-none px-4 z-10">
                   <h3 
-                    className="font-heading text-2xl md:text-3xl lg:text-4xl font-semibold text-white tracking-tight text-center drop-shadow-md transition-all duration-500 group-hover:-translate-y-2 uppercase"
+                    className="font-heading text-[1.1rem] sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white tracking-tight text-center drop-shadow-md transition-all duration-500 group-hover:-translate-y-2 uppercase break-words w-full"
                   >
                     {category.name}
                   </h3>

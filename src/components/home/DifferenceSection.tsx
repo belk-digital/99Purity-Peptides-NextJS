@@ -150,7 +150,7 @@ export function DifferenceSection() {
       {/* Background Tech Pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
-      <div className="w-full max-w-[120rem] px-2 sm:px-12 md:px-16 mx-auto relative z-10 flex flex-col xl:flex-row justify-between items-center h-full gap-16 xl:gap-8">
+      <div className="w-full max-w-[120rem] px-6 sm:px-12 md:px-16 mx-auto relative z-10 flex flex-col xl:flex-row justify-between items-center h-full gap-16 xl:gap-8">
         
         {/* Left Content */}
         <motion.div 
@@ -160,21 +160,21 @@ export function DifferenceSection() {
           viewport={{ once: true, margin: "-100px" }}
           className="w-full xl:w-[35%] z-20 text-center xl:text-left mt-10 xl:mt-0"
         >
-          <motion.div variants={itemVariants} className="inline-block border border-white/10 rounded-full px-4 py-1.5 mb-6 bg-white/5 backdrop-blur-sm mx-auto xl:mx-0">
-            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">99 Purity Peptides</span>
+          <motion.div variants={itemVariants} className="inline-block border border-white/10 rounded-full px-4 py-1.5 mb-4 sm:mb-6 bg-white/5 backdrop-blur-sm mx-auto xl:mx-0">
+            <span className="text-primary text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">99 Purity Peptides</span>
           </motion.div>
-          <motion.h2 variants={itemVariants} className="text-white text-5xl md:text-7xl lg:text-8xl font-heading font-black uppercase leading-[0.9] tracking-tighter mb-6">
+          <motion.h2 variants={itemVariants} className="text-white text-[2rem] sm:text-5xl md:text-7xl lg:text-8xl font-heading font-black uppercase leading-[0.9] tracking-tighter mb-4 sm:mb-6">
             The Lab<br />Difference
           </motion.h2>
-          <motion.p variants={itemVariants} className="text-white/70 text-base md:text-lg leading-relaxed mb-10 max-w-lg mx-auto xl:mx-0 font-medium">
+          <motion.p variants={itemVariants} className="text-white/70 text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 max-w-lg mx-auto xl:mx-0 font-medium">
             Each batch is tested by an independent, accredited laboratory to confirm purity, identity, and composition. Results are documented and available by batch.
           </motion.p>
           <motion.div variants={itemVariants} className="flex justify-center xl:justify-start">
             <Link 
               href="/certificates"
-              className="bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] uppercase tracking-wider text-sm"
+              className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold flex items-center gap-3 hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] uppercase tracking-wider text-xs sm:text-sm"
             >
-              <FileText className="w-5 h-5" />
+              <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
               View COA Library
             </Link>
           </motion.div>
@@ -245,6 +245,7 @@ export function DifferenceSection() {
                     src="/99 Images/transparant-vial.png" 
                     alt="Vial" 
                     fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
                     className={`object-contain transition-all duration-300 ${isAgitated ? 'drop-shadow-[0_0_40px_rgba(255,255,255,0.4)]' : 'drop-shadow-[0_0_40px_rgba(255,255,255,0.15)]'}`}
                   />
                 </motion.div>
@@ -325,6 +326,7 @@ export function DifferenceSection() {
                  src="/99 Images/transparant-vial.png" 
                  alt="Vial" 
                  fill
+                 sizes="(max-width: 640px) 180px, 200px"
                  className="object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" 
                />
              </motion.div>

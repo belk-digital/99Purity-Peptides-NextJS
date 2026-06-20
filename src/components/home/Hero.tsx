@@ -26,7 +26,7 @@ export function Hero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
         >
-          <source src="https://res.cloudinary.com/dgrrovta3/video/upload/v1781206084/99 Purity Peptides_Hero_video_etnndz.mp4" type="video/mp4" />
+          <source src="/videos/99Purity Peptides hero video.mp4" type="video/mp4" />
         </video>
 
         {/* Dark Gradient Overlay inside card */}
@@ -101,6 +101,7 @@ export function Hero() {
               className="flex whitespace-nowrap items-center text-zinc-900 font-extrabold tracking-[0.25em] text-[10px] sm:text-xs md:text-sm w-max pointer-events-none"
               animate={{ x: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: 15 }}
+              style={{ willChange: "transform" }}
             >
                {[...Array(4)].map((_, i) => (
                  <div key={i} className="flex items-center">

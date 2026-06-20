@@ -85,30 +85,30 @@ export function ParallaxImageSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute inset-0 flex items-center justify-center z-50 bg-black/60 backdrop-blur-sm p-4"
+            className="absolute inset-0 flex items-center justify-center z-50 bg-black/60 backdrop-blur-sm p-4 sm:p-6"
           >
-            <div className="bg-[#111] border border-white/10 p-6 md:p-8 rounded-2xl w-full max-w-sm text-center flex flex-col items-center gap-3 md:gap-4 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative">
+            <div className="bg-[#111] border border-white/10 p-5 sm:p-6 md:p-8 rounded-2xl w-full max-w-sm text-center flex flex-col items-center gap-3 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative">
               <button 
                 onClick={() => setShowReward(false)}
-                className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors w-8 h-8 flex items-center justify-center text-lg md:text-base"
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white/40 hover:text-white transition-colors w-8 h-8 flex items-center justify-center text-lg md:text-base"
               >
                 ✕
               </button>
-              <div className="w-14 h-14 md:w-16 md:h-16 bg-white/5 text-white border border-white/10 rounded-full flex items-center justify-center text-2xl md:text-3xl mb-1 shadow-inner">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white/5 text-white border border-white/10 rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl mb-1 shadow-inner">
                 🏆
               </div>
-              <h3 className="text-white font-heading text-xl md:text-2xl font-bold uppercase tracking-tight">Secret Unlocked</h3>
-              <p className="text-white/60 text-xs md:text-sm">
+              <h3 className="text-white font-heading text-lg sm:text-xl md:text-2xl font-bold uppercase tracking-tight">Secret Unlocked</h3>
+              <p className="text-white/60 text-[10px] sm:text-xs md:text-sm">
                 You found the Gigachad button. Take 15% off your next research project.
               </p>
-              <div className="bg-black border border-white/10 p-1.5 md:p-2 pl-4 md:pl-6 rounded-xl flex items-center justify-between w-full mt-2 shadow-inner">
-                <span className="text-white font-mono font-bold text-base md:text-lg tracking-widest">GIGACHAD15</span>
+              <div className="bg-black border border-white/10 p-1.5 sm:p-2 pl-3 sm:pl-4 md:pl-6 rounded-xl flex items-center justify-between w-full mt-2 shadow-inner">
+                <span className="text-white font-mono font-bold text-xs sm:text-base md:text-lg tracking-widest">GIGACHAD15</span>
                 <button 
                   onClick={() => {
                     navigator.clipboard.writeText('GIGACHAD15');
                     alert('Copied to clipboard!');
                   }}
-                  className="text-[10px] md:text-xs bg-white text-black px-3 py-2 md:px-4 md:py-2.5 rounded-lg font-bold uppercase tracking-wider hover:bg-white/80 transition-colors shrink-0 ml-2"
+                  className="text-[9px] sm:text-[10px] md:text-xs bg-white text-black px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2.5 rounded-lg font-bold uppercase tracking-wider hover:bg-white/80 transition-colors shrink-0 ml-2"
                 >
                   Copy
                 </button>
