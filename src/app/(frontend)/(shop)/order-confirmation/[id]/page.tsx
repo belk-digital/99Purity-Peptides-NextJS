@@ -5,7 +5,7 @@ import { OrderConfirmationClient } from './OrderConfirmationClient'
 import { notFound } from 'next/navigation'
 
 export const metadata = {
-  title: 'Order Confirmed | The Looksmaxxing Lab',
+  title: 'Order Confirmed | 99 Purity Peptides',
 }
 
 export default async function OrderConfirmationPage({ params }: { params: Promise<{ id: string }> }) {

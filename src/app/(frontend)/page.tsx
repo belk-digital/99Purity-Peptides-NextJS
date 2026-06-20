@@ -15,7 +15,7 @@ import { IdleMewingCursor } from '@/components/shared/IdleMewingCursor'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'The Looksmaxxing Lab | Research-Grade Peptides, COA-Verified',
+  title: '99 Purity Peptides | Research-Grade Peptides, COA-Verified',
   description: 'US-synthesized research peptides — BPC-157, TB-500, GHK-Cu, Semaglutide. Every batch verified at ≥99% HPLC purity with a full COA. Shop with confidence. 2-day shipping available.',
 }
 
@@ -87,10 +87,10 @@ export default async function Homepage() {
                 },
                 {
                   "@type": "Question",
-                  "name": "What is looksmaxxing and how do peptides relate to it?",
+                  "name": "What is 99 Purity Peptides and how do peptides relate to it?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Looksmaxxing is the practice of optimizing physical appearance through controllable factors. Research peptides are studied in relation to skin collagen, tissue recovery, body composition, and hair density. Our compounds are research use only."
+                    "text": "99 Purity Peptides is the practice of optimizing physical appearance through controllable factors. Research peptides are studied in relation to skin collagen, tissue recovery, body composition, and hair density. Our compounds are research use only."
                   }
                 },
                 {
@@ -106,20 +106,20 @@ export default async function Homepage() {
             {
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "The Looksmaxxing Lab",
-              "url": "https://the-looksmaxxing-lab.vercel.app",
+              "name": "99 Purity Peptides",
+              "url": "https://the-99 Purity Peptides-lab.vercel.app",
               "description": "US-based research peptide supplier providing ≥99% HPLC-pure compounds with third-party COA verification.",
-              "sameAs": ["https://instagram.com/thelooksmaxxinglab"]
+              "sameAs": ["https://instagram.com/the99 Purity Peptideslab"]
             },
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "url": "https://the-looksmaxxing-lab.vercel.app",
+              "url": "https://the-99 Purity Peptides-lab.vercel.app",
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": {
                   "@type": "EntryPoint",
-                  "urlTemplate": "https://the-looksmaxxing-lab.vercel.app/shop?q={search_term_string}"
+                  "urlTemplate": "https://the-99 Purity Peptides-lab.vercel.app/shop?q={search_term_string}"
                 },
                 "query-input": "required name=search_term_string"
               }

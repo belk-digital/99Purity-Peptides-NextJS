@@ -26,7 +26,7 @@ export function Hero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
         >
-          <source src="https://res.cloudinary.com/dgrrovta3/video/upload/v1781206084/Sparta_Hero_video_etnndz.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dgrrovta3/video/upload/v1781206084/99 Purity Peptides_Hero_video_etnndz.mp4" type="video/mp4" />
         </video>
 
         {/* Dark Gradient Overlay inside card */}

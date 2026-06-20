@@ -86,8 +86,8 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
             
             {/* Print Branding Header */}
             <div className="hidden print:flex items-center justify-between py-4 px-0 border-b border-ink/10">
-              <h1 className="text-2xl font-display font-bold tracking-tight text-ink uppercase">The Looksmaxxing Lab</h1>
-              <p className="text-sm font-medium text-ink/60">thelooksmaxxinglab.com</p>
+              <h1 className="text-2xl font-display font-bold tracking-tight text-ink uppercase">99 Purity Peptides</h1>
+              <p className="text-sm font-medium text-ink/60">peptides7.com</p>
             </div>
 
             {/* Invoice Header */}
@@ -209,7 +209,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
               <button onClick={() => window.print()} className="flex items-center gap-2 hover:text-ink transition-colors font-medium">
                 <Printer size={16} /> Print Receipt
               </button>
-              <span className="text-center sm:text-left">Questions? <a href="mailto:support@thelooksmaxxinglab.com" className="text-ink underline hover:no-underline font-medium">Contact Support</a></span>
+              <span className="text-center sm:text-left">Questions? <a href="mailto:support@peptides7.com" className="text-ink underline hover:no-underline font-medium">Contact Support</a></span>
             </div>
           </div>
         </FadeUp>

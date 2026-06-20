@@ -43,7 +43,7 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
               <span className="flex items-center text-ink"><span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span> IN STOCK</span>
             </div>
             
-            {/* Giant Background Spartan Helmet Icon */}
+            {/* Giant Background 99 Purity Peptides Helmet Icon */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
               <svg 
                 viewBox="0 0 200 300" 

@@ -6,7 +6,7 @@ import config from '@payload-config'
 import { redirect } from 'next/navigation'
 
 export const metadata = {
-  title: 'Order History | The Looksmaxxing Lab',
+  title: 'Order History | 99 Purity Peptides',
 }
 
 export const dynamic = 'force-dynamic';

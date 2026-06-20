@@ -23,7 +23,7 @@ const CONTACT_FAQS = [
   { question: 'Where is my tracking number?', answer: 'Tracking numbers are automatically emailed as soon as your shipping label is created. You can also view your tracking status by logging into your account dashboard.' },
   { question: 'My package was damaged in transit, what do I do?', answer: 'If your vials arrive compromised, please use the contact form above to reach out within 48 hours of delivery. Include your order number and we will request photos of the damaged items to expedite a replacement.' },
   { question: 'How can I get a copy of my batch COA?', answer: 'Certificates of Analysis (COAs) are included with every shipment and are also available digitally. You can download past COAs directly from your Order History in your account dashboard, or request them via the Quality & COAs contact email.' },
-  { question: 'Do you offer wholesale pricing for laboratories?', answer: 'Yes, we offer special pricing tiers for bulk acquisition by licensed laboratories and academic institutions. Please select "Wholesale" in the contact form department dropdown or email wholesale@looksmaxxinglab.com directly.' },
+  { question: 'Do you offer wholesale pricing for laboratories?', answer: 'Yes, we offer special pricing tiers for bulk acquisition by licensed laboratories and academic institutions. Please select "Wholesale" in the contact form department dropdown or email wholesale@peptides7.com directly.' },
   { question: 'Why was my order cancelled?', answer: 'Orders may be cancelled if our fraud detection system flags an issue with the payment method, or if there is any communication indicating the intent to misuse our research-only products for human consumption.' },
   { question: 'Do you ship internationally?', answer: 'Yes, we ship worldwide. However, it is the sole responsibility of the researcher to ensure that the importation of our research compounds complies with all local and national regulations in the destination country.' }
 ]
@@ -155,8 +155,8 @@ export default function ContactPage() {
                 <div className="space-y-10">
                   <div>
                     <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Order Support</span>
-                    <a href="mailto:support@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
-                      support@looksmaxxinglab.com
+                    <a href="mailto:support@peptides7.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
+                      support@peptides7.com
                     </a>
                     <p className="text-sm text-gray-500 mt-2">
                       Responses typically within 12 hours.
@@ -165,8 +165,8 @@ export default function ContactPage() {
 
                   <div>
                     <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Quality & COAs</span>
-                    <a href="mailto:quality@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
-                      quality@looksmaxxinglab.com
+                    <a href="mailto:quality@peptides7.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
+                      quality@peptides7.com
                     </a>
                     <p className="text-sm text-gray-500 mt-2">
                       Include your batch number in the subject line.
@@ -175,8 +175,8 @@ export default function ContactPage() {
 
                   <div>
                     <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Wholesale</span>
-                    <a href="mailto:wholesale@looksmaxxinglab.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
-                      wholesale@looksmaxxinglab.com
+                    <a href="mailto:wholesale@peptides7.com" className="text-lg lg:text-xl font-medium text-ink hover:text-[#008B8B] transition-colors underline underline-offset-4">
+                      wholesale@peptides7.com
                     </a>
                     <p className="text-sm text-gray-500 mt-2">
                       For laboratory bulk acquisition and academic institutions.
@@ -187,7 +187,7 @@ export default function ContactPage() {
                 <div className="mt-16 pt-10 border-t border-gray-100">
                   <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Mailing Address</span>
                   <address className="text-base text-gray-600 not-italic leading-relaxed font-light">
-                    The Looksmaxxing Lab<br />
+                    99 Purity Peptides<br />
                     123 Innovation Drive, Suite 400<br />
                     Research Triangle Park, NC 27709
                   </address>

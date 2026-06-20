@@ -10,7 +10,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 export const metadata = {
-  title: 'My Account | The Looksmaxxing Lab',
+  title: 'My Account | 99 Purity Peptides',
 }
 
 export default async function AccountLayout({ children }: { children: React.ReactNode }) {

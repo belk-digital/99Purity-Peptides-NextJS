@@ -133,7 +133,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
     }
   })
 
-  // Force dark theme text/icons since Sparta Labs is dark
+  // Force dark theme text/icons since 99 Purity Peptides is dark
   const textColor = 'text-white'
   const textHoverColor = 'hover:text-primary transition-colors'
   const iconColor = '#ffffff'

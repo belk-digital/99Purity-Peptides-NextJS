@@ -2,7 +2,7 @@ import React from 'react'
 import { CartClient } from './CartClient'
 
 export const metadata = {
-  title: 'Your Cart | The Looksmaxxing Lab',
+  title: 'Your Cart | 99 Purity Peptides',
 }
 
 export default function CartPage() {

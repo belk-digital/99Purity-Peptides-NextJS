@@ -167,7 +167,7 @@ export default buildConfig({
   ],
   email: resendAdapter({
     defaultFromAddress: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
-    defaultFromName: 'The Looksmaxxing Lab',
+    defaultFromName: '99 Purity Peptides',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
 })

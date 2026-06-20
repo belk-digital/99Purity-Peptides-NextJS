@@ -161,7 +161,7 @@ export function DifferenceSection() {
           className="w-full xl:w-[35%] z-20 text-center xl:text-left mt-10 xl:mt-0"
         >
           <motion.div variants={itemVariants} className="inline-block border border-white/10 rounded-full px-4 py-1.5 mb-6 bg-white/5 backdrop-blur-sm mx-auto xl:mx-0">
-            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">The Looksmaxxing Lab</span>
+            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">99 Purity Peptides</span>
           </motion.div>
           <motion.h2 variants={itemVariants} className="text-white text-5xl md:text-7xl lg:text-8xl font-heading font-black uppercase leading-[0.9] tracking-tighter mb-6">
             The Lab<br />Difference

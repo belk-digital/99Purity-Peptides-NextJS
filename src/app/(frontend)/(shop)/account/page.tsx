@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 import type { Order, Address } from '@/payload-types'
 
 export const metadata = {
-  title: 'Account Overview | The Looksmaxxing Lab',
+  title: 'Account Overview | 99 Purity Peptides',
 }
 
 export default async function AccountOverviewPage() {

@@ -12,7 +12,7 @@ import { AgeGate } from '@/components/shared/AgeGate'
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
-  title: 'Looksmaxxing Lab',
+  title: '99 Purity Peptides',
   description: 'Premium Peptides for Peak Performance',
 }
 

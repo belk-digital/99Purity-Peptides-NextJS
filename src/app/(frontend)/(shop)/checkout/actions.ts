@@ -405,7 +405,7 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
     `
 
     await payload.sendEmail({
-      to: 'support@thelooksmaxxinglab.com',
+      to: 'support@peptides7.com',
       subject: `⚠️ Payment Failed - Order ${orderId}`,
       html: html,
     })
