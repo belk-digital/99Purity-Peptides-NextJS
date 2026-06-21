@@ -108,6 +108,7 @@ export function HomePreloaderWrapper({ children }: { children: React.ReactNode }
       onComplete: () => {
         setIsReady(true)
         gsap.set(preloaderRef.current, { display: 'none' })
+        window.dispatchEvent(new Event('preloader-done'))
       }
     })
 

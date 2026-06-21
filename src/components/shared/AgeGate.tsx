@@ -5,14 +5,17 @@ import { motion, AnimatePresence, useMotionValue, useTransform, useSpring, PanIn
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLenis } from 'lenis/react'
+import { usePathname } from 'next/navigation'
 
 export function AgeGate() {
   const [isVisible, setIsVisible] = useState(false)
   const [hasHydrated, setHasHydrated] = useState(false)
   const [exitDirection, setExitDirection] = useState<'up' | 'down'>('down')
+  const [waitingForPreloader, setWaitingForPreloader] = useState(false)
   
   const [isExpanding, setIsExpanding] = useState(false)
   const lenis = useLenis()
+  const pathname = usePathname()
 
   // Horizontal motion value tied to the draggable thumb
   const dragX = useMotionValue(0)
@@ -25,10 +28,28 @@ export function AgeGate() {
   useEffect(() => {
     setHasHydrated(true)
     const isVerified = document.cookie.includes('age_verified=true')
+    
     if (!isVerified) {
-      setIsVisible(true)
+      if (pathname === '/') {
+        setWaitingForPreloader(true)
+        const handleDone = () => {
+          setWaitingForPreloader(false)
+          setIsVisible(true)
+        }
+        window.addEventListener('preloader-done', handleDone)
+        
+        // Fallback to show it eventually if event is missed
+        const timeout = setTimeout(handleDone, 8000)
+        
+        return () => {
+          window.removeEventListener('preloader-done', handleDone)
+          clearTimeout(timeout)
+        }
+      } else {
+        setIsVisible(true)
+      }
     }
-  }, [])
+  }, [pathname])
 
   // Lock scroll and videos globally when visible
   useEffect(() => {
@@ -73,7 +94,7 @@ export function AgeGate() {
     }
   }
 
-  if (!hasHydrated) return null
+  if (!hasHydrated || waitingForPreloader) return null
 
   return (
     <AnimatePresence>
