@@ -21,7 +21,11 @@ const FooterContent = () => {
 
   const handleScrollToTop = () => {
     if (lenis) {
-      lenis.scrollTo(0, { lerp: 0.05 });
+      // Use an exponential ease-out curve for buttery smooth deceleration
+      lenis.scrollTo(0, { 
+        duration: 2, 
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) 
+      });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -135,14 +139,31 @@ const FooterContent = () => {
               </Link>
             </div>
             
-            <div className="pr-14 md:pr-12">
-              <h4 className="text-ink font-bold tracking-[0.15em] uppercase text-xs mb-8">Explore</h4>
-              <ul className="space-y-4 text-ink-muted text-sm font-semibold">
-                <li><Link href="/" className="group flex items-center gap-3 hover:text-primary transition-colors w-fit"><ArrowRight className="w-3.5 h-3.5 text-ink/40 group-hover:text-primary transition-all duration-300 group-hover:translate-x-1" /> Home</Link></li>
-                <li><Link href="/about" className="group flex items-center gap-3 hover:text-primary transition-colors w-fit"><ArrowRight className="w-3.5 h-3.5 text-ink/40 group-hover:text-primary transition-all duration-300 group-hover:translate-x-1" /> About</Link></li>
-                <li><Link href="/shop" className="group flex items-center gap-3 hover:text-primary transition-colors w-fit"><ArrowRight className="w-3.5 h-3.5 text-ink/40 group-hover:text-primary transition-all duration-300 group-hover:translate-x-1" /> Shop</Link></li>
-                <li><Link href="/blog" className="group flex items-center gap-3 hover:text-primary transition-colors w-fit"><ArrowRight className="w-3.5 h-3.5 text-ink/40 group-hover:text-primary transition-all duration-300 group-hover:translate-x-1" /> Blog</Link></li>
-                <li><Link href="/faq" className="group flex items-center gap-3 hover:text-primary transition-colors w-fit"><ArrowRight className="w-3.5 h-3.5 text-ink/40 group-hover:text-primary transition-all duration-300 group-hover:translate-x-1" /> FAQ</Link></li>
+            <div className="pr-14 md:pr-12 w-full">
+              <h4 className="text-ink font-bold tracking-[0.15em] uppercase text-xs mb-4">Explore</h4>
+              <ul className="w-full flex flex-col">
+                {[
+                  { label: 'Home', href: '/' },
+                  { label: 'About', href: '/about' },
+                  { label: 'Shop', href: '/shop' },
+                  { label: 'Blog', href: '/blog' },
+                  { label: 'FAQ', href: '/faq' },
+                  { label: 'Peptide Calculator', href: '/calculator' },
+                  { label: 'Affiliates', href: '/affiliates' }
+                ].map((item) => (
+                  <li key={item.label} className="w-full">
+                    <Link href={item.href} className="group block py-2 border-b border-black/[0.04] last:border-0 relative z-10 transition-transform duration-300 hover:translate-x-1">
+                      <div className="flex justify-between items-center text-ink w-full">
+                        <span className="text-[15px] font-bold group-hover:text-primary transition-colors tracking-tight">
+                          {item.label}
+                        </span>
+                        <div className="w-7 h-7 rounded-full bg-black/[0.04] text-ink flex items-center justify-center transition-all duration-500 group-hover:bg-primary group-hover:text-white group-hover:scale-110">
+                          <ArrowRight className="w-3 h-3 -rotate-45 transition-transform duration-500 group-hover:rotate-0" />
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -239,9 +260,8 @@ const FooterContent = () => {
         </div>
 
         {/* Full-width Brand Name Card */}
-        <div className="bg-cream rounded-[2rem] h-20 sm:h-32 md:h-56 relative overflow-hidden border border-ink/5 flex justify-center items-center shadow-sm w-full">
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent pointer-events-none z-10" />
-          <h1 className="absolute bottom-0 translate-y-[40%] font-heading text-[16vw] sm:text-[18vw] lg:text-[22vw] leading-none font-black text-ink/[0.04] text-center tracking-tighter lowercase select-none w-full whitespace-nowrap overflow-hidden">
+        <div className="bg-cream rounded-[1.5rem] md:rounded-[2rem] h-[10vw] sm:h-[11vw] md:h-[11.5vw] lg:h-[12vw] xl:h-[12.5vw] relative overflow-hidden border border-primary/10 flex justify-center items-start shadow-sm w-full">
+          <h1 className="relative z-20 pt-[2vw] sm:pt-[1.5vw] font-heading text-[12.5vw] sm:text-[13.5vw] md:text-[14vw] lg:text-[14.5vw] xl:text-[15vw] leading-[0.8] font-black text-primary/15 text-center tracking-tighter lowercase select-none w-full whitespace-nowrap px-4">
             99purity
           </h1>
         </div>

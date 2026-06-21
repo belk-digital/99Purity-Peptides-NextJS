@@ -77,7 +77,11 @@ export function Hero() {
               className="absolute bottom-0 -right-[calc(3rem-1px)] w-12 h-12 md:-right-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none"
               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 0v100h100A100 100 0 0 1 0 0Z' fill='%23FAF7F2'/%3E%3C/svg%3E")` }}
             />
-            <FluidButton href="/shop" text="View Research Peptides" className="relative z-10" />
+            <FluidButton 
+              href="/shop" 
+              text={<><span className="md:hidden">View Peptides</span><span className="hidden md:inline">View Research Peptides</span></>} 
+              className="relative z-10" 
+            />
           </div>
         </div>
 
@@ -123,7 +127,7 @@ export function Hero() {
             <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-cream to-transparent z-10 pointer-events-none" />
             
             <motion.div 
-              className="flex whitespace-nowrap items-center text-zinc-900 font-extrabold tracking-[0.25em] text-[10px] sm:text-xs md:text-sm w-max pointer-events-none"
+              className="flex whitespace-nowrap items-center text-zinc-900 font-heading font-extrabold tracking-[0.25em] text-[10px] sm:text-xs md:text-sm w-max pointer-events-none"
               animate={{ x: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: 15 }}
               style={{ willChange: "transform" }}

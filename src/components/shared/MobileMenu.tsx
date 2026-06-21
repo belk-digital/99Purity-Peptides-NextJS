@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { 
-  X, Search, Heart, User, LogIn, ArrowUpRight, 
+  X, Search, Heart, User, LogIn, 
   Activity, Dna, Brain, ShieldPlus, Sparkles, Zap, Network, BatteryCharging,
-  ShoppingBag, Calculator, BookOpen, Microscope,
-  HelpCircle, Mail, Users
+  BookOpen, Microscope, Calculator, HelpCircle, Mail, Users, ArrowRight
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -26,11 +25,11 @@ const CATEGORIES = [
   { name: 'Recovery', icon: BatteryCharging }
 ]
 
-const DISCOVER_LINKS = [
-  { label: 'Shop All Formulations', href: '/shop', icon: ShoppingBag },
-  { label: 'Peptide Calculator', href: '/peptide-calculator', icon: Calculator },
-  { label: 'Scientific Journal', href: '/journal', icon: BookOpen },
-  { label: 'Our Laboratory', href: '/about', icon: Microscope },
+const MAIN_LINKS = [
+  { label: 'Shop Formulations', href: '/shop' },
+  { label: 'Peptide Calculator', href: '/peptide-calculator' },
+  { label: 'Scientific Journal', href: '/journal' },
+  { label: 'Our Laboratory', href: '/about' },
 ]
 
 const SUPPORT_LINKS = [
@@ -56,24 +55,24 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
   }, [isOpen, onClose])
 
   const menuVariants: Variants = {
-    closed: { opacity: 0, scale: 0.96, y: 10 },
+    closed: { opacity: 0, scale: 0.98, y: 20 },
     open: { 
       opacity: 1,
       scale: 1,
       y: 0,
       transition: { 
-        duration: 0.5, 
+        duration: 0.6, 
         ease: [0.22, 1, 0.36, 1],
-        staggerChildren: 0.04,
+        staggerChildren: 0.05,
         delayChildren: 0.1
       } 
     },
-    exit: { opacity: 0, scale: 0.98, y: 5, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }
+    exit: { opacity: 0, scale: 0.98, y: 20, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }
   }
 
   const itemVariants: Variants = {
-    closed: { y: 15, opacity: 0, scale: 0.98 },
-    open: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.4, ease: "easeOut" } }
+    closed: { y: 20, opacity: 0, scale: 0.95 },
+    open: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } }
   }
 
   return (
@@ -84,123 +83,148 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
           animate="open"
           exit="exit"
           variants={menuVariants}
-          className="fixed inset-0 z-[100] bg-white flex flex-col pointer-events-auto"
+          className="fixed inset-0 z-[100] bg-cream/95 backdrop-blur-2xl flex flex-col pointer-events-auto"
         >
-          {/* Header Block - Close button on Right to match new hamburger position! */}
-          <motion.div variants={itemVariants} className="h-[72px] flex items-center justify-between px-6 border-b border-black/5 shrink-0 bg-white">
-            <div className="flex-1" /> {/* Spacer to perfectly center the Directory text */}
+          {/* Subtle Fine Noise Texture for physical feel */}
+          <div 
+            className="absolute inset-0 opacity-[0.04] pointer-events-none z-0 mix-blend-multiply"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
+          />
+
+          {/* Header Block */}
+          <motion.div variants={itemVariants} className="h-[72px] flex items-center justify-between px-6 shrink-0 relative z-10 border-b border-black/5">
+            <div className="flex-1" />
             
-            <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-ink flex-1 text-center">
-              Directory
+            <span className="font-heading text-xs font-bold uppercase tracking-[0.3em] text-ink/50 flex-1 text-center">
+              Menu
             </span>
             
             <div className="flex flex-1 justify-end">
-              <button onClick={onClose} className="p-2 -mr-2 text-ink hover:bg-black/5 transition-colors rounded-full">
-                <X size={20} strokeWidth={1.5} />
+              <button onClick={onClose} className="p-2 -mr-2 text-ink hover:text-primary hover:bg-black/5 transition-colors rounded-full">
+                <X size={24} strokeWidth={1.5} />
               </button>
             </div>
           </motion.div>
 
           {/* Scrollable Main Area */}
-          <div className="flex-1 overflow-y-auto overflow-x-hidden bg-[#FAFAFA]">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden relative z-10 pb-40">
             
-            {/* Categories Section */}
-            <motion.div variants={itemVariants} className="flex flex-col border-b border-black/5 bg-white">
-              <div className="px-6 py-4 border-b border-black/5 bg-[#F5F5F5]">
-                <h3 className="text-[9px] font-bold uppercase tracking-widest text-ink/50">Shop by Category</h3>
-              </div>
-              <div className="grid grid-cols-2">
-                {CATEGORIES.map((cat, i) => (
-                  <Link 
-                    key={cat.name}
-                    href={`/shop/${cat.name.toLowerCase().replace(' ', '-')}`} 
-                    onClick={onClose}
-                    className={`flex flex-col gap-3 items-start px-6 py-5 hover:bg-black/5 transition-colors border-b border-black/5 ${i % 2 === 0 ? 'border-r' : ''}`}
-                  >
-                    <div className="p-2 rounded-full bg-black/5 text-ink">
-                      <cat.icon size={16} strokeWidth={1.5} />
-                    </div>
-                    <span className="text-[12px] font-semibold text-ink">{cat.name}</span>
-                  </Link>
+            <div className="px-6 py-8 sm:py-12 flex flex-col gap-10">
+              
+              {/* Massive Main Links */}
+              <div className="flex flex-col gap-6 sm:gap-8">
+                {MAIN_LINKS.map((link) => (
+                  <motion.div key={link.label} variants={itemVariants}>
+                    <Link 
+                      href={link.href} 
+                      onClick={onClose}
+                      className="group flex items-center justify-between"
+                    >
+                      <h2 className="font-heading text-3xl sm:text-4xl font-black text-ink tracking-tight group-hover:text-primary transition-colors duration-300">
+                        {link.label}
+                      </h2>
+                      <ArrowRight size={24} className="text-ink/20 group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" strokeWidth={1.5} />
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
-            </motion.div>
 
-            {/* Discover Section */}
-            <motion.div variants={itemVariants} className="flex flex-col border-b border-black/5 bg-white mt-4">
-              <div className="px-6 py-4 border-b border-black/5 bg-[#F5F5F5]">
-                <h3 className="text-[9px] font-bold uppercase tracking-widest text-ink/50">Discover</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2">
-                {DISCOVER_LINKS.map((link, i) => (
-                  <Link 
-                    key={link.label}
-                    href={link.href} 
-                    onClick={onClose}
-                    className={`flex items-center gap-4 px-6 py-4 hover:bg-black/5 transition-colors border-b border-black/5 ${i % 2 === 0 ? 'sm:border-r' : ''} last:border-b-0 sm:last:border-b`}
-                  >
-                    <div className="p-2 rounded-full bg-black/5 text-ink">
-                      <link.icon size={16} strokeWidth={1.5} />
-                    </div>
-                    <span className="text-[13px] font-medium text-ink flex-1">{link.label}</span>
-                    <ArrowUpRight size={12} className="text-ink/30" strokeWidth={2} />
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
+              <div className="w-full h-px bg-black/5" />
 
-            {/* Support Section */}
-            <motion.div variants={itemVariants} className="flex flex-col border-b border-black/5 bg-white mt-4 mb-24">
-              <div className="px-6 py-4 border-b border-black/5 bg-[#F5F5F5]">
-                <h3 className="text-[9px] font-bold uppercase tracking-widest text-ink/50">Support</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2">
-                {SUPPORT_LINKS.map((link, i) => (
-                  <Link 
-                    key={link.label}
-                    href={link.href} 
-                    onClick={onClose}
-                    className={`flex items-center gap-4 px-6 py-4 hover:bg-black/5 transition-colors border-b border-black/5 ${i % 2 === 0 ? 'sm:border-r' : ''}`}
-                  >
-                    <link.icon size={16} strokeWidth={1.5} className="text-ink/50" />
-                    <span className="text-[12px] font-medium text-ink/70">{link.label}</span>
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
+              {/* Categories Sleek List */}
+              <motion.div variants={itemVariants} className="flex flex-col">
+                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-6">Explore Categories</h3>
+                <div className="flex flex-col gap-4">
+                  {CATEGORIES.map((cat) => (
+                    <Link 
+                      key={cat.name}
+                      href={`/shop/${cat.name.toLowerCase().replace(' ', '-')}`} 
+                      onClick={onClose}
+                      className="group flex items-center gap-4 py-1"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-ink/50 group-hover:text-primary group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-300 shrink-0 shadow-sm">
+                        <cat.icon size={18} strokeWidth={1.5} />
+                      </div>
+                      <span className="text-[15px] font-semibold text-ink/80 group-hover:text-ink transition-colors">{cat.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+
+              <div className="w-full h-px bg-black/5" />
+
+              {/* Support Links */}
+              <motion.div variants={itemVariants} className="flex flex-col">
+                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/40 mb-6">Support</h3>
+                <div className="flex flex-col gap-4">
+                  {SUPPORT_LINKS.map((link) => (
+                    <Link 
+                      key={link.label}
+                      href={link.href} 
+                      onClick={onClose}
+                      className="group flex items-center gap-4 py-1"
+                    >
+                      <link.icon size={18} strokeWidth={1.5} className="text-ink/40 group-hover:text-primary transition-colors" />
+                      <span className="text-[15px] font-medium text-ink/60 group-hover:text-ink transition-colors">{link.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+
+            </div>
 
           </div>
 
-          {/* Footer Utility Dock */}
+          {/* Floating Glass Pill Utility Dock */}
           <motion.div 
             variants={itemVariants} 
-            className="absolute bottom-0 left-0 right-0 border-t border-black/10 bg-white/95 backdrop-blur-md shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-safe"
+            className="absolute bottom-6 left-0 right-0 px-4 sm:px-6 z-20 pb-safe"
           >
-            <div className="grid grid-cols-3 h-[72px]">
+            <div className="bg-white/80 backdrop-blur-xl border border-black/5 p-2 rounded-[2rem] flex items-center justify-between shadow-[0_8px_32px_rgba(0,0,0,0.08)] max-w-sm mx-auto w-full">
               <button 
                 onClick={() => {
                   onClose();
                   onSearchClick?.();
                 }}
-                className="flex flex-col items-center justify-center gap-1.5 text-ink/60 hover:text-ink hover:bg-black/5 transition-colors"
+                className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
+                title="Search"
               >
-                <Search size={18} strokeWidth={1.5} />
+                <Search size={20} strokeWidth={1.5} />
                 <span className="text-[9px] font-bold uppercase tracking-widest">Search</span>
               </button>
               
-              <Link href="/account/wishlist" onClick={onClose} className="flex flex-col items-center justify-center gap-1.5 text-ink/60 hover:text-ink hover:bg-black/5 transition-colors border-l border-r border-black/10">
-                <Heart size={18} strokeWidth={1.5} />
+              <div className="w-px h-8 bg-black/10 shrink-0" />
+
+              <Link 
+                href="/account/wishlist" 
+                onClick={onClose} 
+                className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
+                title="Wishlist"
+              >
+                <Heart size={20} strokeWidth={1.5} />
                 <span className="text-[9px] font-bold uppercase tracking-widest">Wishlist</span>
               </Link>
               
+              <div className="w-px h-8 bg-black/10 shrink-0" />
+
               {isLoggedIn ? (
-                <Link href="/account" onClick={onClose} className="flex flex-col items-center justify-center gap-1.5 text-ink/60 hover:text-ink hover:bg-black/5 transition-colors">
-                  <User size={18} strokeWidth={1.5} />
+                <Link 
+                  href="/account" 
+                  onClick={onClose} 
+                  className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
+                  title="Account"
+                >
+                  <User size={20} strokeWidth={1.5} />
                   <span className="text-[9px] font-bold uppercase tracking-widest">Account</span>
                 </Link>
               ) : (
-                <Link href="/login" onClick={onClose} className="flex flex-col items-center justify-center gap-1.5 text-ink/60 hover:text-ink hover:bg-black/5 transition-colors">
-                  <LogIn size={18} strokeWidth={1.5} />
+                <Link 
+                  href="/login" 
+                  onClick={onClose} 
+                  className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
+                  title="Login"
+                >
+                  <LogIn size={20} strokeWidth={1.5} />
                   <span className="text-[9px] font-bold uppercase tracking-widest">Login</span>
                 </Link>
               )}

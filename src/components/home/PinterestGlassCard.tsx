@@ -8,10 +8,11 @@ interface PinterestGlassCardProps {
   description: string;
   icon: React.ReactNode;
   tag?: string;
+  microcopy?: string;
   className?: string;
 }
 
-export function PinterestGlassCard({ title, description, icon, tag, className = '' }: PinterestGlassCardProps) {
+export function PinterestGlassCard({ title, description, icon, tag, microcopy, className = '' }: PinterestGlassCardProps) {
   return (
     <div className={`relative w-full rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-[#003333]/95 to-[#001111]/95 border border-primary/20 p-6 sm:p-8 md:p-6 lg:p-8 overflow-visible group ${className}`}>
       
@@ -68,6 +69,13 @@ export function PinterestGlassCard({ title, description, icon, tag, className = 
         <p className="text-white/70 text-xs sm:text-sm md:text-xs lg:text-sm leading-relaxed font-medium pl-2 sm:pl-4 md:pl-2 lg:pl-4">
           {description}
         </p>
+        {microcopy && (
+          <div className="mt-6 sm:mt-8 md:mt-6 lg:mt-8 pl-2 sm:pl-4 md:pl-2 lg:pl-4">
+            <p className="text-primary font-extrabold tracking-[0.2em] text-[10px] sm:text-xs md:text-[11px] lg:text-xs uppercase drop-shadow-[0_0_12px_rgba(0,255,255,0.4)]">
+              {microcopy}
+            </p>
+          </div>
+        )}
       </motion.div>
 
       {/* 

@@ -172,8 +172,16 @@ export function WhyChooseUs() {
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.98, opacity: 0, y: 10 }}
                 transition={{ type: "spring", damping: 30, stiffness: 200, delay: 0.1 }}
-                className="relative w-full h-full max-w-[90vw] max-h-[85vh] flex flex-col items-center justify-center cursor-default z-10"
+                className="relative w-full h-full max-w-[90vw] max-h-[85vh] flex flex-col items-center justify-center cursor-grab active:cursor-grabbing z-10"
                 onClick={(e) => e.stopPropagation()}
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={0.8}
+                onDragEnd={(e, info) => {
+                  if (Math.abs(info.offset.y) > 120 || Math.abs(info.velocity.y) > 500) {
+                    setSelectedIndex(null);
+                  }
+                }}
               >
                 {/* Image Container - Pure and clean, no borders */}
                 <div className="relative w-full flex-1 min-h-0 drop-shadow-2xl">
@@ -201,9 +209,12 @@ export function WhyChooseUs() {
                     </span>
                     <span className="w-8 h-[1px] bg-primary/50"></span>
                   </div>
-                  <h3 className="text-3xl sm:text-5xl font-heading font-light text-white tracking-wide">
+                  <h3 className="text-3xl sm:text-5xl font-heading font-light text-white tracking-wide mb-3 sm:mb-4">
                     {CHOOSE_US_DATA[selectedIndex].title}
                   </h3>
+                  <p className="text-white/70 max-w-xl text-xs sm:text-sm md:text-base leading-relaxed font-light px-4">
+                    {CHOOSE_US_DATA[selectedIndex].description}
+                  </p>
                 </motion.div>
               </motion.div>
             </motion.div>

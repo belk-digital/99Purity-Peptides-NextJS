@@ -37,14 +37,23 @@ const FaqItem = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="border-t border-ink/20 py-8 lg:py-12 group cursor-none transition-colors duration-300 hover:bg-ink/[0.02]"
+      className="border-t border-ink/20 py-8 lg:py-12 group md:cursor-none cursor-pointer transition-colors duration-300 hover:bg-ink/[0.02]"
       onMouseEnter={() => {
-        setIsHovered(true);
-        onHoverStart();
+        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+          setIsHovered(true);
+          onHoverStart();
+        }
       }}
       onMouseLeave={() => {
-        setIsHovered(false);
-        onHoverEnd();
+        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+          setIsHovered(false);
+          onHoverEnd();
+        }
+      }}
+      onClick={() => {
+        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+          setIsHovered(!isHovered);
+        }
       }}
     >
       <div className="container mx-auto px-4 md:px-10 max-w-[1600px] flex flex-col lg:flex-row w-full gap-6 lg:gap-8 justify-between items-start">
@@ -94,6 +103,7 @@ export function FaqSection() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      if (window.innerWidth < 768) return; // Prevent heavy JS tracking on mobile devices
       cursorX.set(e.clientX - 50);
       cursorY.set(e.clientY - 50);
     };
@@ -108,7 +118,7 @@ export function FaqSection() {
       
       {/* Custom Cursor */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
+        className="fixed top-0 left-0 pointer-events-none z-[100] hidden md:flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
         style={{ 
           x: cursorXSpring, 
           y: cursorYSpring,

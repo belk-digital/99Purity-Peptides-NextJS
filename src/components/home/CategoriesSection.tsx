@@ -56,7 +56,6 @@ export function CategoriesSection() {
   })
 
   // Translate the flex container to the left as we scroll down.
-  // We use a function to return a dynamic calc() string because framer-motion cannot interpolate between 0% and calc() strings automatically.
   const x = useTransform(scrollYProgress, (value) => `calc(-${value * 100}% + ${value * 100}vw)`)
 
   return (
@@ -100,7 +99,7 @@ export function CategoriesSection() {
         </div>
 
         {/* Horizontal Scrolling Vertical Slice Gallery */}
-        <motion.div style={{ x }} className="flex w-max h-[60vh] min-h-[400px] max-h-[700px] will-change-transform">
+        <motion.div style={{ x }} className="flex w-max h-[60vh] min-h-[400px] max-h-[700px] will-change-transform max-md:transition-transform max-md:duration-300 max-md:ease-out">
           {CATEGORIES.map((category, index) => (
             <Link 
               href={`/shop?category=${encodeURIComponent(category.name)}`}
@@ -129,7 +128,7 @@ export function CategoriesSection() {
                     {category.name}
                   </h3>
               </div>
-            </Link>
+              </Link>
           ))}
         </motion.div>
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { Container } from '@/components/ui/container'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { FluidButton } from '@/components/ui/fluid-button'
 import Image from 'next/image'
 
 export function Newsletter() {
@@ -52,11 +52,15 @@ export function Newsletter() {
               name="email"
               placeholder="your@email.com" 
               required
-              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
+              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary min-w-0"
             />
-            <Button type="submit" variant="primary" size="md" className="shrink-0 w-full md:w-auto bg-primary text-black hover:bg-white hover:text-black font-bold tracking-widest uppercase text-xs">
-              SUBSCRIBE
-            </Button>
+            <div className="shrink-0 flex justify-center w-full md:w-auto">
+              <FluidButton 
+                type="submit" 
+                text="SUBSCRIBE" 
+                variant="cyan"
+              />
+            </div>
           </form>
         </FadeUp>
         

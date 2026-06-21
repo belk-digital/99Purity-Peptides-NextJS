@@ -5,6 +5,7 @@ import { motion, Variants, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
+import { FluidButton } from '@/components/ui/fluid-button'
 
 const BLOG_POSTS = [
   {
@@ -127,9 +128,11 @@ export function BlogSection() {
             </p>
           </div>
           <div className="w-full md:w-1/3 flex justify-start md:justify-end mt-6 md:mt-0">
-            <Link href="/journal" className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors uppercase tracking-[0.2em] text-xs font-bold">
-              View All Journal Entries <ArrowRight size={16} />
-            </Link>
+            <FluidButton 
+              href="/journal" 
+              text="View Journal" 
+              variant="white"
+            />
           </div>
         </motion.div>
 

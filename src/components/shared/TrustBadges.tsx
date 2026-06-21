@@ -36,15 +36,20 @@ export function TrustBadges() {
         >
           <div className="w-full md:w-1/2">
             <p className="text-primary text-xs sm:text-sm tracking-[0.2em] uppercase mb-3 sm:mb-4 font-bold">The 99 Purity Standard</p>
-            <h2 className="font-heading text-[2.5rem] sm:text-4xl md:text-5xl lg:text-7xl font-black text-zinc-900 leading-[0.9] tracking-tighter uppercase mb-0 md:mb-8 break-words">
+            <h2 className="font-heading text-[2.5rem] sm:text-4xl md:text-5xl lg:text-7xl font-black text-zinc-900 leading-[0.9] tracking-tighter uppercase mb-2 md:mb-4 break-words">
               ENGINEERED FOR <br className="hidden md:block" /> ABSOLUTE PRECISION<span className="text-primary">.</span>
             </h2>
+            <p className="text-zinc-500 font-bold text-xs sm:text-sm md:text-base tracking-[0.15em] uppercase mb-0 md:mb-8">
+              USA-Manufactured. Third-Party Verified.
+            </p>
           </div>
           
           <div className="flex flex-col items-start md:items-end gap-6 sm:gap-8 max-w-md mt-2 sm:mt-6 md:mt-0">
-            <FluidButton href="/about" text="Discover Quality" className="relative z-10" />
+            <div title="See Our Lab Results →">
+              <FluidButton href="/about" text="Discover Quality" className="relative z-10" />
+            </div>
             <p className="text-zinc-600 text-sm sm:text-base md:text-lg text-left md:text-right leading-relaxed font-medium">
-              Every compound is synthesized under strict laboratory conditions, independently verified via third-party analysis, and sealed to ensure maximum stability.
+              Every research peptide is synthesized in U.S. facilities under 503A and 503B manufacturing standards, independently verified through third-party analytical testing, and lyophilized under vacuum to preserve molecular stability from batch to bench.
             </p>
           </div>
         </motion.div>
@@ -61,9 +66,10 @@ export function TrustBadges() {
           <motion.div variants={cardVariants} className="flex justify-center h-full">
             <PinterestGlassCard 
               title="99.1%+ Verified Purity"
-              description="We don't rely on manufacturer claims. Every single batch is independently tested by accredited third-party laboratories in the USA to guarantee minimum 99% purity before it ever reaches our inventory."
+              description="We never rely on manufacturer claims. Every batch is independently tested by accredited U.S. third-party laboratories to confirm minimum 99% purity before it reaches inventory."
               icon={<ShieldCheck className="w-5 h-5" />}
               tag="USA Verified"
+              microcopy="503A · 503B Standards"
             />
           </motion.div>
 
@@ -71,9 +77,10 @@ export function TrustBadges() {
           <motion.div variants={cardVariants} className="flex justify-center h-full lg:mt-16">
             <PinterestGlassCard 
               title="Lyophilized Stability"
-              description="Our peptides are lyophilized (freeze-dried) under vacuum to ensure long-term molecular stability during transit and storage."
+              description="Each research compound is lyophilized (freeze-dried) under vacuum, preserving long-term molecular integrity and structural stability throughout transit and cold storage."
               icon={<FlaskConical className="w-5 h-5" />}
               tag="Vacuum Sealed"
+              microcopy="Batch-Tested for Stability"
             />
           </motion.div>
 
@@ -81,9 +88,10 @@ export function TrustBadges() {
           <motion.div variants={cardVariants} className="flex justify-center h-full lg:mt-32">
             <PinterestGlassCard 
               title="Exact Milligram Dosing"
-              description="Precision is paramount. We guarantee exact milligram content per vial, completely eliminating the guesswork from your research."
+              description="Precision is non-negotiable. We guarantee exact milligram content per vial under 505A-compliant quality systems, removing dosing guesswork from your research."
               icon={<Target className="w-5 h-5" />}
               tag="Precision Dosed"
+              microcopy="505A Quality Systems"
             />
           </motion.div>
         </motion.div>
