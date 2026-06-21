@@ -64,7 +64,7 @@ export function CategoriesSection() {
       
       {/* Custom Cursor */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
+        className="fixed top-0 left-0 pointer-events-none z-[100] hidden md:flex items-center justify-center rounded-full bg-ink text-cream font-bold text-[10px] uppercase tracking-widest text-center shadow-2xl"
         style={{ 
           x: cursorXSpring, 
           y: cursorYSpring,
@@ -100,7 +100,7 @@ export function CategoriesSection() {
         </div>
 
         {/* Horizontal Scrolling Vertical Slice Gallery */}
-        <motion.div style={{ x }} className="flex w-max h-[60vh] min-h-[400px] max-h-[700px]">
+        <motion.div style={{ x }} className="flex w-max h-[60vh] min-h-[400px] max-h-[700px] will-change-transform">
           {CATEGORIES.map((category, index) => (
             <Link 
               href={`/shop?category=${encodeURIComponent(category.name)}`}
@@ -110,15 +110,15 @@ export function CategoriesSection() {
               onMouseLeave={() => setIsHoveringCategory(false)}
             >
               {/* Background Image */}
-              <div className="absolute inset-0 w-full h-full bg-cream">
+              <div className="absolute inset-0 w-full h-full bg-black/5">
                 <Image 
                   src={CATEGORY_IMAGES[index]} 
                   alt={category.name} 
                   fill
-                  className="object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-70 group-hover:opacity-100"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                {/* Subtle bottom gradient for text readability */}
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none transition-opacity duration-700 opacity-80 group-hover:opacity-100" />
+                {/* Subtle bottom gradient for text readability only */}
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none transition-opacity duration-700 opacity-70 group-hover:opacity-90" />
               </div>
 
               {/* Bottom Centered Text */}

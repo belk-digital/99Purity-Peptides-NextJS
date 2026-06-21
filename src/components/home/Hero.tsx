@@ -7,8 +7,35 @@ import Link from 'next/link'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 export function Hero() {
+  const videoRef = React.useRef<HTMLVideoElement>(null)
+
+  React.useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    // Attempt initial play on mount
+    video.play().catch(() => {})
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {})
+          } else {
+            video.pause()
+          }
+        })
+      },
+      { threshold: 0.1 } // Trigger when at least 10% of the video is visible
+    )
+
+    observer.observe(video)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="relative w-full h-[100dvh] min-h-[700px] bg-cream p-3 pt-[44px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[52px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-16 [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
+    <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[44px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[52px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-16 [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
       {/* Main Inner Container */}
       <div className="relative w-full h-full bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden flex flex-col justify-between">
         
@@ -21,10 +48,13 @@ export function Hero() {
 
         {/* Background Video */}
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
+          disablePictureInPicture
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
         >
           <source src="/videos/homepage-hero-video.webm" type="video/webm" />

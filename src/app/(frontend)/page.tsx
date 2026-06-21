@@ -11,7 +11,6 @@ import { WhyChooseUs } from '@/components/home/WhyChooseUs'
 import { DifferenceSection } from '@/components/home/DifferenceSection'
 import { BestSellerSection } from '@/components/home/BestSellerSection'
 import { MerchandiseSection } from '@/components/home/MerchandiseSection'
-import { IdleMewingCursor } from '@/components/shared/IdleMewingCursor'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -34,7 +33,6 @@ export default async function Homepage() {
 
   return (
     <>
-      <IdleMewingCursor />
       <HomePreloaderWrapper>
         <div className="flex flex-col w-full min-h-screen relative z-10 bg-black overflow-x-clip">
           <Hero />

@@ -269,7 +269,7 @@ export function WhatSetsUsApart() {
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1.8, opacity: [0, 0.4, 0] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: i * 0.2 }}
-                      className="absolute inset-0 rounded-full border border-primary pointer-events-none"
+                      className="absolute inset-0 rounded-full border border-primary pointer-events-none will-change-transform"
                     />
                   )}
 
@@ -304,11 +304,11 @@ export function WhatSetsUsApart() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, filter: 'brightness(2) contrast(1.5)', scale: 0.98 }}
-                animate={{ opacity: 1, filter: 'brightness(1) contrast(1)', scale: 1 }}
-                exit={{ opacity: 0, filter: 'brightness(0) contrast(2)', scale: 0.98 }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="relative bg-white/40 border border-white/60 rounded-[40px] p-8 md:p-12 backdrop-blur-[40px] shadow-[0_24px_64px_rgba(0,0,0,0.06),_inset_0_1px_1px_rgba(255,255,255,1)] overflow-hidden"
+                className="relative bg-white/40 border border-white/60 rounded-[40px] p-8 md:p-12 backdrop-blur-[40px] shadow-[0_24px_64px_rgba(0,0,0,0.06),_inset_0_1px_1px_rgba(255,255,255,1)] overflow-hidden will-change-transform"
               >
                 {/* Ultra-premium glass reflection line */}
                 <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />

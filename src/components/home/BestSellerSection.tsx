@@ -5,6 +5,7 @@ import { useRef } from 'react'
 import { useScroll, useTransform, motion, useSpring } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { FluidButton } from '@/components/ui/fluid-button'
 
 const FALLBACK_PRODUCTS = [
   {
@@ -85,9 +86,11 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
           <p className="text-ink/70 text-lg leading-relaxed max-w-2xl mb-10">
             Browse our research-grade peptide reagents for assay development, receptor binding studies, and mechanistic research.
           </p>
-          <Link href="/shop" className="inline-flex items-center gap-2 text-ink border border-ink/20 hover:border-ink px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs transition-colors hover:bg-white hover:shadow-sm">
-            View All Products
-          </Link>
+          <FluidButton 
+            href="/shop" 
+            text="View All Products" 
+            variant="dark"
+          />
         </div>
 
         {/* 4-Column Masonry/Staggered Grid with Parallax */}

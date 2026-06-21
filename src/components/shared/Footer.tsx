@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Mail } from 'lucide-react'
 import { useLenis } from 'lenis/react'
+import { FluidButton } from '@/components/ui/fluid-button'
 
 const FooterContent = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -62,13 +63,12 @@ const FooterContent = () => {
                 </p>
               </div>
 
-              <div className="flex justify-center mt-2">
-                <Link 
-                  href="/shop"
-                  className="bg-white hover:bg-gray-100 text-black px-8 py-4 sm:px-10 sm:py-5 rounded-full font-bold flex items-center gap-3 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)] uppercase tracking-[0.2em] text-xs sm:text-sm hover:scale-105"
-                >
-                  Explore Catalogue <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                </Link>
+              <div className="flex justify-center mt-2 drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+                <FluidButton 
+                  href="/shop" 
+                  text="Explore Catalogue" 
+                  variant="white"
+                />
               </div>
             </div>
           </motion.div>

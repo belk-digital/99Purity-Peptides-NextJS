@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Sparkles, Globe2 } from 'lucide-react';
+import { FluidButton } from '@/components/ui/fluid-button';
 
 const MERCH_ITEMS = [
   { name: 'Canvas Tote', image: '/99 Images/merch/merch_tote_bag_1781758420743.png', class: 'col-span-1 row-span-2' },
@@ -93,9 +94,11 @@ export function MerchandiseSection() {
             <span className="hidden sm:flex items-center gap-2"><Sparkles size={16} className="text-primary" /> Exclusive Merch</span>
             <span className="flex items-center gap-2"><Globe2 size={16} className="text-primary" /> Worldwide Shipping</span>
           </div>
-          <button className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-sm transition-colors w-full md:w-auto">
-            Shop All Gear
-          </button>
+          <FluidButton 
+            href="/merchandise" 
+            text="Shop All Gear" 
+            variant="cyan"
+          />
         </div>
 
       </div>

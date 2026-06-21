@@ -58,11 +58,24 @@ export function DifferenceSection() {
     }
   };
 
+  const rightContainerVariants: any = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
+  };
+
   const itemVariants: any = {
     hidden: { opacity: 0, y: 15 },
     visible: {
       opacity: 1, y: 0,
       transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
+    }
+  };
+
+  const vialVariants: any = {
+    hidden: { opacity: 0, scale: 0.5, filter: 'blur(20px)', y: 60 },
+    visible: {
+      opacity: 1, scale: 1, filter: 'blur(0px)', y: 0,
+      transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
     }
   };
 
@@ -82,14 +95,14 @@ export function DifferenceSection() {
       ];
       return {
         opacity: 0,
-        x: scatter[i % scatter.length].x,
-        y: scatter[i % scatter.length].y,
-        rotate: scatter[i % scatter.length].rotate,
-        scale: 0.95,
-        filter: 'blur(4px)'
+        x: scatter[i % scatter.length].x * 1.5,
+        y: scatter[i % scatter.length].y * 1.5 + 40,
+        rotate: scatter[i % scatter.length].rotate * 2,
+        scale: 0.6,
+        filter: 'blur(8px)'
       };
     },
-    visible: {
+    visible: (i: number) => ({
       opacity: 1,
       x: 0,
       y: 0,
@@ -98,12 +111,12 @@ export function DifferenceSection() {
       filter: 'blur(0px)',
       transition: {
         type: 'spring',
-        damping: 20,
-        stiffness: 80,
-        mass: 1.2,
-        duration: 1.5,
+        damping: 14,
+        stiffness: 90,
+        mass: 1,
+        delay: 0.4 + (i % 5) * 0.15
       }
-    }
+    })
   };
 
   const lineVariants: any = {
@@ -111,8 +124,29 @@ export function DifferenceSection() {
     visible: { 
       pathLength: 1, 
       opacity: 1, 
-      transition: { duration: 1.2, ease: "easeInOut", delay: 0.5 } 
+      transition: { duration: 1.2, ease: "easeInOut", delay: 0.3 } 
     }
+  };
+
+  const mobileCardVariants: any = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+      scale: 0.9,
+      filter: 'blur(8px)'
+    },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        type: 'spring',
+        damping: 15,
+        stiffness: 100,
+        delay: 0.5 + i * 0.15
+      }
+    })
   };
 
   const pulseLineVariants: any = {
@@ -137,11 +171,11 @@ export function DifferenceSection() {
   };
 
   const connectionPaths = [
-    { d: "M 192 140 L 230 140 L 260 170 L 280 170", cx: 280, cy: 170 },
-    { d: "M 192 440 L 230 440 L 260 410 L 280 410", cx: 280, cy: 410 },
-    { d: "M 608 90 L 570 90 L 540 120 L 520 120", cx: 520, cy: 120 },
-    { d: "M 608 290 L 570 290 L 550 270 L 520 270", cx: 520, cy: 270 },
-    { d: "M 608 490 L 570 490 L 540 460 L 520 460", cx: 520, cy: 460 },
+    { d: "M 225 140 L 230 140 L 260 170 L 280 170", cx: 280, cy: 170 },
+    { d: "M 225 440 L 230 440 L 260 410 L 280 410", cx: 280, cy: 410 },
+    { d: "M 575 90 L 570 90 L 540 120 L 520 120", cx: 520, cy: 120 },
+    { d: "M 575 290 L 570 290 L 550 270 L 520 270", cx: 520, cy: 270 },
+    { d: "M 575 490 L 570 490 L 540 460 L 520 460", cx: 520, cy: 460 },
   ];
 
   return (
@@ -184,8 +218,8 @@ export function DifferenceSection() {
         <motion.div 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
+          viewport={{ once: true, amount: 0.4 }}
+          variants={rightContainerVariants}
           className="w-full xl:w-[65%] relative flex justify-center items-center min-h-[600px]"
         >
           
@@ -234,22 +268,41 @@ export function DifferenceSection() {
             </svg>
 
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[520px] z-10 flex flex-col items-center pointer-events-none">
-              <motion.div variants={itemVariants} className="w-full h-full">
-                <motion.div 
-                  onMouseMove={handleVialMouseMove}
-                  animate={{ filter: isAgitated ? "brightness(1.1) saturate(1.2)" : "brightness(1) saturate(1)" }}
-                  className={`relative w-full h-full pointer-events-auto cursor-crosshair z-20 ${isAgitated ? 'animate-vibrate scale-[1.02]' : ''}`}
-                  title="Shake to agitate..."
+              {/* 3D Ambient Glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(0,139,139,0.15)_0%,transparent_70%)] rounded-full pointer-events-none" />
+
+              <motion.div variants={vialVariants} className="w-full h-full">
+                <motion.div
+                  animate={{ y: [-15, 15, -15] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative w-full h-full will-change-transform"
                 >
-                  <Image 
-                    src="/99 Images/transparant-vial.png" 
-                    alt="Vial" 
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                    className={`object-contain transition-all duration-300 ${isAgitated ? 'drop-shadow-[0_0_40px_rgba(255,255,255,0.4)]' : 'drop-shadow-[0_0_40px_rgba(255,255,255,0.15)]'}`}
-                  />
+                  <motion.div 
+                    onMouseMove={handleVialMouseMove}
+                    animate={{ filter: isAgitated ? "brightness(1.1) saturate(1.2)" : "brightness(1) saturate(1)" }}
+                    className={`relative w-full h-full pointer-events-auto cursor-crosshair z-20 ${isAgitated ? 'animate-vibrate scale-[1.02]' : ''}`}
+                    title="Shake to agitate..."
+                  >
+                    <Image 
+                      src="/99 Images/transparant-vial.png" 
+                      alt="Vial" 
+                      fill
+                      sizes="(max-width: 1280px) 240px, 300px"
+                      className="object-contain drop-shadow-[-20px_35px_35px_rgba(0,0,0,0.8)] z-10 relative" 
+                      priority
+                    />
+                  </motion.div>
                 </motion.div>
               </motion.div>
+
+              {/* 3D Floor Shadow */}
+              <div className="absolute -bottom-10 w-full flex justify-center pointer-events-none">
+                <motion.div 
+                  animate={{ scale: [1, 0.7, 1], opacity: [0.8, 0.2, 0.8] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-[160px] h-[16px] bg-black blur-[8px] rounded-[100%]" 
+                />
+              </div>
               
               {/* Shake Warning popup */}
               <AnimatePresence>
@@ -277,88 +330,151 @@ export function DifferenceSection() {
             </div>
 
             {/* Cards (Absolute positioned with percentages for responsive scaling) */}
-            <motion.div custom={0} variants={scatterCardVariants} className="absolute top-[16.6%] left-0 pointer-events-auto z-10 w-[25%]">
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 w-full shadow-2xl relative hover:-translate-y-1 hover:bg-white/10 transition-all cursor-default group">
-                <FlaskConical className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Independently Lab Tested</h4>
-                <p className="text-white/60 text-[11px] leading-snug">Verified purity & composition.</p>
+            <motion.div custom={0} variants={scatterCardVariants} className="absolute top-[16.6%] left-0 pointer-events-auto z-10 w-[28%]">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
+                    <FlaskConical className="w-5 h-5 text-[#003333]" />
+                  </div>
+                  <div className="mt-1 xl:mt-0">
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Independently Lab Tested</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">Verified purity & composition.</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
-            <motion.div custom={1} variants={scatterCardVariants} className="absolute top-[66.6%] left-0 pointer-events-auto z-10 w-[25%]">
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 w-full shadow-2xl relative hover:-translate-y-1 hover:bg-white/10 transition-all cursor-default group">
-                <Network className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Advanced Peptide Synthesis</h4>
-                <p className="text-white/60 text-[11px] leading-snug">Pioneering research grades.</p>
+            <motion.div custom={1} variants={scatterCardVariants} className="absolute top-[66.6%] left-0 pointer-events-auto z-10 w-[28%]">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
+                    <Network className="w-5 h-5 text-[#003333]" />
+                  </div>
+                  <div className="mt-1 xl:mt-0">
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Advanced Synthesis</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">Pioneering research grades.</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
-            <motion.div custom={2} variants={scatterCardVariants} className="absolute top-[8.3%] right-0 pointer-events-auto z-10 w-[25%]">
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 w-full shadow-2xl relative hover:-translate-y-1 hover:bg-white/10 transition-all cursor-default group">
-                <Shield className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Made in the United States</h4>
-                <p className="text-white/60 text-[11px] leading-snug">Manufactured under controlled standards.</p>
+            <motion.div custom={2} variants={scatterCardVariants} className="absolute top-[8.3%] right-0 pointer-events-auto z-10 w-[28%]">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
+                    <Shield className="w-5 h-5 text-[#003333]" />
+                  </div>
+                  <div className="mt-1 xl:mt-0">
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Made in the USA</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">Strictly controlled standards.</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
-            <motion.div custom={3} variants={scatterCardVariants} className="absolute top-[41.6%] right-0 pointer-events-auto z-10 w-[25%]">
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 w-full shadow-2xl relative hover:-translate-y-1 hover:bg-white/10 transition-all cursor-default group">
-                <Snowflake className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Cold Chain Logistics</h4>
-                <p className="text-white/60 text-[11px] leading-snug">Stored under strict temperature control.</p>
+            <motion.div custom={3} variants={scatterCardVariants} className="absolute top-[41.6%] right-0 pointer-events-auto z-10 w-[28%]">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
+                    <Snowflake className="w-5 h-5 text-[#003333]" />
+                  </div>
+                  <div className="mt-1 xl:mt-0">
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Cold Chain Logistics</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">Strict temperature control.</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
-            <motion.div custom={4} variants={scatterCardVariants} className="absolute top-[75%] right-0 pointer-events-auto z-10 w-[25%]">
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 w-full shadow-2xl relative hover:-translate-y-1 hover:bg-white/10 transition-all cursor-default group">
-                <Search className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Full Traceability</h4>
-                <p className="text-white/60 text-[11px] leading-snug">Batch-specific sourcing and tracking.</p>
+            <motion.div custom={4} variants={scatterCardVariants} className="absolute top-[75%] right-0 pointer-events-auto z-10 w-[28%]">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
+                    <Search className="w-5 h-5 text-[#003333]" />
+                  </div>
+                  <div className="mt-1 xl:mt-0">
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Full Traceability</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">Batch-specific tracking.</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
 
-          {/* Mobile/Tablet Diagram Container (Responsive, Stacked) */}
-          <div className="relative w-full flex flex-col items-center lg:hidden mt-12 gap-8">
-             {/* Vial */}
-             <motion.div variants={itemVariants} className="relative w-[180px] h-[400px] z-10">
-               <Image 
-                 src="/99 Images/transparant-vial.png" 
-                 alt="Vial" 
-                 fill
-                 sizes="(max-width: 640px) 180px, 200px"
-                 className="object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" 
-               />
-             </motion.div>
+          {/* Mobile/Tablet Diagram Container */}
+          <div className="relative w-full flex flex-col items-center lg:hidden mt-12 overflow-hidden">
              
-             {/* Grid of Cards */}
-             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
-                <motion.div custom={5} variants={scatterCardVariants} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl">
-                  <FlaskConical className="w-6 h-6 text-primary mb-2" />
-                  <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Independently Lab Tested</h4>
-                  <p className="text-white/60 text-xs leading-snug">Verified purity & composition.</p>
-                </motion.div>
-                <motion.div custom={6} variants={scatterCardVariants} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl">
-                  <Network className="w-6 h-6 text-primary mb-2" />
-                  <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Advanced Peptide Synthesis</h4>
-                  <p className="text-white/60 text-xs leading-snug">Pioneering research grades.</p>
-                </motion.div>
-                <motion.div custom={7} variants={scatterCardVariants} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl">
-                  <Shield className="w-6 h-6 text-primary mb-2" />
-                  <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Made in the United States</h4>
-                  <p className="text-white/60 text-xs leading-snug">Manufactured under controlled standards.</p>
-                </motion.div>
-                <motion.div custom={8} variants={scatterCardVariants} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl">
-                  <Snowflake className="w-6 h-6 text-primary mb-2" />
-                  <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Cold Chain Logistics</h4>
-                  <p className="text-white/60 text-xs leading-snug">Stored under strict temperature control.</p>
-                </motion.div>
-                <motion.div custom={9} variants={scatterCardVariants} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl sm:col-span-2 sm:mx-auto sm:w-80">
-                  <Search className="w-6 h-6 text-primary mb-2" />
-                  <h4 className="text-white font-semibold text-sm mb-1 leading-tight">Full Traceability</h4>
-                  <p className="text-white/60 text-xs leading-snug">Batch-specific sourcing and tracking.</p>
-                </motion.div>
+             {/* 3D Floating Vial Scene */}
+             <div className="relative w-full flex flex-col items-center z-20">
+               {/* 3D Ambient Glow (Native radial-gradient prevents clipping) */}
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[radial-gradient(circle,rgba(0,139,139,0.15)_0%,transparent_70%)] rounded-full pointer-events-none" />
+
+               {/* Floating Vial */}
+               <motion.div variants={vialVariants} className="relative w-[180px] h-[400px]">
+                 <motion.div
+                   animate={{ y: [-12, 12, -12] }}
+                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                   className="relative w-full h-full will-change-transform"
+                 >
+                   <Image 
+                     src="/99 Images/transparant-vial.png" 
+                     alt="Vial" 
+                     fill
+                     sizes="(max-width: 640px) 180px, 200px"
+                     className="object-contain z-10 relative drop-shadow-[-15px_25px_25px_rgba(0,0,0,0.7)]" 
+                   />
+                 </motion.div>
+               </motion.div>
+
+               {/* 3D Floor Shadow (Syncs with the levitation) */}
+               <motion.div 
+                 animate={{ scale: [1, 0.7, 1], opacity: [0.7, 0.2, 0.7] }}
+                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                 className="w-[120px] h-[12px] bg-black blur-[6px] rounded-[100%] mt-8" 
+               />
              </div>
+             
+             {/* Clean Grid of Cards */}
+             <motion.div 
+               initial="hidden"
+               whileInView="visible"
+               viewport={{ once: true, amount: 0.1 }}
+               className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl px-4 sm:px-0 mt-12 sm:mt-16"
+             >
+                {[
+                  { icon: FlaskConical, title: "Independently Lab Tested", desc: "Verified purity & composition." },
+                  { icon: Network, title: "Advanced Synthesis", desc: "Pioneering research grades." },
+                  { icon: Shield, title: "Made in the USA", desc: "Strictly controlled standards." },
+                  { icon: Snowflake, title: "Cold Chain Logistics", desc: "Strict temperature control." },
+                  { icon: Search, title: "Full Traceability", desc: "Batch-specific tracking." }
+                ].map((card, idx) => {
+                  const Icon = card.icon;
+                  return (
+                    <motion.div 
+                      key={idx} 
+                      custom={idx} 
+                      variants={mobileCardVariants} 
+                      className={`bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default ${idx === 4 ? 'sm:col-span-2 sm:mx-auto sm:w-80' : ''}`}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                      <div className="relative z-10 flex flex-col sm:flex-row items-start gap-4">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
+                          <Icon className="w-5 h-5 text-[#003333]" />
+                        </div>
+                        <div className="mt-1 sm:mt-0">
+                          <h4 className="text-white font-bold text-[13px] sm:text-sm mb-1.5 leading-tight tracking-wide">{card.title}</h4>
+                          <p className="text-white/80 text-[11px] sm:text-xs leading-relaxed">{card.desc}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+             </motion.div>
           </div>
         </motion.div>
       </div>
