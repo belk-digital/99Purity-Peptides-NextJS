@@ -30,8 +30,6 @@
     "@payloadcms/richtext-lexical": "3.84.1",
     "@payloadcms/storage-s3": "^3.84.1",
     "@payloadcms/ui": "3.84.1",
-    "@splinetool/react-spline": "^4.1.0",
-    "@splinetool/runtime": "^1.12.97",
     "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^9.8.0",
     "class-variance-authority": "^0.7.1",
