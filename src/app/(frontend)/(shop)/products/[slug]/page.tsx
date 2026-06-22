@@ -307,10 +307,98 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     })
   }
 
+  // Generate JSON-LD Schemas
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://the-looksmaxxing-lab.vercel.app'
+  const productUrl = `${baseUrl}/products/${slug}`
+  
+  const productSchema = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    name: productData.name,
+    description: productData.shortDescription,
+    image: productData.images[0] ? `${baseUrl}${productData.images[0]}` : undefined,
+    sku: productData.sku || productData.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'The Looksmaxxing Lab'
+    },
+    offers: {
+      '@type': 'Offer',
+      url: productUrl,
+      priceCurrency: 'USD',
+      price: typeof productData.variants[0]?.price === 'string' ? productData.variants[0].price.replace('$', '') : '0',
+      availability: productData.variants[0]?.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      offerCount: productData.variants.length > 0 ? productData.variants.length : 1
+    },
+    aggregateRating: productData.reviewCount > 0 ? {
+      '@type': 'AggregateRating',
+      ratingValue: productData.averageRating,
+      reviewCount: productData.reviewCount
+    } : undefined
+  }
+
+  const faqSchema = productData.faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: productData.faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer
+      }
+    }))
+  } : undefined
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: baseUrl
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Research Peptides',
+        item: `${baseUrl}/shop`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: productData.categories[0] || 'Category',
+        item: `${baseUrl}/category/${(productData.categories[0] || 'category').toLowerCase().replace(/ /g, '-')}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: productData.name,
+        item: productUrl
+      }
+    ]
+  }
+
   console.log('--- FINISHED SERVER RENDER FOR PRODUCT PAGE ---')
 
   return (
     <div className="flex flex-col min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <main className="flex-1 mt-20">
         <ProductClient product={productData as any} />
       </main>

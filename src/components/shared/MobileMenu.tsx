@@ -83,13 +83,10 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
           animate="open"
           exit="exit"
           variants={menuVariants}
-          className="fixed inset-0 z-[100] bg-cream/95 backdrop-blur-2xl flex flex-col pointer-events-auto"
+          className="fixed inset-0 z-[100] bg-cream flex flex-col pointer-events-auto"
         >
-          {/* Subtle Fine Noise Texture for physical feel */}
-          <div 
-            className="absolute inset-0 opacity-[0.04] pointer-events-none z-0 mix-blend-multiply"
-            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
-          />
+          {/* Performant static noise texture (0 GPU overhead) */}
+          <div className="absolute inset-0 opacity-[0.15] pointer-events-none z-0 mix-blend-multiply bg-noise" />
 
           {/* Header Block */}
           <motion.div variants={itemVariants} className="h-[72px] flex items-center justify-between px-6 shrink-0 relative z-10 border-b border-black/5">

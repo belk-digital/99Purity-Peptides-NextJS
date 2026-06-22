@@ -108,7 +108,7 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                 className="w-full max-w-[380px] will-change-transform"
               >
                 {/* CSS Transition wrapped element MUST be separate from motion.div */}
-                <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl hover:-translate-y-2 ${rotationClass}`}>
+                <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl ${rotationClass}`}>
                   <Link href={`/product/${product.slug}`} className="absolute inset-0 z-20" aria-label={`View ${product.name}`} />
                   
                   {/* Top Text Content & Wishlist */}
@@ -144,10 +144,22 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
 
                     {/* Price */}
-                    <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-10">
-                      <span className="text-white text-lg sm:text-3xl font-light tracking-tighter">
-                        ${product.price}
-                      </span>
+                    <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-10 pointer-events-none">
+                      <div className="flex flex-col">
+                        <span className="text-white/80 text-[8px] sm:text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5">
+                          From
+                        </span>
+                        <div className="flex items-center flex-wrap gap-1.5 sm:gap-2">
+                          {product.originalPrice && (
+                            <span className="text-[10px] sm:text-sm font-medium text-white/60 line-through">
+                              ${product.originalPrice}
+                            </span>
+                          )}
+                          <span className="text-white text-base sm:text-xl lg:text-2xl font-light tracking-tighter">
+                            {typeof product.price === 'string' && product.price.includes('$') ? product.price.replace('From ', '') : `$${product.price}`}
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Action Button */}

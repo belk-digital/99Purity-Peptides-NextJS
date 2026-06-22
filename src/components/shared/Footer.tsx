@@ -34,48 +34,61 @@ const FooterContent = () => {
   return (
     <footer className="bg-[#050505] w-full relative z-30 font-sans border-t border-white/5 overflow-hidden text-white">
 
-      {/* Pre-Footer CTA */}
-      <div ref={sectionRef} className="relative border-b border-white/5 overflow-hidden">
-        {/* Background Image with Parallax */}
-        <motion.div 
-          className="absolute inset-0 w-full h-[140%] -top-[20%] bg-cover bg-center bg-no-repeat z-0 pointer-events-none opacity-50"
-          style={{ 
-            backgroundImage: `url('/99 Images/vial-closeup.webp')`,
-            y
-          }}
-        />
+      {/* Pre-Footer CTA - Staggered Gallery Design */}
+      <div ref={sectionRef} className="relative overflow-hidden bg-[#050505] border-b border-white/5 pt-24 pb-0 flex flex-col items-center">
         
-        <div className="container relative z-10 mx-auto px-4 md:px-10 pt-16 md:pt-24 pb-32 md:pb-48 max-w-[1600px]">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="bg-white/5 backdrop-blur-2xl border border-white/10 border-t-white/20 rounded-[2.5rem] py-10 px-6 md:py-16 md:px-16 relative overflow-hidden max-w-5xl mx-auto shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]"
-          >
-            {/* Subtle inner top glow for glass edge */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            
-            <div className="relative z-10 flex flex-col items-center justify-center gap-8 text-center">
-              <div className="max-w-3xl">
-                <h2 className="font-heading text-[1.8rem] sm:text-4xl md:text-5xl lg:text-[54px] font-black text-white leading-[1.1] tracking-tight uppercase mb-4 w-full">
-                  <span className="block whitespace-normal sm:whitespace-nowrap">Ready to elevate</span>
-                  <span className="block whitespace-normal sm:whitespace-nowrap">your research?</span>
-                </h2>
-                <p className="text-gray-400 text-sm sm:text-base md:text-lg mx-auto max-w-2xl">
-                  Explore our complete catalogue of high-purity, third-party tested peptides synthesized specifically for advanced laboratory research protocols.
-                </p>
-              </div>
+        {/* Top Text Section */}
+        <div className="container relative z-20 mx-auto px-4 max-w-4xl text-center flex flex-col items-center gap-6 mb-16">
+          <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[1.1] tracking-tight">
+            Ready to elevate your research.<br className="hidden md:block" /> Explore our complete catalogue.
+          </h2>
+          <div className="mt-4">
+            <FluidButton 
+              href="/shop" 
+              text="Explore Catalogue" 
+              variant="white"
+            />
+          </div>
+        </div>
 
-              <div className="flex justify-center mt-2 drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
-                <FluidButton 
-                  href="/shop" 
-                  text="Explore Catalogue" 
-                  variant="white"
-                />
-              </div>
-            </div>
+        {/* Staggered Image Gallery */}
+        <div className="w-full relative z-10 flex items-end justify-center gap-2 sm:gap-4 px-2 sm:px-4 h-[300px] sm:h-[400px] md:h-[500px] overflow-hidden">
+          
+          <motion.div 
+            initial={{ y: 100, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0 }} viewport={{ once: true }}
+            className="relative w-1/5 max-w-[250px] h-[60%] shrink-0"
+          >
+            <img src="/99 Images/category-1.webp" alt="Category" className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" />
           </motion.div>
+          
+          <motion.div 
+            initial={{ y: 150, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.1 }} viewport={{ once: true }}
+            className="relative w-1/5 max-w-[280px] h-[80%] shrink-0 z-10"
+          >
+            <img src="/99 Images/vial-closeup.webp" alt="Vial" className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" />
+          </motion.div>
+          
+          <motion.div 
+            initial={{ y: 80, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true }}
+            className="relative w-1/4 max-w-[350px] h-[100%] shrink-0 z-20"
+          >
+            <img src="/99 Images/vial-ice-closeup.webp" alt="Vial on Ice" className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" />
+          </motion.div>
+          
+          <motion.div 
+            initial={{ y: 120, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.3 }} viewport={{ once: true }}
+            className="relative w-1/5 max-w-[280px] h-[75%] shrink-0 z-10"
+          >
+            <img src="/99 Images/purity.webp" alt="Purity" className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" />
+          </motion.div>
+          
+          <motion.div 
+            initial={{ y: 90, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }} viewport={{ once: true }}
+            className="relative w-1/5 max-w-[250px] h-[65%] shrink-0"
+          >
+            <img src="/99 Images/identity.webp" alt="Identity" className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" />
+          </motion.div>
+          
         </div>
       </div>
 
