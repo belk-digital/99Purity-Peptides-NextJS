@@ -141,7 +141,7 @@ async function run() {
 
   console.log('Preparing default media (product-image.webp)...')
   const imagePath = path.resolve(process.cwd(), 'public/99 Images/product-image.webp')
-  let defaultMediaId = ''
+  let defaultMediaId: string | number = ''
   if (fs.existsSync(imagePath)) {
     const fileData = fs.readFileSync(imagePath)
     const media = await payload.create({
