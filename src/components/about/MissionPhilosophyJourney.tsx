@@ -100,10 +100,8 @@ export function MissionPhilosophyJourney() {
           >
             {/* Left Content */}
             <div className="relative z-10 w-full lg:w-[60%] lg:group-hover:w-[50%] p-8 lg:p-12 flex flex-col justify-center bg-ink transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-              {/* Performant static noise texture for Mobile */}
-              <div className="md:hidden pointer-events-none absolute inset-0 h-full w-full opacity-10 mix-blend-screen bg-noise z-0" />
-              {/* Premium SVG Noise for Desktop */}
-              <svg className="hidden md:block pointer-events-none absolute inset-0 h-full w-full opacity-[0.15] mix-blend-screen z-0">
+              {/* Premium SVG Noise */}
+              <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.15] mix-blend-screen z-0">
                 <filter id="noise1">
                   <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
                 </filter>
@@ -144,10 +142,8 @@ export function MissionPhilosophyJourney() {
           >
             {/* Left Content (Actually on right) */}
             <div className="relative z-10 w-full lg:w-[60%] lg:group-hover:w-[50%] p-8 lg:p-12 flex flex-col justify-center bg-cream transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-              {/* Performant static noise texture for Mobile */}
-              <div className="md:hidden pointer-events-none absolute inset-0 h-full w-full opacity-20 mix-blend-multiply bg-noise z-0" />
-              {/* Premium SVG Noise for Desktop */}
-              <svg className="hidden md:block pointer-events-none absolute inset-0 h-full w-full opacity-[0.4] mix-blend-multiply z-0">
+              {/* Premium SVG Noise */}
+              <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.4] mix-blend-multiply z-0">
                 <filter id="noise2">
                   <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
                 </filter>
@@ -187,10 +183,8 @@ export function MissionPhilosophyJourney() {
           >
             {/* Left Content */}
             <div className="relative z-10 w-full lg:w-[60%] lg:group-hover:w-[50%] p-8 lg:p-12 flex flex-col justify-center bg-[#1A1A1A] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-              {/* Performant static noise texture for Mobile */}
-              <div className="md:hidden pointer-events-none absolute inset-0 h-full w-full opacity-10 mix-blend-screen bg-noise z-0" />
-              {/* Premium SVG Noise for Desktop */}
-              <svg className="hidden md:block pointer-events-none absolute inset-0 h-full w-full opacity-[0.15] mix-blend-screen z-0">
+              {/* Premium SVG Noise */}
+              <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.15] mix-blend-screen z-0">
                 <filter id="noise3">
                   <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
                 </filter>

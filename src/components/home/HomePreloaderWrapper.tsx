@@ -124,7 +124,8 @@ export function HomePreloaderWrapper({ children }: { children: React.ReactNode }
        spawnInterval = setInterval(() => {
           if (!engineRef.current || !dropsContainerRef.current) return
           import('matter-js').then((Matter) => {
-             const w = dropsContainerRef.current!.offsetWidth
+             if (!dropsContainerRef.current || !engineRef.current) return
+             const w = dropsContainerRef.current.offsetWidth
              const startX = (w / 2) + (Math.random() * (w * 0.4) - (w * 0.2)) // drop near center
              const radius = 8 + Math.random() * 6
 
@@ -143,7 +144,7 @@ export function HomePreloaderWrapper({ children }: { children: React.ReactNode }
              el.style.borderRadius = '50%'
              el.style.left = '0'
              el.style.top = '0'
-             dropsContainerRef.current!.appendChild(el)
+             dropsContainerRef.current.appendChild(el)
              
              dropsRef.current.push({ body: dropBody, el })
           })
@@ -166,8 +167,9 @@ export function HomePreloaderWrapper({ children }: { children: React.ReactNode }
         // Move the physics ground up perfectly in sync with the visual liquid line
         if (engineRef.current && engineRef.current.groundBody && dropsContainerRef.current) {
           import('matter-js').then((Matter) => {
-             const h = dropsContainerRef.current!.offsetHeight
-             const w = dropsContainerRef.current!.offsetWidth
+             if (!dropsContainerRef.current || !engineRef.current) return
+             const h = dropsContainerRef.current.offsetHeight
+             const w = dropsContainerRef.current.offsetWidth
              const yPos = h - (progress * h)
              Matter.Body.setPosition(engineRef.current.groundBody, { x: w / 2, y: yPos + 10 })
           })

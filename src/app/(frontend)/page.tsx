@@ -1,6 +1,5 @@
 import { HomePreloaderWrapper } from '@/components/home/HomePreloaderWrapper'
 import { Hero } from '@/components/home/Hero'
-import { FeaturedProductsSection } from '@/components/home/FeaturedProductsSection'
 import { CategoriesSection } from '@/components/home/CategoriesSection'
 import { TrustBadges } from '@/components/shared/TrustBadges'
 import { FaqSection } from '@/components/home/FaqSection'
@@ -40,7 +39,6 @@ export default async function Homepage() {
           <BestSellerSection products={products} />
           <DifferenceSection />
           <MerchandiseSection />
-          <FeaturedProductsSection products={products} />
           <WhatSetsUsApart />
           <CategoriesSection />
           <ParallaxImageSection />

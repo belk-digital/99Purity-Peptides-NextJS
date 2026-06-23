@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
-import { ShoppingBag, ShoppingCart, Menu, Search, X, User } from 'lucide-react'
+import { ShoppingBag, Menu, Search, X, User } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
 import { useCartStore } from '@/lib/cart/store'
 import { useWishlistStore } from '@/lib/wishlist/store'
@@ -107,7 +107,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   }, [])
 
   const pathname = usePathname()
-  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about'
+  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about' || pathname === '/faq' || pathname === '/contact' || pathname === '/affiliates'
 
   useEffect(() => {
     setMounted(true)
@@ -308,13 +308,13 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
             )}
           </AnimatePresence>
 
-          <div className={`w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto relative pointer-events-auto rounded-full transition-all duration-500 ${isTransparentHeader && !isScrolled ? 'mt-4 sm:mt-5 md:mt-8 shadow-none' : 'mt-4 shadow-2xl'}`}>
+          <div className={`w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto relative pointer-events-auto rounded-full transition-all duration-500 ${isTransparentHeader && !isScrolled ? 'mt-4 sm:mt-5 md:mt-8 shadow-none' : 'mt-4 shadow-[0_8px_24px_rgba(0,0,0,0.15)] ring-1 ring-white/5'}`}>
             {isTransparentHeader && !isScrolled ? (
               <div className="w-full transition-all duration-500 border border-transparent rounded-full">
                 {headerContent}
               </div>
             ) : (
-              <div className="w-full transition-all duration-500 rounded-full bg-black/30 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden">
+              <div className="w-full transition-all duration-500 rounded-full bg-black/30 backdrop-blur-xl border border-white/10 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent pointer-events-none rounded-full" />
                 {headerContent}
               </div>
@@ -448,7 +448,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                                   </div>
                                   
                                   <div className="absolute bottom-2 right-2 xl:bottom-3 xl:right-3 w-6 h-6 xl:w-8 xl:h-8 bg-white text-ink rounded-full flex items-center justify-center shadow-lg transition-colors group-hover:bg-ink group-hover:text-white">
-                                    <ShoppingCart className="w-3 h-3 xl:w-4 xl:h-4 text-current" />
+                                    <ShoppingBag className="w-3 h-3 xl:w-4 xl:h-4 text-current" />
                                   </div>
                                 </div>
                               </Link>

@@ -68,7 +68,7 @@ const FaqItem = ({
              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
              className="overflow-hidden flex-1"
           >
-            <div className="text-ink/80 text-base md:text-lg leading-relaxed pt-2 lg:pt-0 pr-4">
+            <div className="text-ink/80 text-base md:text-lg leading-relaxed pt-2 lg:pt-0 pr-4 [&_a]:cursor-pointer [&_a]:text-primary [&_a]:font-bold [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-ink transition-colors">
               {faq.answer}
             </div>
           </motion.div>
@@ -93,19 +93,43 @@ export function SharedFaqSection({
   description?: string | React.ReactNode;
   faqs: FaqItemType[];
 }) {
-  const [isHoveringFaq, setIsHoveringFaq] = useState(false);
-
   // Use MotionValues to prevent React re-renders on mousemove (fixes scroll lag)
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
+  const isHoveringFaqMV = useMotionValue(0);
+  const isHoveringLinkMV = useMotionValue(0);
   
   const springConfig = { damping: 28, stiffness: 400, mass: 0.5 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
+  // Smooth visibility transition
+  const targetVisibility = useMotionValue(0);
+  const visibilitySpring = useSpring(targetVisibility, { damping: 25, stiffness: 300 });
+
+  useEffect(() => {
+    // Update target visibility whenever these values change
+    const updateVisibility = () => {
+      targetVisibility.set(isHoveringFaqMV.get() && !isHoveringLinkMV.get() ? 1 : 0);
+    };
+    
+    const unsubFaq = isHoveringFaqMV.on("change", updateVisibility);
+    const unsubLink = isHoveringLinkMV.on("change", updateVisibility);
+    
+    return () => {
+      unsubFaq();
+      unsubLink();
+    }
+  }, [isHoveringFaqMV, isHoveringLinkMV, targetVisibility]);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (window.innerWidth < 768) return; // Prevent heavy JS tracking on mobile devices
+      
+      const target = e.target as HTMLElement;
+      const isLink = target.tagName?.toLowerCase() === 'a' || target.closest('a') !== null;
+      isHoveringLinkMV.set(isLink ? 1 : 0);
+
       cursorX.set(e.clientX - 50);
       cursorY.set(e.clientY - 50);
     };
@@ -113,7 +137,7 @@ export function SharedFaqSection({
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isHoveringLinkMV]);
 
   return (
     <section className="bg-cream w-full py-32 relative z-30 font-sans">
@@ -125,13 +149,10 @@ export function SharedFaqSection({
           x: cursorXSpring, 
           y: cursorYSpring,
           width: 100, 
-          height: 100 
+          height: 100,
+          scale: visibilitySpring,
+          opacity: visibilitySpring
         }}
-        animate={{
-          scale: isHoveringFaq ? 1 : 0,
-          opacity: isHoveringFaq ? 1 : 0,
-        }}
-        transition={{ duration: 0.2 }}
       >
         <span className="max-w-[70px] leading-tight text-sm">READ</span>
       </motion.div>
@@ -160,8 +181,8 @@ export function SharedFaqSection({
             key={index} 
             faq={faq} 
             index={index} 
-            onHoverStart={() => setIsHoveringFaq(true)}
-            onHoverEnd={() => setIsHoveringFaq(false)}
+            onHoverStart={() => isHoveringFaqMV.set(1)}
+            onHoverEnd={() => isHoveringFaqMV.set(0)}
           />
         ))}
         {/* Final border bottom */}

@@ -3,6 +3,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 const inputVariants = cva(
   "flex w-full rounded-sm border px-4 h-12 font-sans text-body-md transition-all duration-200 ease-out placeholder:text-ink-subtle focus-visible:outline-none focus-visible:shadow-focus focus-visible:border-border-strong disabled:cursor-not-allowed disabled:opacity-40",
@@ -30,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         <input
-          className={inputVariants({ variant: error ? "error" : variant, className })}
+          className={cn(inputVariants({ variant: error ? "error" : variant }), className)}
           ref={ref}
           {...props}
         />
