@@ -289,13 +289,15 @@ const FooterContent = () => {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-4 lg:mb-0">
               <span className="text-cream/90">99Purity Peptides &copy; {new Date().getFullYear()}</span>
               <span className="hidden sm:inline">·</span>
-              <Link href="/privacy" className="hover:text-cream transition-colors">Privacy Policy</Link>
+              <Link href="/privacy-policy" className="hover:text-cream transition-colors">Privacy Policy</Link>
               <span className="hidden sm:inline">·</span>
-              <Link href="/terms" className="hover:text-cream transition-colors">Terms of Service</Link>
+              <Link href="/terms-and-conditions" className="hover:text-cream transition-colors">Terms of Service</Link>
               <span className="hidden sm:inline">·</span>
-              <Link href="/refund" className="hover:text-cream transition-colors">Refund Policy</Link>
+              <Link href="/refund-policy" className="hover:text-cream transition-colors">Refund Policy</Link>
               <span className="hidden sm:inline">·</span>
-              <Link href="/shipping" className="hover:text-cream transition-colors">Shipping Policy</Link>
+              <Link href="/shipping-policy" className="hover:text-cream transition-colors">Shipping Policy</Link>
+              <span className="hidden sm:inline">·</span>
+              <Link href="/medical-disclaimer" className="hover:text-cream transition-colors">Medical Disclaimer</Link>
             </div>
             <div className="flex items-center gap-2 text-center lg:text-right">
               <span>Designed & Developed by <a href="https://belkdigital.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 font-bold hover:text-primary transition-colors">Belk Digital</a></span>

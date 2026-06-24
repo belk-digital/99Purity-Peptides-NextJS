@@ -12,9 +12,10 @@ export function MinimalFooter() {
           <div>Designed & Developed by <a href="https://www.belkdigital.com/" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors font-bold">Belk Digital</a></div>
         </div>
         <div className="flex items-center gap-6 text-label-sm uppercase tracking-wider text-ink-muted">
-          <Link href="/privacy" className="hover:text-ink transition-colors">Privacy</Link>
-          <Link href="/terms" className="hover:text-ink transition-colors">Terms</Link>
-          <Link href="/refunds" className="hover:text-ink transition-colors">Refunds</Link>
+          <Link href="/privacy-policy" className="hover:text-ink transition-colors">Privacy</Link>
+          <Link href="/terms-and-conditions" className="hover:text-primary transition-colors">Terms of Service</Link>
+          <Link href="/refund-policy" className="hover:text-ink transition-colors">Refunds</Link>
+          <Link href="/medical-disclaimer" className="hover:text-ink transition-colors">Medical Disclaimer</Link>
         </div>
       </Container>
     </footer>
