@@ -29,7 +29,7 @@ export function FaqHero() {
         {/* Cutouts & UI Overlay (Inverted corners) */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-30">
           {/* Bottom Center Cutout for Button */}
-          <div className="absolute bottom-0 left-0 right-0 mx-auto w-fit bg-cream rounded-t-[2.5rem] md:rounded-t-[4rem] pointer-events-auto p-3 sm:p-5 md:p-8 pt-6 md:pt-10 px-6 md:px-12 flex justify-center items-center">
+          <div className="absolute -bottom-px left-0 right-0 mx-auto w-fit bg-cream rounded-t-[2.5rem] md:rounded-t-[4rem] pointer-events-auto p-3 sm:p-5 md:p-8 pt-6 md:pt-10 px-6 md:px-12 flex justify-center items-center">
             {/* Left Fillet (Inverted Corner) */}
             <div 
               className="absolute bottom-0 -left-[calc(2.5rem-1px)] w-10 h-10 md:-left-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none z-0"

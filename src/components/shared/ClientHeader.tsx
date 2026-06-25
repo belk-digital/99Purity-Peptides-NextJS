@@ -107,7 +107,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   }, [])
 
   const pathname = usePathname()
-  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about' || pathname === '/faq' || pathname === '/contact' || pathname === '/affiliates' || pathname === '/journal'
+  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about' || pathname === '/faq' || pathname === '/contact' || pathname === '/affiliates' || pathname === '/blog'
 
   useEffect(() => {
     setMounted(true)
@@ -197,8 +197,8 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
               <Link href="/about" className={getNavLinkClass('/about')}>
                 ABOUT
               </Link>
-              <Link href="/journal" className={getNavLinkClass('/journal')}>
-                JOURNAL
+              <Link href="/blog" className={getNavLinkClass('/blog')}>
+                BLOG
               </Link>
               <Link href="/faq" className={getNavLinkClass('/faq')}>
                 FAQ

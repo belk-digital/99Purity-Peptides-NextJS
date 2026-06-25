@@ -66,7 +66,7 @@ export function Hero() {
         {/* Cutouts & UI Overlay (Inverted corners) */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-30">
           {/* Bottom Left Cutout */}
-          <div className="absolute bottom-0 left-0 bg-cream rounded-tr-[3rem] md:rounded-tr-[4rem] pointer-events-auto p-3 sm:p-5 md:p-8 pt-6 md:pt-10 pr-6 md:pr-10">
+          <div className="absolute -bottom-px left-0 bg-cream rounded-tr-[3rem] md:rounded-tr-[4rem] pointer-events-auto p-3 sm:p-5 md:p-8 pt-6 md:pt-10 pr-6 md:pr-10">
             {/* Top Fillet (Inverted Corner) */}
             <div 
               className="absolute -top-[calc(3rem-1px)] left-0 w-12 h-12 md:-top-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none"

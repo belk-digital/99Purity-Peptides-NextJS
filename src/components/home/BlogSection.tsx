@@ -7,55 +7,7 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { FluidButton } from '@/components/ui/fluid-button'
 
-const BLOG_POSTS = [
-  {
-    title: 'The Role of BPC-157 in Cellular Recovery',
-    excerpt: 'An in-depth look at how BPC-157 promotes angiogenesis and accelerates tissue regeneration in clinical models.',
-    date: 'OCT 12, 2026',
-    category: 'Recovery',
-    image: '/99 Images/ChatGPT Image Jun 15, 2026, 04_56_02 AM.webp',
-    slug: 'role-of-bpc-157'
-  },
-  {
-    title: 'Understanding GLP-1 Agonists',
-    excerpt: 'Examining the metabolic pathways and recent advancements in GLP-1 receptor agonist research.',
-    date: 'SEP 28, 2026',
-    category: 'Metabolic',
-    image: '/99 Images/ChatGPT Image Jun 15, 2026, 04_57_45 AM.webp',
-    slug: 'understanding-glp-1'
-  },
-  {
-    title: 'Peptide Stability: Cold Chain Logistics',
-    excerpt: 'Why strict temperature control is critical for maintaining peptide integrity and preventing degradation.',
-    date: 'SEP 15, 2026',
-    category: 'Logistics',
-    image: '/99 Images/ChatGPT Image Jun 15, 2026, 05_03_53 AM.webp',
-  },
-  {
-    title: 'GHK-Cu: The Copper Peptide Revolution',
-    excerpt: 'Exploring the regenerative properties of GHK-Cu in skin remodeling and wound healing.',
-    date: 'AUG 10, 2026',
-    category: 'Regeneration',
-    image: '/99 Images/ChatGPT Image Jun 15, 2026, 04_57_45 AM.webp',
-    slug: 'ghk-cu-copper-peptide'
-  },
-  {
-    title: 'The Pharmacokinetics of TB-500',
-    excerpt: 'Understanding the systemic distribution and actin-binding mechanisms of Thymosin Beta-4.',
-    date: 'JUL 22, 2026',
-    category: 'Science',
-    image: '/99 Images/ChatGPT Image Jun 15, 2026, 05_03_53 AM.webp',
-    slug: 'pharmacokinetics-tb-500'
-  },
-  {
-    title: 'Maximizing Bioavailability in Administration',
-    excerpt: 'Comparing subcutaneous injection, nasal sprays, and oral routes for research peptide delivery.',
-    date: 'JUN 05, 2026',
-    category: 'Administration',
-    image: '/99 Images/ChatGPT Image Jun 15, 2026, 04_56_02 AM.webp',
-    slug: 'maximizing-bioavailability'
-  }
-]
+import { BLOG_POSTS } from '@/data/blog-posts'
 
 export function BlogSection() {
   const [hoveredCol, setHoveredCol] = useState<number | null>(null);
@@ -129,8 +81,8 @@ export function BlogSection() {
           </div>
           <div className="w-full md:w-1/3 flex justify-start md:justify-end mt-6 md:mt-0">
             <FluidButton 
-              href="/journal" 
-              text="View Journal" 
+              href="/blog" 
+              text="View Blog" 
               variant="white"
             />
           </div>
@@ -170,9 +122,9 @@ export function BlogSection() {
             }`}
           >
             <motion.div layout custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/journal/${BLOG_POSTS[0].slug}`} className="block w-full h-full relative">
+              <Link href={`/${BLOG_POSTS[0].slug}`} className="block w-full h-full relative">
                 <Image 
-                  src={BLOG_POSTS[0].image} 
+                  src={BLOG_POSTS[0].imageSrc} 
                   alt={BLOG_POSTS[0].title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -200,9 +152,9 @@ export function BlogSection() {
             }`}
           >
             <motion.div layout custom={2} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-full bg-white/5 border border-white/10 w-full">
-              <Link href={`/journal/${BLOG_POSTS[1].slug}`} className="block w-full h-full relative">
+              <Link href={`/${BLOG_POSTS[1].slug}`} className="block w-full h-full relative">
                 <Image 
-                  src={BLOG_POSTS[1].image} 
+                  src={BLOG_POSTS[1].imageSrc} 
                   alt={BLOG_POSTS[1].title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -230,9 +182,9 @@ export function BlogSection() {
           >
             <motion.div layout custom={3} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
             <motion.div layout custom={4} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/journal/${BLOG_POSTS[2].slug}`} className="block w-full h-full relative">
+              <Link href={`/${BLOG_POSTS[2].slug}`} className="block w-full h-full relative">
                 <Image 
-                  src={BLOG_POSTS[2].image} 
+                  src={BLOG_POSTS[2].imageSrc} 
                   alt={BLOG_POSTS[2].title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -269,9 +221,9 @@ export function BlogSection() {
           >
             <motion.div layout custom={5} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
             <motion.div layout custom={6} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/journal/${BLOG_POSTS[3].slug}`} className="block w-full h-full relative">
+              <Link href={`/${BLOG_POSTS[3].slug}`} className="block w-full h-full relative">
                 <Image 
-                  src={BLOG_POSTS[3].image} 
+                  src={BLOG_POSTS[3].imageSrc} 
                   alt={BLOG_POSTS[3].title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -298,9 +250,9 @@ export function BlogSection() {
             }`}
           >
             <motion.div layout custom={7} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-full bg-white/5 border border-white/10 w-full">
-              <Link href={`/journal/${BLOG_POSTS[4].slug}`} className="block w-full h-full relative">
+              <Link href={`/${BLOG_POSTS[4].slug}`} className="block w-full h-full relative">
                 <Image 
-                  src={BLOG_POSTS[4].image} 
+                  src={BLOG_POSTS[4].imageSrc} 
                   alt={BLOG_POSTS[4].title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -327,9 +279,9 @@ export function BlogSection() {
             }`}
           >
             <motion.div layout custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/journal/${BLOG_POSTS[5].slug}`} className="block w-full h-full relative">
+              <Link href={`/${BLOG_POSTS[5].slug}`} className="block w-full h-full relative">
                 <Image 
-                  src={BLOG_POSTS[5].image} 
+                  src={BLOG_POSTS[5].imageSrc} 
                   alt={BLOG_POSTS[5].title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

@@ -28,7 +28,7 @@ const CATEGORIES = [
 const MAIN_LINKS = [
   { label: 'Shop Formulations', href: '/shop' },
   { label: 'Peptide Calculator', href: '/peptide-calculator' },
-  { label: 'Scientific Journal', href: '/journal' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Our Laboratory', href: '/about' },
 ]
 
