@@ -159,11 +159,6 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
     "description": "Collagen peptides vs peptide therapy for skin: compare GHK-Cu and hydrolyzed collagen, what research shows, and where each fits. RUO research peptides.  — 150 chars",
     "schemas": []
   },
-  "ghk-cu-copper-peptide-research-guide": {
-    "title": "GHK-Cu Peptide: Complete Research Guide 2026 (45 chars)",
-    "description": "GHK-Cu peptide research reference: mechanism, collagen pathway evidence, lab handling, purity standards, and 35+ FAQs from peer-reviewed studies. (146 chars)",
-    "schemas": []
-  },
   "klow-peptide-blend-research-guide-2026": {
     "title": "KLOW Peptide Blend: 2026 Research Guide, Benefits & Dosage",
     "description": "KLOW peptide blend: verified 50/10/10/10mg composition, BPC-157, TB-500, KPV, GHK-Cu. Research benefits, dosage chart, KLOW vs GLOW comparison. 2026 reference.",
@@ -589,9 +584,241 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
     "description": "Retatrutide peptide explained: triple-agonist mechanism, Phase 3 TRIUMPH-1 data, FDA status, and lab handling. A neutral, research-use-only reference.",
     "schemas": []
   },
-  "tesamorelin-visceral-fat-reduction-percentage": {
-    "title": "Tesamorelin & Visceral Fat: Phase 3 VAT Reduction Data (2026)",
-    "description": "What percentage of visceral fat does tesamorelin reduce in research? Phase 3 clinical trials report roughly an 18% VAT reduction near 26 weeks. Review the data, timelines, and reference standards.",
+  "ghk-cu-copper-peptide-research-guide": {
+    "title": "GHK-Cu Peptide: Complete Research Guide 2026",
+    "description": "GHK-Cu peptide research reference: mechanism, collagen pathway evidence, lab handling, purity standards, and 35+ FAQs from peer-reviewed studies.",
     "schemas": []
-  }
+  },
+  "tesamorelin-visceral-fat-reduction-percentage": {
+    "title": "Tesamorelin Visceral Fat Reduction Percentage | Phase 3 Trial Data",
+    "description": "What percentage of visceral fat does tesamorelin reduce in research? Phase 3 clinical trials report roughly an 18% VAT reduction near 26 weeks. Review the data, timelines, and reference standards.",
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What percentage of visceral fat does tesamorelin reduce?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In Phase 3 clinical trials, tesamorelin reduced visceral adipose tissue by approximately 15-18% at 26 weeks, measured by CT scan, versus a slight increase under placebo."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does tesamorelin take to reduce visceral fat?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Research data showed measurable VAT separation from placebo by week 13, with the full reduction documented at the 26-week endpoint."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the tesamorelin visceral fat reduction percentage at 26 weeks?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The registrational Phase 3 trials reported roughly a 15-18% reduction in visceral adipose tissue at the 26-week mark."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is tesamorelin's effect on visceral fat permanent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The research data indicate the effect is reversible — visceral fat tended to return after the peptide was discontinued, suggesting continued administration was needed to maintain it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is tesamorelin?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tesamorelin is a synthetic growth hormone-releasing hormone (GHRH) analog, a stabilized 44-amino-acid peptide studied for its selective reduction of visceral adipose tissue."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does tesamorelin reduce visceral fat?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It stimulates the pituitary to release the body's own growth hormone in natural pulses. Growth hormone promotes lipolysis, and visceral fat is especially sensitive to that effect."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does tesamorelin reduce subcutaneous fat too?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Research showed the reduction was largely selective for visceral fat, with comparatively little change in subcutaneous adipose tissue."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What did tesamorelin Phase 3 trials show?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "They showed an approximately 15-18% reduction in visceral fat at 26 weeks, improved triglycerides, elevated IGF-1 as a pharmacodynamic marker, and reversibility on discontinuation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is tesamorelin a growth hormone?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. It is a GHRH analog that signals the body to release its own growth hormone, rather than supplying growth hormone directly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between tesamorelin and retatrutide?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tesamorelin is a GHRH analog studied for selective visceral fat reduction; retatrutide is a triple-agonist studied for broad body-weight change."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does tesamorelin raise IGF-1?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Because it stimulates growth hormone release, downstream IGF-1 rises. Researchers use this elevation as a marker confirming the compound is active."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is tesamorelin reconstituted in research?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is supplied lyophilized and reconstituted with bacteriostatic water; concentration math is confirmed before use, often with a reconstitution calculator."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How should tesamorelin be stored?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Lyophilized peptide is stored cold and protected from light. Once reconstituted, the solution is refrigerated and used within a defined window."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is visceral adipose tissue (VAT)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Visceral adipose tissue is fat stored around internal organs. It is metabolically active and a key endpoint in tesamorelin research."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is visceral fat measured in tesamorelin studies?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Trials measured VAT using single-slice CT imaging, typically at the L4-L5 vertebral level, before and after the study period."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does tesamorelin affect liver fat?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Emerging research has examined tesamorelin's effect on hepatic fat fraction in fatty-liver models, extending interest beyond visceral fat."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is tesamorelin selective for visceral fat?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes — selectivity for visceral over subcutaneous fat is one of the defining features of its research data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What class of peptide is tesamorelin?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is a growth hormone-releasing hormone (GHRH) analog."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the latest tesamorelin research in 2025-2026?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Recent directions include hepatic fat studies, cardiometabolic marker analysis, cognitive-axis exploration, and combination protocol comparisons."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does tesamorelin compare to AOD-9604?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AOD-9604 is a growth hormone fragment studied for lipolysis that does not raise IGF-1, whereas tesamorelin is a full GHRH analog that does."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is tesamorelin's data considered reliable?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Because it advanced through registrational Phase 3 trials with CT-measured endpoints across hundreds of subjects, producing a well-documented reference dataset."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What triglyceride changes did tesamorelin show?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Trials reported reductions in triglycerides and improvements in several lipid parameters alongside the visceral fat reduction."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is tesamorelin used for research only?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "On this site, tesamorelin and all related compounds are supplied strictly for laboratory and in-vitro research use only."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where can I find verified tesamorelin research specifications?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Reference-grade material with published certificates of analysis is available through 99 Purity Peptides' research catalog."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Tesamorelin & Visceral Fat: What the Phase 3 Clinical Trials Actually Show",
+        "description": "Phase 3 clinical trials report an approximately 15-18% visceral fat reduction with tesamorelin at 26 weeks. Research data, timelines, and reference standards.",
+        "about": [
+          {"@type":"Drug","name":"Tesamorelin"},
+          {"@type":"MedicalCondition","name":"Visceral adiposity"}
+        ],
+        "keywords": "tesamorelin visceral fat reduction percentage, tesamorelin phase 3 trials, GHRH analog, visceral adipose tissue",
+        "author": {"@type":"Organization","name":"99 Purity Peptides"},
+        "publisher": {
+          "@type":"Organization","name":"99 Purity Peptides",
+          "logo":{"@type":"ImageObject","url":"https://99puritypeptides.com/logo.png"}
+        },
+        "mainEntityOfPage": "https://99puritypeptides.com/tesamorelin-visceral-fat-reduction-percentage/",
+        "datePublished": "2026-06-23",
+        "dateModified": "2026-06-23"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://99puritypeptides.com/"},
+          {"@type":"ListItem","position":2,"name":"Research Guides","item":"https://99puritypeptides.com/research-guides/"},
+          {"@type":"ListItem","position":3,"name":"Tesamorelin Visceral Fat Reduction","item":"https://99puritypeptides.com/tesamorelin-visceral-fat-reduction-percentage/"}
+        ]
+      }
+    ]
+  },
 };

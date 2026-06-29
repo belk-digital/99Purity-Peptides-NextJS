@@ -551,5 +551,120 @@ export const BLOG_SCHEMAS: Record<string, any[]> = {
         }
       ]
     }
+  ],
+  "ghk-cu-copper-peptide-research-guide": [
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "@id": "https://99puritypeptides.com/blog/ghk-cu-copper-peptide-research-guide/#article",
+      "headline": "GHK-Cu Peptide: Complete Research Guide 2026",
+      "description": "GHK-Cu peptide research reference: mechanism, collagen pathway evidence, lab handling, purity standards, and 35+ FAQs from peer-reviewed studies.",
+      "image": "https://99puritypeptides.com/wp-content/uploads/2026/05/ghk-cu-peptide-research-vial-hero.webp",
+      "datePublished": "2026-05-27T08:00:00-04:00",
+      "dateModified": "2026-05-27T08:00:00-04:00",
+      "author": {
+        "@type": "Person",
+        "name": "Dr. M. Rivera",
+        "jobTitle": "Research Editor",
+        "description": "PhD, Peptide Biochemistry — Research Editor at 99 Purity Peptides",
+        "alumniOf": "Not Specified",
+        "sameAs": []
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "99 Purity Peptides",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://99puritypeptides.com/wp-content/uploads/2025/12/99-Purity-Peptides-white-logo.png"
+        }
+      },
+      "mainEntityOfPage": "https://99puritypeptides.com/blog/ghk-cu-copper-peptide-research-guide/",
+      "about": "Research-use-only reference on the copper tripeptide GHK-Cu including mechanism, lab handling, purity verification, and pre-clinical evidence summary.",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Research scientists, laboratory professionals, academic researchers"
+      },
+      "proficiencyLevel": "Expert",
+      "dependencies": "Laboratory training in peptide handling, HPLC/LC-MS interpretation, and RUO-classified reagent compliance"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://99puritypeptides.com/"},
+        {"@type":"ListItem","position":2,"name":"Blog","item":"https://99puritypeptides.com/blog/"},
+        {"@type":"ListItem","position":3,"name":"GHK-Cu Copper Peptide Research Guide","item":"https://99puritypeptides.com/blog/ghk-cu-copper-peptide-research-guide/"}
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "99 Purity Peptides",
+      "url": "https://99puritypeptides.com/",
+      "logo": "https://99puritypeptides.com/wp-content/uploads/2025/12/99-Purity-Peptides-white-logo.png",
+      "areaServed": "US",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-843-743-9007",
+        "email": "orders@99puritypeptides.com",
+        "contactType": "Research Support"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Research Protocol: Reconstitution of GHK-Cu Lyophilized Reference Standard",
+      "description": "Standard laboratory reconstitution workflow for research-grade GHK-Cu using bacteriostatic or sterile water. For research use only.",
+      "step": [
+        {"@type":"HowToStep","position":1,"name":"Equilibrate","text":"Allow the sealed vial to equilibrate to room temperature before opening."},
+        {"@type":"HowToStep","position":2,"name":"Draw solvent","text":"Draw the calculated volume of bacteriostatic or sterile water with a sterile syringe."},
+        {"@type":"HowToStep","position":3,"name":"Inject down vial wall","text":"Inject solvent slowly down the vial wall, not directly onto the lyophilized cake."},
+        {"@type":"HowToStep","position":4,"name":"Swirl to dissolve","text":"Gently swirl until the powder dissolves; the solution should display a cobalt-blue color."},
+        {"@type":"HowToStep","position":5,"name":"Aliquot","text":"Aliquot into sterile low-bind tubes and store at 2-8°C for short-term use or -20°C for long-term storage."}
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "name": "GHK-Cu Research Glossary",
+      "hasDefinedTerm": [
+        {"@type":"DefinedTerm","name":"GHK","description":"Glycyl-L-histidyl-L-lysine — the native human tripeptide isolated from plasma in 1973."},
+        {"@type":"DefinedTerm","name":"GHK-Cu","description":"The copper(II) complex of GHK, the standard research form of the compound."},
+        {"@type":"DefinedTerm","name":"Cu-GHK","description":"Alternative ordering of GHK-Cu seen in older biochemistry literature; chemically identical."},
+        {"@type":"DefinedTerm","name":"Copper tripeptide-1","description":"INCI cosmetic-ingredient name for GHK-Cu used on cosmetic labels."},
+        {"@type":"DefinedTerm","name":"Signal peptide","description":"A short peptide sequence that triggers downstream cellular responses through receptor or transport-protein interactions rather than structural incorporation."},
+        {"@type":"DefinedTerm","name":"Fibroblast","description":"Connective-tissue cell responsible for producing collagen, elastin, and other extracellular matrix components."},
+        {"@type":"DefinedTerm","name":"Extracellular matrix (ECM)","description":"Non-cellular network of proteins, glycoproteins, and polysaccharides that provides structural and biochemical support to surrounding cells."},
+        {"@type":"DefinedTerm","name":"Glycosaminoglycans","description":"Long unbranched polysaccharides (including hyaluronic acid, chondroitin sulfate, and dermatan sulfate) that hydrate the ECM and support tissue elasticity."},
+        {"@type":"DefinedTerm","name":"Collagen synthesis","description":"Biosynthetic process by which fibroblasts produce collagen polypeptides that assemble into the structural backbone of connective tissue."},
+        {"@type":"DefinedTerm","name":"Certificate of Analysis (COA)","description":"Batch-level document confirming peptide purity (HPLC), identity (LC-MS), and impurity profile for research-grade reagents."}
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is GHK-Cu peptide?","acceptedAnswer":{"@type":"Answer","text":"GHK-Cu is the copper(II) complex of the tripeptide glycyl-L-histidyl-L-lysine, naturally present in human plasma at declining concentrations with age. In research, it functions as a signal peptide associated with collagen synthesis, fibroblast activation, antioxidant signaling, and broad gene modulation. It is supplied as a lyophilized powder for in-vitro and pre-clinical study, not for human use."}},
+        {"@type":"Question","name":"What is the chemical structure of GHK-Cu?","acceptedAnswer":{"@type":"Answer","text":"GHK-Cu consists of glycine, histidine, and lysine arranged in sequence, with a Cu²⁺ ion coordinated by the histidine imidazole, the N-terminal amine, and additional ligand contributions. The parent complex has a molecular weight near 403–404 g/mol and the acetate-salt form near 462 g/mol."}},
+        {"@type":"Question","name":"How does GHK-Cu work at the cellular level?","acceptedAnswer":{"@type":"Answer","text":"Investigators describe GHK-Cu as a signal peptide that engages multiple cellular pathways rather than a single receptor. Reported activities include fibroblast stimulation, controlled intracellular copper delivery, modulation of collagen and glycosaminoglycan synthesis, and broad changes in gene expression across stress-response and tissue-repair networks."}},
+        {"@type":"Question","name":"What is the mechanism of GHK-Cu in wound healing?","acceptedAnswer":{"@type":"Answer","text":"Pre-clinical wound-healing models report that GHK-Cu accelerates closure and improves tensile strength through a combination of fibroblast activation, angiogenic signaling, macrophage recruitment, and matrix-protein synthesis. The copper component supports enzymes including lysyl oxidase that are critical to collagen cross-linking."}},
+        {"@type":"Question","name":"What pathways does GHK-Cu modulate in skin cells?","acceptedAnswer":{"@type":"Answer","text":"Reported pathways include TGF-β signaling, antioxidant defense (superoxide dismutase, glutathione peroxidase), extracellular-matrix gene expression (collagen types I and III, decorin, perlecan), and inflammatory cytokine modulation. The Broad Institute gene-expression dataset documents changes across 4,192 human genes following GHK exposure."}},
+        {"@type":"Question","name":"How does GHK-Cu stimulate collagen and elastin?","acceptedAnswer":{"@type":"Answer","text":"In-vitro fibroblast studies indicate that GHK-Cu upregulates transcription of collagen and elastin genes and supplies copper as a cofactor for lysyl oxidase, the enzyme that cross-links these matrix proteins. The net effect in cell culture is increased deposition of structurally mature extracellular matrix."}},
+        {"@type":"Question","name":"What is GHK-Cu used for in research?","acceptedAnswer":{"@type":"Answer","text":"Common research applications include in-vitro fibroblast and keratinocyte studies, animal wound-healing models, hair-follicle research, post-procedure skin-recovery models, antioxidant-pathway investigations, and gene-expression profiling. All such work is conducted under research-use-only conditions."}},
+        {"@type":"Question","name":"Can GHK-Cu support hair growth research?","acceptedAnswer":{"@type":"Answer","text":"GHK-Cu interacts with dermal papilla cells and has been examined in animal-model and ex-vivo follicle studies of androgenic alopecia. Reported outcomes include increased follicle size and prolonged anagen phase. Human evidence is limited and largely cosmetic."}},
+        {"@type":"Question","name":"Is GHK-Cu safe for pre-clinical research?","acceptedAnswer":{"@type":"Answer","text":"GHK-Cu is generally well-tolerated in published in-vitro and animal-model work at standard research concentrations. Safety in human therapeutic contexts is not established, and the compound is not FDA-approved. Standard laboratory handling and personal protective equipment apply."}},
+        {"@type":"Question","name":"What is the typical GHK-Cu concentration used in studies?","acceptedAnswer":{"@type":"Answer","text":"Published in-vitro work commonly uses GHK-Cu in the range of 10 nM to 10 μM, with 1 μM as a frequently reported working concentration. Animal-model topical studies have used 0.05–0.2% w/v formulations. These figures describe research literature, not clinical guidance."}},
+        {"@type":"Question","name":"What solvent is used to dissolve GHK-Cu peptide powder?","acceptedAnswer":{"@type":"Answer","text":"GHK-Cu is water-soluble. Common research solvents include sterile water, bacteriostatic water (0.9% benzyl alcohol), and buffered saline at neutral pH. Stock solutions of 1–10 mg/mL are typical and are then diluted into culture medium for working concentrations."}},
+        {"@type":"Question","name":"How should GHK-Cu be stored for research purposes?","acceptedAnswer":{"@type":"Answer","text":"Lyophilized GHK-Cu is stored at −20°C in sealed vials with desiccant, protected from light. Reconstituted solutions are typically kept at 2–8°C and used within weeks, with long-term storage as frozen aliquots to minimize freeze-thaw degradation."}},
+        {"@type":"Question","name":"What is the shelf life of GHK-Cu peptide in lab settings?","acceptedAnswer":{"@type":"Answer","text":"Lyophilized GHK-Cu at −20°C retains stability for 24 months or longer under typical research-storage conditions. Reconstituted aqueous solutions stored at 2–8°C are generally used within 14–28 days for sensitive applications."}},
+        {"@type":"Question","name":"What analytical methods are used to test GHK-Cu purity?","acceptedAnswer":{"@type":"Answer","text":"Reversed-phase HPLC quantifies purity (the ≥99% threshold for research grade), and liquid-chromatography mass spectrometry confirms identity by measuring molecular weight. Both analyses appear on a complete certificate of analysis."}},
+        {"@type":"Question","name":"What impurities should be checked in GHK-Cu peptide?","acceptedAnswer":{"@type":"Answer","text":"Common impurities to check include truncated peptide sequences, residual coupling reagents and protecting groups, counterion residues, free uncomplexed GHK, and excess copper salts. A complete COA quantifies these as part of the impurity profile."}},
+        {"@type":"Question","name":"What is the difference between lab-grade GHK-Cu and cosmetic-grade copper peptide?","acceptedAnswer":{"@type":"Answer","text":"Lab-grade GHK-Cu is supplied as lyophilized powder with verified ≥99% HPLC purity, LC-MS identity confirmation, and a full COA, designated for research use only. Cosmetic-grade copper tripeptide-1 is a formulated topical product subject to cosmetic regulation, with no comparable analytical disclosure."}},
+        {"@type":"Question","name":"Where can I buy GHK-Cu peptide for research in the US?","acceptedAnswer":{"@type":"Answer","text":"Research-grade GHK-Cu is available from suppliers that publish complete certificates of analysis and operate under research-use-only labeling. Verification of HPLC and LC-MS documentation, batch-level transparency, and RUO designation are standard procurement criteria."}},
+        {"@type":"Question","name":"How does GHK-Cu compare to copper tripeptide-1?","acceptedAnswer":{"@type":"Answer","text":"GHK-Cu and copper tripeptide-1 refer to the same Gly-His-Lys-Cu(II) molecule. The distinction is regulatory and contextual: GHK-Cu is used in scientific literature and research supply, while copper tripeptide-1 is the INCI cosmetic-ingredient name."}},
+        {"@type":"Question","name":"Can GHK-Cu be combined with other peptides in research?","acceptedAnswer":{"@type":"Answer","text":"Combination research with other signal peptides (Matrixyl, palmitoyl tripeptides) is an active area in dermatological and regenerative-research literature. Whether combinations produce additive or synergistic effects remains an open question requiring further mechanistic study."}},
+        {"@type":"Question","name":"Why is GHK-Cu sold as research-only peptide?","acceptedAnswer":{"@type":"Answer","text":"GHK-Cu is sold as research-use-only because it has not been evaluated by the FDA for human therapeutic use. Research-grade material is intended for in-vitro studies, assay development, and pre-clinical animal-model work conducted in qualified laboratory settings."}}
+      ]
+    }
   ]
 };

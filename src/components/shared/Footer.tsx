@@ -274,9 +274,9 @@ const FooterContent = () => {
 
         {/* Full-width Brand Name Card */}
         <div className="bg-cream rounded-[1.5rem] md:rounded-[2rem] h-[10vw] sm:h-[11vw] md:h-[11.5vw] lg:h-[12vw] xl:h-[12.5vw] relative overflow-hidden border border-primary/10 flex justify-center items-start shadow-sm w-full">
-          <h1 className="relative z-20 pt-[2vw] sm:pt-[1.5vw] font-heading text-[12.5vw] sm:text-[13.5vw] md:text-[14vw] lg:text-[14.5vw] xl:text-[15vw] leading-[0.8] font-black text-primary/15 text-center tracking-tighter lowercase select-none w-full whitespace-nowrap px-4">
+          <div className="relative z-20 pt-[2vw] sm:pt-[1.5vw] font-heading text-[12.5vw] sm:text-[13.5vw] md:text-[14vw] lg:text-[14.5vw] xl:text-[15vw] leading-[0.8] font-black text-primary/15 text-center tracking-tighter lowercase select-none w-full whitespace-nowrap px-4">
             99purity
-          </h1>
+          </div>
         </div>
 
         {/* Bottom Area Outside the Card */}

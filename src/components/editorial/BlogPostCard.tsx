@@ -3,7 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import { FluidButton } from '@/components/ui/fluid-button'
 export function BlogPostCard({
   slug,
   title,
@@ -60,13 +60,9 @@ export function BlogPostCard({
           {excerpt}
         </p>
         <div className="mt-8 flex items-center justify-between">
-          <span className="inline-flex items-center justify-center px-5 py-2 rounded-full border border-ink/10 text-xs font-bold text-ink group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-all duration-300 gap-2 shadow-sm">
-            Read article
-            <svg className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </span>
-          
+          <div className="w-[155px] md:w-[215px] flex shrink-0 items-center">
+            <FluidButton text="Read article" className="scale-[0.75] origin-left" />
+          </div>
           <button
             onClick={(e) => {
               e.preventDefault();

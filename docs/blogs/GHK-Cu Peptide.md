@@ -82,7 +82,7 @@ markdown
 
 *Author: Dr. M. Rivera, PhD (Peptide Biochemistry) — Research Editor, 99 Purity Peptides*
 
-[IMAGE 1: Hero — GHK-Cu lyophilized powder in a research vial next to HPLC chromatogram printout, soft cobalt-blue tint]
+![GHK-Cu peptide lyophilized powder vial with HPLC chromatogram for research use](/99%20Images/ghk-cu-peptide-research-vial-hero.png)
 
 GHK-Cu peptide — the copper complex of glycyl-L-histidyl-L-lysine — has occupied a quiet but persistent place in regenerative biochemistry since Loren Pickart's 1973 isolation work. This reference page consolidates the mechanistic, analytical, and laboratory-handling literature on GHK-Cu for research professionals working with the compound in vitro or in pre-clinical models. All material is presented for research use only (RUO).
 
@@ -97,7 +97,7 @@ GHK-Cu peptide — the copper complex of glycyl-L-histidyl-L-lysine — has occu
 
 GHK-Cu is the copper-bound form of the human tripeptide glycyl-L-histidyl-L-lysine, originally isolated by Pickart from human plasma albumin in 1973 [1]. The free peptide chelates a Cu²⁺ ion with high affinity, generating a deep cobalt-blue complex that is the workhorse molecule of modern copper-peptide research. Plasma concentrations of GHK in humans are reported at roughly 200 ng/mL in young adults and decline to approximately 80 ng/mL by age sixty [2].
 
-[IMAGE 2: GHK-Cu molecular structure diagram with Cu²⁺ coordination sites labeled]
+![GHK-Cu peptide molecular structure showing copper coordination with glycine, histidine, and lysine](/99%20Images/ghk-cu-peptide-molecular-structure.png)
 
 ### The GHK Tripeptide and Its Copper Complex
 
@@ -127,7 +127,7 @@ Pickart's foundational observation was that plasma from young donors caused live
 
 ## Mechanism of Action: How GHK-Cu Works at the Cellular Level {#mechanism}
 
-[IMAGE 3: Schematic of fibroblast signaling — GHK-Cu binding, downstream collagen/elastin/GAG production]
+![GHK-Cu mechanism diagram showing fibroblast activation and collagen pathway signaling](/99%20Images/ghk-cu-mechanism-fibroblast-signaling.png)
 
 Investigators have characterized GHK-Cu's activity across several overlapping mechanisms. None operate in isolation; the compound's apparent biological effect at any given concentration reflects the sum of these signals.
 
@@ -155,7 +155,7 @@ The Broad Institute Connectivity Map analysis is the single most-cited modern da
 
 > **Key Takeaway:** GHK-Cu acts through multiple overlapping mechanisms — fibroblast activation, controlled copper delivery, antioxidant signaling, and broad gene-expression modulation. No single receptor accounts for its activity; the literature treats it as a multi-pathway signal peptide.
 
-[IMAGE 4: Lab researcher pipetting a reconstituted peptide solution under sterile conditions]
+![Research scientist reconstituting copper peptide with bacteriostatic water under sterile conditions](/99%20Images/research-peptide-reconstitution-protocol.png)
 
 ## Primary Research Applications of GHK-Cu {#research-applications}
 
@@ -189,7 +189,7 @@ In barrier-disruption models, GHK-Cu has been reported to support recovery of st
 
 ## GHK-Cu Compared to Other Research Peptides and Actives {#comparisons}
 
-[IMAGE 5: Comparison-style infographic — GHK-Cu vs other regenerative peptides and dermatological actives]
+![Comparison of GHK-Cu copper peptide versus BPC-157, retinol, and Vitamin C in research contexts](/99%20Images/ghk-cu-vs-bpc-157-retinol-comparison.png)
 
 ### GHK-Cu vs BPC-157 (Research Context)
 
@@ -226,7 +226,7 @@ The published literature is heavily weighted toward topical and in-vitro applica
 
 > **Key Takeaway:** GHK-Cu, BPC-157, retinol, and Vitamin C occupy different points in the regenerative and dermatological-research landscape. Research-grade GHK-Cu is distinguished from cosmetic copper peptide serums primarily by documentation, purity verification, and absence of formulation excipients.
 
-[IMAGE 6: Side-by-side of cosmetic copper peptide serum bottle and a research-grade lyophilized GHK-Cu vial]
+![Research-grade GHK-Cu vial versus cosmetic copper peptide serum showing documentation differences](/99%20Images/research-grade-vs-cosmetic-copper-peptide.png)
 
 ## Laboratory Handling: Reconstitution, Solubility, and Stability {#lab-handling}
 
@@ -264,7 +264,7 @@ Published in-vitro work commonly uses GHK-Cu at concentrations between 10 nM and
 
 ## Purity, Testing, and Quality Verification {#purity-testing}
 
-[IMAGE 7: HPLC chromatogram and mass-spectrometry trace overlay representing a GHK-Cu COA]
+![HPLC chromatogram and mass spectrometry trace for GHK-Cu peptide](/99%20Images/ghk-cu-coa-hplc-mass-spectrometry.png)
 
 ### HPLC and Mass Spectrometry Analysis
 
@@ -314,7 +314,7 @@ Academic, government, and private research laboratories in the United States typ
 
 > **Key Takeaway:** GHK-Cu is sold strictly for research use only in the U.S. and is not approved for human therapeutic use. Research-grade material differs in regulatory category, documentation, and quality control from cosmetic copper peptide products.
 
-[IMAGE 8: Research laboratory bench with peptide vials, pipettes, and documentation folders]
+![Research laboratory bench with peptide vials and pipettes](/99%20Images/research-lab-peptide-vials.png)
 
 ## Reported Limitations and Considerations in GHK-Cu Research {#limitations}
 

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { FluidButton } from '@/components/ui/fluid-button'
 import { BLOG_POSTS } from '@/data/blog-posts'
 
-const CATEGORIES = ['All', 'Emerging', 'Guidelines', 'Studies', 'Guides']
+const CATEGORIES = ['View all', 'Growth research', 'Muscle studies', 'Recovery protocols', 'Metabolic research']
 const MOCK_IMAGES = [
   "/99 Images/category-1.webp",
   "/99 Images/why-choose-us-1.webp",
@@ -24,8 +24,9 @@ const MOCK_IMAGES = [
 ]
 
 export default function BlogIndexPage() {
-  const [activeCategory, setActiveCategory] = useState('All')
+  const [activeCategory, setActiveCategory] = useState('View all')
   const [isScrolledToEnd, setIsScrolledToEnd] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(6)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(scrollContainerRef, { once: true, amount: 0.5 })
 
@@ -65,9 +66,20 @@ export default function BlogIndexPage() {
   });
   const heroImageY = useTransform(heroScroll, [0, 1], ["0%", "100%"]);
 
-  const filteredPosts = activeCategory === 'All' 
-    ? BLOG_POSTS.slice(1) 
-    : BLOG_POSTS.slice(1).filter(post => post.category === activeCategory)
+  const sortedPosts = useMemo(() => {
+    return [...BLOG_POSTS].sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    })
+  }, [])
+
+  const latestPost = sortedPosts[0]
+
+  const filteredPosts = activeCategory === 'View all' 
+    ? sortedPosts 
+    : sortedPosts.filter(post => post.category === activeCategory)
+
+  const displayedPosts = filteredPosts.slice(0, visibleCount)
+  const hasMore = visibleCount < filteredPosts.length
 
   return (
     <main className="bg-cream min-h-screen text-ink font-sans overflow-hidden">
@@ -135,17 +147,41 @@ export default function BlogIndexPage() {
         </div>
       </div>
 
+      {/* Compliance Notice */}
+      <section className="px-4 md:px-6 mb-12 lg:mb-16 max-w-[1280px] mx-auto">
+        <FadeUp delay={0.3}>
+          <div className="bg-white border border-ink/10 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center">
+            <div className="shrink-0 bg-ink/5 p-3 rounded-full hidden sm:block">
+              <svg className="w-6 h-6 text-ink/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-bold text-ink text-sm uppercase tracking-widest mb-2 flex items-center gap-2">
+                <svg className="w-4 h-4 text-ink/60 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Compliance
+              </h3>
+              <p className="text-sm text-ink/70 leading-relaxed font-medium">
+                All products offered by 99PurityPeptides are strictly intended for in-vitro laboratory research and analytical applications only. Products are not approved for human consumption, therapeutic use, or medical application.
+              </p>
+            </div>
+          </div>
+        </FadeUp>
+      </section>
+
       {/* Featured Post */}
       <section className="px-4 md:px-6 mb-24 lg:mb-32 max-w-[1280px] mx-auto">
         <FadeUp delay={0.4}>
           <div className="mb-6 lg:mb-8 px-2 lg:px-4">
             <h2 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tighter text-ink/60">Latest Article</h2>
           </div>
-          <Link href={`/${BLOG_POSTS[0]?.slug}`} className="group flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch w-full bg-white p-4 sm:p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-ink/5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+          <Link href={`/${latestPost?.slug}`} className="group flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch w-full bg-white p-4 sm:p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-ink/5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
             <div className="relative w-full lg:w-[55%] aspect-[4/3] lg:aspect-auto rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden border border-ink/5 shrink-0">
               <Image 
-                src={BLOG_POSTS[0]?.imageSrc || MOCK_IMAGES[0]} 
-                alt={BLOG_POSTS[0]?.title || "Featured post"} 
+                src={latestPost?.imageSrc || MOCK_IMAGES[0]} 
+                alt={latestPost?.title || "Featured post"} 
                 fill 
                 className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-[1.03]" 
               />
@@ -154,36 +190,33 @@ export default function BlogIndexPage() {
             <div className="w-full lg:w-[45%] flex flex-col justify-center px-2 sm:px-4 lg:px-6 py-4 lg:py-8 min-w-0">
               <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8 flex-wrap">
                 <span className="inline-flex items-center px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-ink text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest shadow-sm">
-                  {BLOG_POSTS[0]?.category || "Emerging"}
+                  {latestPost?.category || "Emerging"}
                 </span>
                 <div className="flex items-center gap-3 sm:gap-4">
                   <span className="text-[11px] sm:text-xs font-medium text-ink/50 flex items-center gap-1.5">
                     <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {BLOG_POSTS[0]?.date || "May 2026"}
+                    {latestPost?.date || "May 2026"}
                   </span>
                   <span className="text-[11px] sm:text-xs font-medium text-ink/50 flex items-center gap-1.5">
                     <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    {BLOG_POSTS[0]?.readTime || "12 min read"}
+                    {latestPost?.readTime || "12 min read"}
                   </span>
                 </div>
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl font-extrabold font-sans text-ink mb-4 sm:mb-6 tracking-tight leading-[1.1] group-hover:text-primary transition-colors duration-500">
-                {BLOG_POSTS[0]?.title}
+                {latestPost?.title}
               </h2>
               <p className="text-base sm:text-lg lg:text-xl text-ink/60 mb-8 sm:mb-10 leading-relaxed font-medium line-clamp-3 sm:line-clamp-4">
-                {BLOG_POSTS[0]?.excerpt}
+                {latestPost?.excerpt}
               </p>
               <div className="flex items-center justify-between mt-auto">
-                <span className="inline-flex items-center justify-center px-5 sm:px-6 py-2 sm:py-2.5 rounded-full border border-ink/10 text-xs sm:text-sm font-bold text-ink group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-all duration-300 gap-2 shadow-sm">
-                  Read article
-                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </span>
+                <div className="w-[155px] md:w-[215px] flex shrink-0 items-center">
+                  <FluidButton text="Read article" className="scale-[0.75] origin-left" />
+                </div>
                 
                 <button
                   onClick={(e) => {
@@ -191,12 +224,12 @@ export default function BlogIndexPage() {
                     e.stopPropagation();
                     if (navigator.share) {
                       navigator.share({
-                        title: BLOG_POSTS[0]?.title,
-                        text: BLOG_POSTS[0]?.excerpt,
-                        url: window.location.origin + '/' + BLOG_POSTS[0]?.slug,
+                        title: latestPost?.title,
+                        text: latestPost?.excerpt,
+                        url: window.location.origin + '/' + latestPost?.slug,
                       }).catch(console.error);
                     } else {
-                      navigator.clipboard.writeText(window.location.origin + '/' + BLOG_POSTS[0]?.slug);
+                      navigator.clipboard.writeText(window.location.origin + '/' + latestPost?.slug);
                       alert('Link copied to clipboard!');
                     }
                   }}
@@ -238,7 +271,10 @@ export default function BlogIndexPage() {
             {CATEGORIES.map((cat, i) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => {
+                  setActiveCategory(cat)
+                  setVisibleCount(6)
+                }}
                 className={`whitespace-nowrap px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 snap-center shrink-0 relative z-20 ${
                   activeCategory === cat 
                     ? 'bg-ink text-white shadow-md' 
@@ -254,9 +290,9 @@ export default function BlogIndexPage() {
 
       {/* Grid */}
       <section className="px-4 md:px-6 max-w-[1280px] mx-auto mb-32">
-        {filteredPosts.length > 0 ? (
+        {displayedPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-            {filteredPosts.map((post, index) => (
+            {displayedPosts.map((post, index) => (
               <FadeUp key={post.slug} delay={0.1 * (index % 3)}>
                 <BlogPostCard {...post} />
               </FadeUp>
@@ -267,7 +303,10 @@ export default function BlogIndexPage() {
             <h3 className="text-2xl font-black font-sans text-ink mb-4">No articles found</h3>
             <p className="text-ink/60">We couldn't find any articles in the "{activeCategory}" category.</p>
             <button 
-              onClick={() => setActiveCategory('All')} 
+              onClick={() => {
+                setActiveCategory('View all')
+                setVisibleCount(6)
+              }} 
               className="mt-8 px-6 py-2.5 rounded-full bg-ink text-white font-bold text-sm tracking-wide hover:bg-primary transition-colors"
             >
               View all articles
@@ -277,14 +316,17 @@ export default function BlogIndexPage() {
       </section>
 
       {/* Infinite Scroll trigger area */}
-      <section className="pb-32 flex justify-center">
-        <FadeUp>
-          <FluidButton 
-            text="Load More Posts" 
-            className="w-full sm:w-auto"
-          />
-        </FadeUp>
-      </section>
+      {hasMore && (
+        <section className="pb-32 flex justify-center">
+          <FadeUp>
+            <FluidButton 
+              text="Load More Posts" 
+              className="w-full sm:w-auto"
+              onClick={() => setVisibleCount(prev => prev + 6)}
+            />
+          </FadeUp>
+        </section>
+      )}
     </main>
   )
 }

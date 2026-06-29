@@ -11,7 +11,7 @@ import { useCartStore } from '@/lib/cart/store'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import dynamic from 'next/dynamic'
 import { SearchOverlay } from './SearchOverlay'
-
+import { BLOG_POSTS } from '@/data/blog-posts'
 
 const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod => mod.CartDrawer), { ssr: false })
 
@@ -107,7 +107,8 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   }, [])
 
   const pathname = usePathname()
-  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about' || pathname === '/faq' || pathname === '/contact' || pathname === '/affiliates' || pathname === '/blog'
+  const isBlogPost = BLOG_POSTS.some(post => pathname === `/${post.slug}`)
+  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about' || pathname === '/faq' || pathname === '/contact' || pathname === '/affiliates' || pathname === '/blog' || isBlogPost
 
   useEffect(() => {
     setMounted(true)

@@ -68,7 +68,7 @@ export function FluidButton({ href, onClick, type = "button", disabled = false, 
       <div className="relative z-10 flex items-center justify-between w-full h-[52px] md:h-[72px]">
         {/* Text Area */}
         <div className="pl-6 pr-4 md:pl-10 md:pr-8 py-2 md:py-4 h-full flex items-center justify-center">
-          <span className={`${textColorClasses} font-heading font-bold text-[10px] sm:text-[11px] md:text-sm tracking-[0.15em] uppercase relative top-[1px]`}>
+          <span className={`whitespace-nowrap ${textColorClasses} font-heading font-bold text-[10px] sm:text-[11px] md:text-sm tracking-[0.15em] uppercase relative top-[1px]`}>
             {text}
           </span>
         </div>

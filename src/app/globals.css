@@ -53,3 +53,22 @@ html {
     scrollbar-width: none;
   }
 }
+
+/* Override Browser Autofill Blue Background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #111111 !important;
+}
+
+/* Force Borders on Clerk Auth Inputs */
+.custom-auth-input {
+  border: 1px solid rgba(10, 10, 10, 0.2) !important;
+  outline: none !important;
+}
+.custom-auth-input:focus {
+  border-color: #008B8B !important;
+  box-shadow: 0 0 0 2px rgba(0, 139, 139, 0.2) !important;
+}

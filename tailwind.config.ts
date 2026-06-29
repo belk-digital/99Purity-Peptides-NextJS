@@ -25,10 +25,10 @@ const config: Config = {
           subtle: '#8A8A8A',
         },
         gold: {
-          DEFAULT: '#C9B58E',
-          light: '#E5D8B8',
-          dark: '#A89570',
-          deep: '#8C7A55',
+          DEFAULT: '#008B8B', // Replaced with deep cyan per user request
+          light: '#00AAAA',
+          dark: '#006666',
+          deep: '#004444',
         },
         success: { DEFAULT: '#6B8E5E', bg: '#E8EFE3' },
         error: { DEFAULT: '#B85450', bg: '#F5E3E1' },
@@ -38,7 +38,7 @@ const config: Config = {
           subtle: '#E8E2D5',
           DEFAULT: '#D6CDB8',
           strong: '#0A0A0A',
-          gold: '#C9B58E',
+          gold: '#008B8B',
         },
       },
       fontFamily: {
