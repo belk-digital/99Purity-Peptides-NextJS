@@ -10,6 +10,7 @@ import { WhyChooseUs } from '@/components/home/WhyChooseUs'
 import { DifferenceSection } from '@/components/home/DifferenceSection'
 import { BestSellerSection } from '@/components/home/BestSellerSection'
 import { MerchandiseSection } from '@/components/home/MerchandiseSection'
+import { MilitaryDiscountSection } from '@/components/home/MilitaryDiscountSection'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -32,21 +33,20 @@ export default async function Homepage() {
 
   return (
     <>
-      <HomePreloaderWrapper>
-        <div className="flex flex-col w-full min-h-screen relative z-10 bg-black overflow-x-clip">
-          <Hero />
-          <TrustBadges />
-          <BestSellerSection products={products} />
-          <DifferenceSection />
-          <MerchandiseSection />
-          <WhatSetsUsApart />
-          <CategoriesSection />
-          <ParallaxImageSection />
-          <WhyChooseUs />
-          <BlogSection />
-          <FaqSection />
-        </div>
-      </HomePreloaderWrapper>
+      <div className="flex flex-col w-full min-h-screen relative z-10 bg-black overflow-x-clip">
+        <Hero />
+        <BestSellerSection products={products} />
+        <MilitaryDiscountSection />
+        <TrustBadges />
+        <DifferenceSection />
+        <MerchandiseSection />
+        <WhatSetsUsApart />
+        <CategoriesSection />
+        <ParallaxImageSection />
+        <WhyChooseUs />
+        <BlogSection />
+        <FaqSection />
+      </div>
 
       {/* JSON-LD Structured Data */}
       <script

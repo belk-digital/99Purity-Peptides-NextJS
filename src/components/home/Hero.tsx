@@ -2,21 +2,24 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, ShoppingCart, ShieldCheck, FlaskConical, Award, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ShoppingCart, ShieldCheck, FlaskConical, Award, ArrowUpRight, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 const HERO_PRODUCTS = [
-  { name: "Retatrutide", dose: "10mg", price: "$140.00", image: "/99 Images/transparant-vial.png", desc: "Advanced metabolic research peptide designed for maximum efficacy. Rigorously tested for purity." },
-  { name: "Tirzepatide", dose: "30mg", price: "$160.00", image: "/99 Images/transparant-vial.png", desc: "Dual GIP and GLP-1 receptor agonist for comprehensive metabolic and cardiovascular research." },
-  { name: "Semaglutide", dose: "5mg", price: "$65.00", image: "/99 Images/transparant-vial.png", desc: "High-purity GLP-1 analogue synthesized for precise half-life and cellular response studies." },
-  { name: "BPC-157", dose: "5mg", price: "$45.00", image: "/99 Images/transparant-vial.png", desc: "Premium synthetic peptide sequence known for accelerated tissue healing and recovery pathways." }
+  { name: "Retatrutide", slug: "retatrutide", dose: "10mg", price: "$140.00", image: "/99 Images/transparant-vial.png", desc: "Advanced metabolic research peptide designed for maximum efficacy. Rigorously tested for purity." },
+  { name: "Tirzepatide", slug: "tirzepatide", dose: "30mg", price: "$160.00", image: "/99 Images/transparant-vial.png", desc: "Dual GIP and GLP-1 receptor agonist for comprehensive metabolic and cardiovascular research." },
+  { name: "Semaglutide", slug: "semaglutide", dose: "5mg", price: "$65.00", image: "/99 Images/transparant-vial.png", desc: "High-purity GLP-1 analogue synthesized for precise half-life and cellular response studies." },
+  { name: "BPC-157", slug: "bpc-157", dose: "5mg", price: "$45.00", image: "/99 Images/transparant-vial.png", desc: "Premium synthetic peptide sequence known for accelerated tissue healing and recovery pathways." }
 ]
 
 export function Hero() {
+  const router = useRouter()
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isCardClosed, setIsCardClosed] = useState(false)
 
   React.useEffect(() => {
     const video = videoRef.current
@@ -51,7 +54,7 @@ export function Hero() {
   }, [])
 
   return (
-    <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[44px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[52px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-16 [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
+    <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
       {/* Main Inner Container */}
       <div className="relative w-full h-full bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden flex flex-col justify-between">
         
@@ -102,7 +105,7 @@ export function Hero() {
         </div>
 
         {/* Main Content inside the card */}
-        <div className="relative z-20 flex flex-col items-start justify-center text-left px-5 sm:px-12 md:px-24 w-full h-full max-w-6xl pb-32 pt-20 md:pb-24 md:pt-10 lg:pb-32">
+        <div className={`relative z-20 flex flex-col items-start ${isCardClosed ? 'justify-center pt-0' : 'justify-start pt-[160px]'} sm:justify-center text-left px-5 sm:px-12 md:px-24 w-full h-full max-w-6xl pb-32 sm:pt-20 md:pb-24 md:pt-10 lg:pb-32 transition-all duration-700 ease-in-out`}>
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -125,7 +128,7 @@ export function Hero() {
         </div>
 
         {/* --- Right Side Marquee Cutout --- */}
-        <div className="absolute top-[22%] sm:top-[25%] md:top-[28%] right-0 bg-cream rounded-l-[3rem] md:rounded-l-[4rem] z-30 flex items-center w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] h-12 sm:h-16 md:h-20">
+        <div className="absolute top-[90px] sm:top-[25%] md:top-[28%] right-0 bg-cream rounded-l-[3rem] md:rounded-l-[4rem] z-30 flex items-center w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] h-12 sm:h-16 md:h-20">
           {/* Top Fillet (Inverted Corner) */}
           <div 
             className="absolute -top-[calc(3rem-1px)] right-0 w-12 h-12 md:-top-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none"
@@ -169,29 +172,42 @@ export function Hero() {
         </div>
 
         {/* --- Glass Product Slider (Bottom Right) --- */}
-        <div className="absolute hidden sm:flex bottom-4 right-4 md:bottom-8 md:right-8 z-30 pointer-events-none origin-bottom-right scale-[0.70] lg:scale-[0.80] xl:scale-100 [@media(max-height:850px)]:!scale-[0.80] [@media(max-height:750px)]:!scale-[0.70] transition-transform duration-300">
+        <div className={`absolute ${isCardClosed ? 'hidden sm:flex' : 'flex'} bottom-6 right-4 sm:bottom-4 sm:right-4 md:bottom-8 md:right-8 z-30 pointer-events-none origin-bottom-right scale-[0.52] sm:scale-[0.70] lg:scale-[0.80] xl:scale-100 [@media(max-height:850px)]:!scale-[0.80] [@media(max-height:750px)]:!scale-[0.70] transition-transform duration-300`}>
           
           <div className="relative w-[320px] h-[440px] pointer-events-auto">
             
-            {/* Custom SVG Shadow (Perfectly traces the cutout) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 320 440">
+            {/* Custom SVG Shadow (Perfectly traces the cutout, without translation to avoid leaking into the cutout) */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible" viewBox="0 0 320 440">
               <path 
-                d="M 0 24 A 24 24 0 0 1 24 0 L 296 0 A 24 24 0 0 1 320 24 L 320 330 A 20 20 0 0 0 300 350 L 250 350 A 20 20 0 0 1 230 370 L 230 420 A 20 20 0 0 0 210 440 L 24 440 A 24 24 0 0 1 0 416 L 0 24 Z" 
-                fill="rgba(0,0,0,0.5)" 
-                style={{ filter: 'blur(20px)', transform: 'translateY(20px)' }}
+                d="M 0 24 A 24 24 0 0 1 24 0 L 296 0 A 24 24 0 0 1 320 24 L 320 346 A 24 24 0 0 1 296 370 L 274 370 A 24 24 0 0 0 250 394 L 250 416 A 24 24 0 0 1 226 440 L 24 440 A 24 24 0 0 1 0 416 L 0 24 Z" 
+                fill="rgba(0,0,0,0.4)" 
+                style={{ filter: 'blur(16px)' }}
               />
             </svg>
 
-            {/* The Glass Card (Masked with Stepped Cut-out) */}
+            {/* The Glass Card (Masked perfectly with CSS mask on the SAME element to avoid WebKit bounding box bugs) */}
             <div 
-              className="absolute inset-0 bg-white/[0.03] backdrop-blur-3xl z-10"
+              className="absolute inset-0 bg-white/[0.03] backdrop-blur-3xl z-10 pointer-events-none"
               style={{
-                clipPath: 'path("M 0 24 A 24 24 0 0 1 24 0 L 296 0 A 24 24 0 0 1 320 24 L 320 330 A 20 20 0 0 0 300 350 L 250 350 A 20 20 0 0 1 230 370 L 230 420 A 20 20 0 0 0 210 440 L 24 440 A 24 24 0 0 1 0 416 L 0 24 Z")'
+                maskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,
+                WebkitMaskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,
+                maskSize: '100% 100%',
+                WebkitMaskSize: '100% 100%',
+                maskRepeat: 'no-repeat',
+                WebkitMaskRepeat: 'no-repeat'
               }}
             >
               {/* Glass glare effect */}
               <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 pointer-events-none z-0" />
-              
+
+            {/* Mobile Close Button */}
+            <button 
+              onClick={() => setIsCardClosed(true)}
+              className="absolute top-4 right-4 z-50 w-10 h-10 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center sm:hidden backdrop-blur-md pointer-events-auto transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
               {/* Header */}
               <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
                 <span className="text-xs font-bold tracking-[0.2em] text-white/70 uppercase">Featured</span>
@@ -215,11 +231,12 @@ export function Hero() {
                       opacity: { duration: 0.4 },
                       scale: { duration: 0.4 }
                     }}
-                    className="absolute inset-0 flex flex-col items-start justify-center pb-8 cursor-grab active:cursor-grabbing"
+                    className="absolute inset-0 flex flex-col items-start justify-center pb-8 cursor-pointer active:cursor-grabbing"
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.6}
                     whileTap={{ cursor: "grabbing" }}
+                    onTap={() => router.push(`/product/${HERO_PRODUCTS[currentSlide].slug}`)}
                     onDragEnd={(e, { offset, velocity }) => {
                       const swipePower = offset.x + velocity.x * 0.2;
                       if (swipePower < -40) {
@@ -256,7 +273,7 @@ export function Hero() {
               <div className="absolute bottom-0 left-0 w-full h-[80px] flex justify-between items-end z-20 pointer-events-none">
                 <div className="pl-6 pb-6 flex flex-col pointer-events-auto">
                   <span className="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Total</span>
-                  <div className="relative h-8 overflow-hidden w-28">
+                  <div className="relative h-8 overflow-hidden w-36">
                     <AnimatePresence mode="popLayout">
                       <motion.div
                         key={currentSlide}
@@ -278,7 +295,7 @@ export function Hero() {
             {/* Perfect SVG Border (Drawn over the glass) */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none z-20" viewBox="0 0 320 440">
               <path 
-                d="M 0 24 A 24 24 0 0 1 24 0 L 296 0 A 24 24 0 0 1 320 24 L 320 330 A 20 20 0 0 0 300 350 L 250 350 A 20 20 0 0 1 230 370 L 230 420 A 20 20 0 0 0 210 440 L 24 440 A 24 24 0 0 1 0 416 L 0 24 Z" 
+                d="M 0 24 A 24 24 0 0 1 24 0 L 296 0 A 24 24 0 0 1 320 24 L 320 346 A 24 24 0 0 1 296 370 L 274 370 A 24 24 0 0 0 250 394 L 250 416 A 24 24 0 0 1 226 440 L 24 440 A 24 24 0 0 1 0 416 L 0 24 Z" 
                 fill="none" 
                 stroke="rgba(255,255,255,0.15)" 
                 strokeWidth="1.5" 
@@ -286,12 +303,17 @@ export function Hero() {
             </svg>
 
             {/* The Floating Cart Button */}
-            <Link 
-              href="/shop" 
-              className="absolute bottom-1.5 right-1.5 w-[76px] h-[76px] bg-primary hover:bg-white text-ink flex items-center justify-center rounded-full transition-colors duration-500 z-40 group shadow-[0_10px_30px_rgba(28,228,201,0.3)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)]"
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // TODO: Implement actual add to cart logic
+                alert(`Added ${HERO_PRODUCTS[currentSlide].name} to cart!`);
+              }}
+              className="absolute bottom-[11px] right-[11px] w-12 h-12 bg-primary hover:bg-white text-white hover:text-primary flex items-center justify-center rounded-full transition-colors duration-500 z-40 group shadow-[0_10px_30px_rgba(28,228,201,0.3)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)]"
             >
-              <ShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform duration-500" />
-            </Link>
+              <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform duration-500" />
+            </button>
 
           </div>
         </div>

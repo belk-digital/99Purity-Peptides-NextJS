@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Metadata } from 'next'
+import { BLOG_POSTS } from '@/data/blog-posts'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -207,6 +208,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     faqs: mappedFaqs,
     reviews: [] as any[],
     relatedProducts: [] as any[],
+    suggestedBlogs: [] as any[],
   }
 
   // Fetch related products (same category)
@@ -308,6 +310,49 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   }
 
   // Generate JSON-LD Schemas
+  
+  // Fetch Suggested Blogs
+  const { docs: blogDocs } = await payload.find({
+    collection: 'blog-posts',
+    where: {
+      status: {
+        equals: 'published'
+      }
+    },
+    sort: '-publishedAt',
+    limit: 3,
+    depth: 1,
+  })
+
+  let mappedBlogs = blogDocs.map((post: any) => {
+    let imageUrl = '/temp-products/product-image.png'
+    if (post.heroImage && typeof post.heroImage === 'object' && post.heroImage.url) {
+      imageUrl = post.heroImage.url
+    }
+    return {
+      id: String(post.id),
+      title: post.title,
+      slug: `blog/${post.slug}`,
+      author: typeof post.author === 'object' ? `${post.author.firstName || ''} ${post.author.lastName || ''}`.trim() || 'Admin' : 'Admin',
+      date: new Date(post.publishedAt || post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+      readTime: '5 min read',
+      category: typeof post.categories?.[0] === 'object' ? post.categories[0].title : 'Research',
+      excerpt: post.meta?.description || post.excerpt || 'Explore the latest research and clinical studies on this compound.',
+      imageSrc: imageUrl
+    }
+  })
+
+  if (mappedBlogs.length === 0) {
+    mappedBlogs = BLOG_POSTS.slice(0, 3).map((post, i) => ({
+      ...post,
+      id: `dummy-${i}`,
+      slug: `blog/${post.slug}`,
+      author: 'Admin'
+    }))
+  }
+
+  productData.suggestedBlogs = mappedBlogs
+
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://the-looksmaxxing-lab.vercel.app'
   const productUrl = `${baseUrl}/products/${slug}`
   
@@ -399,7 +444,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <main className="flex-1 mt-20">
+      <main className="flex-1">
         <ProductClient product={productData as any} />
       </main>
     </div>

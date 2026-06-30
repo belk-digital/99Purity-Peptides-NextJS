@@ -5,7 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useMotionValue, useSpring } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
-import { Heart, ChevronRight, ChevronLeft, Download, Star, Check, ShieldCheck, FlaskConical, MapPin, Zap, ShoppingCart, Truck, Sparkles, Loader2 } from 'lucide-react'
+import Autoplay from 'embla-carousel-autoplay'
+import { Heart, ChevronRight, ChevronLeft, Download, Check, ShieldCheck, FlaskConical, MapPin, Zap, ShoppingCart, Truck, Sparkles, Loader2, Award } from 'lucide-react'
 import { Container } from '@/components/ui/container'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -19,15 +20,14 @@ import { ImageGallery } from '@/components/shop/ImageGallery'
 import { VariantSelector, Variant } from '@/components/shop/VariantSelector'
 import { QuantityStepper } from '@/components/shop/QuantityStepper'
 import { ProductTabs, Tab } from '@/components/shop/ProductTabs'
-import { FaqCarousel, FaqItem } from '@/components/shared/FaqCarousel'
-import { TrustBadges } from '@/components/shared/TrustBadges'
-import { StaggerChildren, staggerItemVariants } from '@/components/motion/StaggerChildren'
-import { CompactProductCard } from '@/components/shop/CompactProductCard'
+import { ProductAccordion } from '@/components/shop/ProductAccordion'
+import { ProductDetailTabs } from '@/components/shop/ProductDetailTabs'
 import { PrimaryProductCard } from '@/components/shop/PrimaryProductCard'
+import { ProductCard } from '@/components/shared/ProductCard'
+import { SharedFaqSection } from '@/components/shared/SharedFaqSection'
+import { BlogPostCard } from '@/components/editorial/BlogPostCard'
 import { FadeUp } from '@/components/motion/FadeUp'
-import { Space_Grotesk } from 'next/font/google'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
+import { FluidButton } from '@/components/ui/fluid-button'
 
 interface ProductData {
   id: string
@@ -61,9 +61,10 @@ interface ProductData {
   variants: Variant[]
   coaFile?: string
   tabs: Tab[]
-  faqs?: FaqItem[]
+  faqs?: any[]
   reviews: any[]
   relatedProducts: any[]
+  suggestedBlogs?: any[]
 }
 
 interface ProductClientProps {
@@ -181,7 +182,9 @@ export function ProductClient({ product }: ProductClientProps) {
   const [relatedEmblaRef, relatedEmblaApi] = useEmblaCarousel({ 
     align: 'start',
     containScroll: 'trimSnaps'
-  })
+  }, [
+    Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })
+  ])
 
   useEffect(() => {
     if (!relatedEmblaApi) return
@@ -226,6 +229,7 @@ export function ProductClient({ product }: ProductClientProps) {
   const [inWishlist, setInWishlist] = useState(false)
   const [isWishlistPending, setIsWishlistPending] = useState(false)
   const [showParticles, setShowParticles] = useState(false)
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
 
   useEffect(() => {
     setInWishlist(isWishlistedGlobal)
@@ -303,432 +307,359 @@ export function ProductClient({ product }: ProductClientProps) {
   }
 
   return (
-    <div className="flex flex-col w-full bg-[#f3f4f6] min-h-screen">
-      
+    <div className="flex flex-col w-full min-h-screen bg-cream">
       {/* 1. Hero Section */}
-      <section className="w-full relative z-10 pt-8 pb-32">
-        
-        <Container size="wide" className="relative z-10">
-          {/* Breadcrumbs */}
-          <nav className="flex items-center gap-2 text-sm font-medium text-gray-500 mt-4 mb-8 relative z-20">
-            <Link href="/" className="hover:text-ink transition-colors">Home</Link>
-            <ChevronRight size={14} />
-            <Link href="/shop" className="hover:text-ink transition-colors">Products</Link>
-            <ChevronRight size={14} />
-            <span className="text-ink">{product.name}</span>
-          </nav>
+      <section className="w-full relative z-10 flex flex-col lg:flex-row bg-cream">
 
-        <div className="flex flex-col lg:flex-row gap-16 xl:gap-24 items-start relative z-10">
-          
-          {/* Left Column (Massive Cinematic Gallery) */}
-          <div className="w-full lg:w-[45%] relative lg:sticky lg:top-32 lg:mt-6">
+        {/* Left: Sticky Image Panel */}
+        <div className="w-full lg:w-1/2 lg:h-screen lg:sticky lg:top-0 flex items-start lg:items-center justify-center bg-cream-warm relative">
+          <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[84%] pt-[130px] pb-6 sm:pt-[140px] sm:pb-10 lg:pt-[130px] lg:pb-14">
             <ImageGallery images={product.images} />
           </div>
+        </div>
 
-          {/* Right Column (Clean Flow) */}
-          <div className="w-full lg:w-[50%] flex flex-col pt-4 pb-12">
-            
-            {/* Header Info */}
-            <div className="flex items-center gap-3 mb-6">
-              {product.categories ? (
-                product.categories.map(cat => (
-                  <span key={cat} className="text-[10px] uppercase tracking-widest text-ink/50 font-bold bg-white/50 px-3 py-1 rounded-full border border-ink/5">{cat}</span>
-                ))
-              ) : (
-                <span className="text-[10px] uppercase tracking-widest text-ink/50 font-bold bg-white/50 px-3 py-1 rounded-full border border-ink/5">{product.category}</span>
-              )}
-              {product.badges?.map(badge => (
-                <Badge key={badge} variant="new" className="bg-ink text-white border-none px-3 py-1 shadow-sm text-[10px] tracking-wider uppercase rounded-full">{badge}</Badge>
-              ))}
-            </div>
+        {/* Right: Editorial Product Info */}
+        <div className="w-full lg:w-1/2 flex flex-col px-4 sm:px-6 py-8 lg:px-16 xl:px-20 lg:pt-[160px] lg:pb-28 relative z-10">
 
-            <h1 className={`text-4xl md:text-5xl lg:text-[52px] leading-[1.05] font-semibold text-ink mb-6 tracking-tight ${spaceGrotesk.className}`}>
-              {product.name}
-            </h1>
-            
-            <div className="text-[32px] font-medium text-ink mb-10 flex items-center">
-              {selectedVariant?.salePrice ? (
-                <>
-                  <span className="text-ink/30 line-through mr-4 text-2xl font-light">{selectedVariant.price}</span>
-                  <span className="text-ink">{selectedVariant.salePrice}</span>
-                  <span className="ml-4 px-2.5 py-1 rounded-md bg-ink/5 text-ink text-sm font-bold tracking-tight flex items-center h-8">
-                    -{Math.round(((parseFloat(selectedVariant.price.replace(/[^0-9.]/g, '')) - parseFloat(selectedVariant.salePrice.replace(/[^0-9.]/g, ''))) / parseFloat(selectedVariant.price.replace(/[^0-9.]/g, ''))) * 100)}%
-                  </span>
-                </>
-              ) : (
-                <span>{selectedVariant?.price}</span>
-              )}
-            </div>
+          {/* Breadcrumbs */}
+          <div className="flex items-center gap-1.5 text-[10px] font-medium text-black/30 uppercase tracking-widest mb-8">
+            <Link href="/" className="hover:text-black/60 transition-colors">Home</Link>
+            <ChevronRight size={10} className="text-black/20" />
+            <Link href="/shop" className="hover:text-black/60 transition-colors">Shop</Link>
+          </div>
 
-            {/* Variants */}
-            {product.variants.length > 1 && (
-            <div className="mb-8 sm:mb-10 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                <VariantSelector 
-                  variants={product.variants}
-                  value={selectedVariantId}
-                  onChange={setSelectedVariantId}
-                />
-              </div>
+          {/* Meta Row: Category · Badges */}
+          <div className="flex items-center flex-wrap gap-x-3 gap-y-1.5 mb-6">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-black/35">
+              {(product.category as any)?.name || product.category || 'Research Peptide'}
+            </span>
+            {product.badges?.slice(0, 2).map((badge) => (
+              <React.Fragment key={badge}>
+                <span className="text-black/15 text-xs select-none">·</span>
+                <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-primary-dark/70">{badge}</span>
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Product Name */}
+          <motion.h1
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="font-heading text-[30px] sm:text-[40px] lg:text-[52px] xl:text-[60px] leading-[0.92] font-black text-black mb-5 tracking-tighter uppercase break-words"
+          >
+            {product.name}
+          </motion.h1>
+
+          {/* Price */}
+          <motion.div
+            key={`price-${selectedVariantId}`}
+            initial={{ opacity: 0.6, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="flex items-baseline gap-3 mb-8"
+          >
+            <span className="text-[28px] sm:text-[32px] lg:text-[40px] font-bold text-black leading-none tracking-tight">
+              {selectedVariant?.salePrice || selectedVariant?.price}
+            </span>
+            {selectedVariant?.salePrice && (
+              <>
+                <span className="text-base text-black/25 line-through font-medium">{selectedVariant.price}</span>
+                <span className="inline-flex items-center text-[9px] font-black tracking-[0.12em] uppercase bg-black text-white px-2.5 py-1.5 rounded-full">
+                  Save {Math.round(((parseFloat(selectedVariant.price.replace(/[^0-9.]/g, '')) - parseFloat(selectedVariant.salePrice.replace(/[^0-9.]/g, ''))) / parseFloat(selectedVariant.price.replace(/[^0-9.]/g, ''))) * 100)}%
+                </span>
+              </>
             )}
+          </motion.div>
 
-            {/* Bulk Bundles */}
-            {product.bulkBundles && product.bulkBundles.length > 0 && (
-              <div className="mb-8">
-                <div className="flex flex-col mb-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold uppercase tracking-widest text-ink">Bulk Bundles</span>
-                    {(() => {
-                      let maxDiscount = 0
-                      product.bulkBundles.forEach((bundle) => {
-                        const pNum = typeof bundle.price === 'number' ? bundle.price : parseFloat(String(bundle.price || 0).replace(/[^0-9.]/g, ''))
-                        const sNum = bundle.salePrice ? (typeof bundle.salePrice === 'number' ? bundle.salePrice : parseFloat(String(bundle.salePrice).replace(/[^0-9.]/g, ''))) : null
-                        let discount = 0
-                        if (typeof bundle.discountPercentage === 'number' && bundle.discountPercentage > 0) {
-                          discount = bundle.discountPercentage
-                        } else if (sNum && pNum > 0) {
-                          discount = Math.round(((pNum - sNum) / pNum) * 100)
-                        }
-                        if (discount > maxDiscount) maxDiscount = discount
-                      })
-                      return maxDiscount > 0 ? (
-                        <span className="text-xs font-bold text-green-600 bg-green-50 px-2.5 py-1 rounded-full uppercase tracking-wider">Save up to {maxDiscount}%</span>
-                      ) : null
-                    })()}
-                  </div>
-                  <span className="text-[11px] text-ink/50 mt-1.5 font-medium tracking-wide">Please select your dosage above to view accurate bulk pricing.</span>
-                </div>
-                <div className="flex flex-col gap-3">
-                  {product.bulkBundles.map((bundle, idx) => {
-                    let priceNum = 0;
-                    let salePriceNum = 0;
-                    let discount = 0;
-                    let bundleVariantSku = bundle.name;
-                    let bundleVariantTitle = bundle.name;
-                    
-                    const currentVariantSku = selectedVariant?.sku || selectedVariant?.title || 'Variant';
-                    const currentVariantTitle = selectedVariant?.title || 'Variant';
-                    
-                    // Check for hardcoded Variant Overrides first
-                    const override = (bundle as any).variantOverrides?.find((vo: any) => vo.variantSku === currentVariantSku || vo.variantSku === selectedVariant?.sku || vo.variantSku === selectedVariant?.title);
+          {/* Divider */}
+          <div className="h-px bg-black/[0.06] mb-8" />
 
-                    if (override) {
-                      // Manual Override pricing
-                      priceNum = override.price;
-                      salePriceNum = override.salePrice || 0;
-                      discount = salePriceNum ? Math.round(((priceNum - salePriceNum) / priceNum) * 100) : 0;
-                      bundleVariantSku = `${currentVariantSku} - ${bundle.name}`;
-                      bundleVariantTitle = `${currentVariantTitle} - ${bundle.name}`;
-                    } else if (typeof bundle.discountPercentage === 'number' && bundle.discountPercentage > 0) {
-                      // Dynamic variant-based pricing
-                      const basePrice = parseFloat(String(selectedVariant?.salePrice || selectedVariant?.price || 0).replace(/[^0-9.]/g, ''))
-                      priceNum = basePrice * bundle.quantity
-                      salePriceNum = priceNum * (1 - (bundle.discountPercentage / 100))
-                      discount = bundle.discountPercentage
-                      bundleVariantSku = `${currentVariantSku} - ${bundle.name}`
-                      bundleVariantTitle = `${currentVariantTitle} - ${bundle.name}`;
-                    } else {
-                      // Legacy hardcoded pricing
-                      priceNum = typeof bundle.price === 'number' ? bundle.price : parseFloat(String(bundle.price || 0).replace(/[^0-9.]/g, ''))
-                      salePriceNum = bundle.salePrice ? (typeof bundle.salePrice === 'number' ? bundle.salePrice : parseFloat(String(bundle.salePrice).replace(/[^0-9.]/g, ''))) : 0
-                      discount = salePriceNum ? Math.round(((priceNum - salePriceNum) / priceNum) * 100) : 0
-                    }
+          {/* Short Description */}
+          <p className="text-black/50 leading-[1.75] text-[14px] lg:text-[15px] max-w-[400px] mb-8">
+            {product.shortDescription || product.description?.substring(0, 200) + '...'}
+          </p>
 
-                    return (
-                      <button
-                        key={bundle.id || idx}
-                        onClick={() => {
-                          cartStore.addItem(
-                            { id: product.id, name: product.name, imageUrl: product.images[0] },
-                            bundleVariantSku,
-                            1,
-                            salePriceNum || priceNum,
-                            bundleVariantTitle
-                          )
-                          setJustAdded(true)
-                          toast.success('Added bundle to cart', { action: { label: 'VIEW', onClick: cartStore.openCart } })
-                          setTimeout(() => setJustAdded(false), 1500)
-                        }}
-                        className="relative w-full flex items-center justify-between p-4 sm:p-5 rounded-2xl border border-ink/10 hover:border-ink/30 hover:shadow-lg hover:shadow-ink/5 transition-all duration-300 group bg-white text-left overflow-hidden"
-                      >
-                        {/* Hover Gradient Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-ink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -translate-x-full group-hover:translate-x-full ease-out" />
-                        
-                        <div className="flex items-center gap-4 relative z-10">
-                          {bundle.image ? (
-                            <img src={bundle.image} alt={bundle.name} className="w-12 h-12 rounded-lg object-cover bg-ink/5" />
-                          ) : (
-                            <div className="w-12 h-12 rounded-xl bg-ink/5 flex flex-col items-center justify-center border border-ink/10">
-                              <span className="text-sm font-black text-ink tracking-tighter leading-none">{bundle.quantity}x</span>
-                              <span className="text-[8px] font-bold uppercase tracking-widest text-ink/50 mt-0.5">Kits</span>
-                            </div>
-                          )}
-                          <div className="flex flex-col">
-                            <span className="font-bold text-ink text-sm sm:text-base">{bundle.name}</span>
-                            <span className="text-xs font-medium text-ink/50 mt-0.5">{bundle.quantity} vials included</span>
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-end relative z-10">
-                          {salePriceNum ? (
-                            <div className="flex flex-col items-end">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs line-through text-ink/40 font-medium">${priceNum.toFixed(2)}</span>
-                                <span className="font-bold text-ink text-lg leading-none">${salePriceNum.toFixed(2)}</span>
-                              </div>
-                              {discount > 0 && (
-                                <span className="text-[10px] font-bold text-white bg-ink px-2 py-0.5 rounded-full uppercase tracking-widest shadow-sm">Save {discount}%</span>
-                              )}
-                            </div>
-                          ) : (
-                            <span className="font-bold text-ink text-lg">${priceNum.toFixed(2)}</span>
-                          )}
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
+          {/* Variant Selector */}
+          {product.variants.length > 1 && (
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-3.5">
+                <span className="text-[9px] font-black text-black/35 uppercase tracking-[0.22em]">Select Size</span>
+                <span className="text-[10px] text-black/30 font-medium">{selectedVariant?.title}</span>
               </div>
-            )}
-
-            {/* Action Zone (Quantity & Buttons) */}
-            <div className="flex flex-col gap-4 mb-12 relative z-10">
-              
-              {/* Row 1: Quantity & Wishlist */}
-              <div className="flex items-center gap-4">
-                <div className="flex-1">
-                  <QuantityStepper value={quantity} onChange={setQuantity} className="w-full h-16 rounded-[1.25rem] px-2 shadow-none" />
-                </div>
-                <motion.button 
-                  whileHover={isWishlistPending ? {} : { scale: 1.05 }}
-                  whileTap={isWishlistPending ? {} : { scale: 0.95 }}
-                  className={`relative w-16 h-16 p-0 flex-shrink-0 rounded-[1.25rem] font-bold border transition-colors duration-300 flex items-center justify-center group outline-none disabled:opacity-70 ${
-                    inWishlist 
-                      ? 'border-red-500 bg-red-50 text-red-500 shadow-sm' 
-                      : 'border-ink/10 bg-white hover:border-ink/30 hover:bg-gray-50 text-ink/60 hover:text-ink'
-                  }`}
-                  aria-label="Toggle Wishlist"
-                  onClick={handleWishlistClick}
-                  disabled={isWishlistPending}
-                >
-                  <AnimatePresence>
-                    {showParticles && (
-                      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                        {[...Array(8)].map((_, i) => {
-                          const angle = (i * 45 * Math.PI) / 180;
-                          return (
-                            <motion.div
-                              key={i}
-                              className="absolute w-1.5 h-1.5 bg-red-400 rounded-full"
-                              initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
-                              animate={{
-                                x: Math.cos(angle) * 45,
-                                y: Math.sin(angle) * 45,
-                                scale: [0, 1.5, 0],
-                                opacity: [1, 1, 0]
-                              }}
-                              transition={{ duration: 0.6, ease: "easeOut" }}
-                            />
-                          )
-                        })}
-                      </div>
-                    )}
-                  </AnimatePresence>
-                  <motion.div
-                    animate={inWishlist && !isWishlistPending ? { scale: [1, 1.3, 1] } : { scale: 1 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                  >
-                    {isWishlistPending ? (
-                      <Loader2 size={24} className={`animate-spin ${inWishlist ? 'text-red-500' : 'text-ink/60'}`} />
-                    ) : (
-                      <Heart 
-                        size={24} 
-                        className={`transition-colors duration-300 ${inWishlist ? 'fill-current' : ''}`} 
-                        strokeWidth={inWishlist ? 2.5 : 2} 
-                      />
-                    )}
-                  </motion.div>
-                </motion.button>
-              </div>
-
-              {/* Row 2: Main Actions */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex-1">
-                  <SlideToCartButton 
-                    onAdd={handleAddToCart}
-                    disabled={!selectedVariant?.inStock}
-                    isAdded={justAdded}
-                  />
-                </div>
-                <Button 
-                  variant="dark" 
-                  className="flex-1 h-16 rounded-full font-bold text-white bg-gradient-to-r from-ink to-gray-800 hover:from-black hover:to-ink transition-all duration-500 text-sm uppercase tracking-widest border-none shadow-[0_8px_20px_rgb(0,0,0,0.15)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.25)] hover:-translate-y-0.5"
-                  onClick={() => {
-                    handleAddToCart()
-                    setTimeout(() => window.location.href = '/checkout', 300)
-                  }}
-                  disabled={!selectedVariant?.inStock}
-                >
-                  Buy Now
-                </Button>
-              </div>
+              <VariantSelector
+                variants={product.variants}
+                value={selectedVariantId}
+                onChange={setSelectedVariantId}
+              />
             </div>
+          )}
 
-            {/* Trust Badges Inline Flow */}
-            <div className="flex flex-wrap gap-x-8 gap-y-6 mb-12 pt-6 border-t border-ink/10">
-              <div className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-full border border-ink/10 text-ink flex items-center justify-center font-bold text-lg group-hover:scale-110 group-hover:border-ink/30 transition-all duration-300">
-                  <ShieldCheck size={18} strokeWidth={1.5} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-ink/40 font-bold">Purity</span>
-                  <span className="text-sm font-semibold text-ink">≥99% Tested</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-full border border-ink/10 text-ink flex items-center justify-center font-bold text-lg group-hover:scale-110 group-hover:border-ink/30 transition-all duration-300">
-                  <FlaskConical size={18} strokeWidth={1.5} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-ink/40 font-bold">Testing</span>
-                  <span className="text-sm font-semibold text-ink">LC-MS Verified</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-full border border-ink/10 text-ink flex items-center justify-center font-bold text-lg group-hover:scale-110 group-hover:border-ink/30 transition-all duration-300">
-                  <MapPin size={18} strokeWidth={1.5} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-ink/40 font-bold">Location</span>
-                  <span className="text-sm font-semibold text-ink">US Based</span>
-                </div>
-              </div>
-              {product.coaFile && (
-                <a href={product.coaFile} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group hover:opacity-80 transition-opacity">
-                  <div className="w-10 h-10 rounded-full bg-ink text-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                    <Download size={16} strokeWidth={1.5} />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-widest text-ink/40 font-bold">Download</span>
-                    <span className="text-sm font-semibold text-ink border-b border-ink/20">COA File</span>
-                  </div>
-                </a>
-              )}
-            </div>
+          {/* Stock */}
+          <div className="mb-7">
+            <StockIndicator stock={currentStock} />
+          </div>
 
-            {/* Accordions (Clean Line Style) */}
-            <div className="border-t border-ink/10">
-              
-              {/* Description */}
-              <div className="border-b border-ink/10">
-                <button 
-                  className="w-full flex justify-between items-center py-6 bg-transparent focus:outline-none group"
-                  onClick={() => setDescOpen(!descOpen)}
-                >
-                  <h3 className="text-sm uppercase tracking-[0.2em] font-bold text-ink group-hover:text-ink/70 transition-colors">Description</h3>
-                  <motion.div animate={{ rotate: descOpen ? -90 : 90 }} transition={{ duration: 0.2 }}>
-                    <ChevronRight className="text-ink/50" size={18} strokeWidth={2} />
-                  </motion.div>
-                </button>
-                <AnimatePresence initial={false}>
-                  {descOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="text-ink/70 leading-[1.8] text-[15px] pb-8 pr-4 font-medium">
-                        {product.description || product.shortDescription}
-                      </p>
-                    </motion.div>
+          {/* CTA Area */}
+          <div className="flex flex-col gap-2.5 mb-7">
+            {/* Row: Quantity + Add to Cart + Wishlist */}
+            <div className="flex items-stretch gap-2 sm:gap-2.5">
+              <QuantityStepper
+                value={quantity}
+                onChange={setQuantity}
+                className="h-14 w-[90px] sm:w-[120px] shrink-0 rounded-2xl border border-black/10 bg-white text-black hover:border-black/20 transition-colors flex"
+              />
+              <button
+                className={`flex-1 h-14 rounded-2xl text-[9.5px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.2em] uppercase flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-200 ${
+                  !selectedVariant?.inStock
+                    ? 'bg-black/[0.07] text-black/25 cursor-not-allowed'
+                    : justAdded
+                    ? 'bg-green-600 text-white'
+                    : 'bg-black text-white hover:bg-black/80'
+                }`}
+                onClick={handleAddToCart}
+                disabled={!selectedVariant?.inStock}
+              >
+                <AnimatePresence mode="wait">
+                  {justAdded ? (
+                    <motion.span key="added" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -3 }} className="flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
+                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={2.5} /> Added
+                    </motion.span>
+                  ) : (
+                    <motion.span key="add" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -3 }} className="flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
+                      <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={1.5} />
+                      {selectedVariant?.inStock ? 'Add to Cart' : 'Out of Stock'}
+                    </motion.span>
                   )}
                 </AnimatePresence>
-              </div>
-
-              {/* Delivery Options */}
-              <div className="border-b border-ink/10">
-                <button 
-                  className="w-full flex justify-between items-center py-6 bg-transparent focus:outline-none group"
-                  onClick={() => setDeliveryOpen(!deliveryOpen)}
-                >
-                  <h3 className="text-sm uppercase tracking-[0.2em] font-bold text-ink group-hover:text-ink/70 transition-colors">Delivery Options</h3>
-                  <motion.div animate={{ rotate: deliveryOpen ? -90 : 90 }} transition={{ duration: 0.2 }}>
-                    <ChevronRight className="text-ink/50" size={18} strokeWidth={2} />
-                  </motion.div>
-                </button>
-                <AnimatePresence initial={false}>
-                  {deliveryOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden pb-8"
-                    >
-                      <div className="flex flex-col gap-6">
-                        <div className="flex items-center gap-4 group">
-                          <div className="w-10 h-10 rounded-full border border-ink/10 text-ink flex items-center justify-center font-bold text-lg shrink-0 group-hover:scale-110 group-hover:border-ink/30 transition-all duration-300">
-                            <Truck size={18} strokeWidth={1.5} />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[10px] uppercase tracking-wider text-ink/40 font-bold">Standard Delivery</span>
-                            <span className="text-sm font-semibold text-ink">3-4 Working Days</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4 group">
-                          <div className="w-10 h-10 rounded-full border border-ink/10 text-ink flex items-center justify-center font-bold text-lg shrink-0 group-hover:scale-110 group-hover:border-ink/30 transition-all duration-300">
-                            <Sparkles size={18} strokeWidth={1.5} />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[10px] uppercase tracking-wider text-ink/40 font-bold">Free Shipping</span>
-                            <span className="text-sm font-semibold text-ink">On all orders above $300</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
+              </button>
+              <button
+                onClick={handleWishlistClick}
+                disabled={isWishlistPending}
+                className={`h-14 w-12 sm:w-14 flex items-center justify-center shrink-0 rounded-2xl border transition-colors duration-200 ${
+                  inWishlist
+                    ? 'border-black/20 bg-black/[0.05]'
+                    : 'border-black/10 bg-white hover:border-black/20'
+                }`}
+              >
+                {isWishlistPending
+                  ? <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin text-black/35" />
+                  : <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${inWishlist ? "fill-black text-black" : "text-black/40"}`} strokeWidth={inWishlist ? 2 : 1.5} />
+                }
+              </button>
             </div>
 
+            {/* Buy Now */}
+            <button
+              className="w-full h-14 rounded-2xl text-[11px] font-bold tracking-[0.2em] uppercase text-black border border-black/10 bg-white hover:bg-black hover:text-white hover:border-black transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+              onClick={() => {
+                handleAddToCart()
+                setTimeout(() => window.location.href = '/checkout', 300)
+              }}
+              disabled={!selectedVariant?.inStock}
+            >
+              Buy Now
+            </button>
+          </div>
+
+          {/* Trust Strip */}
+          <div className="flex flex-wrap items-center justify-between gap-y-4 py-5 border-t border-b border-black/[0.06] mb-8">
+            <div className="flex items-center gap-2 shrink-0 w-[45%] lg:w-auto lg:pr-5">
+              <Truck size={12} className="text-black/30 shrink-0" />
+              <span className="text-[8px] sm:text-[9px] font-bold text-black/40 uppercase tracking-[0.18em]">Fast Shipping</span>
+            </div>
+            <div className="hidden lg:block h-3 w-px bg-black/10 shrink-0" />
+            <div className="flex items-center gap-2 shrink-0 w-[45%] lg:w-auto lg:px-5">
+              <FlaskConical size={12} className="text-black/30 shrink-0" />
+              <span className="text-[8px] sm:text-[9px] font-bold text-black/40 uppercase tracking-[0.18em]">99% Purity</span>
+            </div>
+            <div className="hidden lg:block h-3 w-px bg-black/10 shrink-0" />
+            <div className="flex items-center gap-2 shrink-0 w-[45%] lg:w-auto lg:px-5">
+              <ShieldCheck size={12} className="text-black/30 shrink-0" />
+              <span className="text-[8px] sm:text-[9px] font-bold text-black/40 uppercase tracking-[0.18em]">3rd Party Tested</span>
+            </div>
+            <div className="hidden lg:block h-3 w-px bg-black/10 shrink-0" />
+            <div className="flex items-center gap-2 shrink-0 w-[45%] lg:w-auto lg:pl-5">
+              <Award size={12} className="text-black/30 shrink-0" />
+              <span className="text-[8px] sm:text-[9px] font-bold text-black/40 uppercase tracking-[0.18em]">Guaranteed</span>
+            </div>
+          </div>
+
+          {/* COA Download (mobile / no left panel) */}
+          {product.coaFile && (
+            <a
+              href={product.coaFile}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[9px] font-bold text-black/30 uppercase tracking-[0.18em] hover:text-black/55 transition-colors mb-8 lg:hidden"
+            >
+              <Download size={11} />
+              Certificate of Analysis
+            </a>
+          )}
+
+          {/* Bulk Bundles */}
+          {product.bulkBundles && product.bulkBundles.length > 0 && (
+            <div className="pt-8 border-t border-black/[0.06]">
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-[9px] font-black text-black/35 uppercase tracking-[0.22em]">Bulk Pricing</span>
+                <span className="text-[9px] text-black/25 font-medium tracking-wide">Buy more, save more</span>
+              </div>
+              <div className="flex flex-col gap-2">
+                {product.bulkBundles.map((bundle, idx) => {
+                  let priceNum = 0;
+                  let salePriceNum = 0;
+                  let discount = 0;
+                  let bundleVariantSku = bundle.name;
+                  let bundleVariantTitle = bundle.name;
+
+                  const currentVariantSku = selectedVariant?.sku || selectedVariant?.title || 'Variant';
+                  const currentVariantTitle = selectedVariant?.title || 'Variant';
+
+                  const override = (bundle as any).variantOverrides?.find((vo: any) => vo.variantSku === currentVariantSku || vo.variantSku === selectedVariant?.sku || vo.variantSku === selectedVariant?.title);
+
+                  if (override) {
+                    priceNum = override.price;
+                    salePriceNum = override.salePrice || 0;
+                    discount = salePriceNum ? Math.round(((priceNum - salePriceNum) / priceNum) * 100) : 0;
+                    bundleVariantSku = `${currentVariantSku} - ${bundle.name}`;
+                    bundleVariantTitle = `${currentVariantTitle} - ${bundle.name}`;
+                  } else if (typeof bundle.discountPercentage === 'number' && bundle.discountPercentage > 0) {
+                    const basePrice = parseFloat(String(selectedVariant?.salePrice || selectedVariant?.price || 0).replace(/[^0-9.]/g, ''))
+                    priceNum = basePrice * bundle.quantity
+                    salePriceNum = priceNum * (1 - (bundle.discountPercentage / 100))
+                    discount = bundle.discountPercentage
+                    bundleVariantSku = `${currentVariantSku} - ${bundle.name}`
+                    bundleVariantTitle = `${currentVariantTitle} - ${bundle.name}`;
+                  } else {
+                    priceNum = typeof bundle.price === 'number' ? bundle.price : parseFloat(String(bundle.price || 0).replace(/[^0-9.]/g, ''))
+                    salePriceNum = bundle.salePrice ? (typeof bundle.salePrice === 'number' ? bundle.salePrice : parseFloat(String(bundle.salePrice).replace(/[^0-9.]/g, ''))) : 0
+                    discount = salePriceNum ? Math.round(((priceNum - salePriceNum) / priceNum) * 100) : 0
+                  }
+
+                  return (
+                    <button
+                      key={bundle.id || idx}
+                      onClick={() => {
+                        cartStore.addItem({ id: product.id, name: product.name, imageUrl: product.images[0] }, bundleVariantSku, 1, salePriceNum || priceNum, bundleVariantTitle)
+                        setJustAdded(true)
+                        toast.success('Added bundle to cart', { action: { label: 'VIEW', onClick: cartStore.openCart } })
+                        setTimeout(() => setJustAdded(false), 1500)
+                      }}
+                      className="w-full flex items-center justify-between px-5 py-4 rounded-2xl bg-white border border-black/[0.06] hover:border-black/[0.12] hover:shadow-sm transition-all duration-200 text-left"
+                    >
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-bold text-black text-[13px] uppercase tracking-wider">{bundle.name}</span>
+                        {discount > 0 && (
+                          <span className="text-[9px] font-bold text-black/35 uppercase tracking-[0.15em]">Save {discount}%</span>
+                        )}
+                      </div>
+                      <div className="flex flex-col items-end gap-0.5">
+                        <span className="font-bold text-black text-[17px] tracking-tight">${(salePriceNum || priceNum).toFixed(2)}</span>
+                        {salePriceNum > 0 && priceNum > 0 && salePriceNum !== priceNum && (
+                          <span className="text-[10px] text-black/20 line-through">${priceNum.toFixed(2)}</span>
+                        )}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      {/* 2. Dark Credentials Section */}
+      <section className="w-full relative overflow-hidden bg-ink">
+        {/* Ghost watermark */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 font-heading font-black text-white/[0.025] select-none pointer-events-none leading-none tracking-tighter text-[180px] sm:text-[260px] lg:text-[380px] pr-4">
+          99.9
+        </div>
+
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 py-20 lg:py-28 relative z-10">
+
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 lg:mb-20">
+            <div>
+              <span className="text-white/25 text-[9px] sm:text-[10px] font-bold tracking-[0.28em] uppercase mb-4 block">Compound Profile</span>
+              <h2 className="font-heading text-[28px] sm:text-[36px] lg:text-[48px] font-black text-white leading-[0.9] tracking-tighter uppercase break-words">
+                The<br />Science.
+              </h2>
+            </div>
+            {product.coaFile && (
+              <a
+                href={product.coaFile}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start sm:self-auto inline-flex items-center gap-2.5 border border-white/[0.12] text-white/40 hover:text-white hover:border-white/30 rounded-full px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] transition-all"
+              >
+                <Download size={11} />
+                Download Certificate
+              </a>
+            )}
+          </div>
+
+          {/* Stat cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              { value: '≥99%',    label: 'Verified Purity',  desc: 'HPLC certified'          },
+              { value: '3rd Party', label: 'Lab Tested',       desc: 'Independent analysis'    },
+              { value: 'Research',  label: 'Grade Quality',    desc: 'Highest standard'        },
+              { value: 'COA',       label: 'Documented',       desc: 'Full traceability'       },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.45, delay: i * 0.07, ease: 'easeOut' }}
+                className="border border-white/[0.07] rounded-2xl p-4 sm:p-5 lg:p-7 bg-white/[0.02] hover:bg-white/[0.04] transition-colors"
+              >
+                <div className="font-heading text-[20px] sm:text-[24px] lg:text-[32px] font-black text-white leading-none tracking-tighter mb-3 break-words">
+                  {stat.value}
+                </div>
+                <div className="text-[10px] font-bold text-white/55 uppercase tracking-[0.18em] mb-1.5">{stat.label}</div>
+                <div className="text-[11px] text-white/25 leading-relaxed">{stat.desc}</div>
+              </motion.div>
+            ))}
           </div>
         </div>
-        
-        {/* Merged Tabs Section */}
-        <div className="mt-32 w-full">
-          <ProductTabs tabs={product.tabs} />
-        </div>
+      </section>
 
-        </Container>
+      {/* 3. Details Tab Section */}
+      <section className="w-full relative z-10 py-20 lg:py-32 bg-cream">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <ProductDetailTabs tabs={product.tabs} />
+        </div>
       </section>
 
       {/* 5. Related Editorial Carousel */}
-      <section className="w-full py-32 bg-[#f8fafc] border-t border-blue-100/50 overflow-hidden relative">
+      <section className="w-full py-24 bg-cream overflow-hidden relative">
         <Container size="wide" className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
-              <span className="text-[#5984c4] text-label-sm uppercase tracking-[0.2em] font-bold mb-4 block">Continue Exploring</span>
-              <h2 className={`text-[44px] sm:text-[56px] lg:text-[64px] leading-none font-bold tracking-tighter text-ink ${spaceGrotesk.className}`}>
+              <span className="text-primary text-[9px] sm:text-label-sm uppercase tracking-[0.2em] font-bold mb-3 sm:mb-4 block">Continue Exploring</span>
+              <h2 className="font-heading text-[28px] sm:text-[36px] lg:text-[48px] leading-none font-black tracking-tighter text-ink uppercase break-words">
                 Also Considered.
               </h2>
             </div>
             
             {/* Carousel Navigation */}
-            <div className="flex gap-3">
+            <div className="flex gap-2 sm:gap-3">
               <button 
                 onClick={() => relatedEmblaApi?.scrollPrev()}
-                className="w-12 h-12 rounded-full border border-blue-200 flex items-center justify-center text-ink hover:bg-ink hover:text-white transition-all shadow-sm bg-white"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-primary/30 flex items-center justify-center text-ink hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm bg-white"
                 aria-label="Previous Products"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
               </button>
               <button 
                 onClick={() => relatedEmblaApi?.scrollNext()}
-                className="w-12 h-12 rounded-full border border-blue-200 flex items-center justify-center text-ink hover:bg-ink hover:text-white transition-all shadow-sm bg-white"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-primary/30 flex items-center justify-center text-ink hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm bg-white"
                 aria-label="Next Products"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={18} className="sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>
@@ -739,11 +670,11 @@ export function ProductClient({ product }: ProductClientProps) {
             onMouseLeave={() => setIsHoveringSlider(false)}
             onMouseMove={handleSliderMouseMove}
           >
-            <div className="overflow-hidden" ref={relatedEmblaRef}>
-              <div className="flex gap-6 lg:gap-8 pb-12">
+            <div className="overflow-hidden -m-6 p-6" ref={relatedEmblaRef}>
+              <div className="flex gap-6 lg:gap-8 pb-6">
                 {product.relatedProducts.map((p) => (
                   <div key={p.id} className="flex-[0_0_100%] sm:flex-[0_0_45%] lg:flex-[0_0_calc(25%-1.5rem)] min-w-0">
-                    <PrimaryProductCard product={p as any} aspectRatio="4/5" />
+                    <ProductCard product={p as any} />
                   </div>
                 ))}
               </div>
@@ -754,13 +685,35 @@ export function ProductClient({ product }: ProductClientProps) {
 
       {/* 2.5 FAQs Section (Moved to Bottom) */}
       {product.faqs && product.faqs.length > 0 && (
-        <FaqCarousel 
-          faqs={product.faqs} 
-          theme="light" 
-          title="Product" 
-          accentTitle="FAQs"
-          description="Find answers to common questions regarding storage, reconstitution, and testing guidelines for this specific compound."
+        <SharedFaqSection 
+          title="Frequently Asked"
+          faqs={product.faqs}
         />
+      )}
+
+      {/* 3. Suggested Blogs Section */}
+      {product.suggestedBlogs && product.suggestedBlogs.length > 0 && (
+        <section className="w-full py-24 bg-cream border-t border-gray-100">
+          <Container size="wide">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+              <div>
+                <span className="text-primary text-label-sm uppercase tracking-[0.2em] font-bold mb-4 block">Education & Research</span>
+                <h2 className="font-heading text-[44px] sm:text-[56px] lg:text-[64px] leading-none font-black tracking-tighter text-ink uppercase">
+                  Further Reading.
+                </h2>
+              </div>
+              <Button variant="outline" className="rounded-full font-bold border-ink/20 hover:bg-ink hover:text-white transition-all shadow-sm w-fit shrink-0">
+                View All Research
+              </Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              {product.suggestedBlogs.map((post) => (
+                <BlogPostCard key={post.id} {...(post as any)} />
+              ))}
+            </div>
+          </Container>
+        </section>
       )}
 
       {/* Mobile Fixed Action Bar */}

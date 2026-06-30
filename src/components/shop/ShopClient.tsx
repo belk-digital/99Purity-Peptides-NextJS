@@ -172,7 +172,7 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
     <div className="w-full bg-cream min-h-screen font-sans">
       
       {/* 1. Curve Cut Hero Section */}
-      <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[44px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[52px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-16 [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
+      <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
         {/* Main Inner Container */}
         <div className="relative w-full h-full bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden flex flex-col justify-center items-center">
           
@@ -196,7 +196,7 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/60 z-10 pointer-events-none" />
 
           {/* Left Center Marquee Cutout */}
-          <div className="absolute bottom-[32%] sm:bottom-[30%] md:bottom-[30%] left-0 bg-cream rounded-r-[3rem] md:rounded-r-[4rem] z-30 flex items-center w-[220px] sm:w-[280px] md:w-[360px] h-12 sm:h-16 md:h-20 shadow-xl">
+          <div className="absolute bottom-[32%] sm:bottom-[30%] md:bottom-[30%] -left-px bg-cream rounded-r-[3rem] md:rounded-r-[4rem] z-30 flex items-center w-[220px] sm:w-[280px] md:w-[360px] h-12 sm:h-16 md:h-20 shadow-xl">
             {/* Top Fillet (Inverted Corner) */}
             <div 
               className="absolute -top-[calc(3rem-1px)] left-0 w-12 h-12 md:-top-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none"
@@ -289,7 +289,7 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
           </motion.div>
 
           {/* Bottom Right Button Cutout */}
-          <div className="absolute bottom-0 right-0 bg-cream rounded-tl-[3rem] md:rounded-tl-[4rem] pointer-events-auto p-3 sm:p-5 md:p-8 pt-6 md:pt-10 pl-6 md:pl-10 z-30 shadow-2xl">
+          <div className="absolute -bottom-px -right-px bg-cream rounded-tl-[3rem] md:rounded-tl-[4rem] pointer-events-auto p-3 sm:p-5 md:p-8 pt-6 md:pt-10 pl-6 md:pl-10 z-30 shadow-2xl">
             {/* Top Fillet (Inverted Corner) */}
             <div 
               className="absolute -top-[calc(3rem-1px)] right-0 w-12 h-12 md:-top-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none"

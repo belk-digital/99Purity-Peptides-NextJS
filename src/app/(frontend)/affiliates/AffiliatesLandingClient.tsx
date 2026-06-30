@@ -167,7 +167,7 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
     <div className="bg-cream min-h-screen relative font-sans text-ink overflow-hidden">
       
       {/* 1. Hero Section (Contact Style) */}
-      <div className="relative w-full h-[65dvh] min-h-[400px] md:min-h-[500px] bg-cream p-3 pt-[44px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[52px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-16 [.announcement-closed_&]:md:pt-8 overflow-hidden flex transition-[padding] duration-300">
+      <div className="relative w-full h-[65dvh] min-h-[400px] md:min-h-[500px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 overflow-hidden flex transition-[padding] duration-300">
         <div className="relative w-full h-full bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden flex flex-col justify-between">
           
           <div className="absolute inset-0 rounded-[2rem] md:rounded-[4rem] ring-1 ring-inset ring-white/5 pointer-events-none z-20" />

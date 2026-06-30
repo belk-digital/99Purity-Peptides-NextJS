@@ -7,7 +7,7 @@ import { FluidButton } from '@/components/ui/fluid-button'
 
 export function FaqHero() {
   return (
-    <div className="relative w-full h-[75dvh] min-h-[450px] md:min-h-[600px] bg-cream p-3 pt-[44px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[52px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-16 [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
+    <div className="relative w-full h-[75dvh] min-h-[450px] md:min-h-[600px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
       {/* Main Inner Container */}
       <div className="relative w-full h-full bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden flex flex-col justify-between">
         

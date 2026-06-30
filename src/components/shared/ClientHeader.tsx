@@ -5,21 +5,111 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
-import { ShoppingBag, Menu, Search, X, User } from 'lucide-react'
+import { ShoppingBag, Menu, Search, X, User, Copy, Timer } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
 import { useCartStore } from '@/lib/cart/store'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import dynamic from 'next/dynamic'
 import { SearchOverlay } from './SearchOverlay'
 import { BLOG_POSTS } from '@/data/blog-posts'
+import { toast } from 'sonner'
 
 const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod => mod.CartDrawer), { ssr: false })
 
 const ANNOUNCEMENTS = [
-  "FREE SHIPPING ON ORDERS OVER $150",
-  "NEW PEPTIDE BLENDS JUST DROPPED",
-  "SUBSCRIBE FOR 15% OFF YOUR FIRST ORDER"
+  {
+    text: "SUMMER SALE: 15% OFF ALL PEPTIDES",
+    couponCode: "SUMMER15",
+    expiresAt: new Date(Date.now() + 86400000).toISOString() // 24 hours
+  },
+  {
+    text: "FREE EXPRESS SHIPPING ON ORDERS OVER $200",
+    couponCode: "FREESHIP",
+    expiresAt: new Date(Date.now() + 172800000).toISOString() // 48 hours
+  },
+  {
+    text: "NEW PEPTIDE BLENDS JUST DROPPED",
+    couponCode: null,
+    expiresAt: null
+  }
 ]
+
+function CountdownTimer({ expiresAt }: { expiresAt: string }) {
+  const [timeLeft, setTimeLeft] = useState({ h: '00', m: '00', s: '00' })
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = new Date(expiresAt).getTime() - new Date().getTime()
+      if (difference > 0) {
+        return {
+          h: Math.floor((difference / (1000 * 60 * 60)) % 24).toString().padStart(2, '0'),
+          m: Math.floor((difference / 1000 / 60) % 60).toString().padStart(2, '0'),
+          s: Math.floor((difference / 1000) % 60).toString().padStart(2, '0')
+        }
+      }
+      return { h: '00', m: '00', s: '00' }
+    }
+
+    setTimeLeft(calculateTimeLeft())
+    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
+    return () => clearInterval(timer)
+  }, [expiresAt])
+
+  return (
+    <div className="flex items-center gap-1 text-[10px] font-mono font-bold tracking-wider">
+      {/* Hours */}
+      <div className="flex flex-col items-center gap-[2px]">
+        <div className="flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white w-6 h-6 rounded shadow-sm">
+          {timeLeft.h}
+        </div>
+        <span className="text-[5px] text-white/70 font-sans tracking-widest uppercase">HRS</span>
+      </div>
+      
+      <span className="text-white/50 text-[10px] animate-pulse -mt-3">:</span>
+      
+      {/* Minutes */}
+      <div className="flex flex-col items-center gap-[2px]">
+        <div className="flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white w-6 h-6 rounded shadow-sm">
+          {timeLeft.m}
+        </div>
+        <span className="text-[5px] text-white/70 font-sans tracking-widest uppercase">MIN</span>
+      </div>
+      
+      <span className="text-white/50 text-[10px] animate-pulse -mt-3">:</span>
+
+      {/* Seconds */}
+      <div className="flex flex-col items-center gap-[2px]">
+        <div className="flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-emerald-200 w-6 h-6 rounded shadow-sm">
+          {timeLeft.s}
+        </div>
+        <span className="text-[5px] text-white/70 font-sans tracking-widest uppercase">SEC</span>
+      </div>
+    </div>
+  )
+}
+
+function CouponBox({ code }: { code: string }) {
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    navigator.clipboard.writeText(code)
+    toast.success("Coupon copied to clipboard!", {
+      description: `Use code ${code} at checkout.`,
+    })
+  }
+
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={handleCopy}
+      className="flex items-center gap-2 border border-dashed border-white/40 hover:border-white/80 bg-white/5 hover:bg-white/10 transition-colors px-3 py-1 rounded-md text-[10px] font-bold tracking-widest"
+      title="Click to copy coupon"
+    >
+      {code}
+      <Copy size={10} />
+    </motion.button>
+  )
+}
 
 export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLoggedIn = false, categories: initialCategories = [], initialWishlistItems = [], initialCartItems = [] }: any) {
   const cartStore = useCartStore()
@@ -30,6 +120,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   const [hidden, setHidden] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [announcementIndex, setAnnouncementIndex] = useState(0)
+  const [showMobileTimer, setShowMobileTimer] = useState(false)
   const [announcementClosed, setAnnouncementClosed] = useState(true)
   const [mounted, setMounted] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
@@ -119,8 +210,15 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
     setAnnouncementClosed(false)
     document.body.classList.remove('announcement-closed')
     
+    let tick = 0;
     const timer = setInterval(() => {
-      setAnnouncementIndex((prev) => (prev + 1) % ANNOUNCEMENTS.length)
+      tick++;
+      if (tick % 2 !== 0) {
+        setShowMobileTimer(true)
+      } else {
+        setShowMobileTimer(false)
+        setAnnouncementIndex((prev) => (prev + 1) % ANNOUNCEMENTS.length)
+      }
     }, 4000)
     
     return () => clearInterval(timer)
@@ -281,26 +379,67 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           <AnimatePresence>
             {!announcementClosed && (
               <motion.div 
-                initial={{ height: 32, opacity: 1 }}
+                initial={{ height: 44, opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 className="w-full bg-[#008B8B] text-white flex items-center justify-center pointer-events-auto overflow-hidden relative"
               >
                 <AnimatePresence mode="wait">
-                  <motion.p
+                  <motion.div
                     key={announcementIndex}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -20, opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="text-[11px] font-bold tracking-[0.2em] uppercase absolute text-center w-full px-4"
+                    className="absolute w-full px-4 md:px-12 h-full flex items-center justify-center"
                   >
-                    {ANNOUNCEMENTS[announcementIndex]}
-                  </motion.p>
+                    {/* Desktop Layout */}
+                    <div className="hidden md:flex flex-row items-center justify-center gap-6 w-full">
+                      <span className="text-[11px] font-heading font-bold tracking-[0.2em] uppercase text-center shrink-0 mt-[2px]">
+                        {ANNOUNCEMENTS[announcementIndex].text}
+                      </span>
+                      {ANNOUNCEMENTS[announcementIndex].couponCode && ANNOUNCEMENTS[announcementIndex].expiresAt && (
+                        <div className="flex items-center gap-3 shrink-0">
+                          <CountdownTimer expiresAt={ANNOUNCEMENTS[announcementIndex].expiresAt} />
+                          <CouponBox code={ANNOUNCEMENTS[announcementIndex].couponCode} />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Mobile Layout */}
+                    <div className="flex md:hidden flex-row items-center justify-center w-full h-full relative">
+                      <AnimatePresence mode="wait">
+                        {(!ANNOUNCEMENTS[announcementIndex].couponCode || !showMobileTimer) ? (
+                          <motion.span
+                            key={`text-${announcementIndex}`}
+                            initial={{ y: 10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="text-[9px] font-heading font-bold tracking-[0.1em] uppercase text-center mt-[1px] absolute w-full px-6 leading-snug"
+                          >
+                            {ANNOUNCEMENTS[announcementIndex].text}
+                          </motion.span>
+                        ) : (
+                          <motion.div
+                            key={`timer-${announcementIndex}`}
+                            initial={{ y: 10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex items-center justify-center gap-2 scale-90 absolute w-full"
+                          >
+                            <CountdownTimer expiresAt={ANNOUNCEMENTS[announcementIndex].expiresAt} />
+                            <CouponBox code={ANNOUNCEMENTS[announcementIndex].couponCode} />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
                 </AnimatePresence>
                 <button 
                   onClick={closeAnnouncement}
-                  className="absolute right-4 text-white/70 hover:text-white transition-colors z-10"
+                  className="absolute right-2 md:right-4 text-white/70 hover:text-white transition-colors z-10 p-2 md:p-0"
                   aria-label="Close announcement"
                 >
                   <X size={14} strokeWidth={2} />
@@ -329,7 +468,8 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       <div 
         className="fixed inset-x-0 z-[45] transition-transform duration-300 ease-out"
         style={{ 
-          top: announcementClosed ? '53px' : '85px',
+          position: isScrolled || (announcementClosed && !isScrolled) ? 'fixed' : 'absolute',
+          top: announcementClosed ? '53px' : '97px',
           transform: hidden ? 'translateY(-100px)' : 'translateY(0)'
         }}
       >

@@ -24,7 +24,7 @@ export function TrustBadges() {
   };
 
   return (
-    <section className="bg-cream px-4 md:px-10 py-24 md:py-32 w-full relative z-30">
+    <section className="bg-cream px-4 md:px-10 pt-24 pb-32 md:pt-32 md:pb-48 lg:pb-64 w-full relative z-30">
       <div className="max-w-[88rem] mx-auto">
         {/* Header */}
         <motion.div 

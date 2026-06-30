@@ -169,7 +169,7 @@ export function SharedFaqSection({
               </p>
             )}
           </div>
-          <h2 className="font-heading text-[2.5rem] sm:text-[clamp(3rem,9vw,140px)] font-black text-ink text-left md:text-right uppercase leading-[0.85] tracking-tighter w-full break-words">
+          <h2 className="font-heading text-[2rem] sm:text-[clamp(3rem,9vw,140px)] font-black text-ink text-left md:text-right uppercase leading-[0.95] tracking-tighter w-full break-words">
             {title}
           </h2>
         </div>
