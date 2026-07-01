@@ -172,7 +172,7 @@ export function Hero() {
         </div>
 
         {/* --- Glass Product Slider (Bottom Right) --- */}
-        <div className={`absolute ${isCardClosed ? 'hidden sm:flex' : 'flex'} bottom-6 right-4 sm:bottom-4 sm:right-4 md:bottom-8 md:right-8 z-30 pointer-events-none origin-bottom-right scale-[0.52] sm:scale-[0.70] lg:scale-[0.80] xl:scale-100 [@media(max-height:850px)]:!scale-[0.80] [@media(max-height:750px)]:!scale-[0.70] transition-transform duration-300`}>
+        <div className={`absolute ${isCardClosed ? 'hidden sm:flex' : 'flex'} bottom-6 right-4 sm:bottom-4 sm:right-4 md:bottom-8 md:right-8 z-30 pointer-events-none origin-bottom-right scale-[0.60] sm:scale-[0.70] lg:scale-[0.80] xl:scale-100 sm:[@media(max-height:850px)]:!scale-[0.80] sm:[@media(max-height:750px)]:!scale-[0.70] transition-transform duration-300`}>
           
           <div className="relative w-[320px] h-[440px] pointer-events-auto">
             
@@ -261,7 +261,7 @@ export function Hero() {
                         <h3 className="text-2xl font-bold text-white font-heading tracking-tight drop-shadow-md">{HERO_PRODUCTS[currentSlide].name}</h3>
                         <span className="text-white/80 px-2 py-0.5 text-[10px] font-medium bg-white/10 rounded-full border border-white/5 shadow-sm">{HERO_PRODUCTS[currentSlide].dose}</span>
                       </div>
-                      <p className="text-white/60 text-xs font-light leading-relaxed line-clamp-2">
+                      <p className="hidden sm:block text-white/60 text-xs font-light leading-relaxed line-clamp-2">
                         {HERO_PRODUCTS[currentSlide].desc}
                       </p>
                     </div>
