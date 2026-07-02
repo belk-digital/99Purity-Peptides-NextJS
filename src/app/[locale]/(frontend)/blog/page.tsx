@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { StaggerChildren, staggerItemVariants } from '@/components/motion/StaggerChildren'
@@ -11,9 +11,12 @@ import { BlogPostCard } from '@/components/editorial/BlogPostCard'
 import { BlogBentoGrid } from '@/components/editorial/BlogBentoGrid'
 import { Button } from '@/components/ui/button'
 import { FluidButton } from '@/components/ui/fluid-button'
-import { BLOG_POSTS } from '@/data/blog-posts'
+import { useLocale } from 'next-intl'
+import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
 
-const CATEGORIES = ['View all', 'Growth research', 'Muscle studies', 'Recovery protocols', 'Metabolic research']
+const CATEGORIES_EN = ['View all', 'Growth research', 'Muscle studies', 'Recovery protocols', 'Metabolic research']
+const CATEGORIES_ES = ['Ver todo', 'Investigación de crecimiento', 'Estudios musculares', 'Protocolos de recuperación', 'Investigación metabólica']
 const MOCK_IMAGES = [
   "/99 Images/category-1.webp",
   "/99 Images/why-choose-us-1.webp",
@@ -24,7 +27,11 @@ const MOCK_IMAGES = [
 ]
 
 export default function BlogIndexPage() {
-  const [activeCategory, setActiveCategory] = useState('View all')
+  const locale = useLocale()
+  const BLOG_POSTS = locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
+  const CATEGORIES = locale === 'es' ? CATEGORIES_ES : CATEGORIES_EN
+  const ALL_LABEL = CATEGORIES[0]
+  const [activeCategory, setActiveCategory] = useState(ALL_LABEL)
   const [isScrolledToEnd, setIsScrolledToEnd] = useState(false)
   const [visibleCount, setVisibleCount] = useState(6)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -74,8 +81,8 @@ export default function BlogIndexPage() {
 
   const latestPost = sortedPosts[0]
 
-  const filteredPosts = activeCategory === 'View all' 
-    ? sortedPosts 
+  const filteredPosts = activeCategory === ALL_LABEL
+    ? sortedPosts
     : sortedPosts.filter(post => post.category === activeCategory)
 
   const displayedPosts = filteredPosts.slice(0, visibleCount)
@@ -304,7 +311,7 @@ export default function BlogIndexPage() {
             <p className="text-ink/60">We couldn't find any articles in the "{activeCategory}" category.</p>
             <button 
               onClick={() => {
-                setActiveCategory('View all')
+                setActiveCategory(ALL_LABEL)
                 setVisibleCount(6)
               }} 
               className="mt-8 px-6 py-2.5 rounded-full bg-ink text-white font-bold text-sm tracking-wide hover:bg-primary transition-colors"

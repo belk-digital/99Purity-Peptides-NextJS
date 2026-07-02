@@ -861,5 +861,332 @@ export const BLOG_POSTS_PART1: {
         </div>
       </>
     )
+  },
+  {
+    slug: 'retatrutide-peptide-research-guide',
+    title: 'Péptido Retatrutida: La Guía de Referencia de Investigación Completa 2026',
+    category: 'Investigación metabólica',
+    date: '5 de junio de 2026',
+    readTime: '12 min de lectura',
+    excerpt: 'Retatrutida explicada: mecanismo de triple agonista, datos de la Fase 3 TRIUMPH-1, estado ante la FDA y manejo en laboratorio. Una referencia neutral de uso exclusivo en investigación.',
+    imageSrc: '/99 Images/category-1.webp',
+    content: (
+      <>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introducción</h2>
+        <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
+          El péptido retatrutida, identificado en la literatura científica como LY3437943, es un agonista triple investigacional de receptores hormonales desarrollado por Eli Lilly and Company. Se ha convertido en uno de los compuestos más comentados en la investigación metabólica, en parte por su mecanismo y en parte porque los resultados de los ensayos de Fase 3 han llegado en rápida sucesión durante la primera mitad de 2026 [1][2]. Esta guía de referencia recopila lo que las fuentes primarias publicadas dicen actualmente sobre la retatrutida — su estructura, su mecanismo, los datos de los programas TRIUMPH y TRANSCEND-T2D, su estado regulatorio en EE. UU. y las consideraciones de laboratorio que se aplican cuando se suministra como estándar de referencia para uso exclusivo en investigación.
+        </p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <strong>Datos Rápidos: Retatrutida de un Vistazo</strong><br/>
+            <ul className="list-disc pl-6 mt-2">
+                <li>&lt;strong&gt;Definición:&lt;/strong&gt; La retatrutida (LY3437943) es un péptido investigacional que activa tres receptores metabólicos — GIP, GLP-1 y glucagón — mediante una sola molécula [1][3].</li>
+                <li>&lt;strong&gt;Mecanismo:&lt;/strong&gt; Es el primer compuesto en desarrollo clínico que actúa simultáneamente sobre los tres receptores, lo que los investigadores describen como triple agonismo [3][4].</li>
+                <li>&lt;strong&gt;Estado del ensayo (mayo de 2026):&lt;/strong&gt; Eli Lilly reportó resultados preliminares positivos del ensayo de obesidad de Fase 3 TRIUMPH-1 el 21 de mayo de 2026, con una reducción media de peso del 28.3% a las 80 semanas en el brazo de 12 mg [1][2].</li>
+                <li>&lt;strong&gt;Estado regulatorio:&lt;/strong&gt; La retatrutida no está aprobada por la FDA, la EMA ni ninguna otra autoridad reguladora, y la FDA ha declarado explícitamente que no puede utilizarse en compounding bajo la ley federal [5][6].</li>
+            </ul>
+        </blockquote>
+        <p className="mb-4">El artículo está estructurado para que el lector pase de una definición base al mecanismo, luego a los datos de los ensayos, después a una comparación directa con tirzepatida y semaglutida, y finalmente a las preguntas regulatorias y de manejo en laboratorio que los investigadores hacen con más frecuencia. Cada cifra clínica citada a continuación proviene de una fuente primaria listada al final. Nada de esto constituye una recomendación terapéutica, y la retatrutida tratada en esta guía se refiere exclusivamente a material suministrado como estándar de referencia para investigación, no como medicamento.</p>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Qué es la Retatrutida?</h2>
+        <p className="mb-4">La retatrutida es un péptido sintético de 39 aminoácidos, con varios residuos no naturales y una conjugación de ácido graso que extiende su vida media lo suficiente como para permitir la dosificación subcutánea semanal en ensayos clínicos [3][4]. La molécula se comprende mejor no solo por su secuencia, sino por su conjunto de receptores objetivo: se une y activa el receptor del polipéptido insulinotrópico dependiente de glucosa, el receptor del péptido similar al glucagón tipo 1, y el receptor de glucagón [3]. Cada uno de estos receptores regula una palanca distinta del metabolismo energético humano, y combinarlos en una sola molécula es el fundamento mecanístico que distingue a la retatrutida de los péptidos incretínicos de generaciones anteriores [3][4].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">El Apodo "Reta" Explicado</h3>
+        <p className="mb-4">En datos de foros y motores de búsqueda, "reta" es la abreviatura que investigadores y público en general han adoptado para la retatrutida, de la misma forma en que "tirz" surgió para la tirzepatida y "sema" para la semaglutida [7]. El apodo aparece en datos de búsquedas en ascenso y en publicaciones de comunidades; para mayor claridad, esta guía usa el nombre completo "retatrutida" excepto cuando se cita cómo se formula una consulta.</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Estructura Química y Secuencia de Aminoácidos</h3>
+        <p className="mb-4">La secuencia publicada presenta varias modificaciones respecto al GLP-1 nativo: sustituciones de ácido 2-aminoisobutírico para resistir la escisión enzimática, una Î±-metil-leucina para alterar la conformación, un C-terminal serinamida, y una unión de ácido graso que favorece la unión a albúmina para prolongar la duración de acción [3][4]. La secuencia completa del péptido y la identidad química de cada residuo modificado están documentadas en la literatura técnica públicamente disponible, incluyendo una entrada detallada del compuesto en bases de datos de referencia publicadas [3].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Desarrollo por Eli Lilly (LY3437943)</h3>
+        <p className="mb-4">La retatrutida se designa internamente como LY3437943 dentro del pipeline de Eli Lilly [1][3]. Se originó como parte del programa de Lilly para extender el concepto de doble agonista demostrado por la tirzepatida hacia una clase de triple agonista, y es la primera molécula de este tipo en avanzar a Fase 3 en cualquier indicación [1][3][4].</p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; La retatrutida es el agonista triple de receptores hormonales investigacional de Eli Lilly, designado LY3437943. Es un péptido de 39 aminoácidos modificado estructuralmente, diseñado para administración subcutánea semanal en ensayos clínicos.</p>
+        </blockquote>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Mecanismo de Acción — Por Qué la Retatrutida se Llama "Triple Agonista"</h2>
+        <p className="mb-4">Los investigadores clasifican a la retatrutida como triple agonista porque la misma molécula activa tres receptores acoplados a proteína G distintos que regulan el metabolismo humano [3][4]. Los efectos fisiológicos observados en los ensayos reflejan la señalización combinada de las tres vías, y no de una sola de forma aislada [3][4][8].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Actividad del Receptor GLP-1</h3>
+        <p className="mb-4">El receptor del péptido similar al glucagón tipo 1 regula la secreción pancreática de insulina, retarda el vaciamiento gástrico y reduce el apetito a través de vías centrales [3]. El agonismo del receptor GLP-1 es el mecanismo compartido por la semaglutida y el brazo GLP-1 de la tirzepatida, y ha sido la clase objetivo dominante en la investigación de péptidos metabólicos durante más de una década [4].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Actividad del Receptor GIP</h3>
+        <p className="mb-4">El receptor del polipéptido insulinotrópico dependiente de glucosa influye en la liberación de insulina en respuesta a la ingesta de nutrientes y modula el manejo del sustrato energético en el tejido adiposo [3]. La tirzepatida fue el primer agonista dual GLP-1/GIP en demostrar que agregar actividad GIP al GLP-1 produce efectos metabólicos aditivos en ensayos publicados [4].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Actividad del Receptor de Glucagón</h3>
+        <p className="mb-4">La activación del receptor de glucagón, cuando se equilibra con la actividad de GLP-1 y GIP en la misma molécula, es hipotetizada por los investigadores como un factor que aumenta el gasto energético e influye en el manejo hepático de lípidos [3]. El riesgo del agonismo del receptor de glucagón es que una activación excesiva puede elevar la glucosa en sangre; en la retatrutida, las tres actividades receptoras están calibradas para mantener intacto el control glucémico en los datos publicados de los ensayos, mientras se añade la contribución al gasto energético [3][4].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Cómo el Triple Agonismo Difiere del Dual (Tirzepatida) y del Simple (Semaglutida)</h3>
+        <p className="mb-4">Una forma práctica de entender la diferencia mecanística es observar la cobertura de receptores y la pérdida de peso reportada en ensayos publicados. El triple agonismo no es simplemente "más fuerte" — activa una tercera palanca hormonal que las otras clases no tocan [3][4][9].</p>
+        <p className="mb-4">#### Tabla comparativa de unión a receptores</p>
+        <div className="overflow-x-auto my-8">
+            <table className="min-w-full border-collapse border border-ink/20">
+                <thead>
+                    <tr className="bg-cream-warm">
+                        <th className="border border-ink/20 p-3 text-left font-bold">Compuesto</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">GLP-1</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">GIP</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">Glucagón</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">Clase</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">Pérdida de peso máxima reportada en Fase 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className="border border-ink/20 p-3">**Semaglutida**</td>
+                        <td className="border border-ink/20 p-3">✓</td>
+                        <td className="border border-ink/20 p-3">—</td>
+                        <td className="border border-ink/20 p-3">—</td>
+                        <td className="border border-ink/20 p-3">Agonista simple</td>
+                        <td className="border border-ink/20 p-3">14.9% (STEP-1, 68 semanas) [9]</td>
+                    </tr>
+                    <tr>
+                        <td className="border border-ink/20 p-3">**Tirzepatida**</td>
+                        <td className="border border-ink/20 p-3">✓</td>
+                        <td className="border border-ink/20 p-3">✓</td>
+                        <td className="border border-ink/20 p-3">—</td>
+                        <td className="border border-ink/20 p-3">Agonista dual</td>
+                        <td className="border border-ink/20 p-3">22.5% (SURMOUNT-1, 72 semanas) [9]</td>
+                    </tr>
+                    <tr>
+                        <td className="border border-ink/20 p-3">**Retatrutida**</td>
+                        <td className="border border-ink/20 p-3">✓</td>
+                        <td className="border border-ink/20 p-3">✓</td>
+                        <td className="border border-ink/20 p-3">✓</td>
+                        <td className="border border-ink/20 p-3">Agonista triple</td>
+                        <td className="border border-ink/20 p-3">28.3% a las 80 semanas; hasta 30.3% a las 104 semanas (TRIUMPH-1) [1][2]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; La retatrutida activa los receptores GLP-1, GIP y glucagón en una sola molécula, distinguiéndose de agonistas simples como la semaglutida y agonistas duales como la tirzepatida. En los datos publicados de Fase 3, el mecanismo de triple agonista se asocia con las mayores reducciones medias de peso de cualquier compuesto de la clase GLP-1 reportado hasta la fecha.</p>
+        </blockquote>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Estado Actual de los Ensayos Clínicos (Actualizado a Mayo de 2026)</h2>
+        <p className="mb-4">Los programas TRIUMPH y TRANSCEND-T2D son los resultados paralelos de Fase 3 de Eli Lilly para la retatrutida. A mayo de 2026, se han reportado tres lecturas fundamentales, con resultados adicionales esperados durante el resto de 2026 [1][2][8][10].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Ensayo de Obesidad de Fase 3 TRIUMPH-1</h3>
+        <p className="mb-4">TRIUMPH-1 fue un ensayo aleatorizado, doble ciego, controlado con placebo, en 2,339 adultos con obesidad o sobrepeso y al menos una comorbilidad relacionada con el peso, pero sin diabetes [1][2]. Los participantes recibieron retatrutida subcutánea semanal a 4 mg, 9 mg o 12 mg, o placebo, durante 80 semanas [1]. El anuncio de Eli Lilly del 21 de mayo de 2026 reportó una reducción media de peso corporal del 19.0% con 4 mg, 25.9% con 9 mg y 28.3% con 12 mg, comparado con 2.2% con placebo [1][2]. En una extensión ciega entre participantes con IMC basal ≥35, la pérdida de peso continuó hasta las 104 semanas, alcanzando una media de 30.3% [1][2]. Los investigadores reportaron que el 45.3% de los participantes en el brazo de 12 mg lograron una reducción de peso corporal ≥30% durante el período del ensayo de 80 semanas [1][2].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">TRIUMPH-4: Obesidad y Osteoartritis de Rodilla</h3>
+        <p className="mb-4">TRIUMPH-4 evaluó la retatrutida en participantes con obesidad y osteoartritis de rodilla. Lilly reportó que el brazo de 12 mg produjo una reducción media de peso del 28.7% a las 68 semanas y una reducción del 75.8% en las puntuaciones de dolor WOMAC en los participantes con la dosis más alta [10]. Las tasas de interrupción por eventos adversos fueron del 12.2% con 9 mg y 18.2% con 12 mg, comparado con 4.0% con placebo, con tasas menores entre participantes con IMC basal más alto [10].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Ensayo de Diabetes TRANSCEND-T2D-1</h3>
+        <p className="mb-4">TRANSCEND-T2D-1 fue la primera lectura de Fase 3 en diabetes tipo 2, reportada en marzo de 2026 [8]. El ensayo evaluó la retatrutida como complemento de dieta y ejercicio en adultos con diabetes tipo 2 y control glucémico inadecuado. Los investigadores reportaron reducciones de A1C de 1.7% a 2.0% entre dosis a las 40 semanas, junto con una reducción media de peso del 16.8% en el brazo de 12 mg [8]. El comunicado de prensa señaló que no se observó una meseta en la pérdida de peso hasta las 40 semanas [8].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Otras Indicaciones en Estudio</h3>
+        <p className="mb-4">Hay ensayos de Fase 3 en curso para la retatrutida en apnea obstructiva del sueño, enfermedad hepática esteatósica asociada a disfunción metabólica, enfermedad renal crónica en pacientes con diabetes tipo 2, y desenlaces cardiovasculares; el ensayo de desenlaces cardiovasculares (TRIUMPH-CVOT) es el más grande de estos [11][12].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Eventos Adversos Reportados en los Datos de los Ensayos</h3>
+        <p className="mb-4">A lo largo del programa de ensayos de retatrutida, los eventos adversos gastrointestinales — náuseas, vómitos y diarrea — fueron los más frecuentemente reportados, consistente con la clase más amplia de agonistas del receptor GLP-1 [3][4]. En TRIUMPH-1, las interrupciones de tratamiento por eventos adversos ocurrieron en 4.1%, 6.9% y 11.3% en los brazos de 4 mg, 9 mg y 12 mg respectivamente, comparado con 4.9% con placebo [2]. En TRIUMPH-4 las tasas de interrupción fueron más altas, lo cual los investigadores señalaron que se correlacionaba con el IMC basal y con interrupciones por pérdida de peso percibida como excesiva [10]. Lilly indicó que se presentarían datos de seguridad detallados en las Sesiones Científicas de la Asociación Americana de Diabetes en junio de 2026 [1][2].</p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; Los resultados de Fase 3 reportados hasta mayo de 2026 muestran que la retatrutida produjo una pérdida de peso media de hasta 28.3% a las 80 semanas y 30.3% a las 104 semanas en poblaciones no diabéticas, siendo los eventos adversos gastrointestinales la señal de seguridad más común reportada. Se esperan lecturas adicionales de Fase 3 en diabetes, enfermedad cardiovascular y varias otras indicaciones durante 2026.</p>
+        </blockquote>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Retatrutida vs Tirzepatida vs Semaglutida</h2>
+        <p className="mb-4">Tres compuestos dominan la conversación actual de investigación de la clase GLP-1: semaglutida (agonista simple), tirzepatida (agonista dual) y retatrutida (agonista triple) [3][4][9]. Se comparan mejor por mecanismo, por eficacia publicada en ensayos, y por tolerabilidad reportada — y en las tres dimensiones las diferencias siguen el número de receptores activados [3][4][9].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Comparación de Mecanismo</h3>
+        <p className="mb-4">La semaglutida activa únicamente el receptor GLP-1 [4]. La tirzepatida añade activación del receptor GIP, produciendo un mecanismo dual [4]. La retatrutida añade activación del receptor de glucagón sobre el GLP-1 y el GIP, produciendo un mecanismo triple [3][4]. Cada receptor adicional contribuye con un efecto metabólico distinto: el GIP modula la secreción de insulina y el manejo adiposo, el glucagón contribuye al gasto energético [3][4].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Eficacia Reportada en los Datos Publicados de los Ensayos</h3>
+        <p className="mb-4">A través de los ensayos fundamentales, la reducción media de peso ha escalado con la cobertura de receptores en los resultados publicados [1][9]. La semaglutida produjo 14.9% de pérdida media de peso en STEP-1 a las 68 semanas; la tirzepatida alcanzó 22.5% en SURMOUNT-1 a las 72 semanas; la retatrutida alcanzó 28.3% en TRIUMPH-1 a las 80 semanas, con datos de extensión alcanzando 30.3% a las 104 semanas [1][2][9].</p>
+        <p className="mb-4">#### Tabla resumen comparativa</p>
+        <div className="overflow-x-auto my-8">
+            <table className="min-w-full border-collapse border border-ink/20">
+                <thead>
+                    <tr className="bg-cream-warm">
+                        <th className="border border-ink/20 p-3 text-left font-bold">Atributo</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">Semaglutida</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">Tirzepatida</th>
+                        <th className="border border-ink/20 p-3 text-left font-bold">Retatrutida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className="border border-ink/20 p-3">Mecanismo</td>
+                        <td className="border border-ink/20 p-3">Agonista GLP-1</td>
+                        <td className="border border-ink/20 p-3">Agonista GLP-1 + GIP</td>
+                        <td className="border border-ink/20 p-3">Agonista GLP-1 + GIP + glucagón</td>
+                    </tr>
+                    <tr>
+                        <td className="border border-ink/20 p-3">Ensayo pivotal de pérdida de peso</td>
+                        <td className="border border-ink/20 p-3">STEP-1</td>
+                        <td className="border border-ink/20 p-3">SURMOUNT-1</td>
+                        <td className="border border-ink/20 p-3">TRIUMPH-1</td>
+                    </tr>
+                    <tr>
+                        <td className="border border-ink/20 p-3">Duración del ensayo</td>
+                        <td className="border border-ink/20 p-3">68 semanas</td>
+                        <td className="border border-ink/20 p-3">72 semanas</td>
+                        <td className="border border-ink/20 p-3">80 semanas (extensión a 104 semanas)</td>
+                    </tr>
+                    <tr>
+                        <td className="border border-ink/20 p-3">Reducción media de peso (dosis alta)</td>
+                        <td className="border border-ink/20 p-3">14.9% [9]</td>
+                        <td className="border border-ink/20 p-3">22.5% [9]</td>
+                        <td className="border border-ink/20 p-3">28.3% (80 sem.) / 30.3% (104 sem.) [1][2]</td>
+                    </tr>
+                    <tr>
+                        <td className="border border-ink/20 p-3">Dosificación en ensayos</td>
+                        <td className="border border-ink/20 p-3">Semanal</td>
+                        <td className="border border-ink/20 p-3">Semanal</td>
+                        <td className="border border-ink/20 p-3">Semanal</td>
+                    </tr>
+                    <tr>
+                        <td className="border border-ink/20 p-3">Estado ante la FDA (mayo 2026)</td>
+                        <td className="border border-ink/20 p-3">Aprobado</td>
+                        <td className="border border-ink/20 p-3">Aprobado</td>
+                        <td className="border border-ink/20 p-3">Investigacional [5][6]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Perfil de Efectos Secundarios en los Ensayos</h3>
+        <p className="mb-4">Los efectos secundarios reportados en los tres compuestos están dominados por eventos gastrointestinales [3][4][10]. Los datos publicados de TRIUMPH-1 y TRIUMPH-4 sugieren que las tasas de interrupción por eventos adversos aumentan con la dosis, y que el brazo de 12 mg de retatrutida ha mostrado las cifras de interrupción más altas de los tres compuestos en sus respectivas dosis máximas en ensayos de Fase 3 publicados [2][10]. Los investigadores han sugerido que esta tasa se explica en parte por pacientes que alcanzan umbrales de pérdida de peso en los que ellos mismos eligieron interrumpir el tratamiento [10].</p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; A través de los ensayos pivotales de Fase 3, la pérdida media de peso ha escalado con el número de receptores que un compuesto activa: semaglu</p>
+        </blockquote>
+        <p className="mb-4">tida (agonista simple) con 14.9%, tirzepatida (agonista dual) con 22.5%, y retatrutida (agonista triple) con 28.3% durante 80 semanas. Los eventos gastrointestinales dominan el perfil de tolerabilidad reportado en los tres compuestos.</p>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Estado Regulatorio y Legal</h2>
+        <p className="mb-4">La retatrutida no está aprobada para ninguna indicación por ninguna autoridad reguladora en el mundo a partir de mayo de 2026 [5][6][13]. El material descrito comercialmente como "retatrutida" es, por tanto, suministrado (a) a participantes inscritos en un ensayo clínico de Eli Lilly, (b) como estándar de referencia química para uso exclusivo en investigación de laboratorio, o (c) vendido ilícitamente, lo cual ha sido el foco de la aplicación normativa de la FDA [5][6][13][14].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Cronología de Aprobación de la FDA (a Mayo de 2026)</h3>
+        <p className="mb-4">La lectura de TRIUMPH-1 reportada el 21 de mayo de 2026 fue el primer resultado pivotal de Fase 3 en pérdida de peso para la retatrutida [1][2]. Lilly ha señalado que presentará resultados detallados en las Sesiones Científicas de la Asociación Americana de Diabetes en junio de 2026, con múltiples lecturas adicionales de Fase 3 (TRIUMPH-2, TRIUMPH-3, y el ensayo de desenlaces cardiovasculares) esperadas más adelante en 2026 [1][10]. Las expectativas de analistas sobre una solicitud de registro (NDA) de Lilly han apuntado a un marco temporal del cuarto trimestre de 2026 como muy pronto, sin anticiparse aprobación en EE. UU. antes de 2027 [13]. Hasta entonces, la retatrutida sigue siendo un fármaco investigacional.</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Por Qué la Retatrutida se Vende como "Uso Exclusivo en Investigación"</h3>
+        <p className="mb-4">Un estándar de referencia vendido para investigación de laboratorio no es un medicamento. Su propósito, en un flujo de trabajo de investigación adecuado, es permitir que químicos analíticos, organizaciones de investigación por contrato y laboratorios académicos caractericen el compuesto — mediante HPLC, espectrometría de masas, estudios de estabilidad — y lo usen como comparador en sus propios ensayos. La designación "uso exclusivo en investigación" es una categoría regulatoria, no una frase de marketing, y el material vendido bajo esa designación no está destinado, ni es legal, para administración humana o animal [6][14].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Cartas de Advertencia de la FDA a Proveedores de Péptidos (Sept. 2025 y Marzo 2026)</h3>
+        <p className="mb-4">En septiembre de 2025, la FDA emitió más de 50 cartas de advertencia a empresas de EE. UU. e internacionales que comercializaban productos GLP-1 compuestos [5][14]. Varias de esas cartas nombraron específicamente a la retatrutida. La postura de la agencia, reiterada en su guía pública, es que "la retatrutida y la cagrilintida no pueden utilizarse en compounding bajo la ley federal" porque son compuestos investigacionales no elegibles bajo las secciones 503A o 503B de la Ley Federal de Alimentos, Medicamentos y Cosméticos [6][14][15]. Una ronda de seguimiento de cartas de advertencia en marzo de 2026 se dirigió a plataformas de telesalud que comercializaban productos GLP-1 compuestos [16]. La FDA ha declarado explícitamente que una etiqueta de "uso exclusivo en investigación" no exime a un producto de los requisitos de la FDA cuando el producto se comercializa o se destina a uso humano [14][15].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Consideraciones Legales para Investigadores</h3>
+        <p className="mb-4">Para los laboratorios que adquieren retatrutida como estándar de referencia química, las consideraciones de cumplimiento relevantes están bien definidas: el material debe estar etiquetado y vendido estrictamente para investigación de laboratorio, no debe llevar instrucciones para administración humana, debe estar respaldado por un Certificado de Análisis, y debe almacenarse y manejarse bajo protocolos estándar de laboratorio de investigación. La exposición legal creada por las acciones de aplicación de septiembre de 2025 y marzo de 2026 se concentra donde los proveedores difuminaron la línea entre el suministro para investigación y el marketing dirigido al consumidor [5][14][15][16].</p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; La retatrutida no está aprobada por la FDA y no puede utilizarse legalmente en compounding bajo la ley federal de EE. UU. Las acciones de aplicación de la FDA de septiembre de 2025 y marzo de 2026 establecen que el etiquetado de "uso exclusivo en investigación" no exime a un producto de los requisitos federales cuando de hecho se comercializa para uso humano.</p>
+        </blockquote>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Manejo de la Retatrutida en un Entorno de Investigación</h2>
+        <p className="mb-4">Esta sección describe el manejo en laboratorio del material de referencia de retatrutida tal como está documentado en protocolos publicados de investigación de péptidos. No es, ni pretende ser, una instrucción para administración humana o animal.</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Reconstitución con Agua Bacteriostática</h3>
+        <p className="mb-4">Los estándares de referencia de péptidos liofilizados típicamente se reconstituyen con agua bacteriostática para trabajo analítico de laboratorio [17]. El agua bacteriostática contiene 0.9% de alcohol bencílico como conservante, lo que suprime el crecimiento microbiano en viales de investigación de múltiples extracciones durante la vida útil del estándar de referencia [17]. El agua estéril es el diluyente alternativo cuando el alcohol bencílico es incompatible con el ensayo posterior. La reconstitución se realiza dirigiendo el diluyente por la pared interna del vial en lugar de directamente sobre el polvo de péptido, seguido de un suave movimiento circular para disolver [17]. El material reconstituido debe caracterizarse analíticamente antes de usarse como comparador en cualquier trabajo posterior.</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Almacenamiento y Estabilidad</h3>
+        <p className="mb-4">El estándar de referencia de retatrutida liofilizado se almacena típicamente desecado a –20 °C, protegido de la luz, hasta su uso [17]. Las soluciones reconstituidas típicamente se refrigeran a 2–8 °C y se usan dentro de la ventana de estabilidad indicada en el Certificado de Análisis de ese lote. La estabilidad de los péptidos reconstituidos de la clase GLP-1 es específica del producto y del lote; consulte los datos de estabilidad del proveedor para el lote específico en mano [17].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Concentraciones Comunes Usadas en Investigación Publicada</h3>
+        <p className="mb-4">Las concentraciones usadas en la investigación preclínica y analítica publicada de retatrutida varían según la aplicación — la caracterización cromatográfica, los ensayos de unión a receptores y los estudios farmacocinéticos requieren cada uno diferentes concentraciones de trabajo. El programa de ensayos de Fase 3 probó dosis subcutáneas semanales de 4 mg, 9 mg y 12 mg en participantes humanos [1][2], y el trabajo analítico típicamente se referencia a esas concentraciones clínicas aunque los protocolos de laboratorio usan diluciones de trabajo mucho más bajas para análisis in vitro.</p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; El manejo en laboratorio del material de referencia de retatrutida sigue la práctica estándar de química de péptidos: reconstitución con agua bacteriostática, almacenamiento liofilizado a –20 °C, y caracterización analítica frente a un Certificado de Análisis antes de su uso. Nada de lo descrito en el manejo constituye una instrucción para administración humana.</p>
+        </blockquote>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Adquisición de Retatrutida de Grado Investigación</h2>
+        <p className="mb-4">El panorama de suministro de investigación de retatrutida en 2026 está moldeado tanto por la demanda del compuesto como por la postura de aplicación normativa de la FDA [5][14][15][16].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Qué Significa Realmente "Uso Exclusivo en Investigación"</h3>
+        <p className="mb-4">"Uso exclusivo en investigación" es una designación regulatoria y de etiquetado, no una descripción de marketing. Los estándares de referencia suministrados bajo esa designación están destinados a trabajo analítico, uso como comparador en ensayos de investigación, y estudios de estabilidad o impurezas. No son productos terapéuticos, no llevan instrucciones de dosificación, y no son legales para administración a humanos o animales [14][15].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Verificación de Pureza: CoA, HPLC, Espectrometría de Masas</h3>
+        <p className="mb-4">Un Certificado de Análisis (CoA) es la documentación específica del lote del proveedor sobre la identidad, pureza y perfil de impurezas de un estándar de referencia. Para péptidos, los métodos analíticos estándar son la cromatografía líquida de alta resolución en fase reversa para cuantificar la pureza (típicamente reportada como porcentaje de área) y la espectrometría de masas para confirmar la identidad por masa molecular. Un CoA completo para un péptido de investigación típicamente incluye: número de lote asignado, secuencia y peso molecular del péptido, resultado de pureza por HPLC, confirmación por espectrometría de masas, contenido de agua, contenido de péptido por método cuantitativo, e instrucciones de almacenamiento y manejo.</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Señales de Alerta al Evaluar un Proveedor de Péptidos</h3>
+        <p className="mb-4">Los proveedores cuyo etiquetado o lenguaje del sitio web implique uso humano, sugiera efectos terapéuticos, o comercialice el compuesto por comparación con medicamentos aprobados por la FDA fueron el foco de las acciones de aplicación de la FDA en 2025 y 2026 [5][14][15][16]. Otros indicadores a considerar incluyen la ausencia de un CoA específico del lote, la ausencia de verificación analítica de terceros, la ausencia de una cadena documentada de envío y almacenamiento en EE. UU., y precios significativamente por debajo del costo analítico mínimo de producir un péptido de grado investigación.</p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; Adquirir retatrutida de grado investigación razonablemente significa comprar material etiquetado y vendido estrictamente como estándar de referencia, acompañado de un Certificado de Análisis específico del lote, con verificación documentada por HPLC y espectrometría de masas. Los proveedores cuyo marketing implica uso humano conllevan tanto riesgo legal como de calidad.</p>
+        </blockquote>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">El Futuro de la Investigación de Péptidos Triple Agonistas</h2>
+        <p className="mb-4">La trayectoria de la investigación de péptidos metabólicos, vista a través de la literatura publicada, apunta hacia una cobertura de receptores más amplia en moléculas individuales y hacia protocolos de combinación usando mecanismos complementarios [4][11].</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Compuestos de Combinación (CagriSema y otros)</h3>
+        <p className="mb-4">El programa CagriSema (cagrilintida combinada con semaglutida) representa el enfoque de formulación combinada para ampliar el mecanismo: emparejar dos compuestos con mecanismos complementarios en lugar de construir una molécula más grande [4]. Los investigadores han señalado que los protocolos de combinación ofrecen una flexibilidad de titulación de dosis que las moléculas individuales no tienen.</p>
+        <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Compuestos de Cuatro Receptores en Desarrollo Temprano</h3>
+        <p className="mb-4">La investigación en etapa más temprana sobre agonistas de cuatro receptores — añadiendo actividad del receptor de amilina a la actividad de GLP-1, GIP y glucagón — ha aparecido en la literatura preclínica [4]. Ninguno ha entrado aún en Fase 3, y el triple agonismo sigue siendo la clase más observada en la publicación clínica actual.</p>
+        <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
+            <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; La retatrutida se sitúa en la vanguardia de una trayectoria de investigación hacia una mayor cobertura de receptores en péptidos metabólicos. Formulaciones combinadas como CagriSema y compuestos de cuatro receptores en etapa temprana ilustran las direcciones hacia donde se mueve el campo a continuación.</p>
+        </blockquote>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Puntos Clave</h2>
+        <ul className="list-disc pl-6 space-y-4 my-6">
+            <li>La retatrutida (LY3437943) es un agonista triple investigacional de receptores hormonales desarrollado por Eli Lilly, que actúa en los receptores GIP, GLP-1 y glucagón [1][3].</li>
+            <li>En el ensayo de Fase 3 TRIUMPH-1 reportado el 21 de mayo de 2026, el brazo de 12 mg produjo una reducción media de peso corporal del 28.3% a las 80 semanas, con datos de extensión alcanzando 30.3% a las 104 semanas [1][2].</li>
+            <li>Los resultados publicados de Fase 3 en pérdida de peso para la retatrutida superan los reportados para la tirzepatida (22.5% en SURMOUNT-1) y la semaglutida (14.9% en STEP-1) en puntos temporales comparables [1][2][9].</li>
+            <li>La retatrutida no está aprobada por la FDA y, bajo la guía de la FDA, no puede utilizarse legalmente en compounding [5][6][14][15].</li>
+            <li>La FDA emitió más de 50 cartas de advertencia a proveedores de GLP-1 en septiembre de 2025, varias de las cuales nombraron explícitamente a la retatrutida; una ronda de seguimiento en marzo de 2026 se dirigió a plataformas de telesalud [5][14][16].</li>
+            <li>Una etiqueta de "uso exclusivo en investigación" no exime a un producto de los requisitos de la FDA cuando el producto de hecho se comercializa para uso humano [14][15].</li>
+            <li>Los estándares de referencia de retatrutida de grado investigación se manejan mediante protocolos estándar de química de péptidos: reconstitución con agua bacteriostática, almacenamiento liofilizado a –20 °C, y verificación analítica respaldada por CoA.</li>
+        </ul>
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Preguntas Frecuentes</h2>
+        <div className="space-y-6">
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué es la retatrutida?</h3>
+                <p className="text-ink/80 text-sm">La retatrutida es un péptido investigacional desarrollado por Eli Lilly bajo el código LY3437943. Es una molécula sintética de 39 aminoácidos que activa tres receptores metabólicos — GIP, GLP-1 y glucagón — mediante un solo compuesto. No ha sido aprobada por ninguna autoridad reguladora y está siendo evaluada en ensayos clínicos de Fase 3 [1][3]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué significa "reta" en los foros de péptidos?</h3>
+                <p className="text-ink/80 text-sm">"Reta" es la abreviatura coloquial para la retatrutida ampliamente usada en foros, redes sociales y consultas de búsqueda. El mismo patrón de denominación aparece para la tirzepatida ("tirz") y la semaglutida ("sema"). Se refiere al mismo compuesto investigacional tratado en la literatura clínica publicada. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cuál es la estructura química de la retatrutida?</h3>
+                <p className="text-ink/80 text-sm">La retatrutida es un péptido de 39 aminoácidos que contiene varios residuos no naturales — incluyendo ácido 2-aminoisobutírico y una Î±-metil-leucina — junto con una modificación C-terminal serinamida y una unión de ácido graso que favorece un intervalo de dosificación semanal en los ensayos. La secuencia completa está documentada en referencias técnicas publicadas [3]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Quién desarrolló la retatrutida?</h3>
+                <p className="text-ink/80 text-sm">La retatrutida fue desarrollada por Eli Lilly and Company, que mantiene la designación investigacional LY3437943 para la molécula. Eli Lilly actualmente ejecuta el programa de Fase 3 TRIUMPH para la retatrutida en obesidad y el programa de Fase 3 TRANSCEND-T2D en diabetes tipo 2 [1][3][8]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cómo funciona la retatrutida?</h3>
+                <p className="text-ink/80 text-sm">La retatrutida se une a tres receptores que regulan el metabolismo energético humano: el receptor GLP-1 (apetito, secreción de insulina, vaciamiento gástrico), el receptor GIP (respuesta a la insulina, manejo adiposo), y el receptor de glucagón (gasto energético, manejo hepático de lípidos). La activación triple es el mecanismo que la distingue de compuestos anteriores de la clase GLP-1 [3][4]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué es un péptido triple agonista?</h3>
+                <p className="text-ink/80 text-sm">Un péptido triple agonista es una sola molécula que activa tres receptores diferentes al mismo tiempo. La retatrutida es el primer agonista triple de receptores hormonales (GIP, GLP-1, glucagón) en llegar a ensayos clínicos de Fase 3. Las clases anteriores activaban un receptor (semaglutida) o dos receptores (tirzepatida) [3][4]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿En qué se diferencia la retatrutida de la tirzepatida?</h3>
+                <p className="text-ink/80 text-sm">La tirzepatida es un agonista dual que actúa sobre los receptores GLP-1 y GIP. La retatrutida añade activación del receptor de glucagón, convirtiéndola en agonista triple. En los ensayos de Fase 3 publicados, la pérdida media de peso reportada para la retatrutida a las 80 semanas (28.3%) superó la media reportada para la tirzepatida en SURMOUNT-1 a las 72 semanas (22.5%) [1][2][9]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿En qué se diferencia la retatrutida de la semaglutida (Ozempic / Wegovy)?</h3>
+                <p className="text-ink/80 text-sm">La semaglutida es un agonista de un solo receptor que actúa únicamente sobre GLP-1. La retatrutida es un agonista triple que actúa sobre los receptores GLP-1, GIP y glucagón. La reducción media de peso publicada en Fase 3 para la retatrutida (28.3%) es casi el doble de la cifra reportada para la semaglutida en STEP-1 (14.9%) en duraciones de ensayo comparables [1][2][9]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Está la retatrutida aprobada por la FDA?</h3>
+                <p className="text-ink/80 text-sm">No. A partir de mayo de 2026, la retatrutida no ha sido aprobada por la FDA para ninguna indicación. Es un fármaco investigacional en ensayos clínicos activos de Fase 3. La FDA ha declarado explícitamente que la retatrutida no puede utilizarse en compounding bajo la ley federal de EE. UU. [5][6][14][15]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cuándo se espera que la retatrutida sea aprobada por la FDA?</h3>
+                <p className="text-ink/80 text-sm">La lectura de TRIUMPH-1 del 21 de mayo de 2026 fue el primer resultado pivotal de Fase 3 en pérdida de peso para la retatrutida. Se esperan lecturas adicionales de Fase 3 durante 2026, con comentarios de analistas que apuntan a una solicitud de registro (NDA) de Eli Lilly a finales de 2026 como muy pronto, y una aprobación en EE. UU. no anticipada antes de 2027 [1][13]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cuáles fueron los resultados del ensayo de Fase 3 TRIUMPH-1?</h3>
+                <p className="text-ink/80 text-sm">TRIUMPH-1 reportó una reducción media de peso corporal del 19.0%, 25.9% y 28.3% en los brazos de 4 mg, 9 mg y 12 mg respectivamente, comparado con 2.2% con placebo durante 80 semanas. En una extensión ciega entre participantes con IMC basal ≥35, la pérdida media de peso alcanzó 30.3% a las 104 semanas [1][2]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Para qué otras condiciones se está estudiando la retatrutida además de la obesidad?</h3>
+                <p className="text-ink/80 text-sm">La retatrutida está en ensayos de Fase 3 para diabetes tipo 2 (programa TRANSCEND-T2D), apnea obstructiva del sueño, enfermedad hepática esteatósica asociada a disfunción metabólica, enfermedad renal crónica en pacientes con diabetes tipo 2, osteoartritis de rodilla, y desenlaces cardiovasculares [1][8][10][11]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué eventos adversos se han reportado en los ensayos clínicos de retatrutida?</h3>
+                <p className="text-ink/80 text-sm">Los eventos gastrointestinales — náuseas, vómitos, diarrea — han sido los eventos adversos más frecuentemente reportados. En TRIUMPH-1, las tasas de interrupción por eventos adversos fueron 4.1% (4 mg), 6.9% (9 mg) y 11.3% (12 mg), comparado con 4.9% con placebo. TRIUMPH-4 mostró tasas de interrupción más altas correlacionadas con el IMC basal [2][10]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Es legal comprar retatrutida en Estados Unidos?</h3>
+                <p className="text-ink/80 text-sm">La retatrutida es un fármaco investigacional no aprobado para uso humano. No puede venderse legalmente para administración humana ni prepararse mediante compounding bajo la ley federal de EE. UU. El material puede suministrarse legalmente como estándar de referencia química para uso exclusivo en investigación de laboratorio, siempre que el etiquetado y el marketing no impliquen uso humano [6][14][15]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Por qué se vende la retatrutida como "uso exclusivo en investigación"?</h3>
+                <p className="text-ink/80 text-sm">Debido a que la retatrutida no está aprobada para ninguna indicación clínica, el único suministro legal en EE. UU. fuera de un ensayo clínico inscrito es como estándar de referencia química para investigación de laboratorio. La designación "uso exclusivo en investigación" refleja este estado regulatorio; no autoriza la administración humana o animal del material [6][14][15]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué cubrieron las cartas de advertencia de la FDA de septiembre de 2025?</h3>
+                <p className="text-ink/80 text-sm">En septiembre de 2025, la FDA emitió más de 50 cartas de advertencia a empresas que preparaban mediante compounding o comercializaban productos GLP-1, incluyendo semaglutida, tirzepatida y retatrutida. Las cartas citaron violaciones de la Ley Federal de Alimentos, Medicamentos y Cosméticos y dejaron explícito que las etiquetas de "uso exclusivo en investigación" no eximen a los productos comercializados para uso humano de los requisitos federales [5][14][15]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cómo se reconstituye la retatrutida en entornos de investigación?</h3>
+                <p className="text-ink/80 text-sm">El estándar de referencia de retatrutida liofilizado se reconstituye con agua bacteriostática (o agua estéril donde el alcohol bencílico sea incompatible con el ensayo), dirigiendo el diluyente por la pared del vial y disolviendo con un suave movimiento circular. El material reconstituido luego se caracteriza analíticamente antes de usarse en investigación posterior [17]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué es el agua bacteriostática y por qué se usa?</h3>
+                <p className="text-ink/80 text-sm">El agua bacteriostática es agua estéril que contiene 0.9% de alcohol bencílico como conservante. El conservante suprime el crecimiento microbiano en viales de investigación de múltiples extracciones, razón por la cual es el diluyente típico para estándares de referencia de péptidos en trabajo de laboratorio donde los viales se acceden repetidamente durante su ventana de estabilidad [17]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cómo se almacena la retatrutida?</h3>
+                <p className="text-ink/80 text-sm">El estándar de referencia de retatrutida liofilizado se almacena típicamente desecado a –20 °C, protegido de la luz, hasta su uso. Las soluciones de trabajo reconstituidas típicamente se mantienen a 2–8 °C y se usan dentro de la ventana de estabilidad indicada en el Certificado de Análisis específico del lote [17]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué concentraciones se usan en la investigación publicada de retatrutida?</h3>
+                <p className="text-ink/80 text-sm">El programa de ensayos de Fase 3 probó dosis subcutáneas semanales de 4 mg, 9 mg y 12 mg en participantes humanos [1][2]. El trabajo analítico y preclínico de laboratorio usa concentraciones de trabajo mucho más bajas, calibradas al ensayo específico — la unión a receptores, la caracterización por HPLC, la confirmación por espectrometría de masas y los estudios de estabilidad tienen cada uno sus propios rangos de trabajo. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cómo pueden los investigadores verificar la pureza de un estándar de referencia de retatrutida?</h3>
+                <p className="text-ink/80 text-sm">Revisando el Certificado de Análisis específico del lote, que debe reportar la pureza por HPLC (típicamente como porcentaje de área), la confirmación por espectrometría de masas de la identidad, el contenido de agua, el contenido de péptido por método cuantitativo, y las instrucciones de almacenamiento. La verificación analítica independiente de terceros de una muestra del lote es la comprobación externa más sólida. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Qué es un Certificado de Análisis (CoA)?</h3>
+                <p className="text-ink/80 text-sm">Un Certificado de Análisis es el documento específico del lote del proveedor que confirma la identidad, pureza y perfil analítico de un estándar de referencia. Para un estándar de referencia de péptido, un CoA completo incluye la secuencia del péptido, el peso molecular, la pureza por HPLC, la confirmación por espectrometría de masas, el contenido de agua y péptido, el número de lote, y las instrucciones de almacenamiento. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cómo se prueba la pureza de la retatrutida (HPLC, espectrometría de masas)?</h3>
+                <p className="text-ink/80 text-sm">La cromatografía líquida de alta resolución en fase reversa (RP-HPLC) es el método estándar para cuantificar la pureza del péptido, reportada como porcentaje de área del pico principal en relación con todos los picos detectados. La espectrometría de masas (típicamente ESI-MS o MALDI-TOF) confirma la identidad por masa molecular. Ambos métodos están documentados en un Certificado de Análisis completo. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+                <h3 className="font-bold text-lg mb-2">¿Cuál es la diferencia entre la retatrutida y los medicamentos GLP-1 compuestos de farmacias de compounding?</h3>
+                <p className="text-ink/80 text-sm">Los medicamentos GLP-1 compuestos históricamente se referían a semaglutida y tirzepatida compuestas. La FDA ha declarado que la retatrutida no puede prepararse mediante compounding en absoluto bajo la ley federal de EE. UU. porque es un fármaco investigacional, no elegible bajo las secciones 503A o 503B. Los productos de retatrutida compuestos comercializados durante 2025 y 2026 fueron el objetivo explícito de la aplicación normativa de la FDA [6][14][15]. </p>
+            </div>
+            <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+        <h3 className="font-bold text-lg mb-2">¿Qué sigue después de los triples agonistas?</h3>
+        <p className="text-ink/80 text-sm">La investigación publicada describe dos trayectorias. La primera son protocolos de combinación que emparejan mecanismos complementarios (el enfoque CagriSema de cagrilintida más semaglutida). La segunda son moléculas individuales que activan cuatro receptores, con literatura preclínica en etapa temprana que describe la adición de actividad del receptor de amilina a la cobertura de GLP-1, GIP y glucagón [4].</p>
+    </div>
+        </div>
+      </>
+    )
   }
 ]

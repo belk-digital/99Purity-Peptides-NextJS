@@ -1979,80 +1979,237 @@
       "assumesU100Syringe": "*Asume jeringa estándar U-100"
     },
     "main": {
+      "hero": {
+        "ctaLong": "Usar las Calculadoras",
+        "ctaShort": "Calcular",
+        "title": "Calculadora de Péptidos: Reconstitución, Dosis y Conversión de Jeringa",
+        "description1": "La calculadora de reconstitución de péptidos más precisa disponible para uso en investigación. Ingresa el tamaño de tu vial, el volumen de agua bacteriostática y la dosis objetivo — y obtén tu extracción exacta en jeringa en segundos.",
+        "description2": "Ya sea que trabajes con un vial de péptido de 2mg, 5mg o 10mg, las matemáticas precisas de reconstitución no son negociables. Esta calculadora de péptidos elimina errores de dosificación al convertir la concentración de tu vial en unidades exactas de jeringa — sin necesidad de cálculos manuales. Confiada por investigadores, usada diariamente y diseñada para la precisión."
+      },
+      "requiredInputs": {
+        "eyebrow": "Datos Requeridos",
+        "title": "Parámetros de la Calculadora",
+        "vialSize": {
+          "title": "Tamaño del Vial (mg)",
+          "desc": "Peso total de péptido en tu vial (por ejemplo, 5mg, 10mg)."
+        },
+        "bacWater": {
+          "title": "Agua Bacteriostática (mL)",
+          "desc": "Volumen de agua bacteriostática usado para la reconstitución."
+        },
+        "desiredDose": {
+          "title": "Dosis Deseada (mcg)",
+          "desc": "Tu dosis exacta objetivo de investigación en microgramos."
+        }
+      },
       "howToUse": {
+        "title": "Cómo Usar la Calculadora de Reconstitución",
+        "subtitle": "Esta calculadora está diseñada para investigadores que trabajan con viales de péptidos liofilizados (deshidratados por congelación). Sigue estos tres pasos:",
+        "step1": {
+          "title": "Ingresa el Tamaño del Vial",
+          "description": "Ingresa el contenido total de péptido de tu vial en miligramos (mg). Los tamaños comunes incluyen 2mg, 5mg, 10mg y 30mg.",
+          "tag": "Paso 1",
+          "microcopy": "MASA DE PÉPTIDO"
+        },
+        "step2": {
+          "title": "Ingresa el Agua Bacteriostática",
+          "description": "Ingresa cuántos mililitros (mL) de agua bacteriostática usaste o planeas usar al reconstituir. La práctica estándar es de 1 a 2mL.",
+          "tag": "Paso 2",
+          "microcopy": "VOLUMEN DE DILUYENTE"
+        },
         "step3": {
-          "title": "Title",
-          "description": "Desc",
-          "tag": "Tag",
-          "microcopy": "Micro"
+          "title": "Ingresa la Dosis Deseada",
+          "description": "Ingresa tu dosis objetivo en microgramos (mcg). La calculadora genera de inmediato las unidades exactas a extraer en una jeringa U-100.",
+          "tag": "Paso 3",
+          "microcopy": "DOSIS OBJETIVO"
         },
         "result": {
-          "label": "Result",
-          "text": "Result text <primary>primary</primary>"
+          "label": "El Resultado",
+          "text": "Una medición precisa y libre de errores <primary>para cada sesión.</primary>"
         }
       },
       "reconstitution": {
-        "eyebrow": "Reconstitution",
-        "title": "Title",
+        "eyebrow": "Cómo Funciona",
+        "title": "Reconstitución de Péptidos",
         "understanding": {
-          "title": "Title",
-          "description": "Desc"
+          "title": "Entendiendo la Reconstitución de Péptidos",
+          "description": "La reconstitución de péptidos es el proceso de disolver un polvo de péptido liofilizado en un vehículo líquido — casi siempre agua bacteriostática — para crear una solución inyectable para uso en investigación."
         },
         "whyBacWater": {
-          "title": "Title",
-          "description": "Desc"
-        }
+          "title": "¿Por Qué Agua Bacteriostática?",
+          "description": "El agua bacteriostática contiene 0.9% de alcohol bencílico, lo que inhibe el crecimiento microbiano y extiende la vida útil de tu solución de péptido reconstituido en comparación con el agua estéril sola. Esto la convierte en el vehículo estándar de referencia para la investigación de péptidos."
+        },
+        "badgeTitle": "Grado Investigación",
+        "badgeSubtitle": "Pureza Verificada 99%+"
       },
       "process": {
+        "title": "El Proceso de Reconstitución — Paso a Paso",
         "steps": [
-          "Step 1",
-          "Step 2",
-          "Step 3"
-        ]
+          "Limpia el septo del vial con una toallita con alcohol y deja secar por completo.",
+          "Extrae el volumen deseado de agua bacteriostática en una jeringa estéril.",
+          "Inserta la aguja en ángulo a lo largo de la pared interna del vial — nunca apuntes directamente al polvo de péptido.",
+          "Deja que el agua corra lentamente por el vidrio en lugar de dirigirla directamente sobre el polvo.",
+          "Rueda suavemente el vial entre las palmas hasta que el polvo se disuelva por completo. No lo agites.",
+          "Inspecciona la solución — debe ser transparente a ligeramente opaca. Descártala si presenta partículas visibles o decoloración."
+        ],
+        "criticalNote": "Nota crítica: Agitar un vial de péptido puede desnaturalizar las cadenas de aminoácidos. Siempre rueda, nunca agites."
       },
       "mistakes": {
+        "title": "5 Errores que Debes Evitar",
+        "subtitle": "Protege la integridad de tu compuesto y garantiza una dosificación precisa evitando estos errores comunes de reconstitución.",
         "items": [
           {
-            "title": "Mistake 1",
-            "desc": "Desc 1"
+            "title": "Agitar el vial en lugar de rodarlo.",
+            "desc": "La agitación mecánica puede alterar las cadenas de aminoácidos. Siempre rueda suavemente entre las palmas."
+          },
+          {
+            "title": "Inyectar agua bacteriostática directamente sobre el polvo de péptido.",
+            "desc": "Esto causa desnaturalización localizada. Angula la aguja contra la pared de vidrio y deja que el agua caiga en cascada."
+          },
+          {
+            "title": "Confundir mg con mcg.",
+            "desc": "1mg = 1,000mcg. Si tu vial es de 5mg y tu dosis es de 250mcg, tu dosis es 0.25mg — no 250mg. Usa la calculadora para eliminar este error de conversión."
+          },
+          {
+            "title": "Usar el tipo de jeringa incorrecto.",
+            "desc": "Las jeringas U-40 y U-100 tienen valores de unidad diferentes por mL. Este es uno de los errores de dosificación más peligrosos y comunes. Siempre verifica."
+          },
+          {
+            "title": "Reconstituir con demasiada anticipación.",
+            "desc": "Una vez reconstituidas, las soluciones de péptido deben usarse dentro del plazo apropiado para tus condiciones de almacenamiento. Consulta nuestra guía de almacenamiento para más detalles."
           }
         ]
       },
       "storage": {
+        "title": "Almacenamiento",
+        "subtitle": "Mejores Prácticas",
+        "lyophilized": {
+          "title": "Péptidos Liofilizados (Sin Reconstituir)",
+          "description": "Almacena a –20°C (congelador estándar) en un lugar oscuro y seco. La mayoría de los péptidos liofilizados mantienen su estabilidad de 24 a 36 meses bajo estas condiciones. Evita ciclos repetidos de congelación y descongelación."
+        },
+        "reconstituted": {
+          "title": "Soluciones de Péptido Reconstituidas",
+          "description": "Una vez mezclado con agua bacteriostática, almacena en el refrigerador a 2–8°C (36–46°F). Evita congelar las soluciones reconstituidas, ya que esto puede causar agregación. La mayoría de las soluciones de péptido de grado investigación permanecen estables de 28 a 30 días en refrigeración con agua bacteriostática como vehículo."
+        },
         "bullets": [
-          "Storage 1",
-          "Storage 2"
+          "Mantén los viales alejados de la luz directa (usa viales ámbar o envuélvelos en papel aluminio si es necesario)",
+          "Nunca los almacenes cerca de fuentes de calor ni los dejes a temperatura ambiente por períodos prolongados",
+          "Etiqueta cada vial con la fecha de reconstitución",
+          "No uses soluciones que se vean turbias, decoloradas o con partículas (más allá de la ligera opacidad esperada)"
         ]
       },
-      "whyAccuracy": {
-        "title": "Title",
-        "subtitle": "Subtitle",
-        "items": {
-          "item1": "Item 1",
-          "item2": "Item 2",
-          "item3": "Item 3",
-          "item4": "Item 4",
-          "item5": "Item 5"
+      "bacWaterTable": {
+        "title": "Referencia de Mezcla de Agua Bacteriostática",
+        "intro": "El volumen de agua bacteriostática que agregas determina directamente la concentración de tu solución — y por lo tanto cuántas unidades de jeringa equivalen a tu dosis objetivo. Usa esta tabla de referencia:",
+        "chooserHeading": "Eligiendo el Volumen Correcto de Agua Bacteriostática",
+        "chooserBody": "Más agua bacteriostática = menor concentración = más unidades por dosis (más fácil medir dosis pequeñas con precisión). Menos agua bacteriostática = mayor concentración = menos unidades por dosis (más práctico para dosis grandes, pero la precisión disminuye).",
+        "chooserBaseline": "Para la mayoría de los protocolos de investigación con rangos de dosificación comunes de 100 a 500mcg, 2mL de agua bacteriostática por vial de 5–10mg es la referencia base más utilizada.",
+        "headers": {
+          "vialSize": "Tamaño del Vial",
+          "bacWaterAdded": "Agua Bacteriostática Añadida",
+          "concentration": "Concentración",
+          "doseEquals": "Dosis de 250mcg ="
         },
-        "footnote": "Footnote"
+        "footnote": "Todos los valores de unidades calculados para jeringas de insulina U-100."
+      },
+      "math": {
+        "title": "Matemáticas de Dosificación de Péptidos",
+        "subtitle": "Cómo Funciona el Cálculo",
+        "formulaIntro": "La fórmula subyacente que usa esta calculadora es:",
+        "formula1": "Volumen de Extracción (mL) = (Dosis Deseada en mcg ÷ Péptido Total en mcg) × Volumen Total de Agua Bacteriostática (mL)",
+        "thenLabel": "Luego:",
+        "formula2": "Unidades en jeringa U-100 = Volumen de Extracción (mL) × 100",
+        "exampleTitle": "Cálculo de Ejemplo",
+        "example": {
+          "vialLabel": "Vial:",
+          "vialValue": "5mg (= 5,000mcg)",
+          "bacWaterLabel": "Agua bacteriostática:",
+          "desiredDoseLabel": "Dosis deseada:",
+          "drawVolumeLabel": "Volumen de extracción:"
+        },
+        "footnote": "Este es el mismo cálculo que la calculadora de dosificación de péptidos realiza automáticamente — eliminando el error humano de cada sesión de investigación."
+      },
+      "syringeConversion": {
+        "title": "Conversión de Unidades de Jeringa",
+        "subtitle": "Para Investigación de Péptidos",
+        "intro": "Entender las marcas de tu jeringa es esencial para una dosificación precisa de péptidos. La gran mayoría de la investigación de péptidos usa jeringas de insulina U-100, que contienen <bold>100 unidades por 1mL</bold>.",
+        "referenceTitle": "Referencia U-100",
+        "headers": {
+          "drawVolume": "Volumen de Extracción",
+          "unitsU100": "= Unidades en U-100"
+        },
+        "warningTitle": "Jeringas U-100 vs. U-40",
+        "warningText": "Importante: Las jeringas U-40 contienen solo 40 unidades por mL y se usan principalmente para insulina veterinaria. Si accidentalmente usas una jeringa U-40 mientras dosificas según cálculos de U-100, tu extracción será <bold>2.5× mayor</bold> de lo previsto. Siempre confirma el tipo de jeringa."
+      },
+      "whyAccuracy": {
+        "title": "Por Qué la Precisión en el Cálculo de Péptidos Importa para la Investigación",
+        "subtitle": "Las matemáticas manuales de dosificación introducen variables que comprometen la reproducibilidad de la investigación. Una calculadora dedicada de reconstitución de péptidos:",
+        "items": {
+          "item1": "Elimina errores de conversión entre mg, mcg, mL y unidades de jeringa",
+          "item2": "Estandariza los protocolos entre sesiones de investigación e investigadores",
+          "item3": "Ahorra tiempo durante la preparación sin sacrificar precisión",
+          "item4": "Respalda la documentación con mediciones consistentes y repetibles",
+          "item5": "Reduce el desperdicio al calcular volúmenes de extracción exactos para tu dosis objetivo"
+        },
+        "footnote": "Para investigaciones que requieren dosificación consistente entre sesiones, la medición asistida por calculadora es el método más confiable disponible sin equipo volumétrico de grado laboratorio."
       },
       "precision": {
-        "title": "Precision",
-        "subtitle": "Subtitle",
-        "paragraph1": "P1 <bold>bold</bold>",
-        "paragraph2": "P2",
-        "paragraph3": "P3"
+        "title": "Precisión en la Investigación de Péptidos",
+        "subtitle": "Por Qué Cada Unidad Importa",
+        "paragraph1": "Los resultados de la investigación de péptidos son sensibles a la variabilidad en la dosificación. Una diferencia de tan solo <bold>10 a 20 unidades</bold> en una jeringa puede representar una <bold>desviación del 25 al 50%</bold> respecto a tu dosis objetivo, dependiendo de la concentración.",
+        "paragraph2": "Esa desviación altera los perfiles farmacocinéticos en estudios observacionales, reduce la reproducibilidad entre sesiones y compromete la integridad de los datos en investigaciones longitudinales.",
+        "paragraph3": "Usar una calculadora validada de dosificación de péptidos — y consultarla junto con una tabla de mezcla de agua bacteriostática — garantiza que tus sesiones de investigación comiencen con la mayor precisión de medición posible."
       },
       "cta": {
-        "badge": "Badge",
-        "title": "Title <primary>primary</primary>",
-        "description": "Description",
-        "browseCatalog": "Browse",
-        "viewCoaStandards": "View"
+        "badge": "Garantía de Calidad",
+        "title": "Comienza Tu Investigación con Péptidos de <primary>Pureza Verificada</primary>",
+        "description": "Los cálculos precisos de dosificación no significan nada si tu péptido no es lo que la etiqueta indica. Cada producto de nuestro catálogo se fabrica bajo estrictos estándares de calidad y se envía con documentación de Certificado de Análisis (COA) de terceros — para que tus datos de investigación reflejen el comportamiento del compuesto, no contaminación.",
+        "browseCatalog": "Explorar Catálogo",
+        "viewCoaStandards": "Ver Estándares de COA"
       },
       "faq": {
-        "title": "FAQ",
-        "description": "Desc"
+        "title": "Preguntas Frecuentes de la Calculadora",
+        "description": "Preguntas comunes sobre la reconstitución de péptidos y las matemáticas de dosificación.",
+        "q1": {
+          "question": "¿Cuánta agua bacteriostática agrego a un vial de péptido de 5mg?",
+          "answer": "La proporción estándar para un vial de péptido de 5mg es 2mL de agua bacteriostática. Esto crea una concentración de 2.5mg/mL, donde cada 0.1mL (10 unidades en una jeringa de insulina U-100) entrega exactamente 250mcg. Puedes ajustar esta proporción — usa nuestra calculadora de péptidos arriba para recalcular con cualquier volumen de agua."
+        },
+        "q2": {
+          "question": "¿Cuántas unidades son 250mcg en una jeringa de insulina?",
+          "answer": "El número de unidades para una dosis de 250mcg depende de tu proporción de reconstitución. Para un vial de 5mg mezclado con 2mL de agua bacteriostática, 250mcg equivale exactamente a 10 unidades (0.1mL) en una jeringa U-100. Usa la calculadora de dosificación de péptidos para encontrar el conteo exacto de unidades para tu vial y volumen de agua específicos."
+        },
+        "q3": {
+          "question": "¿Cuál es la diferencia entre una jeringa U-100 y U-40 para dosificar péptidos?",
+          "answer": "Una jeringa U-100 contiene 100 unidades por 1mL. Una jeringa U-40 contiene solo 40 unidades por 1mL. Casi todas las sesiones de investigación de péptidos usan jeringas U-100. Extraer el mismo número de marcas en una jeringa U-40 entrega 2.5 veces más volumen que una U-100 — una distinción crítica que puede llevar a errores significativos de dosificación si no se reconoce."
+        },
+        "q4": {
+          "question": "¿Se agita o se rueda un vial de péptido después de agregar agua bacteriostática?",
+          "answer": "Siempre rueda, nunca agites. Agitar un vial de péptido crea estrés mecánico que puede alterar las cadenas de aminoácidos del compuesto. En su lugar, rueda suavemente el vial entre tus palmas con un movimiento circular suave hasta que el polvo liofilizado se disuelva por completo en el agua bacteriostática."
+        },
+        "q5": {
+          "question": "¿Cuánto dura un péptido reconstituido en el refrigerador?",
+          "answer": "La mayoría de las soluciones de péptido reconstituidas con agua bacteriostática permanecen estables de 28 a 30 días cuando se almacenan a 2–8°C (temperatura estándar de refrigerador). Después de este período, la degradación se acelera. Para almacenamiento prolongado, algunos investigadores prefieren mantener los péptidos liofilizados sin reconstituir congelados y reconstituir solo lo necesario por sesión de investigación."
+        },
+        "q6": {
+          "question": "¿Cuánta agua bacteriostática debo usar para un vial de péptido de 10mg?",
+          "answer": "Para un vial de 10mg, agregar 2mL de agua bacteriostática crea una concentración de 5mg/mL, donde una dosis de 250mcg equivale a 5 unidades en una jeringa U-100. Agregar 5mL en su lugar crea una concentración de 2mg/mL, donde la misma dosis equivale a 12.5 unidades — más fácil de medir con precisión. Usa la calculadora de reconstitución de péptidos arriba para encontrar la proporción óptima para tu rango de dosis."
+        },
+        "q7": {
+          "question": "¿Qué es la reconstitución de péptidos?",
+          "answer": "La reconstitución de péptidos es el proceso de disolver un polvo de péptido liofilizado (deshidratado por congelación) en un vehículo líquido estéril — típicamente agua bacteriostática — para crear una solución inyectable lista para uso en investigación. La proporción de péptido a agua determina la concentración de la solución final, la cual dicta cuántas unidades de jeringa corresponden a cualquier dosis dada."
+        },
+        "q8": {
+          "question": "¿Cómo convierto mcg a mg para dosificar péptidos?",
+          "answer": "Para convertir microgramos (mcg) a miligramos (mg), divide entre 1,000. Por ejemplo, 500mcg = 0.5mg. Para convertir mg a mcg, multiplica por 1,000. Así que un vial de 5mg contiene 5,000mcg de péptido. Esta conversión es la base de todos los cálculos de dosificación de péptidos."
+        },
+        "q9": {
+          "question": "¿Puedo usar agua estéril en lugar de agua bacteriostática para péptidos?",
+          "answer": "El agua estéril técnicamente puede disolver péptidos, pero carece del conservante de alcohol bencílico al 0.9% que se encuentra en el agua bacteriostática. Sin este conservante, es posible el crecimiento microbiano y la vida útil de la solución reconstituida se reduce drásticamente — típicamente a 24 horas. Para cualquier sesión de investigación que se extienda más allá de un día, el agua bacteriostática es fuertemente preferida."
+        },
+        "q10": {
+          "question": "¿Por qué importa el volumen de agua bacteriostática que agrego para la precisión de dosificación?",
+          "answer": "El volumen de agua bacteriostática que agregas determina la concentración de tu solución de péptido — y por lo tanto cuántas unidades de jeringa corresponden a tu dosis objetivo. Usar volúmenes de agua inconsistentes entre sesiones crea dosificación inconsistente, incluso con el mismo vial. Siempre anota el volumen exacto de agua usado y recalcula usando la calculadora de péptidos si cambias tu proporción de reconstitución."
+        }
       }
     }
   }

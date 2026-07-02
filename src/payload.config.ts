@@ -113,6 +113,10 @@ export default buildConfig({
     return collection
   }),
   editor: lexicalEditor(),
+  localization: {
+    locales: ['en', 'es'],
+    defaultLocale: 'en',
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

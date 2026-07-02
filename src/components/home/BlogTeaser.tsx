@@ -4,13 +4,16 @@ import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 
-import { BLOG_POSTS } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
 
 export function BlogTeaser() {
   const t = useTranslations('home.blogTeaser')
+  const locale = useLocale()
+  const BLOG_POSTS = locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
   const targetRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const [maxScroll, setMaxScroll] = useState(0)

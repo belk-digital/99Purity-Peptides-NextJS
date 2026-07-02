@@ -165,7 +165,7 @@ export const Products: CollectionConfig = {
         description: 'Offer multi-kit bulk bundles of THIS product (e.g., 5 Kits, 10 Kits) directly on the product page.',
       },
       fields: [
-        { name: 'name', type: 'text', required: true, admin: { description: 'e.g. 5 Kits' } },
+        { name: 'name', type: 'text', required: true, localized: true, admin: { description: 'e.g. 5 Kits' } },
         { name: 'quantity', type: 'number', required: true, min: 2, admin: { description: 'Number of items in this bundle' } },
         { name: 'discountPercentage', type: 'number', min: 0, max: 100, admin: { description: 'Percentage discount off the total (e.g. 15 for 15% off). If set, the bundle dynamically multiplies the selected variant price!' } },
         { name: 'price', type: 'number', min: 0, admin: { description: 'Legacy hardcoded price (leave empty if using dynamic discount or overrides)' } },
@@ -211,29 +211,29 @@ export const Products: CollectionConfig = {
         {
           label: 'Product Details',
           fields: [
-            { name: 'productDetailsTitle', type: 'text', defaultValue: 'Product Details' },
-            { name: 'productDetailsDescription', type: 'textarea' },
+            { name: 'productDetailsTitle', type: 'text', defaultValue: 'Product Details', localized: true },
+            { name: 'productDetailsDescription', type: 'textarea', localized: true },
           ],
         },
         {
           label: 'Research Focus & Mechanism Overview',
           fields: [
-            { name: 'researchFocusTitle', type: 'text', defaultValue: 'Research Focus & Mechanism Overview' },
-            { name: 'researchFocusDescription', type: 'textarea' },
+            { name: 'researchFocusTitle', type: 'text', defaultValue: 'Research Focus & Mechanism Overview', localized: true },
+            { name: 'researchFocusDescription', type: 'textarea', localized: true },
           ],
         },
         {
           label: 'Quality & Purity Standards',
           fields: [
-            { name: 'qualityPurityTitle', type: 'text', defaultValue: 'Quality & Purity Standards' },
-            { name: 'qualityPurityDescription', type: 'textarea' },
+            { name: 'qualityPurityTitle', type: 'text', defaultValue: 'Quality & Purity Standards', localized: true },
+            { name: 'qualityPurityDescription', type: 'textarea', localized: true },
           ],
         },
         {
           label: 'Compliance Notice',
           fields: [
-            { name: 'complianceNoticeTitle', type: 'text', defaultValue: 'Compliance Notice' },
-            { name: 'complianceNoticeDescription', type: 'textarea' },
+            { name: 'complianceNoticeTitle', type: 'text', defaultValue: 'Compliance Notice', localized: true },
+            { name: 'complianceNoticeDescription', type: 'textarea', localized: true },
           ],
         },
       ],
@@ -258,11 +258,13 @@ export const Products: CollectionConfig = {
           name: 'question',
           type: 'text',
           required: true,
+          localized: true,
         },
         {
           name: 'answer',
           type: 'textarea',
           required: true,
+          localized: true,
         },
       ],
       admin: {

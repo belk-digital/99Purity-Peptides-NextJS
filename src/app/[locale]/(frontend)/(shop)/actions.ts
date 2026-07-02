@@ -6,6 +6,7 @@ import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { revalidatePath } from 'next/cache'
 import { attributeOrder } from '@/lib/affiliates/commission'
 import { cookies } from 'next/headers'
+import { getLocale } from 'next-intl/server'
 
 export async function addToCart(productId: string | number, quantity: number = 1, providedVariantSku?: string, providedPriceSnapshot?: number) {
   try {
@@ -691,6 +692,7 @@ export async function getShopProducts(params: {
     const limit = params.limit || 24
     const page = params.page || 1
 
+    const locale = await getLocale()
     const results = await payload.find({
       collection: 'products',
       where,
@@ -699,6 +701,8 @@ export async function getShopProducts(params: {
       sort: sortParam,
       depth: 1, // Fetches media URLs and category names
       overrideAccess: true,
+      locale: locale as 'en' | 'es',
+      fallbackLocale: 'en',
     })
 
     const uiProducts = results.docs.map(doc => {

@@ -4,7 +4,12 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Metadata } from 'next'
-import { BLOG_POSTS } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
+
+function getBlogPosts(locale: string) {
+  return locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
+}
 
 export async function generateMetadata({
   params,
@@ -19,6 +24,8 @@ export async function generateMetadata({
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 1, // Need media depth for images
+    locale: locale as 'en' | 'es',
+    fallbackLocale: 'en',
   })
 
   if (!docs || docs.length === 0) {
@@ -69,7 +76,7 @@ export default async function ProductPage({
   params: Promise<{ slug: string; locale: string }>
 }) {
   console.log('--- STARTING SERVER RENDER FOR PRODUCT PAGE ---')
-  const { slug } = await params
+  const { slug, locale } = await params
   console.log(`Resolved slug: ${slug}, Initializing Payload...`)
   
   const payload = await getPayload({ config: configPromise })
@@ -84,6 +91,8 @@ export default async function ProductPage({
     },
     limit: 1,
     depth: 2, // To fetch categories and media
+    locale: locale as 'en' | 'es',
+    fallbackLocale: 'en',
   })
 
   if (!docs || docs.length === 0) {
@@ -358,7 +367,7 @@ export default async function ProductPage({
   })
 
   if (mappedBlogs.length === 0) {
-    mappedBlogs = BLOG_POSTS.slice(0, 3).map((post, i) => ({
+    mappedBlogs = getBlogPosts(locale).slice(0, 3).map((post, i) => ({
       ...post,
       id: `dummy-${i}`,
       slug: `blog/${post.slug}`,

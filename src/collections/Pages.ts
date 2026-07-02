@@ -7,9 +7,9 @@ export const Pages: CollectionConfig = {
   admin: { defaultColumns: ['title', 'status'] },
   access: accessContent,
   fields: [
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', admin: { position: 'sidebar' } },
-    { name: 'content', type: 'richText', editor: lexicalEditor() },
+    { name: 'content', type: 'richText', editor: lexicalEditor(), localized: true },
     {
       name: 'status',
       type: 'select',

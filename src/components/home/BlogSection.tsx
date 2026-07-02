@@ -5,13 +5,16 @@ import { motion, Variants, AnimatePresence } from 'framer-motion'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
-import { BLOG_POSTS } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
 
 export function BlogSection() {
   const t = useTranslations('home.blogSection')
+  const locale = useLocale()
+  const BLOG_POSTS = locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
   const [hoveredCol, setHoveredCol] = useState<number | null>(null);
   const [hoveredCol2, setHoveredCol2] = useState<number | null>(null);
 

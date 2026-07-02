@@ -8,8 +8,15 @@ import { StaggerChildren, staggerItemVariants } from '@/components/motion/Stagge
 import { ReadingProgress } from '@/components/editorial/ReadingProgress'
 import { TableOfContents } from '@/components/editorial/TableOfContents'
 import { BlogPostHero } from '@/components/editorial/BlogPostHero'
-import { BLOG_POSTS } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
+import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
 import { BLOG_SEO } from '@/data/blog-seo'
+
+const BLOG_POSTS = BLOG_POSTS_EN
+
+function getBlogPosts(locale: string) {
+  return locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
+}
 
 export async function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({
@@ -23,7 +30,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string; locale: string }>
 }): Promise<Metadata> {
   const { slug, locale } = await params
-  const post = BLOG_POSTS.find((p) => p.slug === slug)
+  const post = getBlogPosts(locale).find((p) => p.slug === slug)
 
   if (!post) return { title: 'Post Not Found | 99 Purity Peptides' }
 
@@ -50,15 +57,16 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ slug: string; locale: string }>
 }) {
-  const { slug } = await params
-  const post = BLOG_POSTS.find((p) => p.slug === slug)
+  const { slug, locale } = await params
+  const localePosts = getBlogPosts(locale)
+  const post = localePosts.find((p) => p.slug === slug)
 
   if (!post) {
     notFound()
   }
 
   // Get 3 related posts (just the first 3 that aren't the current one)
-  const relatedPosts = BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 3)
+  const relatedPosts = localePosts.filter((p) => p.slug !== slug).slice(0, 3)
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://99purity.com'
 

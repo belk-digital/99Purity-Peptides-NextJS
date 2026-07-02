@@ -12,6 +12,7 @@ import * as migration_20260524_060000_add_contactmessages_collection from './202
 import * as migration_20260524_070000_add_emaillogs_collection from './20260524_070000_add_emaillogs_collection';
 import * as migration_20260524_203510_seed_updates from './20260524_203510_seed_updates';
 import * as migration_20260603_202126_add_product_fields from './20260603_202126_add_product_fields';
+import * as migration_20260702_150000_localize_content_fields from './20260702_150000_localize_content_fields';
 
 export const migrations = [
   {
@@ -83,5 +84,10 @@ export const migrations = [
     up: migration_20260603_202126_add_product_fields.up,
     down: migration_20260603_202126_add_product_fields.down,
     name: '20260603_202126_add_product_fields'
+  },
+  {
+    up: migration_20260702_150000_localize_content_fields.up,
+    down: migration_20260702_150000_localize_content_fields.down,
+    name: '20260702_150000_localize_content_fields'
   },
 ];

@@ -1,17 +1,21 @@
 'use server'
 
 import { getPayload } from 'payload'
+import { getLocale } from 'next-intl/server'
 import configPromise from '@/payload.config'
 
 export async function getFeaturedProducts() {
   try {
     const payload = await getPayload({ config: configPromise })
+    const locale = await getLocale()
     const products = await payload.find({
       collection: 'products',
       limit: 6,
       where: {
         status: { equals: 'active' }
-      }
+      },
+      locale: locale as 'en' | 'es',
+      fallbackLocale: 'en',
     })
 
     return products.docs.map((p: any) => {

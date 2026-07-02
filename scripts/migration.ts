@@ -25,6 +25,8 @@ interface WooCommerceProduct {
   type: string
   categories: { id: number; name: string; slug: string }[]
   meta_data: { key: string; value: any }[]
+  variations?: any[] // Placeholder for WooCommerce variations data
+  bulk_bundles?: any[] // Placeholder for however bulk pricing was stored in WooCommerce
 }
 
 interface WooCommerceCoupon {
@@ -66,8 +68,26 @@ async function migrateProducts(payload: any, productsData: WooCommerceProduct[])
           isVisible: true,
           
           // Variants
-          hasVariants: product.type === 'variable',
-          variants: [], // TODO: Map WooCommerce variations here
+          hasVariants: product.type === 'variable' || (product.variations && product.variations.length > 0),
+          variants: product.variations ? product.variations.map((v: any) => ({
+            sku: v.sku || '',
+            price: parseFloat(v.price || v.regular_price || '0'),
+            salePrice: v.sale_price ? parseFloat(v.sale_price) : undefined,
+            stock: v.stock_quantity || 0,
+            options: v.attributes ? v.attributes.map((attr: any) => ({
+              key: attr.name,
+              value: attr.option
+            })) : []
+          })) : [],
+
+          // Bulk Bundles
+          bulkBundles: product.bulk_bundles ? product.bulk_bundles.map((bundle: any) => ({
+            name: bundle.name || 'Bulk Bundle',
+            quantity: bundle.quantity || 2,
+            discountPercentage: bundle.discount_percentage || 0,
+            price: bundle.price ? parseFloat(bundle.price) : undefined,
+            // variantOverrides would go here if applicable
+          })) : [],
 
           // Categories 
           // Note: You must migrate Categories first and map their IDs here!
@@ -111,8 +131,18 @@ async function migrateUsers(payload: any, usersData: WooCommerceCustomer[]) {
     // const clerkUserId = await createClerkUser({ email: user.email, ... })
     const dummyClerkId = `migrated_clerk_${user.id}`
 
-    // 2. Map data to Payload Users Collection
+    // 2. Check if user already exists
     try {
+      const existingUser = await payload.find({
+        collection: 'users',
+        where: { email: { equals: user.email } }
+      })
+
+      if (existingUser.totalDocs > 0) {
+        console.log(`Skipping user ${user.email} - already exists.`)
+        continue
+      }
+
       await payload.create({
         collection: 'users',
         data: {

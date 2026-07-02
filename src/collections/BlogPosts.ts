@@ -7,10 +7,10 @@ export const BlogPosts: CollectionConfig = {
   admin: { defaultColumns: ['title', 'author', 'status', 'publishedAt'] },
   access: accessContent,
   fields: [
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', admin: { position: 'sidebar' } },
     { name: 'author', type: 'relationship', relationTo: 'users', required: true },
-    { name: 'content', type: 'richText', editor: lexicalEditor() },
+    { name: 'content', type: 'richText', editor: lexicalEditor(), localized: true },
     { name: 'publishedAt', type: 'date' },
     {
       name: 'status',
