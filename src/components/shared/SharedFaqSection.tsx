@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export type FaqItemType = {
   question: string;
@@ -84,7 +85,7 @@ const FaqItem = ({
 
 export function SharedFaqSection({
   title,
-  subtitle = "(faqs)",
+  subtitle,
   description,
   faqs,
 }: {
@@ -93,6 +94,8 @@ export function SharedFaqSection({
   description?: string | React.ReactNode;
   faqs: FaqItemType[];
 }) {
+  const t = useTranslations('content.sharedFaqSection')
+  const resolvedSubtitle = subtitle ?? t('subtitleDefault')
   // Use MotionValues to prevent React re-renders on mousemove (fixes scroll lag)
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -161,7 +164,7 @@ export function SharedFaqSection({
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full">
           <div className="flex flex-col mb-6 md:mb-0 max-w-xl">
             <p className="text-ink/50 text-sm font-bold tracking-widest uppercase mb-6">
-              {subtitle}
+              {resolvedSubtitle}
             </p>
             {description && (
               <p className="text-ink/70 text-lg md:text-xl leading-relaxed">

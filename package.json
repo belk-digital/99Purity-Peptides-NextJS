@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build --webpack",
+    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8192\" next build",
     "dev": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8192\" next dev --turbo",
     "devsafe": "node -e \"require('fs').rmSync('.next', { recursive: true, force: true })\" && cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8192\" next dev --turbo",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
@@ -48,6 +48,7 @@
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
     "next-auth": "^4.24.14",
+    "next-intl": "^4.13.1",
     "next-themes": "^0.4.6",
     "ogl": "^1.0.11",
     "payload": "3.84.1",

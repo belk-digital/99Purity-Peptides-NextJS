@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowRight, Microscope, Activity, FileText, FlaskConical, Hexagon } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 // Custom hook for the scramble/decode text effect
 const ScrambleText = ({ text, activeIndex }: { text: string, activeIndex: number }) => {
@@ -37,30 +38,20 @@ const ScrambleText = ({ text, activeIndex }: { text: string, activeIndex: number
   return <span>{displayText}</span>;
 }
 
-const ADVANTAGES = [
-  {
-    title: "Verified Purity Standards",
-    description: "All peptides meet ≥99% purity verified by reversed-phase HPLC. Chromatograms are included with every order, enabling you to confirm reagent quality before integration into experimental protocols.",
-    icon: Microscope
-  },
-  {
-    title: "Mass Spectrometry Validation",
-    description: "LC-MS analysis confirms peptide identity and molecular weight accuracy. This dual-verification approach reduces risk of sequence errors that could compromise assay results or mechanistic studies.",
-    icon: Activity
-  },
-  {
-    title: "Comprehensive Documentation",
-    description: "Each certificate of analysis includes detailed analytical data: HPLC purity percentages, MS identity confirmation, peptide concentration, storage recommendations, and amino acid sequence verification. Documentation supports laboratory quality systems and research publication requirements.",
-    icon: FileText
-  },
-  {
-    title: "Research-Only Positioning",
-    description: "Our peptides are clearly designated for research use only (RUO) and intended exclusively for laboratory applications including assay development, receptor binding studies, enzyme kinetics, and non-clinical research investigations.",
-    icon: FlaskConical
-  }
+const ADVANTAGE_KEYS = [
+  { key: 'purityStandards', icon: Microscope },
+  { key: 'massSpecValidation', icon: Activity },
+  { key: 'comprehensiveDocs', icon: FileText },
+  { key: 'researchOnly', icon: FlaskConical }
 ]
 
 export function WhatSetsUsApart() {
+  const t = useTranslations('home.whatSetsUsApart')
+  const ADVANTAGES = ADVANTAGE_KEYS.map(({ key, icon }) => ({
+    title: t(`items.${key}.title`),
+    description: t(`items.${key}.description`),
+    icon
+  }))
   const [activeIndex, setActiveIndex] = useState(0)
 
   // Custom Cursor Logic
@@ -125,7 +116,7 @@ export function WhatSetsUsApart() {
           mass: 0.5,
         }}
       >
-        <span className="max-w-[70px] leading-tight text-[11px] font-bold">CLICK ON<br/>THE NODES</span>
+        <span className="max-w-[70px] leading-tight text-[11px] font-bold">{t('clickCursorLine1')}<br/>{t('clickCursorLine2')}</span>
       </motion.div>
 
       <div className="w-full mx-auto px-4 sm:px-12 md:px-16 max-w-[120rem] relative z-10">
@@ -137,23 +128,23 @@ export function WhatSetsUsApart() {
             viewport={{ once: true }}
             className="inline-block border border-primary/20 rounded-full px-4 py-1.5 mb-6 bg-white shadow-sm"
           >
-            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">Advantage</span>
+            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">{t('eyebrow')}</span>
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="font-heading text-5xl md:text-7xl font-black text-ink leading-none tracking-tighter uppercase mb-6"
           >
-            What Sets<br />Us Apart.
+            {t('titleLine1')}<br />{t('titleLine2')}
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-ink-muted text-lg leading-relaxed max-w-4xl font-medium"
           >
-            <strong className="text-ink">99PurityPeptides</strong> specializes in high-purity synthetic peptides engineered specifically for research laboratory environments. Our commitment to analytical rigor and documentation transparency addresses the core needs of scientific research:
+            {t.rich('description', { strong: (chunks) => <strong className="text-ink">{chunks}</strong> })}
           </motion.p>
         </div>
 
@@ -254,7 +245,7 @@ export function WhatSetsUsApart() {
             </div>
 
             {/* Orbiting Nodes (Frosted Lenses) */}
-            {ADVANTAGES.map((adv, i) => {
+            {ADVANTAGE_KEYS.map(({ key, icon: NodeIcon }, i) => {
               const n = nodes[i];
               const isActive = activeIndex === i;
               return (
@@ -285,13 +276,13 @@ export function WhatSetsUsApart() {
                         : 'bg-white/40 border border-white/50 shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_8px_20px_rgba(0,0,0,0.06)] hover:bg-white/60 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_12px_30px_rgba(0,0,0,0.1)] z-10'
                     }`}
                   >
-                    <adv.icon className={`w-6 h-6 lg:w-8 lg:h-8 transition-colors duration-500 relative z-20 ${isActive ? 'text-white' : 'text-ink-muted'}`} />
+                    <NodeIcon className={`w-6 h-6 lg:w-8 lg:h-8 transition-colors duration-500 relative z-20 ${isActive ? 'text-white' : 'text-ink-muted'}`} />
                   </motion.button>
-                  
+
                   {/* Node Label */}
                   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-32 text-center pointer-events-none z-30">
                     <span className={`inline-block px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-white/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-[10px] uppercase tracking-widest font-bold transition-colors duration-500 ${isActive ? 'text-primary' : 'text-ink-muted'}`}>
-                      {adv.title.split(' ')[0]}
+                      {t(`items.${key}.shortLabel`)}
                     </span>
                   </div>
                 </div>
@@ -323,7 +314,7 @@ export function WhatSetsUsApart() {
                     <ActiveIcon className="w-6 h-6 text-primary" />
                   </div>
                   <span className="text-primary font-mono text-xs tracking-widest uppercase font-bold bg-white/50 px-3 py-1 rounded-full border border-white shadow-sm">
-                    Node 0{activeIndex + 1}
+                    {t('nodeLabel', { number: activeIndex + 1 })}
                   </span>
                 </div>
 
@@ -342,7 +333,7 @@ export function WhatSetsUsApart() {
                     onMouseLeave={() => setIsHoveringClickable(false)}
                     className="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors uppercase tracking-[0.2em] text-xs font-bold group"
                   >
-                    View Protocol Data 
+                    {t('viewProtocolData')}
                     <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
                       <ArrowRight size={12} />
                     </div>

@@ -3,9 +3,11 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 export function ContactHero() {
+  const t = useTranslations('content.contactHero')
   return (
     <div className="relative w-full h-[75dvh] min-h-[450px] md:min-h-[600px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
       {/* Main Inner Container */}
@@ -40,10 +42,10 @@ export function ContactHero() {
               className="absolute bottom-0 -right-[calc(2.5rem-1px)] w-10 h-10 md:-right-[calc(4rem-1px)] md:w-16 md:h-16 bg-contain bg-no-repeat pointer-events-none z-0"
               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 0v100h100A100 100 0 0 1 0 0Z' fill='%23FAF7F2'/%3E%3C/svg%3E")` }}
             />
-            <FluidButton 
-              href="mailto:Support@99puritypeptides.com" 
-              text={<>Get Support</>} 
-              className="relative z-10" 
+            <FluidButton
+              href="mailto:Support@99puritypeptides.com"
+              text={<>{t('getSupport')}</>}
+              className="relative z-10"
             />
           </div>
         </div>
@@ -57,7 +59,7 @@ export function ContactHero() {
             className="w-full max-w-5xl mx-auto px-2"
           >
             <h1 className="w-full font-heading text-5xl sm:text-6xl md:text-7xl lg:text-[100px] leading-[1.05] text-white tracking-tighter uppercase font-black drop-shadow-2xl mb-3 md:mb-6">
-              Contact Us
+              {t('title')}
             </h1>
           </motion.div>
 
@@ -67,7 +69,7 @@ export function ContactHero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-2 md:mt-4 text-white/80 text-sm sm:text-base md:text-xl max-w-2xl font-light leading-relaxed tracking-wide mx-auto px-2"
           >
-            99 Purity Peptides supplies synthetic research peptides intended exclusively for laboratory and experimental research environments.
+            {t('subtitle')}
           </motion.p>
         </div>
 

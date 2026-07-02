@@ -3,35 +3,41 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, Info, ShoppingCart } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { ContactHero } from './ContactHero'
 import { SharedFaqSection } from '@/components/shared/SharedFaqSection'
 import { ContactForm } from './ContactForm'
 import { PinterestGlassCard } from '@/components/home/PinterestGlassCard'
 
-const contactFaqs = [
-  {
-    question: "What is the contact information for 99PurityPeptides in the United States?",
-    answer: (
-      <>
-        Reach us at 5768 Wyncliff Drive, North Charleston, South Carolina 29418, US Phone: <a href="tel:8437439007" className="text-primary font-bold underline underline-offset-4 hover:text-ink transition-colors !cursor-pointer pointer-events-auto" data-hide-cursor="true">843 743 9007</a>, and email: <a href="mailto:support@99puritypeptides.com" className="text-primary font-bold underline underline-offset-4 hover:text-ink transition-colors !cursor-pointer pointer-events-auto" data-hide-cursor="true">support@99puritypeptides.com</a> for lab inquiries.
-      </>
-    )
-  },
-  {
-    question: "How can US laboratories contact 99PurityPeptides for research peptide orders?",
-    answer: "Use our US contact form, call during EST/PST hours, or chat for quick lab supply quotes, serving all 50 states."
-  },
-  {
-    question: "Where is 99PurityPeptides located for US shipping and support?",
-    answer: "We operate nationwide from US facilities, ensuring fast domestic shipping to labs in California, Texas, New York, and beyond."
-  },
-  {
-    question: "What are your customer service hours for US researchers?",
-    answer: "Our US-based support team is available Monday through Friday, 9 AM to 5 PM EST, to assist with peptide specifications and bulk orders."
-  }
-];
-
 export function ContactClient() {
+  const t = useTranslations('content.contactClient')
+
+  const contactFaqs = [
+    {
+      question: t('faqs.contactInfo.question'),
+      answer: (
+        <>
+          {t.rich('faqs.contactInfo.answer', {
+            phone: (chunks) => <a href="tel:8437439007" className="text-primary font-bold underline underline-offset-4 hover:text-ink transition-colors !cursor-pointer pointer-events-auto" data-hide-cursor="true">{chunks}</a>,
+            email: (chunks) => <a href="mailto:support@99puritypeptides.com" className="text-primary font-bold underline underline-offset-4 hover:text-ink transition-colors !cursor-pointer pointer-events-auto" data-hide-cursor="true">{chunks}</a>,
+          })}
+        </>
+      )
+    },
+    {
+      question: t('faqs.usLabsContact.question'),
+      answer: t('faqs.usLabsContact.answer')
+    },
+    {
+      question: t('faqs.locationShipping.question'),
+      answer: t('faqs.locationShipping.answer')
+    },
+    {
+      question: t('faqs.serviceHours.question'),
+      answer: t('faqs.serviceHours.answer')
+    }
+  ];
+
   return (
     <div className="bg-cream min-h-screen relative font-sans text-ink overflow-hidden">
       
@@ -47,12 +53,12 @@ export function ContactClient() {
             href="mailto:Support@99puritypeptides.com"
             className="block w-full h-full cursor-pointer hover:-translate-y-2 transition-transform duration-500 ease-out"
           >
-            <PinterestGlassCard 
-              title="Support Email"
-              description="Drop us an email anytime for lab inquiries, product specifications, or general support."
+            <PinterestGlassCard
+              title={t('supportEmailTitle')}
+              description={t('supportEmailDescription')}
               icon={<Mail className="w-5 h-5" />}
               tag="Support@99"
-              microcopy="24/7 TICKET SYSTEM"
+              microcopy={t('supportEmailMicrocopy')}
               scrollFanning={true}
             />
           </motion.a>
@@ -61,12 +67,12 @@ export function ContactClient() {
             href="mailto:Orders@99puritypeptides.com"
             className="block w-full h-full cursor-pointer hover:-translate-y-2 transition-transform duration-500 ease-out"
           >
-            <PinterestGlassCard 
-              title="Orders Email"
-              description="For order tracking, bulk procurement, and wholesale account assistance."
+            <PinterestGlassCard
+              title={t('ordersEmailTitle')}
+              description={t('ordersEmailDescription')}
               icon={<ShoppingCart className="w-5 h-5" />}
               tag="Orders@99"
-              microcopy="PRIORITY HANDLING"
+              microcopy={t('ordersEmailMicrocopy')}
               scrollFanning={true}
             />
           </motion.a>
@@ -75,12 +81,12 @@ export function ContactClient() {
             href="tel:8433307365"
             className="block w-full h-full cursor-pointer hover:-translate-y-2 transition-transform duration-500 ease-out"
           >
-            <PinterestGlassCard 
-              title="Support Phone"
-              description="Speak directly with our US-based support team for immediate research assistance."
+            <PinterestGlassCard
+              title={t('supportPhoneTitle')}
+              description={t('supportPhoneDescription')}
               icon={<Phone className="w-5 h-5" />}
               tag="843-330-7365"
-              microcopy="9AM - 5PM EST"
+              microcopy={t('supportPhoneMicrocopy')}
               scrollFanning={true}
             />
           </motion.a>
@@ -99,10 +105,10 @@ export function ContactClient() {
 
         {/* FAQ Section */}
         <div className="w-screen relative left-1/2 -ml-[50vw]">
-          <SharedFaqSection 
-            title="Questions" 
-            subtitle="(faqs)" 
-            faqs={contactFaqs} 
+          <SharedFaqSection
+            title={t('faqTitle')}
+            subtitle={t('faqSubtitle')}
+            faqs={contactFaqs}
           />
         </div>
 
@@ -131,9 +137,11 @@ export function ContactClient() {
                 
                 <div className="relative z-10 text-cream/70 text-sm md:text-base font-light leading-relaxed">
                   <span className="font-heading font-bold text-primary tracking-[0.15em] uppercase text-xs block mb-1.5">
-                    Disclaimer
+                    {t('disclaimerLabel')}
                   </span>
-                  This page is provided for general and operational inquiries related to <strong className="text-white font-medium">orders, documentation, account access</strong> or <strong className="text-white font-medium">website-related matters</strong>.
+                  {t.rich('disclaimerText', {
+                    strong: (chunks) => <strong className="text-white font-medium">{chunks}</strong>,
+                  })}
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { toggleWishlistInPayload } from '@/app/(frontend)/actions/wishlist'
+import { toggleWishlistInPayload } from '@/app/[locale]/(frontend)/actions/wishlist'
 
 export interface WishlistItem {
   id: string

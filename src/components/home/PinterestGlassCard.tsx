@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 interface PinterestGlassCardProps {
   title: string;
@@ -16,6 +17,7 @@ interface PinterestGlassCardProps {
 }
 
 export function PinterestGlassCard({ title, description, icon, tag, microcopy, className = '', iconPosition = 'left', index = 0, scrollFanning = false }: PinterestGlassCardProps) {
+  const t = useTranslations('home.pinterestGlassCard')
   const cardRef = useRef<HTMLDivElement>(null);
   
   // Magnetic scroll effect
@@ -182,7 +184,7 @@ export function PinterestGlassCard({ title, description, icon, tag, microcopy, c
           viewport={{ once: true }}
           className="px-4 py-2 sm:px-6 sm:py-2.5 md:px-4 md:py-2 lg:px-6 lg:py-2.5 bg-[#002222] border border-primary/30 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs md:text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] whitespace-nowrap relative z-10"
         >
-          {tag || 'Verified'}
+          {tag || t('defaultTag')}
         </motion.div>
       </div>
     </motion.div>

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Minus, Plus } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 
 interface QuantityStepperProps {
@@ -21,7 +22,8 @@ export function QuantityStepper({
   className,
   theme = 'light'
 }: QuantityStepperProps) {
-  
+  const t = useTranslations('shop.quantityStepper')
+
   const handleDecrement = (e: React.MouseEvent) => {
     e.preventDefault()
     if (value > min) onChange(value - 1)
@@ -38,7 +40,7 @@ export function QuantityStepper({
         onClick={handleDecrement}
         disabled={value <= min}
         className="w-10 h-10 flex items-center justify-center text-ink/60 hover:text-ink hover:bg-ink/5 rounded-full transition-colors disabled:opacity-30 flex-shrink-0"
-        aria-label="Decrease quantity"
+        aria-label={t('decreaseQuantity')}
       >
         <Minus size={16} strokeWidth={2} />
       </button>
@@ -51,7 +53,7 @@ export function QuantityStepper({
         onClick={handleIncrement}
         disabled={value >= max}
         className="w-10 h-10 flex items-center justify-center text-ink/60 hover:text-ink hover:bg-ink/5 rounded-full transition-colors disabled:opacity-30 flex-shrink-0"
-        aria-label="Increase quantity"
+        aria-label={t('increaseQuantity')}
       >
         <Plus size={16} strokeWidth={2} />
       </button>

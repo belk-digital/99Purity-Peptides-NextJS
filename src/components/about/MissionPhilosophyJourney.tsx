@@ -5,8 +5,10 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { Microscope, ShieldCheck, FlaskConical } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export function MissionPhilosophyJourney() {
+  const t = useTranslations('content.missionPhilosophyJourney')
   const containerRef = useRef<HTMLElement>(null);
   
   // Premium crisp entrance animation variants
@@ -78,12 +80,12 @@ export function MissionPhilosophyJourney() {
           >
             <div className="h-[1px] w-8 md:w-12 bg-primary/40" />
             <h2 className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-primary font-bold">
-              Our Foundation
+              {t('eyebrow')}
             </h2>
             <div className="h-[1px] w-8 md:w-12 bg-primary/40" />
           </motion.div>
           <motion.h3 variants={{hidden: {opacity: 0, y: 20}, visible: {opacity: 1, y: 0}}} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-black text-ink tracking-tighter uppercase leading-[0.95]">
-            Principles & Values
+            {t('title')}
           </motion.h3>
         </motion.div>
 
@@ -115,12 +117,12 @@ export function MissionPhilosophyJourney() {
                     <Microscope className="w-6 h-6 lg:w-8 lg:h-8 text-primary transition-colors duration-500" strokeWidth={1.5} />
                   </div>
                 </div>
-                <div className="mb-3 text-primary font-mono tracking-widest text-xs lg:text-sm font-bold uppercase transition-colors duration-500">Our Mission</div>
+                <div className="mb-3 text-primary font-mono tracking-widest text-xs lg:text-sm font-bold uppercase transition-colors duration-500">{t('card1Label')}</div>
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-black uppercase text-white mb-4 tracking-tight leading-[1.1] transition-colors duration-500 break-words">
-                  Advancing Scientific Research Standards
+                  {t('card1Title')}
                 </h3>
                 <p className="text-base lg:text-lg text-white/70 leading-relaxed font-light transition-colors duration-500">
-                  The mission of 99 Purity Peptides as a research peptide company is to support laboratory professionals by providing access to laboratory-grade peptides that meet documented analytical quality standards.
+                  {t('card1Text')}
                 </p>
               </div>
             </div>
@@ -157,12 +159,12 @@ export function MissionPhilosophyJourney() {
                     <ShieldCheck className="w-6 h-6 lg:w-8 lg:h-8 text-primary transition-colors duration-500" strokeWidth={1.5} />
                   </div>
                 </div>
-                <div className="mb-3 text-primary font-mono tracking-widest text-xs lg:text-sm font-bold uppercase transition-colors duration-500">Our Philosophy</div>
+                <div className="mb-3 text-primary font-mono tracking-widest text-xs lg:text-sm font-bold uppercase transition-colors duration-500">{t('card2Label')}</div>
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-black uppercase text-ink mb-4 tracking-tight leading-[1.1] transition-colors duration-500 break-words">
-                  Research Integrity and Transparency
+                  {t('card2Title')}
                 </h3>
                 <p className="text-base lg:text-lg text-ink/70 leading-relaxed font-light transition-colors duration-500">
-                  Our operational philosophy centers on research integrity, compliance clarity, and material traceability. As a compliance-focused peptide supplier, we categorize all products clearly as synthetic research peptides intended solely for laboratory research applications.
+                  {t('card2Text')}
                 </p>
               </div>
             </div>
@@ -198,12 +200,12 @@ export function MissionPhilosophyJourney() {
                     <FlaskConical className="w-6 h-6 lg:w-8 lg:h-8 text-primary transition-colors duration-500" strokeWidth={1.5} />
                   </div>
                 </div>
-                <div className="mb-3 text-primary font-mono tracking-widest text-xs lg:text-sm font-bold uppercase transition-colors duration-500">Our Journey</div>
+                <div className="mb-3 text-primary font-mono tracking-widest text-xs lg:text-sm font-bold uppercase transition-colors duration-500">{t('card3Label')}</div>
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-black uppercase text-white mb-4 tracking-tight leading-[1.1] transition-colors duration-500 break-words">
-                  A Focus on Laboratory Research Supply
+                  {t('card3Title')}
                 </h3>
                 <p className="text-base lg:text-lg text-white/70 leading-relaxed font-light transition-colors duration-500">
-                  99 Purity Peptides was established to address the need for clearly classified synthetic research peptides within the scientific community. The organization's development has been guided by analytical rigor, controlled handling practices and adherence to research use designation across all offerings.
+                  {t('card3Text')}
                 </p>
               </div>
             </div>

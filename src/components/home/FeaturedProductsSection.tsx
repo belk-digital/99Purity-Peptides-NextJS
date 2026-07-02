@@ -2,10 +2,12 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export function FeaturedProductsSection({ products = [] }: { products?: any[] }) {
+  const t = useTranslations('home.featuredProducts')
   if (!products || products.length === 0) return null;
 
   const featuredProduct = products[0];
@@ -27,10 +29,10 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
           className="flex flex-col md:flex-row justify-between items-end mb-16"
         >
           <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-ink leading-[0.9] tracking-tighter uppercase w-full md:w-1/2">
-            SELECTED<br />REFERENCES<span className="text-primary">.</span>
+            {t('titleLine1')}<br />{t('titleLine2')}<span className="text-primary">.</span>
           </h2>
           <p className="text-ink text-base md:text-[20px] max-w-md text-left md:text-right mt-6 md:mt-0 leading-relaxed font-medium">
-            A small catalogue of research-grade peptides. Each batch independently verified, sealed and traceable to the milligram.
+            {t('description')}
           </p>
         </motion.div>
 
@@ -40,7 +42,7 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
           <Link href={`/products/${featuredProduct.slug}`} className="bg-ink/[0.03] backdrop-blur-md border border-ink/5 rounded-2xl p-8 w-full lg:w-1/2 flex flex-col justify-between relative overflow-hidden shadow-2xl group hover:bg-ink/[0.05] transition-colors">
             <div className="flex justify-between items-center text-[10px] font-bold text-slate-500 tracking-widest uppercase z-10">
               <span>{featuredProduct.sku || 'NXP-FEATURED'}</span>
-              <span className="flex items-center text-ink"><span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span> IN STOCK</span>
+              <span className="flex items-center text-ink"><span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span> {t('inStock')}</span>
             </div>
             
             {/* Giant Background 99 Purity Peptides Helmet Icon */}
@@ -64,9 +66,9 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
 
             <div className="flex justify-between items-end z-10 relative">
               <div>
-                <p className="text-primary text-[10px] tracking-widest uppercase mb-1 font-bold">FEATURED</p>
+                <p className="text-primary text-[10px] tracking-widest uppercase mb-1 font-bold">{t('featuredLabel')}</p>
                 <h3 className="font-heading text-3xl font-bold text-ink uppercase mb-1 tracking-tight">{featuredProduct.name}</h3>
-                <p className="text-slate-500 text-[10px] tracking-widest uppercase font-semibold">{featuredProduct.descriptor || 'RESEARCH USE ONLY'}</p>
+                <p className="text-slate-500 text-[10px] tracking-widest uppercase font-semibold">{featuredProduct.descriptor || t('researchUseOnly')}</p>
               </div>
               <div className="text-2xl font-bold text-ink font-heading tracking-tight">
                 ${featuredProduct.price}
@@ -84,12 +86,12 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
                 <div className="ml-6 flex-1">
                   <p className="text-slate-500 text-[10px] tracking-widest uppercase mb-1 font-semibold">{product.sku || `NXP-0${idx + 1}`}</p>
                   <h3 className="font-heading text-xl font-bold text-ink uppercase mb-1 tracking-tight">{product.name}</h3>
-                  <p className="text-slate-500 text-[10px] tracking-widest uppercase font-semibold">{product.descriptor || 'RESEARCH USE ONLY'}</p>
+                  <p className="text-slate-500 text-[10px] tracking-widest uppercase font-semibold">{product.descriptor || t('researchUseOnly')}</p>
                 </div>
                 <div className="flex flex-col items-end justify-between h-24">
                   <div className="text-lg font-bold text-ink font-heading tracking-tight">${product.price}</div>
                   <button className="bg-ink hover:bg-slate-700 text-cream text-[9px] font-bold px-6 py-2 rounded-full uppercase tracking-widest transition-all shadow-md mt-auto">
-                    View
+                    {t('viewButton')}
                   </button>
                 </div>
               </Link>
@@ -100,7 +102,7 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
         {/* Footer Button */}
         <div className="flex justify-center mt-12">
           <Link href="/shop" className="bg-ink hover:bg-slate-700 text-cream text-[10px] font-bold px-10 py-4 rounded-full uppercase tracking-widest transition-colors shadow-lg backdrop-blur-md">
-            View Full Catalogue
+            {t('viewFullCatalogue')}
           </Link>
         </div>
       </div>

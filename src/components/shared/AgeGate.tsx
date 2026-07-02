@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 import { ArrowRight, Lock } from 'lucide-react'
 import { useLenis } from 'lenis/react'
-import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { Link, usePathname } from '@/i18n/navigation'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 export function AgeGate() {
+  const t = useTranslations('ageGate')
   const [isVisible, setIsVisible] = useState(false)
   const [hasHydrated, setHasHydrated] = useState(false)
   const [exitDirection, setExitDirection] = useState<'up' | 'down'>('down')
@@ -57,13 +58,13 @@ export function AgeGate() {
       document.documentElement.style.overflow = ''
       document.body.style.overflow = ''
       lenis?.start()
-      videos.forEach(v => v.play())
+      videos.forEach(v => v.play().catch(() => {}))
     }
     return () => {
       document.documentElement.style.overflow = ''
       document.body.style.overflow = ''
       lenis?.start()
-      videos.forEach(v => v.play())
+      videos.forEach(v => v.play().catch(() => {}))
     }
   }, [isVisible, lenis])
 
@@ -126,39 +127,39 @@ export function AgeGate() {
 
                     <div className="max-w-xl w-full flex flex-col items-center sm:items-start text-center sm:text-left shrink-0 mx-auto">
                       <p className="font-bold tracking-[0.2em] uppercase text-primary text-[10px] md:text-xs mb-3">
-                        Restricted Access
+                        {t('restrictedAccess')}
                       </p>
                       <h2 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-ink mb-6 tracking-tighter font-heading uppercase leading-none break-words w-full">
-                        Age<br className="hidden sm:block" /> Verification
+                        {t('titleLine1')}<br className="hidden sm:block" /> {t('titleLine2')}
                       </h2>
-                      
+
                       <div className="w-12 h-[3px] bg-primary mb-6 mx-auto sm:mx-0" />
 
                       <div className="text-ink/80 text-xs sm:text-sm md:text-base leading-relaxed mb-8 space-y-4 font-medium max-w-md">
                         <p>
-                          <strong className="text-ink block mb-1 text-sm md:text-lg">RESEARCH PURPOSES ONLY</strong>
-                          The products on this website are strictly for in-vitro laboratory research. They are <strong>not</strong> for human consumption, supplements, or drugs. 
+                          <strong className="text-ink block mb-1 text-sm md:text-lg">{t('disclaimerLabel')}</strong>
+                          {t.rich('disclaimerText', { strong: (chunks) => <strong>{chunks}</strong> })}
                         </p>
                         <p className="font-bold text-ink">
-                          By clicking confirm, you acknowledge the intended use of these compounds and verify you are of legal age.
+                          {t('consentText')}
                         </p>
                       </div>
 
                       {/* Dual Buttons */}
                       <div className="flex flex-col sm:flex-row w-full gap-4 mt-2 max-w-sm mx-auto sm:mx-0">
                         <div className="flex-1">
-                          <FluidButton 
+                          <FluidButton
                             onClick={handleVerify}
-                            text="18+ Older"
+                            text={t('confirmButton')}
                             variant="dark"
                             className="w-full min-w-full"
                           />
                         </div>
-                        <button 
+                        <button
                           onClick={handleDeny}
                           className="flex-1 bg-transparent text-ink border border-ink/20 px-6 py-4 rounded-full font-bold uppercase tracking-widest text-xs md:text-sm hover:bg-black/5 hover:border-black/30 transition-colors active:scale-95 duration-200"
                         >
-                          Under 18
+                          {t('denyButton')}
                         </button>
                       </div>
                     </div>
@@ -166,7 +167,7 @@ export function AgeGate() {
                     <div className="flex-auto min-h-[1rem]"></div>
 
                     <div className="mt-8 text-ink/30 text-[9px] uppercase tracking-[0.2em] text-center sm:text-left shrink-0 max-w-xl w-full mx-auto pb-4 md:pb-0">
-                      By entering, you agree to our <Link href="/terms-and-conditions" className="hover:text-primary transition-colors underline underline-offset-2 opacity-80 hover:opacity-100">Terms of Service</Link>
+                      {t('agreementPrefix')} <Link href="/terms-and-conditions" className="hover:text-primary transition-colors underline underline-offset-2 opacity-80 hover:opacity-100">{t('termsLink')}</Link>
                     </div>
                   </motion.div>
                 ) : (
@@ -188,22 +189,22 @@ export function AgeGate() {
                     </motion.div>
 
                     <h2 className="text-4xl md:text-6xl font-black text-red-600 mb-4 tracking-tighter font-heading uppercase leading-none">
-                      Access Denied
+                      {t('deniedTitle')}
                     </h2>
-                    
+
                     <div className="w-12 h-[3px] bg-red-600 mb-6" />
 
                     <div className="text-ink/80 text-sm md:text-base leading-relaxed mb-10 max-w-md font-medium">
                       <p>
-                        Due to the strict nature of research chemicals, you must be 18 years of age or older to enter this site.
+                        {t('deniedText')}
                       </p>
                     </div>
 
-                    <button 
+                    <button
                       onClick={handleGoBack}
                       className="text-xs uppercase tracking-widest font-bold text-ink/60 hover:text-ink transition-colors border-b border-ink/20 pb-1 hover:border-ink"
                     >
-                      Wait, I made a mistake
+                      {t('goBack')}
                     </button>
                   </motion.div>
                 )}
@@ -236,8 +237,8 @@ export function AgeGate() {
                 </div>
 
                 <div className={`absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white pointer-events-none transition-[opacity,transform] duration-700 will-change-[opacity,transform] ${isDenied ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-                  <p className="font-bold tracking-widest uppercase text-[9px] md:text-[10px] opacity-80 mb-1 md:mb-2">Purity Guaranteed</p>
-                  <p className="font-heading text-xl md:text-3xl drop-shadow-lg leading-none">99.1% HPLC<br/>Verified</p>
+                  <p className="font-bold tracking-widest uppercase text-[9px] md:text-[10px] opacity-80 mb-1 md:mb-2">{t('purityGuaranteed')}</p>
+                  <p className="font-heading text-xl md:text-3xl drop-shadow-lg leading-none">{t('hplcVerifiedLine1')}<br/>{t('hplcVerifiedLine2')}</p>
                 </div>
               </div>
 

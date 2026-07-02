@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
 import Image from 'next/image'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { ShoppingBag, Menu, Search, X, User, Copy, Timer } from 'lucide-react'
@@ -13,22 +12,24 @@ import dynamic from 'next/dynamic'
 import { SearchOverlay } from './SearchOverlay'
 import { BLOG_POSTS } from '@/data/blog-posts'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod => mod.CartDrawer), { ssr: false })
 
 const ANNOUNCEMENTS = [
   {
-    text: "SUMMER SALE: 15% OFF ALL PEPTIDES",
+    key: "summerSale",
     couponCode: "SUMMER15",
     expiresAt: new Date(Date.now() + 86400000).toISOString() // 24 hours
   },
   {
-    text: "FREE EXPRESS SHIPPING ON ORDERS OVER $200",
+    key: "freeShipping",
     couponCode: "FREESHIP",
     expiresAt: new Date(Date.now() + 172800000).toISOString() // 48 hours
   },
   {
-    text: "NEW PEPTIDE BLENDS JUST DROPPED",
+    key: "newBlends",
     couponCode: null,
     expiresAt: null
   }
@@ -89,11 +90,13 @@ function CountdownTimer({ expiresAt }: { expiresAt: string }) {
 }
 
 function CouponBox({ code }: { code: string }) {
+  const t = useTranslations('header')
+
   const handleCopy = (e: React.MouseEvent) => {
     e.stopPropagation()
     navigator.clipboard.writeText(code)
-    toast.success("Coupon copied to clipboard!", {
-      description: `Use code ${code} at checkout.`,
+    toast.success(t('couponCopiedTitle'), {
+      description: t('couponCopiedDescription', { code }),
     })
   }
 
@@ -103,7 +106,7 @@ function CouponBox({ code }: { code: string }) {
       whileTap={{ scale: 0.95 }}
       onClick={handleCopy}
       className="flex items-center gap-2 border border-dashed border-white/40 hover:border-white/80 bg-white/5 hover:bg-white/10 transition-colors px-3 py-1 rounded-md text-[10px] font-bold tracking-widest"
-      title="Click to copy coupon"
+      title={t('clickToCopy')}
     >
       {code}
       <Copy size={10} />
@@ -112,6 +115,7 @@ function CouponBox({ code }: { code: string }) {
 }
 
 export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLoggedIn = false, categories: initialCategories = [], initialWishlistItems = [], initialCartItems = [] }: any) {
+  const t = useTranslations('header')
   const cartStore = useCartStore()
   const setCartItems = useCartStore((state) => state.setItems)
   const setWishlistItems = useWishlistStore((state) => state.setItems)
@@ -145,7 +149,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
 
   useEffect(() => {
     if (initialCategories.length === 0) {
-      import('@/app/(frontend)/actions/megaMenu').then(module => {
+      import('@/app/[locale]/(frontend)/actions/megaMenu').then(module => {
         module.getMegaMenuData().then(data => {
           setCategoriesData(data)
           setIsLoadingMenu(false)
@@ -164,7 +168,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       if (initialCartItems.length > 0) {
         setCartItems(initialCartItems)
       } else if (localItems.length > 0) {
-        import('@/app/(frontend)/actions/cart').then(m => m.syncCartToPayload(localItems))
+        import('@/app/[locale]/(frontend)/actions/cart').then(m => m.syncCartToPayload(localItems))
       }
       cartHydrated.current = true
     }
@@ -177,7 +181,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       if (initialWishlistItems.length > 0) {
         setWishlistItems(initialWishlistItems)
       } else if (localItems.length > 0) {
-        import('@/app/(frontend)/actions/wishlist').then(m => {
+        import('@/app/[locale]/(frontend)/actions/wishlist').then(m => {
           localItems.forEach(item => m.toggleWishlistInPayload(item.id, true))
         })
       }
@@ -276,37 +280,37 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           return (
             <>
               <Link href="/shop" className={getNavLinkClass('/shop')}>
-                SHOP
+                {t('navShop')}
               </Link>
-              
-              <div 
+
+              <div
                 className="h-full flex items-center cursor-pointer"
                 onMouseEnter={handleMenuEnter}
                 onMouseLeave={handleMenuLeave}
               >
                 <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[8px] 2xl:text-[10px] font-heading tracking-normal 2xl:tracking-[0.1em] uppercase transition-all h-full py-2 font-medium whitespace-nowrap ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
-                  CATEGORIES
+                  {t('navCategories')}
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
                 </Link>
               </div>
-              
+
               <Link href="/peptide-calculator" className={getNavLinkClass('/peptide-calculator')}>
-                CALCULATOR
+                {t('navCalculator')}
               </Link>
               <Link href="/about" className={getNavLinkClass('/about')}>
-                ABOUT
+                {t('navAbout')}
               </Link>
               <Link href="/blog" className={getNavLinkClass('/blog')}>
-                BLOG
+                {t('navBlog')}
               </Link>
               <Link href="/faq" className={getNavLinkClass('/faq')}>
-                FAQ
+                {t('navFaq')}
               </Link>
               <Link href="/contact" className={getNavLinkClass('/contact')}>
-                CONTACT
+                {t('navContact')}
               </Link>
               <Link href="/affiliates" className={getNavLinkClass('/affiliates')}>
-                AFFILIATES
+                {t('navAffiliates')}
               </Link>
             </>
           )
@@ -318,7 +322,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
         <button 
           onClick={() => setIsSearchOpen(true)}
           className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}
-          aria-label="Open search"
+          aria-label={t('openSearch')}
         >
           <Search size={18} strokeWidth={1.5} />
         </button>
@@ -339,6 +343,8 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           </AnimatePresence>
         </button>
         
+        <LanguageSwitcher className={`${textColor} hidden sm:flex`} />
+
         <div className="flex items-center justify-center">
           {mounted ? (
             isLoggedIn ? (
@@ -350,7 +356,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
         </div>
         
         <Link href="/shop" className={`hidden md:inline-flex border border-white/30 hover:border-white bg-transparent hover:bg-white text-white hover:text-black rounded-full px-4 py-2 2xl:px-6 2xl:py-2.5 text-[8.5px] 2xl:text-[11px] font-heading font-bold tracking-normal 2xl:tracking-[0.1em] uppercase transition-colors duration-300 whitespace-nowrap`}>
-          SHOP NOW
+          {t('shopNow')}
         </Link>
 
         {/* Mobile Hamburger */}
@@ -396,7 +402,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                     {/* Desktop Layout */}
                     <div className="hidden md:flex flex-row items-center justify-center gap-6 w-full">
                       <span className="text-[11px] font-heading font-bold tracking-[0.2em] uppercase text-center shrink-0 mt-[2px]">
-                        {ANNOUNCEMENTS[announcementIndex].text}
+                        {t(`announcements.${ANNOUNCEMENTS[announcementIndex].key}`)}
                       </span>
                       {ANNOUNCEMENTS[announcementIndex].couponCode && ANNOUNCEMENTS[announcementIndex].expiresAt && (
                         <div className="flex items-center gap-3 shrink-0">
@@ -418,7 +424,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                             transition={{ duration: 0.2 }}
                             className="text-[9px] font-heading font-bold tracking-[0.1em] uppercase text-center mt-[1px] absolute w-full px-6 leading-snug"
                           >
-                            {ANNOUNCEMENTS[announcementIndex].text}
+                            {t(`announcements.${ANNOUNCEMENTS[announcementIndex].key}`)}
                           </motion.span>
                         ) : (
                           <motion.div
@@ -440,7 +446,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                 <button 
                   onClick={closeAnnouncement}
                   className="absolute right-2 md:right-4 text-white/70 hover:text-white transition-colors z-10 p-2 md:p-0"
-                  aria-label="Close announcement"
+                  aria-label={t('closeAnnouncement')}
                 >
                   <X size={14} strokeWidth={2} />
                 </button>
@@ -499,7 +505,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           <div className="w-full flex flex-col md:flex-row relative z-10 text-white min-h-[350px] xl:min-h-[450px]">
             {/* Left side: Massive typography list (40%) */}
             <div className="w-full md:w-2/5 flex flex-col justify-center py-6 px-8 xl:px-16 border-r border-white/5 relative z-20">
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] mb-4 xl:mb-6">Navigation</span>
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] mb-4 xl:mb-6">{t('megaMenu.navigation')}</span>
               <div className="flex flex-col gap-2 xl:gap-4">
                 {isLoadingMenu ? (
                   Array.from({ length: 5 }).map((_, i) => (
@@ -540,15 +546,15 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                     {/* Header for Right Side */}
                     <div className="w-full flex justify-between items-end mb-4 xl:mb-6 relative z-20">
                       <div className="flex flex-col">
-                        <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-1">Featured Formulations</span>
+                        <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-1">{t('megaMenu.featuredFormulations')}</span>
                         <h4 className="text-xl xl:text-2xl font-light text-white">{cat.name}</h4>
                       </div>
-                      <Link 
-                        href={`/shop?category=${encodeURIComponent(cat.name)}`} 
+                      <Link
+                        href={`/shop?category=${encodeURIComponent(cat.name)}`}
                         onClick={() => setIsMegaMenuOpen(false)}
                         className="inline-flex items-center gap-2 px-5 py-2 xl:px-6 xl:py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-colors text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] backdrop-blur-md"
                       >
-                        Explore Category &rarr;
+                        {t('megaMenu.exploreCategory')} &rarr;
                       </Link>
                     </div>
 
@@ -571,9 +577,9 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                                 <div className="flex flex-col gap-1.5 xl:gap-2 mb-3 relative z-20">
                                   <div className="pr-4">
                                     <h3 className="text-xs xl:text-sm font-semibold text-ink tracking-tight line-clamp-1">{prod.name}</h3>
-                                    <p className="text-primary text-[8px] xl:text-[9px] font-bold uppercase tracking-[0.1em] mt-0.5">{prod.category || 'RESEARCH PEPTIDE'}</p>
+                                    <p className="text-primary text-[8px] xl:text-[9px] font-bold uppercase tracking-[0.1em] mt-0.5">{prod.category || t('megaMenu.researchPeptideFallback')}</p>
                                   </div>
-                                  <p className="text-ink/60 text-[9px] xl:text-[10px] leading-tight line-clamp-2">{prod.shortDescription || `Highly purified synthetic peptide prepared for rigorous laboratory research.`}</p>
+                                  <p className="text-ink/60 text-[9px] xl:text-[10px] leading-tight line-clamp-2">{prod.shortDescription || t('megaMenu.productDescriptionFallback')}</p>
                                 </div>
                                 
                                 {/* Inner Image Container */}
@@ -582,7 +588,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
                                   
                                   <div className="absolute bottom-2 left-2 xl:bottom-3 xl:left-3 z-20 flex flex-col">
-                                    <span className="text-white/80 text-[7px] xl:text-[8px] font-bold tracking-[0.1em] uppercase mb-0.5">From</span>
+                                    <span className="text-white/80 text-[7px] xl:text-[8px] font-bold tracking-[0.1em] uppercase mb-0.5">{t('megaMenu.from')}</span>
                                     <span className="text-white text-xs xl:text-sm font-light tracking-tight">
                                       {prod.priceRange ? (typeof prod.priceRange === 'string' ? prod.priceRange.replace('From ', '') : prod.priceRange) : `$${prod.price}`}
                                     </span>
@@ -599,7 +605,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                       </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center opacity-50 flex-1">
-                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em]">New arrivals pending</span>
+                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em]">{t('megaMenu.newArrivalsPending')}</span>
                       </div>
                     )}
                   </div>

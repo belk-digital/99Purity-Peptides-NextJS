@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslations } from 'next-intl'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { Container } from '@/components/ui/container'
 import { Input } from '@/components/ui/input'
@@ -6,6 +7,7 @@ import { FluidButton } from '@/components/ui/fluid-button'
 import Image from 'next/image'
 
 export function Newsletter() {
+  const t = useTranslations('home.newsletter')
   return (
     <section className="relative z-10 w-full py-32 overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 z-0 bg-black">
@@ -22,19 +24,19 @@ export function Newsletter() {
         
         <FadeUp>
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4 block">
-            STAY INFORMED
+            {t('eyebrow')}
           </span>
         </FadeUp>
-        
+
         <FadeUp delay={0.1}>
           <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black text-white leading-none tracking-tighter uppercase mb-6">
-            Quiet updates.
+            {t('title')}
           </h2>
         </FadeUp>
-        
+
         <FadeUp delay={0.2}>
           <p className="text-white/70 text-lg max-w-lg leading-relaxed">
-            New compounds and research notes — no marketing noise.
+            {t('description')}
           </p>
         </FadeUp>
         
@@ -47,26 +49,26 @@ export function Newsletter() {
             }}
             className="flex flex-col md:flex-row gap-3 max-w-md mx-auto mt-12 w-full"
           >
-            <Input 
-              type="email" 
+            <Input
+              type="email"
               name="email"
-              placeholder="your@email.com" 
+              placeholder={t('emailPlaceholder')}
               required
               className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary min-w-0"
             />
             <div className="shrink-0 flex justify-center w-full md:w-auto">
-              <FluidButton 
-                type="submit" 
-                text="SUBSCRIBE" 
+              <FluidButton
+                type="submit"
+                text={t('subscribeButton')}
                 variant="cyan"
               />
             </div>
           </form>
         </FadeUp>
-        
+
         <FadeUp delay={0.4}>
           <p className="text-xs font-medium tracking-wide text-white/40 mt-6 uppercase">
-            Unsubscribe at any time.
+            {t('unsubscribeNote')}
           </p>
         </FadeUp>
 

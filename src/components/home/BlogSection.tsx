@@ -2,14 +2,16 @@
 
 import React, { useState } from 'react'
 import { motion, Variants, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 import { BLOG_POSTS } from '@/data/blog-posts'
 
 export function BlogSection() {
+  const t = useTranslations('home.blogSection')
   const [hoveredCol, setHoveredCol] = useState<number | null>(null);
   const [hoveredCol2, setHoveredCol2] = useState<number | null>(null);
 
@@ -73,16 +75,16 @@ export function BlogSection() {
         >
           <div className="w-full md:w-2/3">
             <h2 className="font-heading text-[2.2rem] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter uppercase break-words mb-4">
-              Latest Peptide<br />Research Resources
+              {t('titleLine1')}<br />{t('titleLine2')}
             </h2>
             <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-xl">
-              Insights from the lab and the field
+              {t('subtitle')}
             </p>
           </div>
           <div className="w-full md:w-1/3 flex justify-start md:justify-end mt-6 md:mt-0">
-            <FluidButton 
-              href="/blog" 
-              text="View Blog" 
+            <FluidButton
+              href="/blog"
+              text={t('ctaText')}
               variant="white"
             />
           </div>
@@ -96,10 +98,10 @@ export function BlogSection() {
             className="inline-flex rounded-full border border-white/10 p-1.5 bg-white/5 backdrop-blur-md"
           >
             <button className="px-6 py-2 rounded-full bg-white text-black text-sm font-semibold shadow-md">
-              Peptide Science
+              {t('tabPeptideScience')}
             </button>
             <button className="px-6 py-2 rounded-full text-white/70 hover:text-white text-sm font-semibold transition-colors">
-              Lab Updates
+              {t('tabLabUpdates')}
             </button>
           </motion.div>
         </div>

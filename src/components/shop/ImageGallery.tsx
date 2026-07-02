@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import useEmblaCarousel from 'embla-carousel-react'
+import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 
 export interface ImageGalleryProps {
@@ -10,6 +11,7 @@ export interface ImageGalleryProps {
 }
 
 export function ImageGallery({ images }: ImageGalleryProps) {
+  const t = useTranslations('shop.imageGallery')
   const [activeIndex, setActiveIndex] = useState(0)
   
   // Embla for mobile swipe
@@ -70,11 +72,11 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                     ? "ring-1 ring-black ring-offset-[3px] ring-offset-[#F2EDE4] opacity-100"
                     : "opacity-40 hover:opacity-70"
                 )}
-                aria-label={`View image ${idx + 1}`}
+                aria-label={t('viewImage', { number: idx + 1 })}
               >
                 <Image
                   src={img}
-                  alt={`Thumbnail ${idx + 1}`}
+                  alt={t('thumbnailAlt', { number: idx + 1 })}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 56px, 68px"
@@ -100,7 +102,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
             >
               <Image
                 src={img}
-                alt={`Product view ${idx + 1}`}
+                alt={t('productViewAlt', { number: idx + 1 })}
                 fill
                 priority={idx === 0}
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"

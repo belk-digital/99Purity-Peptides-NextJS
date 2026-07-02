@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, X, Loader2, Zap, Sparkles, BatteryCharging, Dna, ArrowRight, Command, Activity, Brain, ShieldPlus, Network } from 'lucide-react'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 
 interface SearchOverlayProps {
@@ -12,17 +13,18 @@ interface SearchOverlayProps {
 }
 
 const QUICK_CATEGORIES = [
-  { name: 'Metabolic Research', icon: Zap, href: '/shop/metabolic' },
-  { name: 'Growth Factor Research', icon: Sparkles, href: '/shop/growth-factor' },
-  { name: 'Recovery Research', icon: BatteryCharging, href: '/shop/recovery' },
-  { name: 'Cellular Health Research', icon: Dna, href: '/shop/cellular-health' },
-  { name: 'Bioregulators', icon: Activity, href: '/shop/bioregulators' },
-  { name: 'Cognitive Research', icon: Brain, href: '/shop/cognitive' },
-  { name: 'Essentials', icon: ShieldPlus, href: '/shop/essentials' },
-  { name: 'Receptor Agonist', icon: Network, href: '/shop/receptor-agonist' },
+  { key: 'metabolic', icon: Zap, href: '/shop/metabolic' },
+  { key: 'growthFactor', icon: Sparkles, href: '/shop/growth-factor' },
+  { key: 'recovery', icon: BatteryCharging, href: '/shop/recovery' },
+  { key: 'cellularHealth', icon: Dna, href: '/shop/cellular-health' },
+  { key: 'bioregulators', icon: Activity, href: '/shop/bioregulators' },
+  { key: 'cognitive', icon: Brain, href: '/shop/cognitive' },
+  { key: 'essentials', icon: ShieldPlus, href: '/shop/essentials' },
+  { key: 'receptorAgonist', icon: Network, href: '/shop/receptor-agonist' },
 ]
 
 export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
+  const t = useTranslations('searchOverlay')
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -109,7 +111,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               <input
                 ref={inputRef}
                 type="text"
-                placeholder="Search compounds..."
+                placeholder={t('placeholder')}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="flex-1 bg-transparent text-xl sm:text-2xl text-black placeholder:text-black/30 focus:outline-none font-medium"
@@ -126,8 +128,8 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             <div className="flex-1 overflow-y-auto max-h-[60vh]">
               {query && !isLoading && results.length === 0 && (
                 <div className="text-center py-20">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-2">0 Results Found</p>
-                  <p className="text-sm text-black/40">Try adjusting your search terms.</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 mb-2">{t('noResults')}</p>
+                  <p className="text-sm text-black/40">{t('tryAdjusting')}</p>
                 </div>
               )}
 
@@ -136,15 +138,15 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                 <div className="py-2">
                   <div className="flex items-center gap-4 px-6 pt-6">
                     <span className="text-[9px] font-bold uppercase tracking-widest text-black/40 shrink-0">
-                      Quick Categories
+                      {t('quickCategories')}
                     </span>
                     <div className="flex-1 h-px bg-black/5" />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
                     {QUICK_CATEGORIES.map((cat, index) => (
                       <Link
-                        key={cat.name}
+                        key={cat.key}
                         href={cat.href}
                         onClick={onClose}
                         className={`group items-center p-4 rounded-2xl bg-[#FAFAFA] border border-black/5 hover:border-black/20 hover:bg-white transition-all shadow-sm hover:shadow-md ${
@@ -155,7 +157,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                           <cat.icon size={18} className="text-black" strokeWidth={1.5} />
                         </div>
                         <span className="ml-4 text-sm font-semibold text-black flex-1">
-                          {cat.name}
+                          {t(`categories.${cat.key}`)}
                         </span>
                         <ArrowRight size={16} className="text-black/20 group-hover:text-black/60 transition-colors" />
                       </Link>
@@ -169,7 +171,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                 <div className="py-2">
                   <div className="flex items-center gap-4 px-6 pt-6">
                     <span className="text-[9px] font-bold uppercase tracking-widest text-black/40 shrink-0">
-                      Search Results ({results.length})
+                      {t('searchResults', { count: results.length })}
                     </span>
                     <div className="flex-1 h-px bg-black/5" />
                   </div>
@@ -224,25 +226,25 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-[10px] font-bold text-black uppercase tracking-[0.2em] mb-0.5">
-                    Institutional Access
+                    {t('institutionalAccess')}
                   </p>
                   <p className="text-[10px] text-black/40">
-                    Use <kbd className="font-sans px-1 py-0.5 bg-black/5 rounded mx-1">⌘ + K</kbd> to search from any laboratory module
+                    {t.rich('kbdHint', { kbd: (chunks) => <kbd className="font-sans px-1 py-0.5 bg-black/5 rounded mx-1">{chunks}</kbd> })}
                   </p>
                 </div>
                 <div className="block sm:hidden">
                   <p className="text-[10px] font-bold text-black uppercase tracking-[0.2em]">
-                    Institutional Access
+                    {t('institutionalAccess')}
                   </p>
                 </div>
               </div>
-              
-              <Link 
-                href="/faq" 
+
+              <Link
+                href="/faq"
                 onClick={onClose}
                 className="px-4 py-2 border border-black/10 rounded-full text-[9px] font-bold uppercase tracking-widest text-black hover:bg-black hover:text-white transition-colors shrink-0"
               >
-                Help Center
+                {t('helpCenter')}
               </Link>
             </div>
             

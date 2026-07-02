@@ -5,8 +5,10 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { CheckCircle2, ArrowRight, Beaker, ShieldAlert } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export function OurServices() {
+  const t = useTranslations('content.ourServices')
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -105,12 +107,12 @@ export function OurServices() {
         >
           <motion.h2 variants={titleVariants} className="font-mono text-xs uppercase tracking-[0.3em] text-primary mb-6 font-bold flex items-center justify-center gap-4">
             <span className="w-12 h-[1px] bg-primary/30"></span>
-            Our Capabilities
+            {t('capabilitiesLabel')}
             <span className="w-12 h-[1px] bg-primary/30"></span>
           </motion.h2>
           <motion.h3 variants={titleVariants} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-black text-ink tracking-tighter uppercase mb-6 leading-[1.1] break-words">
-            Synthetic Research<br/>
-            <span className="text-primary">Peptide Supply</span>
+            {t('titleLine1')}<br/>
+            <span className="text-primary">{t('titleLine2')}</span>
           </motion.h3>
         </motion.div>
 
@@ -142,10 +144,10 @@ export function OurServices() {
                   <Beaker strokeWidth={1.5} className="w-8 h-8 text-ink group-hover:text-white transition-colors duration-500" />
                 </div>
                 <h4 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-black text-ink uppercase tracking-tight mb-6 group-hover:text-white transition-colors duration-500 break-words">
-                  Laboratory Grade Excellence
+                  {t('card1Title')}
                 </h4>
                 <p className="text-ink/70 text-lg font-light leading-relaxed max-w-xl group-hover:text-white/80 transition-colors duration-500">
-                  99 Purity Peptides supplies chemically synthesised research peptides across multiple laboratory research categories. Our catalogue of laboratory-grade peptides supports analytical environments where structured classification and documented purity standards are required.
+                  {t('card1Text')}
                 </p>
               </div>
             </div>
@@ -165,14 +167,14 @@ export function OurServices() {
 
             <div className="relative z-10 h-full flex flex-col justify-end">
               <h4 className="text-2xl font-heading font-black text-ink uppercase tracking-tight mb-4 group-hover:text-white transition-colors duration-500 break-words">
-                Exclusive Application
+                {t('card2Title')}
               </h4>
               <p className="text-primary font-medium mb-4 text-base group-hover:text-white/90 transition-colors duration-500">
-                All materials are provided exclusively for laboratory and analytical research applications.
+                {t('card2Text1')}
               </p>
               <div className="w-12 h-[1px] bg-ink/10 mb-4 group-hover:bg-white/20 transition-colors duration-500" />
               <p className="text-ink/40 text-sm font-light italic group-hover:text-white/60 transition-colors duration-500">
-                We do not provide medical consultation, dosage guidance, or application recommendations.
+                {t('card2Text2')}
               </p>
             </div>
           </motion.div>
@@ -194,24 +196,24 @@ export function OurServices() {
                     <CheckCircle2 className="w-6 h-6 text-primary group-hover:text-primary transition-colors duration-500" strokeWidth={2} />
                   </div>
                   <h4 className="text-sm font-mono tracking-[0.2em] text-ink/40 uppercase font-bold group-hover:text-white/50 transition-colors duration-500">
-                    Research Commitment
+                    {t('footerLabel')}
                   </h4>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-heading font-black text-ink uppercase tracking-tight leading-tight group-hover:text-white transition-colors duration-500 break-words">
-                  Supporting Controlled Scientific Environments
+                  {t('footerTitle')}
                 </h3>
                 <p className="text-ink/60 font-light mt-4 text-base group-hover:text-white/70 transition-colors duration-500">
-                  99 Purity Peptides functions solely as a research material supplier. Operational support includes:
+                  {t('footerText')}
                 </p>
               </div>
 
               {/* Right List Area */}
               <div className="w-full lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
                 {[
-                  "Order processing",
-                  "Documentation access",
-                  "Product classification clarification",
-                  "General sourcing inquiries"
+                  t('listItems.orderProcessing'),
+                  t('listItems.documentationAccess'),
+                  t('listItems.productClassification'),
+                  t('listItems.sourcingInquiries')
                 ].map((item, i) => (
                   <div 
                     key={i}

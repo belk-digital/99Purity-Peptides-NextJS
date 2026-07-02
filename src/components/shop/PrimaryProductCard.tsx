@@ -2,10 +2,11 @@
 
 import React, { useState, useRef } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { Heart, ShoppingCart, ChevronRight, Check, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@clerk/nextjs'
+import { useTranslations } from 'next-intl'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import { useCartStore } from '@/lib/cart/store'
 import { toast } from 'sonner'
@@ -31,6 +32,7 @@ export interface PrimaryProductCardProps {
 }
 
 function SlideToAddButton({ product }: { product: Product }) {
+  const t = useTranslations('shop.primaryProductCard')
   const containerRef = useRef<HTMLDivElement>(null)
   const [isAdded, setIsAdded] = useState(false)
   const cartStore = useCartStore()
@@ -43,8 +45,8 @@ function SlideToAddButton({ product }: { product: Product }) {
       parseFloat(product.priceRange.replace(/[^0-9.]/g, '')) || 0
     )
     setIsAdded(true)
-    toast.success('Added to cart', { 
-      action: { label: 'VIEW', onClick: cartStore.openCart } 
+    toast.success(t('addedToCart'), {
+      action: { label: t('view'), onClick: cartStore.openCart }
     })
     cartStore.openCart()
     setTimeout(() => setIsAdded(false), 2000)
@@ -77,7 +79,7 @@ function SlideToAddButton({ product }: { product: Product }) {
       className="relative w-full h-[40px] sm:h-[52px] bg-[#F1F1F1] rounded-full flex items-center overflow-hidden pointer-events-auto z-20 mt-auto border border-black/5"
     >
       <div className="absolute inset-0 flex items-center justify-center pl-8 sm:pl-10 text-[9px] sm:text-[12px] lg:text-[13px] font-semibold text-ink/40 pointer-events-none select-none tracking-tight">
-        Slide to add <ChevronRight size={14} className="inline ml-0.5" />
+        {t('slideToAdd')} <ChevronRight size={14} className="inline ml-0.5" />
       </div>
       
       <motion.button
@@ -99,8 +101,9 @@ function SlideToAddButton({ product }: { product: Product }) {
 }
 
 export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProductCardProps) {
+  const t = useTranslations('shop.primaryProductCard')
   const imageAspectClass = size === 'tall' ? 'aspect-[4/5]' : 'aspect-[3/4]';
-  
+
   const addItem = useWishlistStore(state => state.addItem)
   const removeItem = useWishlistStore(state => state.removeItem)
   const isWishlistedGlobal = useWishlistStore(state => product.id ? state.hasItem(product.id) : false)
@@ -119,15 +122,15 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
     e.stopPropagation()
     
     if (!isSignedIn) {
-      toast.error('Sign in required', {
-        description: 'Please log in to add items to your wishlist.',
+      toast.error(t('signInRequired'), {
+        description: t('signInRequiredDescription'),
       })
       return
     }
 
     if (!product.id) {
-      toast.error('Product ID missing', {
-        description: 'Unable to add this product to wishlist.',
+      toast.error(t('productIdMissing'), {
+        description: t('productIdMissingDescription'),
       })
       return
     }
@@ -137,9 +140,9 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
     try {
       if (inWishlist) {
         await removeItem(product.id)
-        toast('Removed from wishlist', {
+        toast(t('removedFromWishlist'), {
           id: `wishlist-${product.id}`,
-          description: `${product.name} has been removed.`,
+          description: t('removedFromWishlistDescription', { name: product.name }),
         })
       } else {
         await addItem({
@@ -151,18 +154,18 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
         })
         setShowParticles(true)
         setTimeout(() => setShowParticles(false), 1000)
-        toast.success('Added to wishlist', {
+        toast.success(t('addedToWishlist'), {
           id: `wishlist-${product.id}`,
-          description: `${product.name} is now in your wishlist.`,
+          description: t('addedToWishlistDescription', { name: product.name }),
           action: {
-            label: 'View Wishlist',
+            label: t('viewWishlist'),
             onClick: () => window.location.href = '/account/wishlist',
           },
         })
       }
     } catch (error: any) {
-      toast.error('Failed to update wishlist', {
-        description: error.message || 'An unexpected error occurred.',
+      toast.error(t('failedToUpdateWishlist'), {
+        description: error.message || t('unexpectedError'),
       })
     } finally {
       setIsPending(false)
@@ -181,7 +184,7 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
         {(product.originalPrice || product.discountPercentage) && (
           <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20">
             <span className="bg-red-600 text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-sm shadow-sm">
-              Sale
+              {t('sale')}
             </span>
           </div>
         )}
@@ -262,7 +265,7 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
         
         {/* Description - ALWAYS VISIBLE */}
         <p className="text-[11px] sm:text-sm text-ink/60 line-clamp-2 mb-3 sm:mb-4 font-light leading-relaxed">
-          {product.shortDescription || `Experience the pure benefits of ${product.name}.`}
+          {product.shortDescription || t('experiencePureBenefits', { name: product.name })}
         </p>
         
         {/* Price Area - Pushed to bottom above slider */}
@@ -289,7 +292,7 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
 
       {/* Absolute Link overlay so entire card is clickable */}
       <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10">
-        <span className="sr-only">View {product.name}</span>
+        <span className="sr-only">{t('viewProduct', { name: product.name })}</span>
       </Link>
     </div>
   )

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
-import { 
-  X, Search, Heart, User, LogIn, 
+import {
+  X, Search, Heart, User, LogIn,
   Activity, Dna, Brain, ShieldPlus, Sparkles, Zap, Network, BatteryCharging,
   BookOpen, Microscope, Calculator, HelpCircle, Mail, Users, ArrowRight
 } from 'lucide-react'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 
 export interface MobileMenuProps {
   isOpen: boolean
@@ -15,30 +16,31 @@ export interface MobileMenuProps {
 }
 
 const CATEGORIES = [
-  { name: 'Bioregulators', icon: Activity },
-  { name: 'Cellular Health', icon: Dna },
-  { name: 'Cognitive', icon: Brain },
-  { name: 'Essentials', icon: ShieldPlus },
-  { name: 'Growth Factor', icon: Sparkles },
-  { name: 'Metabolic', icon: Zap },
-  { name: 'Receptor Agonist', icon: Network },
-  { name: 'Recovery', icon: BatteryCharging }
+  { name: 'Bioregulators', key: 'bioregulators', icon: Activity },
+  { name: 'Cellular Health', key: 'cellularHealth', icon: Dna },
+  { name: 'Cognitive', key: 'cognitive', icon: Brain },
+  { name: 'Essentials', key: 'essentials', icon: ShieldPlus },
+  { name: 'Growth Factor', key: 'growthFactor', icon: Sparkles },
+  { name: 'Metabolic', key: 'metabolic', icon: Zap },
+  { name: 'Receptor Agonist', key: 'receptorAgonist', icon: Network },
+  { name: 'Recovery', key: 'recovery', icon: BatteryCharging }
 ]
 
 const MAIN_LINKS = [
-  { label: 'Shop Formulations', href: '/shop' },
-  { label: 'Peptide Calculator', href: '/peptide-calculator' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Our Laboratory', href: '/about' },
+  { key: 'shopFormulations', href: '/shop' },
+  { key: 'peptideCalculator', href: '/peptide-calculator' },
+  { key: 'blog', href: '/blog' },
+  { key: 'ourLaboratory', href: '/about' },
 ]
 
 const SUPPORT_LINKS = [
-  { label: 'F.A.Q', href: '/faq', icon: HelpCircle },
-  { label: 'Contact Support', href: '/contact', icon: Mail },
-  { label: 'Affiliate Program', href: '/affiliates', icon: Users },
+  { key: 'faq', href: '/faq', icon: HelpCircle },
+  { key: 'contactSupport', href: '/contact', icon: Mail },
+  { key: 'affiliateProgram', href: '/affiliates', icon: Users },
 ]
 
 export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick }: MobileMenuProps) {
+  const t = useTranslations('mobileMenu')
 
   useEffect(() => {
     if (isOpen) {
@@ -93,7 +95,7 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
             <div className="flex-1" />
             
             <span className="font-heading text-xs font-bold uppercase tracking-[0.3em] text-ink/50 flex-1 text-center">
-              Menu
+              {t('menu')}
             </span>
             
             <div className="flex flex-1 justify-end">
@@ -111,14 +113,14 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
               {/* Massive Main Links */}
               <div className="flex flex-col gap-6 sm:gap-8">
                 {MAIN_LINKS.map((link) => (
-                  <motion.div key={link.label} variants={itemVariants}>
-                    <Link 
-                      href={link.href} 
+                  <motion.div key={link.key} variants={itemVariants}>
+                    <Link
+                      href={link.href}
                       onClick={onClose}
                       className="group flex items-center justify-between"
                     >
                       <h2 className="font-heading text-3xl sm:text-4xl font-black text-ink tracking-tight group-hover:text-primary transition-colors duration-300">
-                        {link.label}
+                        {t(`links.${link.key}`)}
                       </h2>
                       <ArrowRight size={24} className="text-ink/20 group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" strokeWidth={1.5} />
                     </Link>
@@ -130,19 +132,19 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
 
               {/* Categories Sleek List */}
               <motion.div variants={itemVariants} className="flex flex-col">
-                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-6">Explore Categories</h3>
+                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-6">{t('exploreCategories')}</h3>
                 <div className="flex flex-col gap-4">
                   {CATEGORIES.map((cat) => (
-                    <Link 
+                    <Link
                       key={cat.name}
-                      href={`/shop/${cat.name.toLowerCase().replace(' ', '-')}`} 
+                      href={`/shop/${cat.name.toLowerCase().replace(' ', '-')}`}
                       onClick={onClose}
                       className="group flex items-center gap-4 py-1"
                     >
                       <div className="w-10 h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-ink/50 group-hover:text-primary group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-300 shrink-0 shadow-sm">
                         <cat.icon size={18} strokeWidth={1.5} />
                       </div>
-                      <span className="text-[15px] font-semibold text-ink/80 group-hover:text-ink transition-colors">{cat.name}</span>
+                      <span className="text-[15px] font-semibold text-ink/80 group-hover:text-ink transition-colors">{t(`categories.${cat.key}`)}</span>
                     </Link>
                   ))}
                 </div>
@@ -152,17 +154,17 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
 
               {/* Support Links */}
               <motion.div variants={itemVariants} className="flex flex-col">
-                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/40 mb-6">Support</h3>
+                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/40 mb-6">{t('support')}</h3>
                 <div className="flex flex-col gap-4">
                   {SUPPORT_LINKS.map((link) => (
-                    <Link 
-                      key={link.label}
-                      href={link.href} 
+                    <Link
+                      key={link.key}
+                      href={link.href}
                       onClick={onClose}
                       className="group flex items-center gap-4 py-1"
                     >
                       <link.icon size={18} strokeWidth={1.5} className="text-ink/40 group-hover:text-primary transition-colors" />
-                      <span className="text-[15px] font-medium text-ink/60 group-hover:text-ink transition-colors">{link.label}</span>
+                      <span className="text-[15px] font-medium text-ink/60 group-hover:text-ink transition-colors">{t(`links.${link.key}`)}</span>
                     </Link>
                   ))}
                 </div>
@@ -184,45 +186,45 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
                   onSearchClick?.();
                 }}
                 className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
-                title="Search"
+                title={t('dock.search')}
               >
                 <Search size={20} strokeWidth={1.5} />
-                <span className="text-[9px] font-bold uppercase tracking-widest">Search</span>
+                <span className="text-[9px] font-bold uppercase tracking-widest">{t('dock.search')}</span>
               </button>
-              
+
               <div className="w-px h-8 bg-black/10 shrink-0" />
 
-              <Link 
-                href="/account/wishlist" 
-                onClick={onClose} 
+              <Link
+                href="/account/wishlist"
+                onClick={onClose}
                 className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
-                title="Wishlist"
+                title={t('dock.wishlist')}
               >
                 <Heart size={20} strokeWidth={1.5} />
-                <span className="text-[9px] font-bold uppercase tracking-widest">Wishlist</span>
+                <span className="text-[9px] font-bold uppercase tracking-widest">{t('dock.wishlist')}</span>
               </Link>
-              
+
               <div className="w-px h-8 bg-black/10 shrink-0" />
 
               {isLoggedIn ? (
-                <Link 
-                  href="/account" 
-                  onClick={onClose} 
+                <Link
+                  href="/account"
+                  onClick={onClose}
                   className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
-                  title="Account"
+                  title={t('dock.account')}
                 >
                   <User size={20} strokeWidth={1.5} />
-                  <span className="text-[9px] font-bold uppercase tracking-widest">Account</span>
+                  <span className="text-[9px] font-bold uppercase tracking-widest">{t('dock.account')}</span>
                 </Link>
               ) : (
-                <Link 
-                  href="/login" 
-                  onClick={onClose} 
+                <Link
+                  href="/login"
+                  onClick={onClose}
                   className="flex flex-col items-center justify-center gap-1.5 flex-1 py-2 text-ink/60 hover:text-primary hover:bg-black/5 rounded-2xl transition-all"
-                  title="Login"
+                  title={t('dock.login')}
                 >
                   <LogIn size={20} strokeWidth={1.5} />
-                  <span className="text-[9px] font-bold uppercase tracking-widest">Login</span>
+                  <span className="text-[9px] font-bold uppercase tracking-widest">{t('dock.login')}</span>
                 </Link>
               )}
             </div>

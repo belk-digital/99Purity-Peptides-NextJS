@@ -2,11 +2,16 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useScroll, useMotionValueEvent } from 'framer-motion'
-import { faqData } from '@/data/faqs'
+import { useTranslations, useLocale } from 'next-intl'
+import { faqData as faqDataEn } from '@/data/faqs'
+import { faqData as faqDataEs } from '@/data/faqs.es'
 import { FaqCategorySection } from './FaqCategorySection'
 import { FaqHero } from './FaqHero'
 
 export function FaqClient() {
+  const t = useTranslations('content.faqClient')
+  const locale = useLocale()
+  const faqData = locale === 'es' ? faqDataEs : faqDataEn
   const [activeCategory, setActiveCategory] = useState<string>(faqData[0]?.category || '');
   const [isHoveringFaq, setIsHoveringFaq] = useState(false);
   const [headerHidden, setHeaderHidden] = useState(false);
@@ -132,7 +137,7 @@ export function FaqClient() {
         }}
         transition={{ duration: 0.2 }}
       >
-        <span className="max-w-[70px] leading-tight text-sm">READ</span>
+        <span className="max-w-[70px] leading-tight text-sm">{t('cursorRead')}</span>
       </motion.div>
 
       {/* Hero Header */}
@@ -173,7 +178,7 @@ export function FaqClient() {
         >
           <div className="pr-6">
             <h3 className="font-heading text-xl font-bold uppercase tracking-tight mb-8 text-ink/40">
-              Categories
+              {t('categoriesLabel')}
             </h3>
             <ul className="flex flex-col gap-2">
               {faqData.map((categoryData) => (
@@ -252,9 +257,11 @@ export function FaqClient() {
                   {/* Text Content */}
                   <div className="relative z-10 text-cream/70 text-sm md:text-base font-light leading-relaxed">
                     <span className="font-heading font-bold text-primary tracking-[0.15em] uppercase text-xs block mb-1.5">
-                      Research Disclaimer
+                      {t('disclaimerLabel')}
                     </span>
-                    All products across every category are <strong className="text-white font-medium">for research use only</strong> and <strong className="text-white font-medium">not for human or veterinary use, diagnosis or treatment</strong>.
+                    {t.rich('disclaimerText', {
+                      strong: (chunks) => <strong className="text-white font-medium">{chunks}</strong>,
+                    })}
                   </div>
                 </div>
               </div>

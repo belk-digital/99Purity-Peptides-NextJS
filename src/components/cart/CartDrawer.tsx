@@ -2,9 +2,10 @@
 
 import React, { useEffect } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ArrowRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { QuantityStepper } from '@/components/shop/QuantityStepper'
 import { useCartStore } from '@/lib/cart/store'
@@ -14,6 +15,7 @@ import { useLenis } from 'lenis/react'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 export function CartDrawer() {
+  const t = useTranslations('checkout.cartDrawer')
   const { isOpen, closeCart, items, removeItem, updateQuantity } = useCartStore()
   const lenis = useLenis()
 
@@ -73,15 +75,15 @@ export function CartDrawer() {
             {/* Header */}
             <div className="flex items-center justify-between px-6 pt-8 pb-4 md:px-8 md:pt-10 shrink-0 relative">
               <h2 className="font-heading text-3xl sm:text-4xl font-black text-ink tracking-tight flex items-center gap-3">
-                CART 
+                {t('title')}
                 <span className="flex items-center justify-center bg-primary text-white text-xs w-6 h-6 rounded-full font-bold shadow-[0_0_10px_rgba(0,255,255,0.4)]">
                   {items.reduce((acc, i) => acc + i.quantity, 0)}
                 </span>
               </h2>
-              <button 
+              <button
                 onClick={closeCart}
                 className="p-2 -mr-2 bg-ink/5 hover:bg-ink/10 rounded-full text-ink hover:text-primary transition-colors focus:outline-none"
-                aria-label="Close cart"
+                aria-label={t('closeCartAria')}
               >
                 <X size={20} strokeWidth={2} />
               </button>
@@ -93,14 +95,14 @@ export function CartDrawer() {
                 <div className="w-20 h-20 bg-ink/5 rounded-full flex items-center justify-center mb-6">
                   <ShoppingBag className="w-10 h-10 text-ink/30" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-heading text-2xl font-bold text-ink mb-2">Your cart is empty</h3>
+                <h3 className="font-heading text-2xl font-bold text-ink mb-2">{t('emptyTitle')}</h3>
                 <p className="text-ink/60 text-center mb-8 max-w-xs">
-                  Looks like you haven't added any premium formulations to your cart yet.
+                  {t('emptyText')}
                 </p>
-                <FluidButton 
-                  href="/shop" 
-                  onClick={closeCart} 
-                  text="Discover Quality" 
+                <FluidButton
+                  href="/shop"
+                  onClick={closeCart}
+                  text={t('discoverQuality')}
                   variant="dark"
                   className="mb-4"
                 />
@@ -111,9 +113,9 @@ export function CartDrawer() {
                 {/* Shipping Progress */}
                 <div className="px-6 md:px-8 py-2 shrink-0">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-ink/60 mb-2">
-                    {amountToFreeShipping > 0 
-                      ? `Add $${amountToFreeShipping.toFixed(2)} more for free 2-day shipping`
-                      : "🎉 You've unlocked free 2-day shipping!"}
+                    {amountToFreeShipping > 0
+                      ? t('freeShippingProgress', { amount: amountToFreeShipping.toFixed(2) })
+                      : t('freeShippingUnlocked')}
                   </p>
                   <div className="w-full h-1.5 bg-ink/5 rounded-full overflow-hidden shadow-inner">
                     <motion.div 
@@ -157,10 +159,10 @@ export function CartDrawer() {
                                   {item.variantTitle || item.variantSku}
                                 </span>
                               </div>
-                              <button 
+                              <button
                                 onClick={() => removeItem(item.lineId)}
                                 className="text-ink/30 hover:text-error transition-colors p-1.5 bg-black/0 hover:bg-error/10 rounded-full -mt-1 -mr-1"
-                                aria-label="Remove item"
+                                aria-label={t('removeItemAria')}
                               >
                                 <X size={14} strokeWidth={2} />
                               </button>
@@ -184,26 +186,26 @@ export function CartDrawer() {
                 {/* Sticky Summary */}
                 <div className="px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] md:px-8 md:pb-8 bg-white shrink-0 border-t border-ink/5 z-10 relative">
                   <div className="flex justify-between items-center mb-3">
-                    <span className="text-[10px] font-bold text-ink/50 uppercase tracking-[0.2em]">Subtotal</span>
+                    <span className="text-[10px] font-bold text-ink/50 uppercase tracking-[0.2em]">{t('subtotal')}</span>
                     <span className="text-2xl text-ink font-black font-heading tracking-tight">${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center mb-6">
-                    <span className="text-[10px] font-bold text-ink/50 uppercase tracking-[0.2em]">Shipping</span>
+                    <span className="text-[10px] font-bold text-ink/50 uppercase tracking-[0.2em]">{t('shipping')}</span>
                     <span className="text-sm text-ink font-bold">
-                      {amountToFreeShipping > 0 ? 'Calculated at checkout' : <span className="text-primary uppercase tracking-widest text-[10px]">Free 2-Day</span>}
+                      {amountToFreeShipping > 0 ? t('calculatedAtCheckout') : <span className="text-primary uppercase tracking-widest text-[10px]">{t('free2Day')}</span>}
                     </span>
                   </div>
                   <div className="w-full flex justify-center mb-4">
-                    <FluidButton 
-                      href="/checkout" 
-                      onClick={closeCart} 
-                      text="CHECKOUT" 
+                    <FluidButton
+                      href="/checkout"
+                      onClick={closeCart}
+                      text={t('checkout')}
                       variant="dark"
                       className="w-full md:w-auto"
                     />
                   </div>
                   <Link href="/cart" onClick={closeCart} className="flex items-center justify-center w-full text-ink/40 hover:text-ink text-[10px] uppercase tracking-[0.2em] font-bold transition-colors">
-                    VIEW FULL CART
+                    {t('viewFullCart')}
                   </Link>
                 </div>
               </>

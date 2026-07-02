@@ -4,21 +4,23 @@ import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, IdCard, User, Mail, ChevronsUp, ChevronDown, Upload, CheckCircle2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { FluidButton } from '@/components/ui/fluid-button';
 
 export function MilitaryDiscountSection() {
+  const t = useTranslations('home.militaryDiscount')
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState("");
 
   const branches = [
-    { id: 'army', label: 'US Army' },
-    { id: 'navy', label: 'US Navy' },
-    { id: 'airforce', label: 'US Air Force' },
-    { id: 'marines', label: 'US Marine Corps' },
-    { id: 'coastguard', label: 'US Coast Guard' },
-    { id: 'spaceforce', label: 'US Space Force' },
-    { id: 'other', label: 'Other / Veteran' }
+    { id: 'army', key: 'army' },
+    { id: 'navy', key: 'navy' },
+    { id: 'airforce', key: 'airforce' },
+    { id: 'marines', key: 'marines' },
+    { id: 'coastguard', key: 'coastguard' },
+    { id: 'spaceforce', key: 'spaceforce' },
+    { id: 'other', key: 'other' }
   ];
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -79,13 +81,13 @@ export function MilitaryDiscountSection() {
               transition={{ duration: 0.6 }}
             >
               <span className="text-primary text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-4 block">
-                Honoring Your Service
+                {t('eyebrow')}
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black font-heading uppercase leading-[1.1] tracking-tighter mb-6">
-                Exclusive 30% <br /> Military Discount
+                {t('titleLine1')} <br /> {t('titleLine2')}
               </h2>
               <p className="text-ink/80 text-base md:text-lg leading-relaxed font-light mb-8 w-full">
-                As a thank you for your service, we are proud to offer an exclusive 30% discount on your order. Please select your branch and upload a copy of your Military ID or Discharge Papers (DD-214) below.
+                {t('description')}
               </p>
 
               <div className="bg-white border border-black/5 shadow-sm rounded-2xl p-5 md:p-6 w-full group hover:border-black/10 hover:shadow-md transition-all duration-300">
@@ -99,10 +101,13 @@ export function MilitaryDiscountSection() {
                   
                   <div>
                     <h4 className="text-ink font-black text-sm md:text-base tracking-[0.1em] uppercase mb-1.5 flex items-center gap-2">
-                      Privacy & Security Notice
+                      {t('privacyNoticeTitle')}
                     </h4>
                     <p className="text-ink/75 text-xs md:text-sm leading-relaxed font-medium">
-                      For your protection, please <span className="font-bold text-ink">redact (black out)</span> sensitive information like your SSN. Documents are securely encrypted for review and <span className="font-bold text-primary">permanently destroyed</span> from our servers immediately upon approval.
+                      {t.rich('privacyNoticeText', {
+                        redact: (chunks) => <span className="font-bold text-ink">{chunks}</span>,
+                        destroyed: (chunks) => <span className="font-bold text-primary">{chunks}</span>
+                      })}
                     </p>
                   </div>
                 </div>
@@ -130,7 +135,7 @@ export function MilitaryDiscountSection() {
                     className="flex flex-col gap-4 relative z-10"
                   >
                     <h3 className="text-2xl font-black font-heading text-white uppercase tracking-tighter mb-2 drop-shadow-md">
-                      Verify Status
+                      {t('formTitle')}
                     </h3>
 
                     {/* ID Upload */}
@@ -140,9 +145,9 @@ export function MilitaryDiscountSection() {
                       </div>
                       <div className="w-px h-8 bg-black/10"></div>
                       <div className="flex-1 flex justify-between items-center pl-2">
-                        <span className="font-bold text-ink text-sm">ID Photo</span>
+                        <span className="font-bold text-ink text-sm">{t('idPhotoLabel')}</span>
                         <button type="button" className="flex items-center gap-2 border border-dashed border-ink/30 px-3 md:px-4 py-2 rounded-lg text-ink/70 hover:text-primary hover:border-primary transition-colors text-[10px] md:text-xs font-bold uppercase tracking-wide">
-                          <Upload className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Upload</span>
+                          <Upload className="w-3.5 h-3.5" /> <span className="hidden sm:inline">{t('uploadButton')}</span>
                         </button>
                       </div>
                     </div>
@@ -154,8 +159,8 @@ export function MilitaryDiscountSection() {
                       </div>
                       <div className="w-px h-8 bg-black/10"></div>
                       <div className="flex-1 flex flex-col justify-center pl-2">
-                        <label className="font-bold text-ink text-sm">Full Name</label>
-                        <input required type="text" placeholder="Enter your full name" className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
+                        <label className="font-bold text-ink text-sm">{t('fullNameLabel')}</label>
+                        <input required type="text" placeholder={t('fullNamePlaceholder')} className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
                       </div>
                     </div>
 
@@ -166,8 +171,8 @@ export function MilitaryDiscountSection() {
                       </div>
                       <div className="w-px h-8 bg-black/10"></div>
                       <div className="flex-1 flex flex-col justify-center pl-2">
-                        <label className="font-bold text-ink text-sm">Email Address</label>
-                        <input required type="email" placeholder="Enter your email" className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
+                        <label className="font-bold text-ink text-sm">{t('emailLabel')}</label>
+                        <input required type="email" placeholder={t('emailPlaceholder')} className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
                       </div>
                     </div>
 
@@ -182,10 +187,10 @@ export function MilitaryDiscountSection() {
                         </div>
                         <div className="w-px h-8 bg-black/10"></div>
                         <div className="flex-1 flex flex-col justify-center pl-2">
-                          <label className="font-bold text-ink text-sm cursor-pointer">Service Branch</label>
+                          <label className="font-bold text-ink text-sm cursor-pointer">{t('serviceBranchLabel')}</label>
                           <div className="flex justify-between items-center mt-0.5">
                             <span className={`text-sm ${selectedBranch ? 'text-ink' : 'text-ink/40'}`}>
-                              {selectedBranch ? branches.find(b => b.id === selectedBranch)?.label : 'Select your branch'}
+                              {selectedBranch ? t(`branches.${branches.find(b => b.id === selectedBranch)?.key}`) : t('selectBranchPlaceholder')}
                             </span>
                             <ChevronDown className={`w-4 h-4 text-ink/40 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
                           </div>
@@ -215,7 +220,7 @@ export function MilitaryDiscountSection() {
                                       : 'text-ink/70 hover:bg-black/5 hover:text-ink'
                                   }`}
                                 >
-                                  {branch.label}
+                                  {t(`branches.${branch.key}`)}
                                 </button>
                               ))}
                             </div>
@@ -225,7 +230,7 @@ export function MilitaryDiscountSection() {
                     </div>
 
                     <div className="mt-4">
-                      <FluidButton type="submit" text="Submit for Verification" className="w-full min-w-full" variant="dark" />
+                      <FluidButton type="submit" text={t('submitButton')} className="w-full min-w-full" variant="dark" />
                     </div>
                   </motion.form>
                 ) : (
@@ -239,16 +244,16 @@ export function MilitaryDiscountSection() {
                       <CheckCircle2 className="w-10 h-10 text-primary" />
                     </div>
                     <h3 className="text-2xl md:text-3xl font-black font-heading text-ink uppercase tracking-tighter mb-4">
-                      Documents Received
+                      {t('successTitle')}
                     </h3>
                     <p className="text-ink/70 text-sm leading-relaxed mb-8 max-w-sm">
-                      Thank you for your service! Your documents have been securely routed for review. We will email your exclusive 30% discount code within 24 hours.
+                      {t('successText')}
                     </p>
-                    <button 
+                    <button
                       onClick={() => setIsSubmitted(false)}
                       className="text-xs font-bold uppercase tracking-widest text-ink/50 hover:text-primary transition-colors border-b border-ink/20 hover:border-primary pb-1"
                     >
-                      Submit Another
+                      {t('submitAnother')}
                     </button>
                   </motion.div>
                 )}

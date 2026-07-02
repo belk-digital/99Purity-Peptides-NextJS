@@ -2,11 +2,12 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 import { useWishlistStore } from '@/lib/wishlist/store'
 
 export interface StandardProduct {
@@ -23,6 +24,7 @@ export interface StandardProduct {
 }
 
 export function CompactProductCard({ product }: { product: StandardProduct }) {
+  const t = useTranslations('shop.compactProductCard')
   const addItem = useWishlistStore(state => state.addItem)
   const removeItem = useWishlistStore(state => state.removeItem)
   const inWishlist = useWishlistStore(state => product.id ? state.hasItem(product.id) : false)
@@ -35,8 +37,8 @@ export function CompactProductCard({ product }: { product: StandardProduct }) {
 
     if (inWishlist) {
       removeItem(product.id)
-      toast('Removed from wishlist', {
-        description: `${product.name} has been removed.`,
+      toast(t('removedFromWishlist'), {
+        description: t('removedFromWishlistDescription', { name: product.name }),
       })
     } else {
       addItem({
@@ -46,10 +48,10 @@ export function CompactProductCard({ product }: { product: StandardProduct }) {
         image: product.image,
         priceRange: product.price || ''
       })
-      toast.success('Added to wishlist', {
-        description: `${product.name} is now in your wishlist.`,
+      toast.success(t('addedToWishlist'), {
+        description: t('addedToWishlistDescription', { name: product.name }),
         action: {
-          label: 'View Wishlist',
+          label: t('viewWishlist'),
           onClick: () => window.location.href = '/account/wishlist',
         },
       })
@@ -130,7 +132,7 @@ export function CompactProductCard({ product }: { product: StandardProduct }) {
           {product.badge && (
             <div className="absolute top-4 left-4 z-10">
               <Badge variant={product.badge}>
-                {product.badge === 'bestseller' ? 'Best Seller' : product.badge}
+                {product.badge === 'bestseller' ? t('bestSeller') : product.badge}
               </Badge>
             </div>
           )}

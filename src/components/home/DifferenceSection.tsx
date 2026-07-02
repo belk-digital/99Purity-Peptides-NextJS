@@ -4,9 +4,11 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, FlaskConical, Network, Shield, Snowflake, Search, AlertTriangle } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export function DifferenceSection() {
+  const t = useTranslations('home.difference');
   const [isAgitated, setIsAgitated] = useState(false);
   const lastMousePos = useRef({ x: 0, y: 0, time: Date.now() });
   const shakeCount = useRef(0);
@@ -198,18 +200,18 @@ export function DifferenceSection() {
             <span className="text-primary text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">99 Purity Peptides</span>
           </motion.div>
           <motion.h2 variants={itemVariants} className="text-white text-[2rem] sm:text-5xl md:text-7xl lg:text-8xl font-heading font-black uppercase leading-[0.9] tracking-tighter mb-4 sm:mb-6">
-            The Lab<br />Difference
+            {t('titleLine1')}<br />{t('titleLine2')}
           </motion.h2>
           <motion.p variants={itemVariants} className="text-white/70 text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 max-w-lg mx-auto xl:mx-0 font-medium">
-            Each batch is tested by an independent, accredited laboratory to confirm purity, identity, and composition. Results are documented and available by batch.
+            {t('description')}
           </motion.p>
           <motion.div variants={itemVariants} className="flex justify-center xl:justify-start">
-            <Link 
+            <Link
               href="/certificates"
               className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold flex items-center gap-3 hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] uppercase tracking-wider text-xs sm:text-sm"
             >
               <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
-              View COA Library
+              {t('ctaText')}
             </Link>
           </motion.div>
         </motion.div>
@@ -283,9 +285,9 @@ export function DifferenceSection() {
                     className={`relative w-full h-full pointer-events-auto cursor-crosshair z-20 ${isAgitated ? 'animate-vibrate scale-[1.02]' : ''}`}
                     title="Shake to agitate..."
                   >
-                    <Image 
-                      src="/99 Images/transparant-vial.png" 
-                      alt="Vial" 
+                    <Image
+                      src="/99 Images/transparant-vial.png"
+                      alt={t('vialAlt')}
                       fill
                       sizes="(max-width: 1280px) 240px, 300px"
                       className="object-contain drop-shadow-[-20px_35px_35px_rgba(0,0,0,0.8)] z-10 relative" 
@@ -318,10 +320,10 @@ export function DifferenceSection() {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-red-500 font-bold text-xs uppercase tracking-widest leading-none mb-1">
-                        Critical Warning
+                        {t('shakeWarningTitle')}
                       </span>
                       <span className="text-red-200/80 font-mono text-[10px] uppercase tracking-wider leading-none">
-                        Peptide bonds agitated
+                        {t('shakeWarningSubtitle')}
                       </span>
                     </div>
                   </motion.div>
@@ -338,8 +340,8 @@ export function DifferenceSection() {
                     <FlaskConical className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Independently Lab Tested</h4>
-                    <p className="text-white/80 text-xs leading-relaxed">Verified purity & composition.</p>
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.labTested.title')}</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">{t('cards.labTested.desc')}</p>
                   </div>
                 </div>
               </div>
@@ -353,8 +355,8 @@ export function DifferenceSection() {
                     <Network className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Advanced Synthesis</h4>
-                    <p className="text-white/80 text-xs leading-relaxed">Pioneering research grades.</p>
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.synthesis.title')}</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">{t('cards.synthesis.desc')}</p>
                   </div>
                 </div>
               </div>
@@ -368,8 +370,8 @@ export function DifferenceSection() {
                     <Shield className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Made in the USA</h4>
-                    <p className="text-white/80 text-xs leading-relaxed">Strictly controlled standards.</p>
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.madeInUsa.title')}</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">{t('cards.madeInUsa.desc')}</p>
                   </div>
                 </div>
               </div>
@@ -383,8 +385,8 @@ export function DifferenceSection() {
                     <Snowflake className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Cold Chain Logistics</h4>
-                    <p className="text-white/80 text-xs leading-relaxed">Strict temperature control.</p>
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.coldChain.title')}</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">{t('cards.coldChain.desc')}</p>
                   </div>
                 </div>
               </div>
@@ -398,8 +400,8 @@ export function DifferenceSection() {
                     <Search className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">Full Traceability</h4>
-                    <p className="text-white/80 text-xs leading-relaxed">Batch-specific tracking.</p>
+                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.traceability.title')}</h4>
+                    <p className="text-white/80 text-xs leading-relaxed">{t('cards.traceability.desc')}</p>
                   </div>
                 </div>
               </div>
@@ -421,9 +423,9 @@ export function DifferenceSection() {
                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                    className="relative w-full h-full will-change-transform"
                  >
-                   <Image 
-                     src="/99 Images/transparant-vial.png" 
-                     alt="Vial" 
+                   <Image
+                     src="/99 Images/transparant-vial.png"
+                     alt={t('vialAlt')}
                      fill
                      sizes="(max-width: 640px) 180px, 200px"
                      className="object-contain z-10 relative drop-shadow-[-15px_25px_25px_rgba(0,0,0,0.7)]" 
@@ -447,18 +449,18 @@ export function DifferenceSection() {
                className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl px-4 sm:px-0 mt-12 sm:mt-16"
              >
                 {[
-                  { icon: FlaskConical, title: "Independently Lab Tested", desc: "Verified purity & composition." },
-                  { icon: Network, title: "Advanced Synthesis", desc: "Pioneering research grades." },
-                  { icon: Shield, title: "Made in the USA", desc: "Strictly controlled standards." },
-                  { icon: Snowflake, title: "Cold Chain Logistics", desc: "Strict temperature control." },
-                  { icon: Search, title: "Full Traceability", desc: "Batch-specific tracking." }
+                  { icon: FlaskConical, key: "labTested" },
+                  { icon: Network, key: "synthesis" },
+                  { icon: Shield, key: "madeInUsa" },
+                  { icon: Snowflake, key: "coldChain" },
+                  { icon: Search, key: "traceability" }
                 ].map((card, idx) => {
                   const Icon = card.icon;
                   return (
-                    <motion.div 
-                      key={idx} 
-                      custom={idx} 
-                      variants={mobileCardVariants} 
+                    <motion.div
+                      key={idx}
+                      custom={idx}
+                      variants={mobileCardVariants}
                       className={`bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default ${idx === 4 ? 'sm:col-span-2 sm:mx-auto sm:w-80' : ''}`}
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
@@ -467,8 +469,8 @@ export function DifferenceSection() {
                           <Icon className="w-5 h-5 text-[#003333]" />
                         </div>
                         <div className="mt-1 sm:mt-0">
-                          <h4 className="text-white font-bold text-[13px] sm:text-sm mb-1.5 leading-tight tracking-wide">{card.title}</h4>
-                          <p className="text-white/80 text-[11px] sm:text-xs leading-relaxed">{card.desc}</p>
+                          <h4 className="text-white font-bold text-[13px] sm:text-sm mb-1.5 leading-tight tracking-wide">{t(`cards.${card.key}.title`)}</h4>
+                          <p className="text-white/80 text-[11px] sm:text-xs leading-relaxed">{t(`cards.${card.key}.desc`)}</p>
                         </div>
                       </div>
                     </motion.div>

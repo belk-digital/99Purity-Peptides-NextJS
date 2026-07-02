@@ -6,6 +6,7 @@ import { Container } from '@/components/ui/container'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { motion, useSpring, useTransform } from 'framer-motion'
 import { CheckCircle2, ShieldCheck, FileSearch, ArrowUpRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 // Desktop Animated HUD Card
 const AnimatedHUDCard = ({
@@ -127,6 +128,7 @@ const MobileAnimatedCard = ({ icon, title, desc, delay, tooltip }: { icon: React
 
 
 export function CoaSection() {
+  const t = useTranslations('home.coaSection')
   const containerRef = useRef<HTMLDivElement>(null)
   
   // Create a mouse-tracking effect for the 3D vial
@@ -163,17 +165,17 @@ export function CoaSection() {
          <div className="text-center mb-8 lg:mb-16">
             <FadeUp>
               <span className="text-label-md uppercase tracking-widest text-[#008B8B] mb-4 lg:mb-6 block font-bold">
-                ABSOLUTE TRANSPARENCY
+                {t('eyebrow')}
               </span>
             </FadeUp>
             <FadeUp delay={0.1}>
               <h2 className="text-[12vw] md:text-5xl lg:text-7xl font-display leading-[0.9] tracking-tight text-ink">
-                Verified Purity.<br/>Every Single Batch.
+                {t('titleLine1')}<br/>{t('titleLine2')}
               </h2>
             </FadeUp>
             <FadeUp delay={0.2}>
               <p className="mt-6 text-body-md text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                Third-party purity verification is the cornerstone of research-grade compounds. Every vial we ship carries an independently verified COA that proves what is inside — not what we claim is inside. Here is exactly what we test for, and why it matters.
+                {t('description')}
               </p>
             </FadeUp>
          </div>
@@ -186,9 +188,9 @@ export function CoaSection() {
               style={{ rotateX, rotateY }}
               className="relative w-[140px] sm:w-[180px] lg:w-[300px] aspect-[1/2.2] z-20 pointer-events-none perspective-[1000px]"
             >
-               <Image 
+               <Image
                  src="/Featured%20Images/vial-no-bg.webp"
-                 alt="Single precision research peptide vial with Certificate of Analysis document — 99 Purity Peptides"
+                 alt={t('vialAlt')}
                  fill
                  className="object-contain"
                  priority
@@ -201,57 +203,57 @@ export function CoaSection() {
               delay={0.1}
               positionClass="top-[40%] left-[5%] xl:left-[10%] right-[50%]"
               icon={<CheckCircle2 className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
-              title="≥99% HPLC Purity"
-              desc="Stringent chromatographic isolation for every compound — verified before any order ships."
-              tooltip="HPLC separates compound mixtures by molecular polarity, confirming concentration and purity to ≥99%."
+              title={t('metric1Title')}
+              desc={t('metric1Desc')}
+              tooltip={t('metric1Tooltip')}
             />
 
             {/* Desktop HUD: Metric 2 (Top Right) */}
-            <AnimatedHUDCard 
+            <AnimatedHUDCard
               direction="right"
               delay={0.4}
               positionClass="top-[15%] right-[5%] xl:right-[10%] left-[50%]"
               icon={<FileSearch className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
-              title="Mass Spectrometry (LC-MS)"
-              desc="Exact molecular weight verification confirms you are receiving the compound on the label."
-              tooltip="LC-MS cross-references molecular mass against known peptide databases. Cannot be faked."
+              title={t('metric2Title')}
+              desc={t('metric2Desc')}
+              tooltip={t('metric2Tooltip')}
             />
 
             {/* Desktop HUD: Metric 3 (Bottom Right) */}
-            <AnimatedHUDCard 
+            <AnimatedHUDCard
               direction="right"
               delay={0.7}
               positionClass="bottom-[20%] right-[5%] xl:right-[10%] left-[50%]"
               icon={<ShieldCheck className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
-              title="Endotoxin-Free"
-              desc="Limulus Amebocyte Lysate (LAL) testing confirms endotoxin levels below research-safe thresholds."
-              tooltip="Endotoxin contamination invalidates in-vitro research results. We test and confirm absence."
+              title={t('metric3Title')}
+              desc={t('metric3Desc')}
+              tooltip={t('metric3Tooltip')}
             />
 
          </div>
 
          {/* Mobile Metrics Stack */}
          <div className="flex lg:hidden flex-col gap-4 w-full max-w-sm mx-auto mt-8 relative z-30 px-4">
-            <MobileAnimatedCard 
+            <MobileAnimatedCard
               delay={0.1}
               icon={<CheckCircle2 className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
-              title="≥99% HPLC Purity"
-              desc="Stringent chromatographic isolation for every compound — verified before any order ships."
-              tooltip="HPLC separates compound mixtures by molecular polarity, confirming concentration and purity to ≥99%."
+              title={t('metric1Title')}
+              desc={t('metric1Desc')}
+              tooltip={t('metric1Tooltip')}
             />
-            <MobileAnimatedCard 
+            <MobileAnimatedCard
               delay={0.4}
               icon={<FileSearch className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
-              title="Mass Spectrometry (LC-MS)"
-              desc="Exact molecular weight verification confirms you are receiving the compound on the label."
-              tooltip="LC-MS cross-references molecular mass against known peptide databases. Cannot be faked."
+              title={t('metric2Title')}
+              desc={t('metric2Desc')}
+              tooltip={t('metric2Tooltip')}
             />
-            <MobileAnimatedCard 
+            <MobileAnimatedCard
               delay={0.7}
               icon={<ShieldCheck className="w-5 h-5 text-[#008B8B]" strokeWidth={1.5} />}
-              title="Endotoxin-Free"
-              desc="Limulus Amebocyte Lysate (LAL) testing confirms endotoxin levels below research-safe thresholds."
-              tooltip="Endotoxin contamination invalidates in-vitro research results. We test and confirm absence."
+              title={t('metric3Title')}
+              desc={t('metric3Desc')}
+              tooltip={t('metric3Tooltip')}
             />
          </div>
 
@@ -259,7 +261,7 @@ export function CoaSection() {
          <div className="mt-12 lg:mt-16 flex justify-center px-4">
            <FadeUp delay={1.2}>
              <a href="/certificates" className="group bg-transparent border border-[#008B8B]/30 text-ink hover:bg-[#008B8B] hover:border-[#008B8B] hover:text-white rounded-full px-6 lg:px-8 py-4 uppercase tracking-widest text-[10px] md:text-xs font-bold transition-all duration-300 flex items-center gap-3">
-               VIEW COA LIBRARY
+               {t('ctaText')}
                <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
              </a>
            </FadeUp>

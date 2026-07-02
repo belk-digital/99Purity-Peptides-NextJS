@@ -4,34 +4,25 @@ import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import { ShieldCheck, Award, FileCheck, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { MagazineGlassCard } from './MagazineGlassCard'
 import Image from 'next/image'
 
-const CHOOSE_US_DATA = [
-  {
-    tag: "Trusted & Verified",
-    title: "HPLC-Verified Purity",
-    description: "Every research peptide includes reversed-phase HPLC chromatograms confirming ≥99% purity for reliable laboratory results.",
-    media: "/99 Images/purity.webp",
-    icon: ShieldCheck,
-  },
-  {
-    tag: "Test It Free",
-    title: "MS Identity Confirmation",
-    description: "Peptide identity verified by liquid chromatography-mass spectrometry (LC-MS) with documented molecular weight accuracy.",
-    media: "/99 Images/identity.webp?v=2",
-    icon: Award,
-  },
-  {
-    tag: "Receptor Agonist Research",
-    title: "Complete COA Documentation",
-    description: "Detailed certificates of analysis include purity percentages, impurity profiles, and analytical test methods for full research traceability.",
-    media: "/99 Images/coa.webp",
-    icon: FileCheck,
-  }
+const CHOOSE_US_KEYS = [
+  { key: 'hplcPurity', media: "/99 Images/purity.webp", icon: ShieldCheck },
+  { key: 'msIdentity', media: "/99 Images/identity.webp?v=2", icon: Award },
+  { key: 'coaDocumentation', media: "/99 Images/coa.webp", icon: FileCheck }
 ]
 
 export function WhyChooseUs() {
+  const t = useTranslations('home.whyChooseUs')
+  const CHOOSE_US_DATA = CHOOSE_US_KEYS.map(({ key, media, icon }) => ({
+    tag: t(`items.${key}.tag`),
+    title: t(`items.${key}.title`),
+    description: t(`items.${key}.description`),
+    media,
+    icon
+  }))
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isHoveringCard, setIsHoveringCard] = useState(false);
@@ -90,7 +81,7 @@ export function WhyChooseUs() {
         transition={{ duration: 0.2 }}
       >
         <span className="font-sans font-bold text-[10px] tracking-[0.2em] uppercase text-center leading-[1.4]">
-          Click<br/>To<br/>View
+          {t('clickToViewLine1')}<br/>{t('clickToViewLine2')}<br/>{t('clickToViewLine3')}
         </span>
       </motion.div>
 
@@ -103,16 +94,16 @@ export function WhyChooseUs() {
             viewport={{ once: true }}
             className="inline-block border border-ink/10 rounded-full px-4 py-1.5 mb-6 bg-white shadow-sm"
           >
-            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">Why Choose Us</span>
+            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">{t('eyebrow')}</span>
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="font-heading text-[2.5rem] sm:text-4xl md:text-5xl lg:text-[6rem] font-black text-ink leading-[0.9] tracking-tighter uppercase drop-shadow-sm break-words"
           >
-            Transparency<br />You Can Trust.
+            {t('titleLine1')}<br />{t('titleLine2')}
           </motion.h2>
         </div>
 

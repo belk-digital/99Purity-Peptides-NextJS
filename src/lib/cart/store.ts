@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { syncCartToPayload } from '@/app/(frontend)/actions/cart'
+import { syncCartToPayload } from '@/app/[locale]/(frontend)/actions/cart'
 
 export type MinimalProduct = {
   id: string

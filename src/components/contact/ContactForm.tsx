@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 export function ContactForm() {
+  const t = useTranslations('content.contactForm')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -34,54 +36,54 @@ export function ContactForm() {
       </div>
 
       <div className="relative z-10 mb-10 md:mb-16">
-        <h3 className="font-heading font-black text-3xl md:text-5xl uppercase tracking-tighter text-white mb-3">Get in touch with us</h3>
-        <p className="text-white/60 font-light text-base md:text-lg">Please complete the form below for non-advisory inquiries only.</p>
+        <h3 className="font-heading font-black text-3xl md:text-5xl uppercase tracking-tighter text-white mb-3">{t('heading')}</h3>
+        <p className="text-white/60 font-light text-base md:text-lg">{t('subheading')}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-6 w-full text-left pb-16 md:pb-24">
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div className="flex flex-col gap-3">
-            <label htmlFor="name" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">Name</label>
-            <input 
-              type="text" 
-              id="name" 
+            <label htmlFor="name" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">{t('nameLabel')}</label>
+            <input
+              type="text"
+              id="name"
               required
               className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-white/20 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 backdrop-blur-sm"
-              placeholder="John Doe"
+              placeholder={t('namePlaceholder')}
             />
           </div>
           <div className="flex flex-col gap-3">
-            <label htmlFor="email" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">Email</label>
-            <input 
-              type="email" 
-              id="email" 
+            <label htmlFor="email" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">{t('emailLabel')}</label>
+            <input
+              type="email"
+              id="email"
               required
               className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-white/20 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 backdrop-blur-sm"
-              placeholder="john@laboratory.com"
+              placeholder={t('emailPlaceholder')}
             />
           </div>
         </div>
 
         <div className="flex flex-col gap-3 mt-2">
-          <label htmlFor="subject" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">Subject</label>
-          <input 
-            type="text" 
-            id="subject" 
+          <label htmlFor="subject" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">{t('subjectLabel')}</label>
+          <input
+            type="text"
+            id="subject"
             required
             className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-white/20 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 backdrop-blur-sm"
-            placeholder="Order Inquiry"
+            placeholder={t('subjectPlaceholder')}
           />
         </div>
 
         <div className="flex flex-col gap-3 mt-2">
-          <label htmlFor="message" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">Message</label>
-          <textarea 
-            id="message" 
+          <label htmlFor="message" className="text-xs font-mono tracking-[0.2em] uppercase font-bold text-white/50 pl-4">{t('messageLabel')}</label>
+          <textarea
+            id="message"
             required
             rows={5}
             className="w-full bg-white/5 border border-white/10 rounded-[2rem] px-6 py-5 text-white placeholder-white/20 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 resize-none backdrop-blur-sm"
-            placeholder="How can we assist you today?"
+            placeholder={t('messagePlaceholder')}
           />
         </div>
       </form>
@@ -102,9 +104,9 @@ export function ContactForm() {
         />
 
         <div className="relative z-10">
-          <FluidButton 
+          <FluidButton
             onClick={isSubmitting || isSubmitted ? undefined : () => handleSubmit()}
-            text={<>{isSubmitting ? 'Sending...' : isSubmitted ? 'Message Sent!' : 'Submit Request'}</>} 
+            text={<>{isSubmitting ? t('sending') : isSubmitted ? t('sent') : t('submit')}</>}
             className={isSubmitting || isSubmitted ? 'opacity-70' : ''}
           />
         </div>

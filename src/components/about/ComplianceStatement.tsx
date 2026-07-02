@@ -3,24 +3,26 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Microscope, ShieldAlert, Activity, FileWarning, AlertTriangle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function ComplianceStatement() {
+  const t = useTranslations('content.complianceStatement')
   const statements = [
     {
       icon: Microscope,
-      text: "Products offered by 99 Purity Peptides are synthetic research peptides intended for laboratory research only.",
+      text: t('statements.researchOnly'),
     },
     {
       icon: ShieldAlert,
-      text: "Not for human or animal use.",
+      text: t('statements.notForHumanAnimalUse'),
     },
     {
       icon: Activity,
-      text: "Not for diagnosis, treatment, ingestion or administration of any kind.",
+      text: t('statements.notForDiagnosisTreatment'),
     },
     {
       icon: FileWarning,
-      text: "Products have not been evaluated or approved by the US Food and Drug Administration (FDA).",
+      text: t('statements.notFdaApproved'),
     }
   ];
 
@@ -89,14 +91,14 @@ export function ComplianceStatement() {
         >
           <motion.h2 variants={titleVariants} className="font-mono text-xs uppercase tracking-[0.3em] text-primary mb-6 font-bold flex items-center justify-center gap-4">
             <span className="w-8 h-[1px] bg-primary/30"></span>
-            Official Notice
+            {t('officialNotice')}
             <span className="w-8 h-[1px] bg-primary/30"></span>
           </motion.h2>
           <motion.h3 variants={titleVariants} className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-heading font-black text-white tracking-tighter uppercase mb-4 leading-[1.1] break-words">
-            Compliance <br className="md:hidden" />Statement
+            {t('titleLine1')} <br className="md:hidden" />{t('titleLine2')}
           </motion.h3>
           <motion.p variants={titleVariants} className="text-white/40 uppercase tracking-widest text-sm md:text-base font-light">
-            Terms of Research Use
+            {t('subtitle')}
           </motion.p>
         </motion.div>
 

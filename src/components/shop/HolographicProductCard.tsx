@@ -2,13 +2,15 @@
 
 import React, { useRef } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { Heart, Activity, Thermometer, TestTube } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { useTranslations } from 'next-intl'
 import { StandardProduct } from './CompactProductCard'
 
 export function HolographicProductCard({ product }: { product: StandardProduct }) {
+  const t = useTranslations('shop.holographicProductCard')
   const cardRef = useRef<HTMLDivElement>(null)
   
   // 3D Tilt Effect
@@ -84,7 +86,7 @@ export function HolographicProductCard({ product }: { product: StandardProduct }
           {product.badge && (
             <div className="absolute top-4 left-4 z-20">
               <Badge variant={product.badge} className="px-3 py-1 bg-white/10 backdrop-blur-md text-white border-white/20">
-                {product.badge === 'bestseller' ? 'Best Seller' : product.badge}
+                {product.badge === 'bestseller' ? t('bestSeller') : product.badge}
               </Badge>
             </div>
           )}
@@ -129,7 +131,7 @@ export function HolographicProductCard({ product }: { product: StandardProduct }
              <div className="w-[1px] h-6 bg-white/10" />
              <div className="flex flex-col items-center gap-1">
                 <Activity size={14} className="text-gold" />
-                <span className="text-[10px] text-white/60 uppercase tracking-widest">Active</span>
+                <span className="text-[10px] text-white/60 uppercase tracking-widest">{t('active')}</span>
              </div>
           </motion.div>
         </div>
@@ -147,7 +149,7 @@ export function HolographicProductCard({ product }: { product: StandardProduct }
               {product.price}
             </span>
             <span className="text-label-sm text-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300 uppercase tracking-widest">
-              Explore &rarr;
+              {t('explore')} &rarr;
             </span>
           </div>
         </div>

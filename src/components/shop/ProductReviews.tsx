@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { Star } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
@@ -19,6 +20,7 @@ interface ProductReviewsProps {
 }
 
 export function ProductReviews({ reviews }: ProductReviewsProps) {
+  const t = useTranslations('shop.productReviews')
   const [visibleCount, setVisibleCount] = useState(5)
   const [sort, setSort] = useState('recent')
 
@@ -46,7 +48,7 @@ export function ProductReviews({ reviews }: ProductReviewsProps) {
       {/* Left: Summary */}
       <div className="w-full md:w-1/3 flex flex-col gap-8 shrink-0">
         <div>
-          <h2 className="text-display-sm font-display text-ink mb-2">Customer Reviews</h2>
+          <h2 className="text-display-sm font-display text-ink mb-2">{t('customerReviews')}</h2>
           <div className="flex items-center gap-4">
             <span className="text-display-md text-ink">{averageRating.toFixed(1)}</span>
             <div className="flex flex-col">
@@ -55,7 +57,7 @@ export function ProductReviews({ reviews }: ProductReviewsProps) {
                   <Star key={i} size={16} fill={i <= Math.round(averageRating) ? "currentColor" : "none"} strokeWidth={1.5} />
                 ))}
               </div>
-              <span className="text-body-sm text-ink-muted mt-1">Based on {reviews.length} reviews</span>
+              <span className="text-body-sm text-ink-muted mt-1">{t('basedOnReviews', { count: reviews.length })}</span>
             </div>
           </div>
         </div>
@@ -63,7 +65,7 @@ export function ProductReviews({ reviews }: ProductReviewsProps) {
         <div className="flex flex-col gap-3">
           {distribution.map(dist => (
             <div key={dist.stars} className="flex items-center gap-4 text-body-sm">
-              <span className="w-12 text-ink">{dist.stars} Stars</span>
+              <span className="w-12 text-ink">{t('starsCount', { count: dist.stars })}</span>
               <div className="flex-1 h-2 bg-border-subtle rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-gold rounded-full transition-all duration-1000 ease-out" 
@@ -75,24 +77,24 @@ export function ProductReviews({ reviews }: ProductReviewsProps) {
           ))}
         </div>
 
-        <Button variant="dark" className="w-full mt-4">Write a Review</Button>
+        <Button variant="dark" className="w-full mt-4">{t('writeReview')}</Button>
       </div>
 
       {/* Right: Review List */}
       <div className="flex-1 flex flex-col">
         <div className="flex justify-between items-center mb-8 border-b border-border-subtle pb-4">
           <span className="text-label-md uppercase tracking-wider text-ink">
-            {reviews.length} Reviews
+            {t('reviewsCount', { count: reviews.length })}
           </span>
           <div className="w-40">
             <Select value={sort} onValueChange={setSort}>
               <SelectTrigger className="border-none bg-transparent shadow-none px-0 justify-end gap-2 text-label-sm uppercase tracking-wider text-ink">
-                <SelectValue placeholder="Sort by" />
+                <SelectValue placeholder={t('sortBy')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="recent">Most Recent</SelectItem>
-                <SelectItem value="highest">Highest Rating</SelectItem>
-                <SelectItem value="lowest">Lowest Rating</SelectItem>
+                <SelectItem value="recent">{t('mostRecent')}</SelectItem>
+                <SelectItem value="highest">{t('highestRating')}</SelectItem>
+                <SelectItem value="lowest">{t('lowestRating')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -121,7 +123,7 @@ export function ProductReviews({ reviews }: ProductReviewsProps) {
           
           {visibleReviews.length === 0 && (
             <div className="text-body-md text-ink-muted italic">
-              No reviews yet. Be the first to review!
+              {t('noReviewsYet')}
             </div>
           )}
         </div>
@@ -129,7 +131,7 @@ export function ProductReviews({ reviews }: ProductReviewsProps) {
         {visibleCount < reviews.length && (
           <div className="flex justify-center mt-12">
             <Button variant="secondary" onClick={() => setVisibleCount(v => v + 5)}>
-              Load More Reviews
+              {t('loadMoreReviews')}
             </Button>
           </div>
         )}

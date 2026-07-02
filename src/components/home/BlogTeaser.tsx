@@ -2,13 +2,15 @@
 
 import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 
 import { BLOG_POSTS } from '@/data/blog-posts'
 
 export function BlogTeaser() {
+  const t = useTranslations('home.blogTeaser')
   const targetRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const [maxScroll, setMaxScroll] = useState(0)
@@ -73,13 +75,13 @@ export function BlogTeaser() {
         {/* Left / Top Panel: Solid Sticky Block (Slides over the cards) */}
         <div className="absolute top-0 left-0 w-full h-[40vh] xl:w-[40vw] xl:h-screen bg-white z-20 flex flex-col justify-center px-6 sm:px-12 xl:pl-16 2xl:pl-24 shadow-[20px_0_40px_-20px_rgba(0,0,0,0.05)] border-r border-slate-100">
            <span className="text-[10px] xl:text-label-md uppercase tracking-widest text-[#008B8B] mb-2 xl:mb-6 block font-bold">
-             SCIENCE BLOG
+             {t('eyebrow')}
            </span>
            <h2 className="text-4xl sm:text-5xl xl:text-6xl 2xl:text-7xl font-display text-ink leading-[0.9] tracking-tight mb-4 xl:mb-8 max-w-[90%] drop-shadow-sm">
-             Clinical Reviews & Research Guidelines
+             {t('title')}
            </h2>
            <p className="text-xs xl:text-body-md text-ink/70 mb-6 xl:mb-12 max-w-md">
-             Our blog publishes peer-reviewed literature summaries, compound mechanism deep dives, and methodology guides covering purity testing, reconstitution, and storage. Written for researchers who need the science, not the hype.
+             {t('description')}
            </p>
            
            {/* Interactive Scroll Prompt */}
@@ -92,13 +94,13 @@ export function BlogTeaser() {
                />
              </div>
              <span className="text-[8px] xl:text-[9px] font-sans uppercase tracking-[0.25em] font-bold text-[#008B8B]">
-               Scroll to Explore
+               {t('scrollToExplore')}
              </span>
            </div>
 
            <div>
             <Button variant="outline" asChild className="border-slate-300 text-ink hover:bg-[#008B8B] hover:border-[#008B8B] hover:text-white rounded-full px-6 xl:px-8 py-4 uppercase tracking-widest text-[10px] xl:text-xs font-bold transition-all duration-300 shadow-sm">
-               <Link href="/blog">View the Full Blog →</Link>
+               <Link href="/blog">{t('ctaText')} →</Link>
              </Button>
            </div>
         </div>

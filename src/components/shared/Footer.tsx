@@ -1,13 +1,15 @@
 'use client'
 
 import React, { useRef, useState, useEffect } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Mail } from 'lucide-react'
 import { useLenis } from 'lenis/react'
+import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 const FooterContent = () => {
+  const t = useTranslations('footer')
   const sectionRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -40,12 +42,12 @@ const FooterContent = () => {
         {/* Top Text Section */}
         <div className="container relative z-20 mx-auto px-4 max-w-4xl text-center flex flex-col items-center gap-6 mb-16">
           <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[1.1] tracking-tight">
-            Ready to elevate your research.<br className="hidden md:block" /> Explore our complete catalogue.
+            {t('ctaHeadlineLine1')}<br className="hidden md:block" /> {t('ctaHeadlineLine2')}
           </h2>
           <div className="mt-4">
-            <FluidButton 
-              href="/shop" 
-              text="Explore Catalogue" 
+            <FluidButton
+              href="/shop"
+              text={t('exploreCatalogue')}
               variant="white"
             />
           </div>
@@ -127,7 +129,7 @@ const FooterContent = () => {
 
             <div className="pr-20 relative z-10">
               <h3 className="text-white text-lg md:text-xl font-medium leading-relaxed tracking-wide">
-                Join research laboratories and universities nationwide relying on <span className="font-bold">99PurityPeptides.</span>
+                {t('brandBlurbPrefix')} <span className="font-bold">99PurityPeptides.</span>
               </h3>
             </div>
           </div>
@@ -153,16 +155,16 @@ const FooterContent = () => {
             </div>
             
             <div className="pr-14 md:pr-12 w-full">
-              <h4 className="text-ink font-bold tracking-[0.15em] uppercase text-xs mb-4">Explore</h4>
+              <h4 className="text-ink font-bold tracking-[0.15em] uppercase text-xs mb-4">{t('explore')}</h4>
               <ul className="w-full flex flex-col">
                 {[
-                  { label: 'Home', href: '/' },
-                  { label: 'About', href: '/about' },
-                  { label: 'Shop', href: '/shop' },
-                  { label: 'Blog', href: '/blog' },
-                  { label: 'FAQ', href: '/faq' },
-                  { label: 'Peptide Calculator', href: '/calculator' },
-                  { label: 'Affiliates', href: '/affiliates' }
+                  { label: t('navHome'), href: '/' },
+                  { label: t('navAbout'), href: '/about' },
+                  { label: t('navShop'), href: '/shop' },
+                  { label: t('navBlog'), href: '/blog' },
+                  { label: t('navFaq'), href: '/faq' },
+                  { label: t('navCalculator'), href: '/calculator' },
+                  { label: t('navAffiliates'), href: '/affiliates' }
                 ].map((item) => (
                   <li key={item.label} className="w-full">
                     <Link href={item.href} className="group block py-2 border-b border-black/[0.04] last:border-0 relative z-10 transition-transform duration-300 hover:translate-x-1">
@@ -202,7 +204,7 @@ const FooterContent = () => {
             </div>
 
             <div className="pr-14">
-              <h4 className="text-ink font-bold tracking-[0.15em] uppercase text-xs mb-8">Contact</h4>
+              <h4 className="text-ink font-bold tracking-[0.15em] uppercase text-xs mb-8">{t('contact')}</h4>
               <div className="flex flex-col gap-5 items-start">
                 <a href="mailto:orders@99puritypeptides.com" className="flex items-center gap-4 hover:bg-black/[0.03] rounded-2xl p-2 -ml-2 transition-colors group w-full">
                   <div className="w-10 h-10 rounded-full bg-black/[0.04] border border-black/[0.05] flex items-center justify-center text-ink-muted group-hover:text-white group-hover:bg-primary group-hover:border-primary transition-all duration-300 shrink-0 group-hover:scale-110">
@@ -250,22 +252,22 @@ const FooterContent = () => {
               <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
               <Link href="/contact" className="group/btn border-b border-black/[0.04] pb-6 mb-6 block relative z-10 transition-transform duration-300 hover:translate-x-2">
                 <div className="flex justify-between items-center text-ink mb-1">
-                  <h3 className="text-xl md:text-2xl font-bold group-hover/btn:text-primary transition-colors tracking-tight">Contact Us</h3>
+                  <h3 className="text-xl md:text-2xl font-bold group-hover/btn:text-primary transition-colors tracking-tight">{t('contactUs')}</h3>
                   <div className="w-10 h-10 rounded-full bg-black/[0.04] text-ink flex items-center justify-center transition-all duration-500 group-hover/btn:bg-primary group-hover/btn:text-white group-hover/btn:scale-110">
                     <ArrowRight className="w-4 h-4 -rotate-45 transition-transform duration-500 group-hover/btn:rotate-0" />
                   </div>
                 </div>
-                <p className="text-ink/60 text-xs sm:text-sm font-medium">Reach out to our support team</p>
+                <p className="text-ink/60 text-xs sm:text-sm font-medium">{t('contactUsSubtext')}</p>
               </Link>
 
               <Link href="/shop" className="group/btn block relative z-10 transition-transform duration-300 hover:translate-x-2">
                 <div className="flex justify-between items-center text-ink mb-1">
-                  <h3 className="text-xl md:text-2xl font-bold group-hover/btn:text-primary transition-colors tracking-tight">Shop Catalogue</h3>
+                  <h3 className="text-xl md:text-2xl font-bold group-hover/btn:text-primary transition-colors tracking-tight">{t('shopCatalogue')}</h3>
                   <div className="w-10 h-10 rounded-full bg-black/[0.04] text-ink flex items-center justify-center transition-all duration-500 group-hover/btn:bg-primary group-hover/btn:text-white group-hover/btn:scale-110">
                     <ArrowRight className="w-4 h-4 -rotate-45 transition-transform duration-500 group-hover/btn:rotate-0" />
                   </div>
                 </div>
-                <p className="text-ink/60 text-xs sm:text-sm font-medium">View all research peptides</p>
+                <p className="text-ink/60 text-xs sm:text-sm font-medium">{t('shopCatalogueSubtext')}</p>
               </Link>
             </div>
           </div>
@@ -282,25 +284,25 @@ const FooterContent = () => {
         {/* Bottom Area Outside the Card */}
         <div className="mt-8 px-4 md:px-8 flex flex-col gap-6 relative z-10">
           <p className="text-cream/70 text-[10px] leading-relaxed max-w-6xl mx-auto text-center">
-            <span className="font-bold text-cream uppercase tracking-wider mr-2">Disclaimer:</span> 
-            The content on this website has not been evaluated or approved by the U.S. Food and Drug Administration (FDA). Products sold by 99 Purity Peptides are offered for research and laboratory purposes only and are not intended to diagnose, treat, cure, or prevent any disease. 99 Purity Peptides is not a compounding pharmacy and does not operate as a chemical compounding facility as defined under Section 503A of the Federal Food, Drug, and Cosmetic Act. Products are not for human or veterinary use, and are not intended for ingestion, injection, or any form of administration. Purity levels may vary by product and lot; certain items may test below 99% purity.
+            <span className="font-bold text-cream uppercase tracking-wider mr-2">{t('disclaimerLabel')}:</span>
+            {t('disclaimerText')}
           </p>
           <div className="flex flex-col lg:flex-row justify-between items-center text-cream/70 text-[11px] font-medium pt-4 border-t border-cream/10 pb-4">
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-4 lg:mb-0">
               <span className="text-cream/90">99Purity Peptides &copy; {new Date().getFullYear()}</span>
               <span className="hidden sm:inline">·</span>
-              <Link href="/privacy-policy" className="hover:text-cream transition-colors">Privacy Policy</Link>
+              <Link href="/privacy-policy" className="hover:text-cream transition-colors">{t('privacyPolicy')}</Link>
               <span className="hidden sm:inline">·</span>
-              <Link href="/terms-and-conditions" className="hover:text-cream transition-colors">Terms of Service</Link>
+              <Link href="/terms-and-conditions" className="hover:text-cream transition-colors">{t('termsOfService')}</Link>
               <span className="hidden sm:inline">·</span>
-              <Link href="/refund-policy" className="hover:text-cream transition-colors">Refund Policy</Link>
+              <Link href="/refund-policy" className="hover:text-cream transition-colors">{t('refundPolicy')}</Link>
               <span className="hidden sm:inline">·</span>
-              <Link href="/shipping-policy" className="hover:text-cream transition-colors">Shipping Policy</Link>
+              <Link href="/shipping-policy" className="hover:text-cream transition-colors">{t('shippingPolicy')}</Link>
               <span className="hidden sm:inline">·</span>
-              <Link href="/medical-disclaimer" className="hover:text-cream transition-colors">Medical Disclaimer</Link>
+              <Link href="/medical-disclaimer" className="hover:text-cream transition-colors">{t('medicalDisclaimer')}</Link>
             </div>
             <div className="flex items-center gap-2 text-center lg:text-right">
-              <span>Designed & Developed by <a href="https://belkdigital.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 font-bold hover:text-primary transition-colors">Belk Digital</a></span>
+              <span>{t('designedBy')} <a href="https://belkdigital.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 font-bold hover:text-primary transition-colors">Belk Digital</a></span>
             </div>
           </div>
         </div>

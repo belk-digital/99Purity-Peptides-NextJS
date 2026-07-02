@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Minus } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export interface Faq {
   id: string
@@ -15,6 +16,7 @@ interface ProductFaqsProps {
 }
 
 export function ProductFaqs({ faqs }: ProductFaqsProps) {
+  const t = useTranslations('shop.productFaqs')
   const [openFaq, setOpenFaq] = useState<string | null>(null)
 
   if (!faqs || faqs.length === 0) return null
@@ -25,7 +27,7 @@ export function ProductFaqs({ faqs }: ProductFaqsProps) {
 
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col border-t border-border-subtle pt-16">
-      <h3 className="text-display-sm font-display text-ink mb-8">Frequently Asked Questions</h3>
+      <h3 className="text-display-sm font-display text-ink mb-8">{t('title')}</h3>
       
       <div className="flex flex-col border-t border-border-subtle">
         {faqs.map((faq) => {

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 
 export interface Variant {
@@ -21,6 +22,7 @@ interface VariantSelectorProps {
 }
 
 export function VariantSelector({ variants, value, onChange, label = '', theme = 'light' }: VariantSelectorProps) {
+  const t = useTranslations('shop.variantSelector')
   if (!variants || variants.length === 0) return null
 
   return (
@@ -50,7 +52,7 @@ export function VariantSelector({ variants, value, onChange, label = '', theme =
                 "text-[13px] font-bold uppercase tracking-widest",
                 !variant.inStock && "line-through"
               )}>
-                {variant.title || `Option`}
+                {variant.title || t('option')}
               </span>
               
               {/* Optional tiny price diff indicator - omitted for maximum cleanliness since top price updates */}

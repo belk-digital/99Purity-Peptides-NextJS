@@ -4,11 +4,13 @@ import { ShoppingCart, Heart } from 'lucide-react'
 import { useRef } from 'react'
 import { useScroll, useTransform, motion, useSpring } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 const FALLBACK_PRODUCTS = [
   {
+    key: "tb500",
     name: "TB-500",
     categories: [{ title: "Muscle Repair" }],
     meta: { description: "Potent synthetic peptide researched for its role in cellular migration, actin regulation, and wound healing." },
@@ -17,6 +19,7 @@ const FALLBACK_PRODUCTS = [
     slug: "tb-500",
   },
   {
+    key: "bpc157",
     name: "BPC-157",
     categories: [{ title: "Recovery & Healing" }],
     meta: { description: "A highly purified synthetic peptide widely studied for its profound effects on tissue regeneration and angiogenesis." },
@@ -25,6 +28,7 @@ const FALLBACK_PRODUCTS = [
     slug: "bpc-157",
   },
   {
+    key: "semaglutide",
     name: "Semaglutide",
     categories: [{ title: "Metabolic Research" }],
     meta: { description: "A GLP-1 receptor agonist actively researched for its mechanisms in glycemic control and metabolic regulation." },
@@ -33,6 +37,7 @@ const FALLBACK_PRODUCTS = [
     slug: "semaglutide",
   },
   {
+    key: "ghkCu",
     name: "GHK-Cu",
     categories: [{ title: "Cellular Aging" }],
     meta: { description: "A naturally occurring copper complex peptide frequently studied for its role in collagen synthesis and anti-aging." },
@@ -43,6 +48,7 @@ const FALLBACK_PRODUCTS = [
 ]
 
 export function BestSellerSection({ products = [] }: { products?: any[] }) {
+  const t = useTranslations('home.bestSeller')
   const sectionRef = useRef<HTMLElement>(null)
   
   const { scrollYProgress } = useScroll({
@@ -65,6 +71,7 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
 
   // Use passed products or fallback to hardcoded ones if API is empty
   const sourceProducts = products.length > 0 ? products : FALLBACK_PRODUCTS;
+  const isFallback = products.length === 0;
 
   // Ensure we have exactly 8 products to fill a 2-row, 4-column grid perfectly
   const displayProducts = sourceProducts.length >= 8 
@@ -78,17 +85,17 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
         {/* Centered Header */}
         <div className="text-center mb-20 flex flex-col items-center">
           <div className="inline-block border border-ink/10 rounded-full px-4 py-1.5 mb-6 bg-white shadow-sm">
-            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">Most Popular</span>
+            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">{t('eyebrow')}</span>
           </div>
           <h2 className="font-heading text-5xl lg:text-7xl font-black text-ink leading-[0.9] tracking-tighter uppercase mb-6">
-            Our Best Sellers.
+            {t('title')}
           </h2>
           <p className="text-ink/70 text-lg leading-relaxed max-w-2xl mb-10">
-            Browse our research-grade peptide reagents for assay development, receptor binding studies, and mechanistic research.
+            {t('description')}
           </p>
-          <FluidButton 
-            href="/shop" 
-            text="View All Products" 
+          <FluidButton
+            href="/shop"
+            text={t('ctaText')}
             variant="dark"
           />
         </div>
@@ -109,7 +116,7 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
               >
                 {/* CSS Transition wrapped element MUST be separate from motion.div */}
                 <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl ${rotationClass}`}>
-                  <Link href={`/product/${product.slug}`} className="absolute inset-0 z-20" aria-label={`View ${product.name}`} />
+                  <Link href={`/product/${product.slug}`} className="absolute inset-0 z-20" aria-label={product.name} />
                   
                   {/* Top Text Content & Wishlist */}
                   <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative">
@@ -123,11 +130,11 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                         {product.name}
                       </h3>
                       <p className="text-primary text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 sm:mt-1">
-                        {product.categories?.[0]?.title || 'Research Peptide'}
+                        {product.categories?.[0]?.title || t('fallbackCategory')}
                       </p>
                     </div>
                     <p className="text-ink/60 text-[9px] sm:text-[13px] leading-tight sm:leading-relaxed line-clamp-2">
-                      {product.meta?.description || 'Highly purified synthetic peptide prepared for rigorous laboratory research.'}
+                      {isFallback && product.key ? t(`products.${product.key}`) : (product.meta?.description || t('fallbackDescription'))}
                     </p>
                   </div>
 
@@ -147,7 +154,7 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                     <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-10 pointer-events-none">
                       <div className="flex flex-col">
                         <span className="text-white/80 text-[8px] sm:text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5">
-                          From
+                          {t('fromLabel')}
                         </span>
                         <div className="flex items-center flex-wrap gap-1.5 sm:gap-2">
                           {product.originalPrice && (

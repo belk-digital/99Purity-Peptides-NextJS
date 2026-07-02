@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface DialogProps {
   open: boolean
@@ -15,6 +16,7 @@ interface DialogProps {
 }
 
 export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
+  const t = useTranslations('account.securityDialogs')
   const { user } = useUser()
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -27,7 +29,7 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
     setError('')
 
     if (newPassword !== confirmPassword) {
-      setError('New passwords do not match')
+      setError(t('passwordMismatch'))
       return
     }
 
@@ -45,7 +47,7 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
           newPassword
         })
       }
-      toast.success('Password updated successfully')
+      toast.success(t('passwordUpdateSuccess'))
       onOpenChange(false)
       // Reset form
       setCurrentPassword('')
@@ -55,9 +57,9 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
       console.error('Password update error', err)
       const errCode = err.errors?.[0]?.code
       if (errCode === 'session_reverification_required') {
-        setError('Security policy requires re-authentication. Please log out and log back in, or use the official Clerk UI.')
+        setError(t('reverificationRequired'))
       } else {
-        setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || 'An error occurred while updating password')
+        setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || t('passwordUpdateError'))
       }
     } finally {
       setIsLoading(false)
@@ -68,18 +70,18 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-white border border-gray-200 shadow-2xl rounded-2xl">
         <DialogHeader>
-          <DialogTitle>Update Password</DialogTitle>
+          <DialogTitle>{t('updatePasswordTitle')}</DialogTitle>
           <DialogDescription>
-            Enter your current password and a new secure password.
+            {t('updatePasswordDescription')}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 py-4">
           {user?.passwordEnabled && (
             <div className="flex flex-col gap-2">
-              <Label htmlFor="current">Current Password</Label>
-              <Input 
-                id="current" 
-                type="password" 
+              <Label htmlFor="current">{t('currentPassword')}</Label>
+              <Input
+                id="current"
+                type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 required
@@ -87,20 +89,20 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
             </div>
           )}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="new">New Password</Label>
-            <Input 
-              id="new" 
-              type="password" 
+            <Label htmlFor="new">{t('newPassword')}</Label>
+            <Input
+              id="new"
+              type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="confirm">Confirm New Password</Label>
-            <Input 
-              id="confirm" 
-              type="password" 
+            <Label htmlFor="confirm">{t('confirmNewPassword')}</Label>
+            <Input
+              id="confirm"
+              type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -109,11 +111,11 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
           {error && <p className="text-sm font-medium text-red-500">{error}</p>}
           <DialogFooter className="mt-4">
             <DialogClose asChild>
-              <Button type="button" variant="outline">Cancel</Button>
+              <Button type="button" variant="outline">{t('cancel')}</Button>
             </DialogClose>
             <Button type="submit" variant="dark" disabled={isLoading} className="bg-black text-white hover:bg-gray-800">
               {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-              Update Password
+              {t('updatePasswordTitle')}
             </Button>
           </DialogFooter>
         </form>
@@ -123,6 +125,7 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
 }
 
 export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
+  const t = useTranslations('account.securityDialogs')
   const { user } = useUser()
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
@@ -146,10 +149,10 @@ export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
       await newEmail.prepareVerification({ strategy: 'email_code' })
       
       setStep('verify')
-      toast.success('Verification code sent')
+      toast.success(t('verificationCodeSent'))
     } catch (err: any) {
       console.error('Email preparation error', err)
-      setError(err.errors?.[0]?.message || 'An error occurred while preparing email')
+      setError(err.errors?.[0]?.message || t('emailPreparationError'))
     } finally {
       setIsLoading(false)
     }
@@ -172,15 +175,15 @@ export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
       if (verifiedEmail.verification.status === 'verified') {
         // 2. Optionally set it as primary (required if deleting the old one)
         // Clerk SDK uses setAsPrimary on the email object or user.update
-        toast.success('Email updated successfully')
+        toast.success(t('emailUpdateSuccess'))
         onOpenChange(false)
         resetState()
       } else {
-        setError('Verification failed. Please try again.')
+        setError(t('verificationFailed'))
       }
     } catch (err: any) {
       console.error('Email verification error', err)
-      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || 'Invalid verification code')
+      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || t('invalidVerificationCode'))
     } finally {
       setIsLoading(false)
     }
@@ -204,21 +207,21 @@ export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-white border border-gray-200 shadow-2xl rounded-2xl">
         <DialogHeader>
-          <DialogTitle>Change Email Address</DialogTitle>
+          <DialogTitle>{t('changeEmailTitle')}</DialogTitle>
           <DialogDescription>
-            {step === 'input' 
-              ? "Enter your new email address. We'll send a code to verify it." 
-              : `Enter the 6-digit verification code sent to ${email}`}
+            {step === 'input'
+              ? t('changeEmailDescriptionInput')
+              : t('changeEmailDescriptionVerify', { email })}
           </DialogDescription>
         </DialogHeader>
 
         {step === 'input' ? (
           <form onSubmit={handleSendCode} className="flex flex-col gap-4 py-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email">New Email Address</Label>
-              <Input 
-                id="email" 
-                type="email" 
+              <Label htmlFor="email">{t('newEmailAddress')}</Label>
+              <Input
+                id="email"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="hello@example.com"
@@ -228,21 +231,21 @@ export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
             {error && <p className="text-sm font-medium text-red-500">{error}</p>}
             <DialogFooter className="mt-4">
               <DialogClose asChild>
-                <Button type="button" variant="outline">Cancel</Button>
+                <Button type="button" variant="outline">{t('cancel')}</Button>
               </DialogClose>
               <Button type="submit" variant="dark" disabled={isLoading} className="bg-black text-white hover:bg-gray-800">
                 {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-                Send Code
+                {t('sendCode')}
               </Button>
             </DialogFooter>
           </form>
         ) : (
           <form onSubmit={handleVerifyCode} className="flex flex-col gap-4 py-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="code">Verification Code</Label>
-              <Input 
-                id="code" 
-                type="text" 
+              <Label htmlFor="code">{t('verificationCode')}</Label>
+              <Input
+                id="code"
+                type="text"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="123456"
@@ -253,10 +256,10 @@ export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
             </div>
             {error && <p className="text-sm font-medium text-red-500">{error}</p>}
             <DialogFooter className="mt-4">
-              <Button type="button" variant="outline" onClick={() => setStep('input')}>Back</Button>
+              <Button type="button" variant="outline" onClick={() => setStep('input')}>{t('back')}</Button>
               <Button type="submit" variant="dark" disabled={isLoading} className="bg-black text-white hover:bg-gray-800">
                 {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-                Verify
+                {t('verify')}
               </Button>
             </DialogFooter>
           </form>

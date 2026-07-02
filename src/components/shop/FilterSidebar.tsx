@@ -9,6 +9,7 @@ import { Slider } from '@/components/ui/slider'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 export interface Category {
   id: string | number
@@ -21,6 +22,7 @@ export interface FilterSidebarProps {
 }
 
 function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
+  const t = useTranslations('shop.filterSidebar')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -86,7 +88,7 @@ function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
       {/* Category Section */}
       <div className="flex flex-col gap-4">
           <h4 className="text-xs font-bold uppercase tracking-widest text-black border-b border-black/10 pb-3">
-          Category
+          {t('category')}
         </h4>
         <div className="flex flex-col gap-3">
           {categories.map(cat => (
@@ -107,7 +109,7 @@ function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
       {/* Price Section */}
       <div className="flex flex-col gap-4">
           <h4 className="text-xs font-bold uppercase tracking-widest text-black border-b border-black/10 pb-3">
-          Price
+          {t('price')}
         </h4>
         <div className="px-2 pt-4">
           <Slider 
@@ -128,7 +130,7 @@ function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
       {/* Availability Section */}
       <div className="flex flex-col gap-4">
           <h4 className="text-xs font-bold uppercase tracking-widest text-black border-b border-black/10 pb-3">
-          Availability
+          {t('availability')}
         </h4>
         <div className="flex flex-col gap-3">
           <div className="flex items-center space-x-3">
@@ -137,7 +139,7 @@ function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
               checked={inStock}
               onCheckedChange={(c) => updateFilters('inStock', c === true)}
             />
-            <Label htmlFor="instock" className="text-sm font-medium text-black cursor-pointer">In stock</Label>
+            <Label htmlFor="instock" className="text-sm font-medium text-black cursor-pointer">{t('inStock')}</Label>
           </div>
           <div className="flex items-center space-x-3">
             <Checkbox 
@@ -145,7 +147,7 @@ function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
               checked={onSale}
               onCheckedChange={(c) => updateFilters('onSale', c === true)}
             />
-            <Label htmlFor="onsale" className="text-sm font-medium text-black cursor-pointer">On sale</Label>
+            <Label htmlFor="onsale" className="text-sm font-medium text-black cursor-pointer">{t('onSale')}</Label>
           </div>
         </div>
       </div>
@@ -154,7 +156,7 @@ function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
       {/* Footer / Clear Button */}
       <div className="pt-8 mt-8 border-t border-black/10 flex justify-end">
         <Button variant="link" onClick={clearAll} className="text-black/60 hover:text-black px-4 font-medium">
-          Clear all filters
+          {t('clearAllFilters')}
         </Button>
       </div>
     </div>

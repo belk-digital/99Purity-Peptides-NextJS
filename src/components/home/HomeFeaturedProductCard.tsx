@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 export interface Product {
   name: string
@@ -19,13 +20,14 @@ export interface HomeFeaturedProductCardProps {
 }
 
 export function HomeFeaturedProductCard({ product, id, index = 0 }: HomeFeaturedProductCardProps) {
+  const t = useTranslations('home.featuredProductCard')
   return (
     <div 
       className="group relative flex flex-col items-center w-full bg-transparent cursor-pointer"
     >
       {/* Absolute Link overlay so entire card is clickable */}
       <Link href={`/products/${product.slug}`} className="absolute inset-0 z-0">
-        <span className="sr-only">View {product.name}</span>
+        <span className="sr-only">{t('viewSrOnly', { name: product.name })}</span>
       </Link>
 
       {/* Image Area with overlapping vial */}
@@ -79,7 +81,7 @@ export function HomeFeaturedProductCard({ product, id, index = 0 }: HomeFeatured
         
         {/* Add to Cart Button */}
         <button className="pointer-events-auto px-6 py-2.5 sm:px-8 sm:py-3 rounded-none bg-ink border border-slate-300 text-cream hover:bg-cream hover:text-ink hover:border-black transition-all duration-300 font-bold tracking-[0.15em] uppercase text-[9px] sm:text-[10px] w-full max-w-[180px]">
-          ADD TO CART
+          {t('addToCart')}
         </button>
       </div>
     </div>

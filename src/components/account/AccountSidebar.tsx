@@ -1,11 +1,12 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { usePathname } from 'next/navigation'
 import { Space_Grotesk } from 'next/font/google'
 import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, Wallet, BarChart3, Users } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 import { useClerk } from '@clerk/nextjs'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog'
@@ -14,11 +15,11 @@ import { useState } from 'react'
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 const NAV_ITEMS = [
-  { name: 'Overview', href: '/account', icon: LayoutDashboard },
-  { name: 'Orders', href: '/account/orders', icon: Package },
-  { name: 'Addresses', href: '/account/addresses', icon: MapPin },
-  { name: 'Wishlist', href: '/account/wishlist', icon: Heart },
-  { name: 'Settings', href: '/account/settings', icon: Settings },
+  { key: 'overview', href: '/account', icon: LayoutDashboard },
+  { key: 'orders', href: '/account/orders', icon: Package },
+  { key: 'addresses', href: '/account/addresses', icon: MapPin },
+  { key: 'wishlist', href: '/account/wishlist', icon: Heart },
+  { key: 'settings', href: '/account/settings', icon: Settings },
 ]
 
 export function AccountSidebar({ 
@@ -30,15 +31,16 @@ export function AccountSidebar({
   maxxPoints?: number
   affiliateStatus?: 'none' | 'pending' | 'approved' | 'rejected' | 'suspended'
 }) {
+  const t = useTranslations('account.sidebar')
   const pathname = usePathname() || ''
   const { signOut } = useClerk()
   const [open, setOpen] = useState(false)
-  
+
   return (
     <aside className="w-full h-fit flex flex-col gap-8 lg:sticky lg:top-32 z-10">
       {/* Greeting */}
       <div className="hidden lg:flex flex-col gap-1">
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Welcome Back</span>
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{t('welcomeBack')}</span>
         <h2 className={`text-2xl font-bold text-black tracking-tight ${spaceGrotesk.className}`}>
           {userName}
         </h2>
@@ -54,13 +56,13 @@ export function AccountSidebar({
             <Wallet size={18} />
           </div>
           <div className="flex flex-col">
-            <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-500">Maxx Points</span>
+            <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-500">{t('maxxPoints')}</span>
             <span className="text-xl font-bold text-black leading-none mt-1">{Number(maxxPoints.toFixed(2))} <span className="text-sm font-medium text-gray-400">(${maxxPoints.toFixed(2)})</span></span>
           </div>
         </div>
         <div className="relative z-10 bg-amber-50/50 rounded-xl p-3.5 border border-amber-100/50 mt-1 shadow-sm">
           <p className="text-[10px] text-amber-800/90 leading-relaxed font-medium">
-            <strong className="text-amber-900 font-bold">1 Point = $1.</strong> Your points can be applied as a discount directly at checkout.
+            {t.rich('maxxPointsDescription', { strong: (chunks) => <strong className="text-amber-900 font-bold">{chunks}</strong> })}
           </p>
         </div>
       </div>
@@ -96,7 +98,7 @@ export function AccountSidebar({
                 />
               )}
               <Icon size={16} className={`relative z-10 transition-colors duration-300 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-black'}`} />
-              <span className="relative z-10">{item.name}</span>
+              <span className="relative z-10">{t(`nav.${item.key}`)}</span>
             </Link>
           )
         })}
@@ -108,40 +110,40 @@ export function AccountSidebar({
             className="relative flex items-center justify-center lg:justify-start gap-3 shrink-0 px-4 py-3.5 rounded-2xl text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-[#008B8B] hover:bg-blue-50/50 bg-blue-50 lg:bg-transparent group"
           >
             <BarChart3 size={16} className="relative z-10 transition-colors duration-300 text-[#008B8B] group-hover:text-blue-600" />
-            <span className="relative z-10 group-hover:text-blue-600">Affiliate Dashboard</span>
+            <span className="relative z-10 group-hover:text-blue-600">{t('affiliateDashboard')}</span>
           </Link>
         )}
-        
+
         <div className="hidden lg:block w-full h-px bg-gray-200 my-4" />
-        
+
         {/* Sign out */}
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <button className="flex items-center justify-center lg:justify-start gap-3 shrink-0 px-4 py-3.5 rounded-2xl text-[11px] font-bold uppercase tracking-[0.15em] text-red-500 hover:text-white hover:bg-red-500 transition-all duration-300 group bg-red-50 lg:bg-transparent">
               <LogOut size={16} className="text-red-400 group-hover:text-white transition-colors duration-300" />
-              <span className="relative z-10">Sign out</span>
+              <span className="relative z-10">{t('signOut')}</span>
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md bg-white border border-gray-100 p-8 rounded-3xl shadow-2xl">
             <DialogHeader>
               <DialogTitle className={`text-2xl font-bold tracking-tight text-black ${spaceGrotesk.className}`}>
-                Sign Out
+                {t('signOutDialogTitle')}
               </DialogTitle>
               <DialogDescription className="text-sm text-gray-500 mt-2">
-                Are you sure you want to sign out of your account?
+                {t('signOutDialogDescription')}
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="flex flex-col sm:flex-row gap-3 mt-6 sm:justify-end">
               <DialogClose asChild>
                 <button className="px-6 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] text-black bg-gray-100 hover:bg-gray-200 transition-colors w-full sm:w-auto text-center">
-                  Cancel
+                  {t('cancel')}
                 </button>
               </DialogClose>
-              <button 
+              <button
                 onClick={() => signOut({ redirectUrl: '/' })}
                 className="px-6 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] text-white bg-red-500 hover:bg-red-600 transition-colors shadow-md w-full sm:w-auto text-center"
               >
-                Yes, Sign Out
+                {t('confirmSignOut')}
               </button>
             </DialogFooter>
           </DialogContent>
@@ -155,23 +157,23 @@ export function AccountSidebar({
             <Users size={80} />
           </div>
           <div className="relative z-10 flex flex-col gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#008B8B]">Partner Program</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#008B8B]">{t('partnerProgram')}</span>
             <p className="text-[11px] text-blue-900/80 leading-relaxed font-medium">
-              Earn <strong className="text-blue-900 font-bold">15% commission</strong> by referring researchers.
+              {t.rich('partnerProgramDescription', { strong: (chunks) => <strong className="text-blue-900 font-bold">{chunks}</strong> })}
             </p>
           </div>
           <Link href="/affiliates" className="relative z-10 mt-2 bg-white text-[#008B8B] hover:bg-blue-50 hover:text-blue-600 border border-blue-100 rounded-xl px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-center shadow-sm">
-            Apply Now
+            {t('applyNow')}
           </Link>
         </div>
       )}
-      
+
       {affiliateStatus === 'pending' && (
         <div className="hidden lg:flex flex-col gap-3 mt-4 bg-gray-50 border border-gray-200/50 shadow-sm p-5 rounded-2xl w-full relative overflow-hidden">
           <div className="relative z-10 flex flex-col gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500">Partner Program</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500">{t('partnerProgram')}</span>
             <p className="text-[11px] text-gray-600 leading-relaxed font-medium">
-              Your application is currently under review.
+              {t('applicationUnderReview')}
             </p>
           </div>
         </div>

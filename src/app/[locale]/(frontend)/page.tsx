@@ -1,0 +1,128 @@
+import { HomePreloaderWrapper } from '@/components/home/HomePreloaderWrapper'
+import { Hero } from '@/components/home/Hero'
+import { CategoriesSection } from '@/components/home/CategoriesSection'
+import { TrustBadges } from '@/components/shared/TrustBadges'
+import { FaqSection } from '@/components/home/FaqSection'
+import { BlogSection } from '@/components/home/BlogSection'
+import { ParallaxImageSection } from '@/components/home/ParallaxImageSection'
+import { WhatSetsUsApart } from '@/components/home/WhatSetsUsApart'
+import { WhyChooseUs } from '@/components/home/WhyChooseUs'
+import { DifferenceSection } from '@/components/home/DifferenceSection'
+import { BestSellerSection } from '@/components/home/BestSellerSection'
+import { MerchandiseSection } from '@/components/home/MerchandiseSection'
+import { MilitaryDiscountSection } from '@/components/home/MilitaryDiscountSection'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: '99 Purity Peptides | Research-Grade Peptides, COA-Verified',
+  description: 'US-synthesized research peptides — BPC-157, TB-500, GHK-Cu, Semaglutide. Every batch verified at ≥99% HPLC purity with a full COA. Shop with confidence. 2-day shipping available.',
+}
+
+import { getShopProducts } from '@/app/[locale]/(frontend)/(shop)/actions'
+
+export default async function Homepage() {
+  let products = []
+  try {
+    const res = await getShopProducts({ limit: 8, sort: 'newest' })
+    if (res.success && res.products) {
+      products = res.products as any[]
+    }
+  } catch (e) {
+    console.error("Failed to fetch featured products", e)
+  }
+
+  return (
+    <>
+      <div className="flex flex-col w-full min-h-screen relative z-10 bg-black overflow-x-clip">
+        <Hero />
+        <BestSellerSection products={products} />
+        <MilitaryDiscountSection />
+        <TrustBadges />
+        <DifferenceSection />
+        <MerchandiseSection />
+        <WhatSetsUsApart />
+        <CategoriesSection />
+        <ParallaxImageSection />
+        <WhyChooseUs />
+        <BlogSection />
+        <FaqSection />
+      </div>
+
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "What is the purity standard for your research peptides?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Every research peptide must meet or exceed ≥99% purity, verified by independent third-party HPLC and LC-MS testing on every production batch. Any batch below this threshold is discarded."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How can I access the Certificate of Analysis (COA)?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "COAs for every active batch are publicly available in our COA Library at /certificates. Every order includes a batch number traceable to its specific test documentation."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Are these products intended for human consumption?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. All products are strictly for laboratory and research use only. Not intended to diagnose, treat, cure, or prevent any disease, and not for human or animal consumption."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What is 99 Purity Peptides and how do peptides relate to it?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "99 Purity Peptides is the practice of optimizing physical appearance through controllable factors. Research peptides are studied in relation to skin collagen, tissue recovery, body composition, and hair density. Our compounds are research use only."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you offer wholesale pricing for research institutions?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. We offer tiered wholesale pricing for qualified research institutions, university labs, and clinical facilities. Contact our team to apply for an institutional account."
+                  }
+                }
+              ]
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "99 Purity Peptides",
+              "url": "https://the-99 Purity Peptides-lab.vercel.app",
+              "description": "US-based research peptide supplier providing ≥99% HPLC-pure compounds with third-party COA verification.",
+              "sameAs": ["https://instagram.com/the99 Purity Peptideslab"]
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "url": "https://the-99 Purity Peptides-lab.vercel.app",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://the-99 Purity Peptides-lab.vercel.app/shop?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            }
+          ])
+        }}
+      />
+    </>
+  )
+}

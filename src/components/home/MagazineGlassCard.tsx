@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface MagazineGlassCardProps {
   title: string;
@@ -15,6 +16,7 @@ interface MagazineGlassCardProps {
 }
 
 export function MagazineGlassCard({ title, description, icon: Icon, tag, image, className = '', onClick }: MagazineGlassCardProps) {
+  const t = useTranslations('home.magazineGlassCard')
   return (
     <div 
       onClick={onClick}
@@ -86,7 +88,7 @@ export function MagazineGlassCard({ title, description, icon: Icon, tag, image, 
         
         {/* Pill (Dynamic fit) */}
         <div className="px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-4 md:py-2 lg:px-6 lg:py-2.5 bg-[#002222] border border-primary/30 text-white rounded-full flex items-center justify-center text-[8px] sm:text-xs md:text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] whitespace-nowrap relative z-10 transition-colors duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-lg">
-          {tag || 'Verified'}
+          {tag || t('defaultTag')}
         </div>
       </div>
 

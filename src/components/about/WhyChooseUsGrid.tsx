@@ -4,40 +4,43 @@ import React, { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Microscope, ShieldCheck, Settings, FileCheck } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { FadeUp } from '@/components/motion/FadeUp'
 
-const features = [
+const FEATURE_META = [
   {
+    key: 'analyticalEvaluation',
     icon: Microscope,
-    title: "Analytical Evaluation",
-    description: "Each batch of synthetic research peptides undergoes analytical peptide assessment procedures to confirm identity, composition, and purity benchmarks.",
     image: "/99 Images/why-choose-us-1.webp",
     colSpan: "md:col-span-2",
   },
   {
+    key: 'clearClassification',
     icon: ShieldCheck,
-    title: "Clear Classification",
-    description: "All products are designated strictly for laboratory use to ensure regulatory awareness.",
     image: "/99 Images/why-choose-us-2.webp",
     colSpan: "md:col-span-1",
   },
   {
+    key: 'controlledHandling',
     icon: Settings,
-    title: "Controlled Handling",
-    description: "We emphasise internal verification processes aligned with industry-standard analytical methodologies.",
     image: "/99 Images/vial-closeup.webp",
     colSpan: "md:col-span-1",
   },
   {
+    key: 'operationalTransparency',
     icon: FileCheck,
-    title: "Operational Transparency",
-    description: "Transparent access to documentation and classification details. Peptides with COA are available to support purity validation.",
     image: "/99 Images/coa.webp",
     colSpan: "md:col-span-2",
   }
 ];
 
 export function WhyChooseUsGrid() {
+  const t = useTranslations('content.whyChooseUsGrid')
+  const features = FEATURE_META.map((f) => ({
+    ...f,
+    title: t(`features.${f.key}.title`),
+    description: t(`features.${f.key}.description`),
+  }))
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -121,12 +124,12 @@ export function WhyChooseUsGrid() {
           >
             <div className="h-[1px] w-8 md:w-12 bg-primary/40" />
             <h2 className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-primary font-bold">
-              Why Choose Us
+              {t('eyebrow')}
             </h2>
             <div className="h-[1px] w-8 md:w-12 bg-primary/40" />
           </motion.div>
           <motion.h3 variants={titleVariants} className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-heading font-black text-white tracking-tighter uppercase mb-6 leading-none break-words">
-            Research Focused <br className="hidden md:block"/>Supply Practices
+            {t('titleLine1')} <br className="hidden md:block"/>{t('titleLine2')}
           </motion.h3>
         </motion.div>
 

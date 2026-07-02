@@ -4,9 +4,11 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, ShieldCheck, FlaskConical, Award } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 export function AboutHero() {
+  const t = useTranslations('content.aboutHero')
   return (
     <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
       {/* Main Inner Container */}
@@ -43,7 +45,7 @@ export function AboutHero() {
             />
             <FluidButton 
               href="/shop" 
-              text={<><span className="md:hidden">View Peptides</span><span className="hidden md:inline">View Research Peptides</span></>} 
+              text={<><span className="md:hidden">{t('viewPeptidesShort')}</span><span className="hidden md:inline">{t('viewPeptidesLong')}</span></>}
               className="relative z-10" 
             />
           </div>
@@ -58,8 +60,8 @@ export function AboutHero() {
             className="w-full max-w-5xl mx-auto"
           >
             <h1 className="w-full font-heading text-[11vw] sm:text-[9vw] md:text-[7vw] lg:text-[80px] xl:text-[100px] leading-[1.1] md:leading-[1.05] text-white tracking-tighter uppercase font-black drop-shadow-2xl mb-4 md:mb-6">
-              ABOUT 99<span className="md:hidden"><br/></span>
-              <span className="hidden md:inline"> </span>PURITY PEPTIDES
+              {t('titleLine1')}<span className="md:hidden"><br/></span>
+              <span className="hidden md:inline"> </span>{t('titleLine2')}
             </h1>
           </motion.div>
 
@@ -69,7 +71,7 @@ export function AboutHero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-2 md:mt-4 text-white/80 text-sm sm:text-base md:text-xl max-w-2xl font-light leading-relaxed tracking-wide mx-auto"
           >
-            99 Purity Peptides operates as a research-focused peptide company that USA laboratories and independent research professionals rely on when sourcing synthetic research peptides.
+            {t('subtitle')}
           </motion.p>
         </div>
 
