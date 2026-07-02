@@ -9,7 +9,7 @@ import { ExternalLink, Shield, Save, Bell, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Space_Grotesk } from 'next/font/google'
 import { toast } from 'sonner'
-import { UpdatePasswordDialog } from '@/components/account/SecurityDialogs'
+import { UpdatePasswordDialog, ChangeEmailDialog } from '@/components/account/SecurityDialogs'
 import { useTranslations } from 'next-intl'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
@@ -20,6 +20,7 @@ export interface AccountSettingsProps {
     lastName?: string | null;
     email: string;
     phone?: string | null;
+    authProvider?: string;
   }
 }
 
@@ -28,9 +29,10 @@ export function SettingsClient({ user }: AccountSettingsProps) {
   const [isPending, startTransition] = React.useTransition()
   const [marketingEmails, setMarketingEmails] = React.useState(true)
   const [orderSms, setOrderSms] = React.useState(true)
-  
+
   // Custom dialog states
   const [passwordOpen, setPasswordOpen] = React.useState(false)
+  const [emailOpen, setEmailOpen] = React.useState(false)
 
   async function handleSubmit(formData: FormData) {
     startTransition(async () => {
@@ -142,6 +144,13 @@ export function SettingsClient({ user }: AccountSettingsProps) {
                 className="flex items-center justify-center gap-2 bg-white hover:bg-black hover:text-white border border-gray-200 hover:border-black text-black rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors w-full sm:w-auto shadow-sm"
               >
                 {t('updatePassword')} <ExternalLink size={14} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setEmailOpen(true)}
+                className="flex items-center justify-center gap-2 bg-white hover:bg-black hover:text-white border border-gray-200 hover:border-black text-black rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors w-full sm:w-auto shadow-sm"
+              >
+                {t('changeEmail')} <ExternalLink size={14} />
               </button>
             </div>
           </div>
@@ -256,7 +265,8 @@ export function SettingsClient({ user }: AccountSettingsProps) {
 
       </div>
 
-      <UpdatePasswordDialog open={passwordOpen} onOpenChange={setPasswordOpen} />
+      <UpdatePasswordDialog open={passwordOpen} onOpenChange={setPasswordOpen} isGoogleOnly={user.authProvider === 'google'} />
+      <ChangeEmailDialog open={emailOpen} onOpenChange={setEmailOpen} />
     </motion.div>
   )
 }

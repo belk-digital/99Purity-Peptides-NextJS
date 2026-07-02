@@ -21,7 +21,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@clerk/nextjs": "^7.4.1",
     "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.4.0",
     "@payloadcms/db-postgres": "3.84.1",
@@ -70,6 +69,7 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "16.2.6",
     "@playwright/test": "1.58.2",
     "@testing-library/react": "16.3.0",
     "@types/jsonwebtoken": "^9.0.10",

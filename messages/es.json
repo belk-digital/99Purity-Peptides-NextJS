@@ -5,6 +5,51 @@
       "es": "Español"
     }
   },
+  "auth": {
+    "login": {
+      "title": "Inicia sesión en 99 Purity Peptides",
+      "subtitle": "¡Bienvenido de nuevo! Inicia sesión para continuar",
+      "google": "Continuar con Google",
+      "or": "O",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar Sesión",
+      "invalidCredentials": "Correo electrónico o contraseña inválidos"
+    },
+    "register": {
+      "title": "Regístrate en 99 Purity Peptides",
+      "subtitle": "Crea una cuenta para continuar",
+      "google": "Continuar con Google",
+      "or": "O",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Crear Cuenta",
+      "emailInUse": "Ya existe una cuenta con este correo electrónico",
+      "genericError": "Algo salió mal. Por favor, inténtalo de nuevo."
+    },
+    "forgotPassword": {
+      "title": "Restablece tu contraseña",
+      "subtitle": "Ingresa tu correo y te enviaremos un enlace para restablecerla",
+      "email": "Correo electrónico",
+      "submit": "Enviar Enlace",
+      "success": "Si existe una cuenta con ese correo, se ha enviado un enlace de restablecimiento.",
+      "backToLogin": "Volver a iniciar sesión"
+    },
+    "resetPassword": {
+      "title": "Elige una nueva contraseña",
+      "subtitle": "Ingresa una nueva contraseña para tu cuenta",
+      "newPassword": "Nueva Contraseña",
+      "confirmPassword": "Confirmar Nueva Contraseña",
+      "submit": "Restablecer Contraseña",
+      "success": "Tu contraseña ha sido restablecida. Ya puedes iniciar sesión.",
+      "mismatch": "Las contraseñas no coinciden",
+      "invalidToken": "Este enlace de restablecimiento no es válido o ha expirado",
+      "backToLogin": "Volver a iniciar sesión"
+    }
+  },
   "ageGate": {
     "restrictedAccess": "Acceso Restringido",
     "titleLine1": "Verificación",
@@ -836,6 +881,7 @@
       "authManagedSecurely": "Autenticación gestionada de forma segura",
       "authDescription": "Tu correo electrónico (<strong>{email}</strong>) y contraseña están encriptados y gestionados de forma segura a través de nuestro proveedor de autenticación.",
       "updatePassword": "Actualizar Contraseña",
+      "changeEmail": "Cambiar Correo",
       "preferences": "Preferencias",
       "language": "Idioma",
       "selectLanguage": "Selecciona un Idioma",
@@ -888,7 +934,7 @@
     "securityDialogs": {
       "passwordMismatch": "Las nuevas contraseñas no coinciden",
       "passwordUpdateSuccess": "Contraseña actualizada correctamente",
-      "reverificationRequired": "La política de seguridad requiere una nueva autenticación. Cierra sesión y vuelve a iniciarla, o usa la interfaz oficial de Clerk.",
+      "reverificationRequired": "Por tu seguridad, cierra sesión y vuelve a iniciarla antes de cambiar tu contraseña.",
       "passwordUpdateError": "Ocurrió un error al actualizar la contraseña",
       "updatePasswordTitle": "Actualizar Contraseña",
       "updatePasswordDescription": "Ingresa tu contraseña actual y una nueva contraseña segura.",

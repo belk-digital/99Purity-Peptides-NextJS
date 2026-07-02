@@ -5,6 +5,51 @@
       "es": "Español"
     }
   },
+  "auth": {
+    "login": {
+      "title": "Sign in to 99 Purity Peptides",
+      "subtitle": "Welcome back! Please sign in to continue",
+      "google": "Continue with Google",
+      "or": "OR",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "invalidCredentials": "Invalid email or password"
+    },
+    "register": {
+      "title": "Sign up for 99 Purity Peptides",
+      "subtitle": "Create an account to continue",
+      "google": "Continue with Google",
+      "or": "OR",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create Account",
+      "emailInUse": "An account with this email already exists",
+      "genericError": "Something went wrong. Please try again."
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send you a reset link",
+      "email": "Email",
+      "submit": "Send Reset Link",
+      "success": "If an account exists for that email, a reset link has been sent.",
+      "backToLogin": "Back to sign in"
+    },
+    "resetPassword": {
+      "title": "Choose a new password",
+      "subtitle": "Enter a new password for your account",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "submit": "Reset Password",
+      "success": "Your password has been reset. You can now sign in.",
+      "mismatch": "Passwords do not match",
+      "invalidToken": "This reset link is invalid or has expired",
+      "backToLogin": "Back to sign in"
+    }
+  },
   "ageGate": {
     "restrictedAccess": "Restricted Access",
     "titleLine1": "Age",
@@ -836,6 +881,7 @@
       "authManagedSecurely": "Authentication managed securely",
       "authDescription": "Your email (<strong>{email}</strong>) and password are encrypted and managed securely via our authentication provider.",
       "updatePassword": "Update Password",
+      "changeEmail": "Change Email",
       "preferences": "Preferences",
       "language": "Language",
       "selectLanguage": "Select Language",
@@ -888,7 +934,7 @@
     "securityDialogs": {
       "passwordMismatch": "New passwords do not match",
       "passwordUpdateSuccess": "Password updated successfully",
-      "reverificationRequired": "Security policy requires re-authentication. Please log out and log back in, or use the official Clerk UI.",
+      "reverificationRequired": "For your security, please log out and log back in before changing your password.",
       "passwordUpdateError": "An error occurred while updating password",
       "updatePasswordTitle": "Update Password",
       "updatePasswordDescription": "Enter your current password and a new secure password.",

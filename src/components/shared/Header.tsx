@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import { Heart, ShoppingCart, User } from 'lucide-react'
-import { auth } from '@clerk/nextjs/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth/authOptions'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { ClientHeader } from './ClientHeader'
 
 export async function Header() {
   try {
-    const { userId } = await auth()
+    const session = await getServerSession(authOptions)
+    const userId = session?.user?.id
     let cartItemCount = 0
     let wishlistItemCount = 0
     let initialWishlistItems: any[] = []
@@ -15,16 +17,13 @@ export async function Header() {
 
     if (userId) {
       const payload = await getPayload({ config: configPromise })
-      
-      const payloadUsers = await payload.find({
+
+      const payloadUser = await payload.findByID({
         collection: 'users',
-        where: { clerkUserId: { equals: userId } },
-        limit: 1,
+        id: userId,
         overrideAccess: true,
-      })
-      
-      const payloadUser = payloadUsers.docs[0]
-      
+      }).catch(() => null)
+
       if (payloadUser) {
         const carts = await payload.find({
           collection: 'carts',

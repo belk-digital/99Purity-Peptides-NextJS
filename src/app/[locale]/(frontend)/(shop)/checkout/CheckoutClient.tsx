@@ -13,7 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { useCartStore } from '@/lib/cart/store'
 import { verifyCoupon, getUserDefaultAddress, getUserMaxxPoints, getUserAddresses } from '../actions'
 import { toast } from 'sonner'
-import { useUser } from '@clerk/nextjs'
+import { useSession } from 'next-auth/react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { StripeCheckoutForm } from './StripeCheckoutForm'
@@ -27,7 +27,8 @@ const stripePromise = typeof window !== 'undefined' ? loadStripe(process.env.NEX
 export function CheckoutClient() {
   const t = useTranslations('checkout.checkoutClient')
   const { items, couponCode: storedCouponCode, setCoupon } = useCartStore()
-  const { user } = useUser()
+  const { data: session } = useSession()
+  const user = session?.user
   
   // Mobile summary toggle
   const [mobileSummaryOpen, setMobileSummaryOpen] = useState(true)
@@ -67,7 +68,7 @@ export function CheckoutClient() {
       
       setFormData(prev => ({
         ...prev,
-        email: user.primaryEmailAddress?.emailAddress || prev.email,
+        email: user.email || prev.email,
         firstName: user.firstName || prev.firstName,
         lastName: user.lastName || prev.lastName,
       }))
@@ -249,7 +250,7 @@ export function CheckoutClient() {
       const { createPayloadOrder } = await import('./actions')
       const orderRes = await createPayloadOrder(
         items, shippingMethod, appliedCoupon?.code, isRedeemingPoints, 
-        { ...formData, email: user?.primaryEmailAddress?.emailAddress || formData.email }, 
+        { ...formData, email: user?.email || formData.email },
         'free_order', 
         user?.id as string
       )

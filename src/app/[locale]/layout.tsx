@@ -3,23 +3,8 @@ import '@/app/globals.css'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import { ClerkProvider } from '@clerk/nextjs'
+import { AuthSessionProvider } from '@/components/providers/AuthSessionProvider'
 import { routing } from '@/i18n/routing'
-
-const clerkLocalization = {
-  signIn: {
-    start: {
-      title: 'Sign in to 99 Purity Peptides',
-      subtitle: 'Welcome back! Please sign in to continue',
-    },
-  },
-  signUp: {
-    start: {
-      title: 'Sign up for 99 Purity Peptides',
-      subtitle: 'Create an account to continue',
-    },
-  },
-}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -42,7 +27,7 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <ClerkProvider localization={clerkLocalization}>
+    <AuthSessionProvider>
       <html lang={locale} className="min-h-screen" suppressHydrationWarning>
         <head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -56,6 +41,6 @@ export default async function LocaleLayout({
           <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
         </body>
       </html>
-    </ClerkProvider>
+    </AuthSessionProvider>
   )
 }

@@ -10,7 +10,7 @@ async function runTest() {
       collection: 'users',
       data: {
         email: `test_${Date.now()}@test.com`,
-        clerkUserId: `user_${Date.now()}`,
+        googleId: `user_${Date.now()}`,
         password: 'testpassword123',
         role: 'customer'
       } as any,

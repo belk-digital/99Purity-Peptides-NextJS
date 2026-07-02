@@ -269,17 +269,8 @@ export async function createPayloadOrder(
   const total = totalBeforePoints - pointsToRedeem
 
   try {
-    // Attempt to map clerk userId to Payload User
-    let payloadUserId = null
-    if (userId) {
-       const userRes = await payload.find({
-          collection: 'users',
-          where: { clerkUserId: { equals: userId } }
-       })
-       if (userRes.docs.length > 0) {
-          payloadUserId = userRes.docs[0].id
-       }
-    }
+    // userId is the Payload user's own id (from the NextAuth session), not an external IdP id.
+    const payloadUserId = userId ? Number(userId) : null
 
     // Format order items for Payload
     const orderItems = items.map(item => {

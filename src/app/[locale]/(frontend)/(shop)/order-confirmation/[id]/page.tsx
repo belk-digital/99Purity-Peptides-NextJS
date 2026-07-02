@@ -41,11 +41,13 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
   // 2. Check User Auth (Logged in user returning to the page)
   if (!isAuthorized) {
      try {
-       const { auth } = await import('@clerk/nextjs/server')
-       const { userId } = await auth()
+       const { getServerSession } = await import('next-auth')
+       const { authOptions } = await import('@/lib/auth/authOptions')
+       const session = await getServerSession(authOptions)
+       const userId = session?.user?.id
        if (userId && order.owner) {
-          const ownerDoc = typeof order.owner === 'object' ? order.owner : await payload.findByID({ collection: 'users', id: order.owner });
-          if (ownerDoc && ownerDoc.clerkUserId === userId) {
+          const ownerId = typeof order.owner === 'object' ? order.owner.id : order.owner
+          if (String(ownerId) === String(userId)) {
              isAuthorized = true;
           }
        }

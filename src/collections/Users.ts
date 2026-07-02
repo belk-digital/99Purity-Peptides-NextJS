@@ -9,6 +9,14 @@ export const Users: CollectionConfig = {
   },
   auth: {
     tokenExpiration: 7200,
+    forgotPassword: {
+      generateEmailHTML: ({ token, user } = {}) => {
+        const base = process.env.NEXT_PUBLIC_SERVER_URL || ''
+        const locale = (user as any)?.preferredLocale === 'es' ? '/es' : ''
+        const url = `${base}${locale}/reset-password/${token}`
+        return `<p>Click the link below to reset your password:</p><p><a href="${url}">${url}</a></p><p>This link expires in 1 hour. If you didn't request this, you can safely ignore this email.</p>`
+      },
+    },
   },
   access: accessUsers,
   fields: [
@@ -24,14 +32,41 @@ export const Users: CollectionConfig = {
       required: false,
     },
     {
-      name: 'clerkUserId',
+      name: 'googleId',
       type: 'text',
       unique: true,
       index: true,
-      access: { 
+      access: {
         read: () => false,
         update: () => false, // Prevent manual editing in admin UI
       },
+    },
+    {
+      name: 'authProvider',
+      type: 'select',
+      defaultValue: 'credentials',
+      options: [
+        { label: 'Email/Password', value: 'credentials' },
+        { label: 'Google', value: 'google' },
+      ],
+      access: {
+        update: () => false,
+      },
+    },
+    {
+      name: 'pendingEmail',
+      type: 'text',
+      access: { read: () => false },
+    },
+    {
+      name: 'pendingEmailCodeHash',
+      type: 'text',
+      access: { read: () => false },
+    },
+    {
+      name: 'pendingEmailCodeExpiresAt',
+      type: 'date',
+      access: { read: () => false },
     },
     {
       name: 'phone',

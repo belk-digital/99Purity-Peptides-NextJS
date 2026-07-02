@@ -63,7 +63,7 @@ input:-webkit-autofill:active {
     -webkit-text-fill-color: #111111 !important;
 }
 
-/* Force Borders on Clerk Auth Inputs */
+/* Force Borders on Auth Form Inputs */
 .custom-auth-input {
   border: 1px solid rgba(10, 10, 10, 0.2) !important;
   outline: none !important;

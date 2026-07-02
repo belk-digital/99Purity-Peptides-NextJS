@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useUser } from '@clerk/nextjs'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -9,15 +8,19 @@ import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import {
+  updatePasswordAction,
+  requestEmailChangeAction,
+  verifyEmailChangeAction,
+} from '@/app/[locale]/(frontend)/(shop)/account/settings/actions'
 
 interface DialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
 }
 
-export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
+export function UpdatePasswordDialog({ open, onOpenChange, isGoogleOnly = false }: DialogProps & { isGoogleOnly?: boolean }) {
   const t = useTranslations('account.securityDialogs')
-  const { user } = useUser()
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -33,34 +36,23 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
       return
     }
 
-    if (!user) return
-
     setIsLoading(true)
     try {
-      if (user.passwordEnabled) {
-        await user.updatePassword({
-          currentPassword,
-          newPassword
-        })
-      } else {
-        await user.updatePassword({
-          newPassword
-        })
+      const result = await updatePasswordAction({
+        currentPassword: isGoogleOnly ? undefined : currentPassword,
+        newPassword,
+      })
+      if (!result.success) {
+        setError(result.error || t('passwordUpdateError'))
+        return
       }
       toast.success(t('passwordUpdateSuccess'))
       onOpenChange(false)
-      // Reset form
       setCurrentPassword('')
       setNewPassword('')
       setConfirmPassword('')
-    } catch (err: any) {
-      console.error('Password update error', err)
-      const errCode = err.errors?.[0]?.code
-      if (errCode === 'session_reverification_required') {
-        setError(t('reverificationRequired'))
-      } else {
-        setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || t('passwordUpdateError'))
-      }
+    } catch {
+      setError(t('passwordUpdateError'))
     } finally {
       setIsLoading(false)
     }
@@ -76,7 +68,7 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 py-4">
-          {user?.passwordEnabled && (
+          {!isGoogleOnly && (
             <div className="flex flex-col gap-2">
               <Label htmlFor="current">{t('currentPassword')}</Label>
               <Input
@@ -126,33 +118,27 @@ export function UpdatePasswordDialog({ open, onOpenChange }: DialogProps) {
 
 export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
   const t = useTranslations('account.securityDialogs')
-  const { user } = useUser()
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
   const [step, setStep] = useState<'input' | 'verify'>('input')
-  const [emailId, setEmailId] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    if (!user) return
 
     setIsLoading(true)
     try {
-      // 1. Create the new email address
-      const newEmail = await user.createEmailAddress({ email })
-      setEmailId(newEmail.id)
-      
-      // 2. Trigger the verification code
-      await newEmail.prepareVerification({ strategy: 'email_code' })
-      
+      const result = await requestEmailChangeAction(email)
+      if (!result.success) {
+        setError(result.error || t('emailPreparationError'))
+        return
+      }
       setStep('verify')
       toast.success(t('verificationCodeSent'))
-    } catch (err: any) {
-      console.error('Email preparation error', err)
-      setError(err.errors?.[0]?.message || t('emailPreparationError'))
+    } catch {
+      setError(t('emailPreparationError'))
     } finally {
       setIsLoading(false)
     }
@@ -161,29 +147,19 @@ export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    if (!user) return
 
     setIsLoading(true)
     try {
-      // Get the email address object we just created
-      const emailObj = user.emailAddresses.find((e) => e.id === emailId)
-      if (!emailObj) throw new Error('Email object not found')
-
-      // 1. Verify the code
-      const verifiedEmail = await emailObj.attemptVerification({ code })
-
-      if (verifiedEmail.verification.status === 'verified') {
-        // 2. Optionally set it as primary (required if deleting the old one)
-        // Clerk SDK uses setAsPrimary on the email object or user.update
-        toast.success(t('emailUpdateSuccess'))
-        onOpenChange(false)
-        resetState()
-      } else {
-        setError(t('verificationFailed'))
+      const result = await verifyEmailChangeAction(code)
+      if (!result.success) {
+        setError(result.error || t('invalidVerificationCode'))
+        return
       }
-    } catch (err: any) {
-      console.error('Email verification error', err)
-      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || t('invalidVerificationCode'))
+      toast.success(t('emailUpdateSuccess'))
+      onOpenChange(false)
+      resetState()
+    } catch {
+      setError(t('invalidVerificationCode'))
     } finally {
       setIsLoading(false)
     }
@@ -194,7 +170,6 @@ export function ChangeEmailDialog({ open, onOpenChange }: DialogProps) {
     setCode('')
     setStep('input')
     setError('')
-    setEmailId('')
   }
 
   // Intercept dialog close to reset state

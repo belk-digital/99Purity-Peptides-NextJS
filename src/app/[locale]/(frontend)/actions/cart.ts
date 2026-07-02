@@ -1,26 +1,24 @@
 'use server'
 
-import { auth } from '@clerk/nextjs/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth/authOptions'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { CartLine } from '@/lib/cart/store'
 
 export async function syncCartToPayload(items: CartLine[]) {
   try {
-    const { userId } = await auth()
+    const session = await getServerSession(authOptions)
+    const userId = session?.user?.id
     if (!userId) return { success: false, error: 'Not authenticated' }
 
     const payload = await getPayload({ config: configPromise })
 
-    const payloadUsers = await payload.find({
+    const payloadUser = await payload.findByID({
       collection: 'users',
-      req: { payload } as any,
-      where: { clerkUserId: { equals: userId } },
-      limit: 1,
+      id: userId,
       overrideAccess: true,
-    })
-
-    const payloadUser = payloadUsers.docs[0]
+    }).catch(() => null)
     if (!payloadUser) return { success: false, error: 'User not found' }
 
     const carts = await payload.find({
