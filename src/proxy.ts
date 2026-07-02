@@ -1,11 +1,10 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { getToken } from 'next-auth/jwt'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 
 const handleI18nRouting = createIntlMiddleware(routing)
-
-const isAdminRoute = createRouteMatcher(['/admin(.*)'])
 
 const PROTECTED_PREFIXES = ['/account', '/affiliates/dashboard']
 const PUBLIC_AUTH_PREFIXES = ['/login', '/register']
@@ -17,10 +16,10 @@ function stripLocalePrefix(pathname: string) {
   return match ? pathname.slice(match[0].length) || '/' : pathname
 }
 
-export default clerkMiddleware(async (auth, req) => {
+export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
 
-  if (isAdminRoute(req) || path.startsWith('/api')) {
+  if (path.startsWith('/admin') || path.startsWith('/api')) {
     return NextResponse.next()
   }
 
@@ -32,11 +31,16 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   if (PROTECTED_PREFIXES.some((prefix) => pathWithoutLocale.startsWith(prefix))) {
-    await auth.protect()
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+    if (!token) {
+      const loginUrl = new URL('/login', req.url)
+      loginUrl.searchParams.set('callbackUrl', path)
+      return NextResponse.redirect(loginUrl)
+    }
   }
 
   return intlResponse
-})
+}
 
 export const config = {
   matcher: [

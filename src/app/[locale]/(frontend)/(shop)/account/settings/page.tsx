@@ -16,6 +16,7 @@ export default async function SettingsPage() {
     lastName: user.lastName,
     email: user.email,
     phone: user.phone || null,
+    authProvider: (user as any).authProvider || 'credentials',
   }
 
   return <SettingsClient user={userData} />

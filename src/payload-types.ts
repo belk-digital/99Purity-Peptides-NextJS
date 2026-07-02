@@ -208,7 +208,11 @@ export interface User {
   id: number;
   firstName?: string | null;
   lastName?: string | null;
-  clerkUserId?: string | null;
+  googleId?: string | null;
+  authProvider?: ('credentials' | 'google') | null;
+  pendingEmail?: string | null;
+  pendingEmailCodeHash?: string | null;
+  pendingEmailCodeExpiresAt?: string | null;
   phone?: string | null;
   role?: ('customer' | 'admin' | 'staff') | null;
   emailVerified?: boolean | null;
@@ -282,7 +286,6 @@ export interface Media {
   id: number;
   alt: string;
   caption?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -312,7 +315,6 @@ export interface Media {
 export interface Document {
   id: number;
   title: string;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1363,7 +1365,11 @@ export interface OrderCountersSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
-  clerkUserId?: T;
+  googleId?: T;
+  authProvider?: T;
+  pendingEmail?: T;
+  pendingEmailCodeHash?: T;
+  pendingEmailCodeExpiresAt?: T;
   phone?: T;
   role?: T;
   emailVerified?: T;
@@ -1400,7 +1406,6 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1433,7 +1438,6 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

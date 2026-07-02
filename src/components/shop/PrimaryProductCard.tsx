@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { Heart, ShoppingCart, ChevronRight, Check, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useAuth } from '@clerk/nextjs'
+import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import { useCartStore } from '@/lib/cart/store'
@@ -107,7 +107,8 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
   const addItem = useWishlistStore(state => state.addItem)
   const removeItem = useWishlistStore(state => state.removeItem)
   const isWishlistedGlobal = useWishlistStore(state => product.id ? state.hasItem(product.id) : false)
-  const { isSignedIn } = useAuth()
+  const { status } = useSession()
+  const isSignedIn = status === 'authenticated'
   
   const [inWishlist, setInWishlist] = useState(false)
   const [showParticles, setShowParticles] = useState(false)

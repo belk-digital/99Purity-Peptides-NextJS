@@ -8,7 +8,7 @@ import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, Wallet, BarC
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 
-import { useClerk } from '@clerk/nextjs'
+import { signOut } from 'next-auth/react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog'
 import { useState } from 'react'
 
@@ -33,7 +33,6 @@ export function AccountSidebar({
 }) {
   const t = useTranslations('account.sidebar')
   const pathname = usePathname() || ''
-  const { signOut } = useClerk()
   const [open, setOpen] = useState(false)
 
   return (
@@ -140,7 +139,7 @@ export function AccountSidebar({
                 </button>
               </DialogClose>
               <button
-                onClick={() => signOut({ redirectUrl: '/' })}
+                onClick={() => signOut({ callbackUrl: '/' })}
                 className="px-6 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] text-white bg-red-500 hover:bg-red-600 transition-colors shadow-md w-full sm:w-auto text-center"
               >
                 {t('confirmSignOut')}

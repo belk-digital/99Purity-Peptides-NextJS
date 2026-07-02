@@ -1,53 +1,127 @@
 'use client'
 
-import React from 'react'
-import { SignIn } from '@clerk/nextjs'
+import React, { Suspense, useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 import { Space_Grotesk } from 'next/font/google'
 import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { loginSchema, type LoginInput } from '@/lib/validations/auth'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
+
+function LoginForm() {
+  const t = useTranslations('auth.login')
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callbackUrl') || '/account'
+  const [serverError, setServerError] = useState('')
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) })
+
+  const onSubmit = async (data: LoginInput) => {
+    setServerError('')
+    const result = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+      callbackUrl,
+    })
+
+    if (!result || result.error) {
+      setServerError(t('invalidCredentials'))
+      return
+    }
+
+    router.push(callbackUrl)
+    router.refresh()
+  }
+
+  const handleGoogle = () => {
+    setIsGoogleLoading(true)
+    signIn('google', { callbackUrl })
+  }
+
+  return (
+    <div className="w-full flex flex-col gap-6">
+      <div>
+        <h1 className={`text-2xl font-bold tracking-tight text-ink mb-2 ${spaceGrotesk.className}`}>
+          {t('title')}
+        </h1>
+        <p className="text-sm text-ink/60">{t('subtitle')}</p>
+      </div>
+
+      <Button
+        type="button"
+        variant="outline"
+        size="lg"
+        className="w-full rounded-xl"
+        onClick={handleGoogle}
+        isLoading={isGoogleLoading}
+      >
+        {t('google')}
+      </Button>
+
+      <div className="flex items-center gap-4">
+        <div className="h-px flex-1 bg-ink/10" />
+        <span className="text-xs font-medium text-ink/40">{t('or')}</span>
+        <div className="h-px flex-1 bg-ink/10" />
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="email">{t('email')}</Label>
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            error={errors.email?.message}
+            {...register('email')}
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <div className="flex justify-between items-center mb-1.5">
+            <Label htmlFor="password" className="!mb-0">
+              {t('password')}
+            </Label>
+            <Link href="/forgot-password" className="text-xs font-bold text-ink hover:underline">
+              {t('forgotPassword')}
+            </Link>
+          </div>
+          <Input
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            error={errors.password?.message}
+            {...register('password')}
+          />
+        </div>
+        {serverError && <p className="text-sm font-medium text-red-500">{serverError}</p>}
+        <Button type="submit" variant="dark" size="lg" className="w-full rounded-full mt-2" isLoading={isSubmitting}>
+          {t('submit')}
+        </Button>
+      </form>
+    </div>
+  )
+}
 
 export default function LoginPage() {
   return (
     <AuthSplitLayout mode="login">
-      <SignIn 
-        path="/login"
-        routing="path"
-        signUpUrl="/register"
-        forceRedirectUrl="/account"
-        appearance={{
-          variables: {
-            colorPrimary: '#007a7a', // Cyan color for buttons
-            colorText: '#111111', 
-            colorBackground: '#ffffff',
-            colorInputBackground: '#ffffff',
-            colorInputText: '#111111',
-            borderRadius: '12px',
-            fontFamily: 'inherit',
-            colorTextOnPrimaryBackground: '#ffffff',
-          },
-          elements: {
-            rootBox: 'w-full flex justify-center !overflow-visible',
-            cardBox: 'shadow-none bg-transparent !overflow-visible',
-            card: 'bg-white shadow-none w-full p-0 m-0 border-none ring-0 !overflow-visible',
-            headerTitle: `text-2xl font-bold tracking-tight text-ink mb-2 ${spaceGrotesk.className}`,
-            headerSubtitle: 'text-sm text-ink/60 mb-6',
-            footerAction: 'hidden', // Hidden because it's handled by AuthSplitLayout
-            formButtonPrimary: 'bg-[#111] hover:bg-black text-white w-full rounded-full h-12 md:h-[52px] text-[10px] sm:text-[11px] md:text-sm font-heading font-bold tracking-[0.15em] uppercase shadow-none transition-all flex items-center justify-center mt-4 border-none',
-            formFieldInput: 'custom-auth-input bg-white h-12 text-ink rounded-xl placeholder:text-ink/40 transition-all duration-300 px-4 shadow-sm text-sm',
-            formFieldLabel: 'text-xs font-bold text-ink/80 mb-1.5',
-            dividerLine: 'bg-ink/10',
-            dividerText: 'text-xs font-medium text-ink/40 px-4',
-            socialButtonsBlockButton: 'bg-white hover:bg-gray-50 h-12 rounded-xl transition-colors duration-300 mb-4 relative !overflow-visible shadow-sm border-none',
-            socialButtonsBlockButtonText: 'text-sm font-bold text-ink',
-            formFieldAction: 'text-ink hover:text-primary text-xs font-bold transition-colors',
-            identityPreview: 'bg-cream border border-ink/10 rounded-xl text-ink p-4 mb-4',
-            identityPreviewText: 'text-sm font-medium text-ink',
-            identityPreviewEditButton: 'text-ink/50 hover:text-ink transition-colors',
-            footer: 'hidden', 
-          }
-        }} 
-      />
+      <Suspense fallback={null}>
+        <LoginForm />
+      </Suspense>
     </AuthSplitLayout>
   )
 }
