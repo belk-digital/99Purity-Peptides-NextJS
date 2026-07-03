@@ -182,7 +182,7 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
             variants={itemVariants} 
             className="absolute bottom-6 left-0 right-0 px-4 sm:px-6 z-20 pb-safe"
           >
-            <div className="bg-white/80 backdrop-blur-xl border border-black/5 p-2 rounded-[2rem] flex items-center justify-between shadow-[0_8px_32px_rgba(0,0,0,0.08)] max-w-sm mx-auto w-full">
+            <div className="bg-white/95 border border-black/10 p-2 rounded-[2rem] flex items-center justify-between shadow-[0_8px_32px_rgba(0,0,0,0.08)] max-w-sm mx-auto w-full">
               <button 
                 onClick={() => {
                   onClose();

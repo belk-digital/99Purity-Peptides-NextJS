@@ -28,8 +28,10 @@ export function AgeGate() {
       if (pathname === '/') {
         setWaitingForPreloader(true)
         const handleDone = () => {
-          setWaitingForPreloader(false)
-          setIsVisible(true)
+          if (!document.cookie.includes('age_verified=true')) {
+            setWaitingForPreloader(false)
+            setIsVisible(true)
+          }
         }
         window.addEventListener('preloader-done', handleDone)
         
@@ -97,7 +99,7 @@ export function AgeGate() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
-            className={`fixed inset-0 backdrop-blur-md z-0 transition-colors duration-700 ${isDenied ? 'bg-red-950/60' : 'bg-black/40'}`}
+            className={`fixed inset-0 z-0 transition-colors duration-700 ${isDenied ? 'bg-red-950/80' : 'bg-black/70'}`}
           />
 
           {/* Outer wrapper handles the entry/exit intro animations */}
