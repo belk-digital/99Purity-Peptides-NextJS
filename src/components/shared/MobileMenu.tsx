@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 export interface MobileMenuProps {
   isOpen: boolean
@@ -92,7 +93,9 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
 
           {/* Header Block */}
           <motion.div variants={itemVariants} className="h-[72px] flex items-center justify-between px-6 shrink-0 relative z-10 border-b border-black/5">
-            <div className="flex-1" />
+            <div className="flex-1 flex justify-start">
+              <LanguageSwitcher variant="light" />
+            </div>
             
             <span className="font-heading text-xs font-bold uppercase tracking-[0.3em] text-ink/50 flex-1 text-center">
               {t('menu')}

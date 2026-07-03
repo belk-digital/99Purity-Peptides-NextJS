@@ -94,20 +94,20 @@ export function Hero() {
 
         {/* Background Video */}
         <video
+          suppressHydrationWarning
           ref={videoRef}
+          src="/videos/homepage-hero-video.webm"
           autoPlay
           loop
           muted
           playsInline
           disablePictureInPicture
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
-        >
-          <source src="/videos/homepage-hero-video.webm" type="video/webm" />
-        </video>
+          className="absolute inset-0 w-full h-full object-cover z-[5] pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
+        />
 
         {/* Dark Gradient Overlay inside card */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-10 pointer-events-none" />
 
         {/* Cutouts & UI Overlay (Inverted corners) */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-30">

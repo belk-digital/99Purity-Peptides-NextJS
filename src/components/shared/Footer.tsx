@@ -7,6 +7,7 @@ import { ArrowRight, Mail } from 'lucide-react'
 import { useLenis } from 'lenis/react'
 import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 const FooterContent = () => {
   const t = useTranslations('footer')
@@ -301,7 +302,8 @@ const FooterContent = () => {
               <span className="hidden sm:inline">·</span>
               <Link href="/medical-disclaimer" className="hover:text-cream transition-colors">{t('medicalDisclaimer')}</Link>
             </div>
-            <div className="flex items-center gap-2 text-center lg:text-right">
+            <div className="flex flex-col sm:flex-row items-center gap-4 text-center lg:text-right">
+              <LanguageSwitcher variant="dark" />
               <span>{t('designedBy')} <a href="https://belkdigital.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 font-bold hover:text-primary transition-colors">Belk Digital</a></span>
             </div>
           </div>

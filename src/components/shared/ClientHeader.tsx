@@ -265,12 +265,12 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       </div>
 
       {/* Center: Nav */}
-      <nav className="hidden xl:flex items-center justify-center gap-2.5 2xl:gap-6 flex-1 h-full min-w-0">
+      <nav className="hidden xl:flex items-center justify-center gap-2 xl:gap-3 min-[1650px]:gap-6 flex-1 h-full min-w-0">
         {(() => {
           const getNavLinkClass = (path: string) => {
             const targetPath = path.replace('/en', '');
             const isActive = targetPath === '' ? pathname === '/en' || pathname === '/' : pathname.includes(targetPath);
-            return `text-[8px] 2xl:text-[10px] font-heading tracking-normal 2xl:tracking-[0.1em] uppercase transition-all h-full flex items-center py-2 whitespace-nowrap ${
+            return `text-[8px] xl:text-[8.5px] min-[1650px]:text-[10px] font-heading tracking-tight min-[1650px]:tracking-[0.1em] uppercase transition-all h-full flex items-center py-2 whitespace-nowrap ${
               isActive 
                 ? `font-bold text-primary opacity-100` 
                 : `font-medium ${textColor} opacity-70 hover:opacity-100 hover:text-primary`
@@ -288,7 +288,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                 onMouseEnter={handleMenuEnter}
                 onMouseLeave={handleMenuLeave}
               >
-                <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[8px] 2xl:text-[10px] font-heading tracking-normal 2xl:tracking-[0.1em] uppercase transition-all h-full py-2 font-medium whitespace-nowrap ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
+                <Link href="/shop" onClick={() => setIsMegaMenuOpen(false)} className={`flex items-center gap-1 text-[8px] xl:text-[8.5px] min-[1650px]:text-[10px] font-heading tracking-tight min-[1650px]:tracking-[0.1em] uppercase transition-all h-full py-2 font-medium whitespace-nowrap ${textColor} opacity-70 hover:opacity-100 hover:text-primary`}>
                   {t('navCategories')}
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity"><path d="m6 9 6 6 6-6"/></svg>
                 </Link>
@@ -318,7 +318,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       </nav>
 
       {/* Right: Search, SHOP NOW Button & Cart */}
-      <div className="flex items-center justify-end gap-2 sm:gap-4 xl:gap-4 2xl:gap-6 flex-none shrink-0 text-sm relative z-20">
+      <div className="flex items-center justify-end gap-2 sm:gap-3 xl:gap-4 min-[1650px]:gap-6 flex-none shrink-0 text-sm relative z-20">
         <button 
           onClick={() => setIsSearchOpen(true)}
           className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}
@@ -348,14 +348,17 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
         <div className="flex items-center justify-center">
           {mounted ? (
             isLoggedIn ? (
-              <Link href="/account" className={`p-1.5 transition-colors flex items-center justify-center ${textColor} ${textHoverColor}`}>
+              <Link href="/account" className={`p-1.5 transition-colors flex items-center justify-center ${textColor} ${textHoverColor}`} title="Account">
                 <User size={18} strokeWidth={1.5} />
               </Link>
-            ) : null
+            ) : (
+              <Link href="/login" className={`hidden sm:flex transition-colors items-center justify-center ${textColor} ${textHoverColor} px-2 text-[8px] xl:text-[9px] min-[1650px]:text-[10px] font-heading font-bold uppercase tracking-tight min-[1650px]:tracking-widest whitespace-nowrap`}>
+                Login
+              </Link>
+            )
           ) : null}
         </div>
-        
-        <Link href="/shop" className={`hidden md:inline-flex border border-white/30 hover:border-white bg-transparent hover:bg-white text-white hover:text-black rounded-full px-4 py-2 2xl:px-6 2xl:py-2.5 text-[8.5px] 2xl:text-[11px] font-heading font-bold tracking-normal 2xl:tracking-[0.1em] uppercase transition-colors duration-300 whitespace-nowrap`}>
+        <Link href="/shop" className={`hidden md:inline-flex border border-white/30 hover:border-white bg-transparent hover:bg-white text-white hover:text-black rounded-full px-3 py-1.5 min-[1650px]:px-6 min-[1650px]:py-2.5 text-[8px] xl:text-[9px] min-[1650px]:text-[11px] font-heading font-bold tracking-tight min-[1650px]:tracking-[0.1em] uppercase transition-colors duration-300 whitespace-nowrap`}>
           {t('shopNow')}
         </Link>
 
