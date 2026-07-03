@@ -12,13 +12,15 @@ export const getPayloadUser = cache(async (): Promise<User | null> => {
   const payload = await getPayload({ config })
 
   try {
+    const parsedId = isNaN(Number(session.user.id)) ? session.user.id : Number(session.user.id)
     const user = await payload.findByID({
       collection: 'users',
-      id: session.user.id,
+      id: parsedId,
       overrideAccess: true,
     })
     return (user as User) ?? null
-  } catch {
+  } catch (err) {
+    console.error("getPayloadUser Error on Vercel:", err)
     return null
   }
 })

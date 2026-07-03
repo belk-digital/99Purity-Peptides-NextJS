@@ -106,11 +106,15 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role ?? 'customer'
 
         const payload = await getPayload({ config })
+        const parsedId = isNaN(Number(user.id)) ? user.id : Number(user.id)
         const fullUser = await payload.findByID({
           collection: 'users',
-          id: user.id,
+          id: parsedId,
           overrideAccess: true,
-        }).catch(() => null)
+        }).catch((err) => {
+          console.error("JWT fetch error on Vercel:", err)
+          return null
+        })
         if (fullUser) {
           token.firstName = fullUser.firstName || undefined
           token.lastName = fullUser.lastName || undefined
