@@ -7,6 +7,7 @@ import config from '@payload-config'
 import type { User } from '@/payload-types'
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: 'jwt' },
   pages: { signIn: '/login' },
   providers: [
