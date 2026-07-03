@@ -1,12 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, ChevronDown, ChevronUp, Lock, Loader2, ArrowRight, ShieldCheck, Tag, ShoppingCart, Sparkles } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { Container } from '@/components/ui/container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -18,9 +17,11 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { StripeCheckoutForm } from './StripeCheckoutForm'
 import { createPaymentIntent, getShippingMethods } from './actions'
-import { Space_Grotesk } from 'next/font/google'
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
 
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
+// Card payments are temporarily disabled in favor of Zelle. Flip this back to re-enable Stripe —
+// the rest of the Stripe integration below is left intact, just not rendered/called while off.
+const ENABLE_STRIPE = false
 
 const stripePromise = typeof window !== 'undefined' ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '') : null
 
@@ -133,6 +134,16 @@ export function CheckoutClient() {
   // Order Calculations
   const subtotal = items.reduce((acc, item) => acc + item.priceSnapshot * item.quantity, 0)
 
+  // Fire the free-shipping toast once per crossing, not on every render while above the threshold.
+  const hasShownFreeShippingToast = useRef(false)
+  useEffect(() => {
+    if (subtotal >= FREE_SHIPPING_THRESHOLD && !hasShownFreeShippingToast.current) {
+      toast.success(t('freeShippingUnlockedToast'))
+      hasShownFreeShippingToast.current = true
+    } else if (subtotal < FREE_SHIPPING_THRESHOLD) {
+      hasShownFreeShippingToast.current = false
+    }
+  }, [subtotal])
 
   const visibleShippingMethods = availableShippingMethods.filter((method: any) => {
     if (method.minOrderAmount && method.minOrderAmount > 0) {
@@ -153,7 +164,10 @@ export function CheckoutClient() {
   const selectedMethodObj = visibleShippingMethods.find(m => m.method === shippingMethod) || visibleShippingMethods[0]
   const shippingCost = selectedMethodObj?.price || 0
   const isExpressShipping = shippingMethod.toLowerCase().includes('express')
-  const finalShipping = (appliedCoupon?.freeShipping && !isExpressShipping) ? 0 : shippingCost
+  // Subtotal is checked before coupon discount, per the $300 free-standard-shipping threshold.
+  // Express is never discounted (matches how a coupon's freeShipping flag already behaves).
+  const qualifiesForFreeShipping = appliedCoupon?.freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
   const discountAmount = appliedCoupon ? appliedCoupon.discount : 0
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
   
@@ -172,9 +186,9 @@ export function CheckoutClient() {
   const pointsToRedeem = isRedeemingPoints ? Math.min(availablePoints, totalBeforePoints) : 0
   const total = totalBeforePoints - pointsToRedeem
 
-  // Fetch client secret when order details change
+  // Fetch client secret when order details change (skipped while Stripe is disabled)
   useEffect(() => {
-    if (items.length > 0 && total > 0) {
+    if (ENABLE_STRIPE && items.length > 0 && total > 0) {
       createPaymentIntent(items, shippingMethod, appliedCoupon?.code, isRedeemingPoints)
         .then(res => {
           if (res.clientSecret && res.paymentIntentId) {
@@ -249,10 +263,52 @@ export function CheckoutClient() {
     try {
       const { createPayloadOrder } = await import('./actions')
       const orderRes = await createPayloadOrder(
-        items, shippingMethod, appliedCoupon?.code, isRedeemingPoints, 
+        items, shippingMethod, appliedCoupon?.code, isRedeemingPoints,
         { ...formData, email: user?.email || formData.email },
-        'free_order', 
-        user?.id as string
+        'free_order',
+        user?.id as string,
+        'stripe',
+        selectedAddressId === 'new'
+      )
+
+      if (orderRes.error || !orderRes.orderId) {
+        toast.error(orderRes.error || t('freeOrderInitFailed'))
+        if ((orderRes as any).priceChanged && (orderRes as any).updatedItems) {
+          useCartStore.getState().setItems((orderRes as any).updatedItems)
+        }
+        setIsProcessing(false)
+        return
+      }
+
+      toast.success(t('orderSuccessRedirecting'))
+      useCartStore.getState().clear()
+      window.location.href = `/order-confirmation/${orderRes.orderId}`
+    } catch (e: any) {
+      toast.error(t('unexpectedError'))
+      setIsProcessing(false)
+    }
+  }
+
+  // Zelle has no payment API — this creates the order as pending/unpaid immediately,
+  // then the customer sends payment manually using the details shown. A human confirms
+  // the transfer and updates the order's paymentStatus in the admin panel afterward.
+  const handleZellePlaceOrder = async () => {
+    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip) {
+      toast.error(t('fillRequiredFieldsOrder'))
+      return
+    }
+
+    setIsProcessing(true)
+
+    try {
+      const { createPayloadOrder } = await import('./actions')
+      const orderRes = await createPayloadOrder(
+        items, shippingMethod, appliedCoupon?.code, isRedeemingPoints,
+        { ...formData, email: user?.email || formData.email },
+        'zelle_pending',
+        user?.id as string,
+        'zelle',
+        selectedAddressId === 'new'
       )
 
       if (orderRes.error || !orderRes.orderId) {
@@ -283,7 +339,7 @@ export function CheckoutClient() {
     return (
       <div className="pt-32 pb-24 min-h-[70vh] flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-display-sm font-display text-ink mb-4">{t('emptyTitle')}</h1>
+          <h1 className="text-display-sm font-heading text-ink mb-4">{t('emptyTitle')}</h1>
           <p className="text-body-md text-ink-muted mb-8">{t('emptyText')}</p>
           <Link href="/products">
             <Button variant="dark" className="rounded-full h-14 px-8 tracking-widest text-sm uppercase">
@@ -297,10 +353,10 @@ export function CheckoutClient() {
 
   return (
     <div className="pt-32 pb-16 md:pt-36 md:pb-24 bg-white min-h-screen">
-      <Container size="page">
-        
+      <div className="w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto">
+
         <div className="flex items-end justify-between mb-12">
-          <h1 className={`text-4xl md:text-5xl font-bold tracking-tight text-ink ${spaceGrotesk.className}`}>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-ink font-heading">
             {t('secureCheckout')}
           </h1>
         </div>
@@ -468,7 +524,7 @@ export function CheckoutClient() {
 
                   <div className="flex justify-between items-end mb-2 mt-4">
                     <span className="text-sm font-bold uppercase tracking-widest text-ink/60">{t('total')}</span>
-                    <span className={`text-4xl font-bold text-ink ${spaceGrotesk.className}`}>
+                    <span className="text-4xl font-bold text-ink font-heading">
                       ${total.toFixed(2)}
                     </span>
                   </div>
@@ -484,25 +540,6 @@ export function CheckoutClient() {
           {/* Left Column: Flow */}
           <div className="flex flex-col gap-10">
             
-            {/* Express Checkout */}
-            <div className="flex flex-col gap-4 p-6 sm:p-8 bg-white rounded-3xl border border-slate-100 shadow-sm items-center">
-              <span className="text-xs font-bold uppercase tracking-widest text-ink/40 text-center">{t('expressCheckout')}</span>
-              <div className="flex flex-col sm:flex-row w-full gap-3">
-                <Button variant="dark" className="flex-1 h-12 rounded-full bg-[#000] text-white hover:bg-black/80 transition-colors shadow-sm whitespace-nowrap">
-                  {t('applePay')}
-                </Button>
-                <Button variant="outline" className="flex-1 h-12 rounded-full bg-white text-ink border-ink/20 hover:border-ink/40 transition-colors shadow-sm whitespace-nowrap">
-                  {t('googlePay')}
-                </Button>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 py-2 opacity-50">
-              <div className="flex-1 h-px bg-ink/10" />
-              <span className="text-xs font-bold uppercase tracking-widest text-ink/60">{t('orPayWithCard')}</span>
-              <div className="flex-1 h-px bg-ink/10" />
-            </div>
-
             {/* Continuous Form */}
             <div className="flex flex-col gap-10">
               <input type="hidden" name="redeemPoints" value={isRedeemingPoints ? 'true' : 'false'} />
@@ -510,7 +547,7 @@ export function CheckoutClient() {
               
               {/* Contact */}
               <section className="flex flex-col gap-4">
-                <h2 className="text-xl font-display font-bold text-ink mb-2">{t('contactInformation')}</h2>
+                <h2 className="text-xl font-heading font-bold text-ink mb-2">{t('contactInformation')}</h2>
                 <Input
                   name="email"
                   value={formData.email}
@@ -536,7 +573,7 @@ export function CheckoutClient() {
 
               {/* Delivery */}
               <section className="flex flex-col gap-4">
-                <h2 className="text-xl font-display font-bold text-ink mb-2">{t('deliveryAddress')}</h2>
+                <h2 className="text-xl font-heading font-bold text-ink mb-2">{t('deliveryAddress')}</h2>
                 
                 {user && addresses.length > 0 && (
                   <div className="flex flex-col gap-3 mb-4">
@@ -606,7 +643,7 @@ export function CheckoutClient() {
 
               {/* Shipping Method */}
               <section className="flex flex-col gap-4">
-                <h2 className="text-xl font-display font-bold text-ink mb-2">{t('shippingMethod')}</h2>
+                <h2 className="text-xl font-heading font-bold text-ink mb-2">{t('shippingMethod')}</h2>
                 <div className="flex flex-col gap-3">
                   {visibleShippingMethods.map((method: any) => (
                     <label key={method.method} className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${shippingMethod === method.method ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'}`}>
@@ -629,7 +666,7 @@ export function CheckoutClient() {
                       <span className="text-sm font-bold text-ink">
                         {(() => {
                           const isExpress = method.method.toLowerCase().includes('express')
-                          const isFreeShipping = appliedCoupon?.freeShipping && !isExpress
+                          const isFreeShipping = (appliedCoupon?.freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD) && !isExpress
                           if (isFreeShipping || method.price === 0) return t('free')
                           return `$${method.price.toFixed(2)}`
                         })()}
@@ -641,7 +678,7 @@ export function CheckoutClient() {
 
               {/* Payment */}
               <section className="flex flex-col gap-4">
-                <h2 className="text-xl font-display font-bold text-ink mb-2">{t('payment')}</h2>
+                <h2 className="text-xl font-heading font-bold text-ink mb-2">{t('payment')}</h2>
                 <p className="text-xs font-medium text-ink/50 mb-2 flex items-center gap-1.5"><Lock size={12} /> {t('encryptionNotice')}</p>
 
                 {total <= 0 ? (
@@ -650,13 +687,13 @@ export function CheckoutClient() {
                        <Check size={24} />
                     </div>
                     <span className="text-sm font-bold text-green-800">{t('orderFullyCovered')}</span>
-                    <Button onClick={handleZeroTotalCheckout} disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full">
+                    <Button onClick={handleZeroTotalCheckout} disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
                       {isProcessing ? <Loader2 className="animate-spin" /> : t('completeFreeOrder')}
                     </Button>
                   </div>
-                ) : clientSecret && stripePromise && paymentIntentId ? (
+                ) : ENABLE_STRIPE && clientSecret && stripePromise && paymentIntentId ? (
                   <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
-                    <StripeCheckoutForm 
+                    <StripeCheckoutForm
                        amount={total}
                        items={items}
                        shippingMethod={shippingMethod}
@@ -668,9 +705,14 @@ export function CheckoutClient() {
                     />
                   </Elements>
                 ) : (
-                  <div className="w-full h-56 bg-white border border-ink/10 rounded-3xl flex items-center justify-center flex-col gap-3 shadow-sm relative overflow-hidden">
-                    <Loader2 size={32} className="text-ink/20 animate-spin" />
-                    <span className="text-sm font-bold text-ink/40">{t('initializingCheckout')}</span>
+                  <div className="w-full p-6 sm:p-8 bg-white border border-ink/10 rounded-3xl shadow-sm flex flex-col items-center gap-6 text-center">
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="text-sm font-bold uppercase tracking-widest text-ink font-heading">{t('payWithZelle')}</span>
+                      <p className="text-xs text-ink/50 max-w-xs">{t('zelleCheckoutNote')}</p>
+                    </div>
+                    <Button onClick={handleZellePlaceOrder} disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
+                      {isProcessing ? <Loader2 className="animate-spin" /> : t('placeOrder')}
+                    </Button>
                   </div>
                 )}
               </section>
@@ -682,7 +724,7 @@ export function CheckoutClient() {
           <div className="hidden lg:block relative">
             <div className="bg-[#F5F5F7]/40 p-8 md:p-10 rounded-[2rem] border border-slate-100 flex flex-col gap-8">
               
-              <h2 className={`text-2xl font-bold text-ink ${spaceGrotesk.className}`}>
+              <h2 className="text-2xl font-bold text-ink font-heading">
                 {t('orderSummary')}
               </h2>
               
@@ -823,7 +865,7 @@ export function CheckoutClient() {
 
               <div className="flex justify-between items-end mt-4">
                 <span className="text-sm font-bold uppercase tracking-widest text-ink/60">{t('total')}</span>
-                <span className={`text-4xl font-bold text-ink ${spaceGrotesk.className}`}>
+                <span className="text-4xl font-bold text-ink font-heading">
                   ${total.toFixed(2)}
                 </span>
               </div>
@@ -832,7 +874,7 @@ export function CheckoutClient() {
           </div>
 
         </div>
-      </Container>
+      </div>
     </div>
   )
 }

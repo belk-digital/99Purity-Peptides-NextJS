@@ -14,6 +14,8 @@ import * as migration_20260524_203510_seed_updates from './20260524_203510_seed_
 import * as migration_20260603_202126_add_product_fields from './20260603_202126_add_product_fields';
 import * as migration_20260702_150000_localize_content_fields from './20260702_150000_localize_content_fields';
 import * as migration_20260703_064000_add_nextauth_user_fields from './20260703_064000_add_nextauth_user_fields';
+import * as migration_20260703_233000_add_order_sms_updates from './20260703_233000_add_order_sms_updates';
+import * as migration_20260704_004500_add_order_payment_method from './20260704_004500_add_order_payment_method';
 
 export const migrations = [
   {
@@ -95,5 +97,15 @@ export const migrations = [
     up: migration_20260703_064000_add_nextauth_user_fields.up,
     down: migration_20260703_064000_add_nextauth_user_fields.down,
     name: '20260703_064000_add_nextauth_user_fields',
+  },
+  {
+    up: migration_20260703_233000_add_order_sms_updates.up,
+    down: migration_20260703_233000_add_order_sms_updates.down,
+    name: '20260703_233000_add_order_sms_updates',
+  },
+  {
+    up: migration_20260704_004500_add_order_payment_method.up,
+    down: migration_20260704_004500_add_order_payment_method.down,
+    name: '20260704_004500_add_order_payment_method',
   },
 ];

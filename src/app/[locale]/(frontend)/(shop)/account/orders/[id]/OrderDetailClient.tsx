@@ -8,34 +8,21 @@ import { Space_Grotesk } from 'next/font/google'
 import { motion } from 'framer-motion'
 import { useCartStore } from '@/lib/cart/store'
 import { useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { getMappedStatus, type DisplayOrderStatus } from '@/lib/orders/statusLabel'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
-type OrderStatus = 'Placed' | 'Processing' | 'Shipped' | 'Delivered'
+type OrderStatus = DisplayOrderStatus
 const STATUS_STEPS: OrderStatus[] = ['Placed', 'Processing', 'Shipped', 'Delivered']
 
 export interface OrderDetailProps {
   order: any; // We use any here to safely traverse the dynamic payload object
 }
 
-function getMappedStatus(payloadStatus: string): OrderStatus {
-  switch (payloadStatus) {
-    case 'shipped': return 'Shipped'
-    case 'completed': return 'Delivered'
-    case 'pending': return 'Placed'
-    case 'refunded':
-    case 'cancelled':
-      return 'Placed' // Technically an edge case for the timeline
-    case 'paid':
-    case 'fulfilled':
-    default:
-      return 'Processing'
-  }
-}
-
 export function OrderDetailClient({ order }: OrderDetailProps) {
   const t = useTranslations('account.orderDetail')
+  const locale = useLocale()
   const router = useRouter()
   const addItem = useCartStore(state => state.addItem)
   const openCart = useCartStore(state => state.openCart)
@@ -69,7 +56,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
 
   const currentStepIndex = STATUS_STEPS.indexOf(getMappedStatus(order.status))
   
-  const formattedDate = new Intl.DateTimeFormat('en-US', {
+  const formattedDate = new Intl.DateTimeFormat(locale === 'es' ? 'es-US' : 'en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric'

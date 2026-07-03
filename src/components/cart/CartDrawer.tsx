@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -13,6 +13,8 @@ import { EmptyState } from '@/components/shared/EmptyState'
 import { ShoppingBag } from 'lucide-react'
 import { useLenis } from 'lenis/react'
 import { FluidButton } from '@/components/ui/fluid-button'
+import { toast } from 'sonner'
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
 
 export function CartDrawer() {
   const t = useTranslations('checkout.cartDrawer')
@@ -44,9 +46,19 @@ export function CartDrawer() {
   }, [closeCart])
 
   const subtotal = items.reduce((acc, item) => acc + item.priceSnapshot * item.quantity, 0)
-  const FREE_SHIPPING_THRESHOLD = 300
   const progressToFreeShipping = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100)
   const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - subtotal
+
+  // Fire the free-shipping toast once per crossing, not on every render while above the threshold.
+  const hasShownFreeShippingToast = useRef(false)
+  useEffect(() => {
+    if (subtotal >= FREE_SHIPPING_THRESHOLD && !hasShownFreeShippingToast.current) {
+      toast.success(t('freeShippingUnlockedToast'))
+      hasShownFreeShippingToast.current = true
+    } else if (subtotal < FREE_SHIPPING_THRESHOLD) {
+      hasShownFreeShippingToast.current = false
+    }
+  }, [subtotal, t])
 
   return (
     <AnimatePresence>

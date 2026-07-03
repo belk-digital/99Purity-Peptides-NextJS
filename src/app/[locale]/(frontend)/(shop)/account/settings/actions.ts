@@ -44,6 +44,30 @@ export async function updateProfile(formData: FormData) {
   }
 }
 
+export async function updatePreferencesAction(input: {
+  preferredLocale?: 'en' | 'es'
+  acceptsMarketing?: boolean
+  orderSmsUpdates?: boolean
+}) {
+  const t = await getTranslations('account.settings')
+  const user = await getPayloadUser()
+  if (!user) return { success: false, error: t('errorUnauthorized') }
+
+  const payload = await getPayload({ config })
+  try {
+    await payload.update({
+      collection: 'users',
+      id: user.id,
+      data: input as any,
+      overrideAccess: true,
+    })
+    revalidatePath('/account/settings')
+    return { success: true }
+  } catch (error: any) {
+    return { success: false, error: error.message || t('errorUnexpected') }
+  }
+}
+
 export async function updatePasswordAction(input: {
   currentPassword?: string
   newPassword: string

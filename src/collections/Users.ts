@@ -99,6 +99,14 @@ export const Users: CollectionConfig = {
       defaultValue: false,
     },
     {
+      name: 'orderSmsUpdates',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description: 'Send SMS notifications for order status updates.',
+      },
+    },
+    {
       name: 'preferredLocale',
       type: 'select',
       defaultValue: 'en',
@@ -150,7 +158,7 @@ export const Users: CollectionConfig = {
       type: 'number',
       defaultValue: 0,
       admin: {
-        description: 'Maxx Points ($1 per point). Can be used by users at checkout.',
+        description: 'Purity Points ($1 per point). Can be used by users at checkout.',
       },
     },
   ],

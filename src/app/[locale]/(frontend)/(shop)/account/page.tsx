@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { redirect } from 'next/navigation'
 import type { Order, Address } from '@/payload-types'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 export const metadata = {
   title: 'Account Overview | 99 Purity Peptides',
@@ -14,6 +15,8 @@ export default async function AccountOverviewPage() {
   const user = await getPayloadUser()
   if (!user) redirect('/login')
 
+  const locale = await getLocale()
+  const t = await getTranslations('account.overview')
   const payload = await getPayload({ config })
 
   // 1. Fetch Orders
@@ -53,6 +56,56 @@ export default async function AccountOverviewPage() {
   })
   const affiliateStatus = affiliates.length > 0 ? (affiliates[0].status || 'pending') : 'none'
 
+  // 5. Spending overview for the current year, broken down by product category
+  const currentYear = new Date().getFullYear()
+  const yearStart = new Date(currentYear, 0, 1).toISOString()
+  const { docs: yearOrders } = await payload.find({
+    collection: 'orders',
+    where: {
+      owner: { equals: user.id },
+      createdAt: { greater_than_equal: yearStart },
+    },
+    depth: 2, // populate items.product.categories
+    limit: 0,
+    overrideAccess: true,
+  })
+
+  const categoryTotals = new Map<string, number>()
+  let shippingTotal = 0
+  for (const order of yearOrders) {
+    shippingTotal += order.shippingTotal || 0
+    for (const item of order.items || []) {
+      const product = typeof item.product === 'object' ? item.product : null
+      const categoryName = (product?.categories?.[0] && typeof product.categories[0] === 'object')
+        ? product.categories[0].name
+        : t('categoryOther')
+      const lineTotal = (item.price || 0) * (item.quantity || 0)
+      categoryTotals.set(categoryName, (categoryTotals.get(categoryName) || 0) + lineTotal)
+    }
+  }
+  if (shippingTotal > 0) {
+    const shippingLabel = t('categoryShipping')
+    categoryTotals.set(shippingLabel, (categoryTotals.get(shippingLabel) || 0) + shippingTotal)
+  }
+
+  const totalSpent = yearOrders.reduce((sum, o) => sum + (o.total || 0), 0)
+  const PALETTE = ['#112a2e', '#1e5661', '#84d0d9', '#d1e8eb', '#9ca3af']
+  const sortedCategories = [...categoryTotals.entries()].sort((a, b) => b[1] - a[1])
+  const topCategories = sortedCategories.slice(0, 4)
+  const otherTotal = sortedCategories.slice(4).reduce((sum, [, val]) => sum + val, 0)
+  if (otherTotal > 0) topCategories.push([t('categoryOther'), otherTotal])
+
+  const spending = {
+    year: currentYear,
+    totalSpent,
+    categories: topCategories.map(([label, value], i) => ({
+      label,
+      color: PALETTE[i] || PALETTE[PALETTE.length - 1],
+      value,
+      pct: totalSpent > 0 ? Math.round((value / totalSpent) * 100) : 0,
+    })),
+  }
+
   const stats = {
     ordersPlaced,
     wishlistCount,
@@ -60,11 +113,13 @@ export default async function AccountOverviewPage() {
     memberSince: new Date(user.createdAt).getFullYear().toString()
   }
 
+  const userName = user?.firstName || user?.email?.split('@')[0] || 'User'
+
   // Map to simple types for client component to keep it clean
   const recentOrders = orders.map(order => ({
     id: String(order.id), // Payload IDs can be number or string, we convert to string for safety in URLs
     orderNumber: order.orderNumber || String(order.id),
-    date: new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    date: new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     status: order.status,
     total: order.total
   }))
@@ -79,11 +134,13 @@ export default async function AccountOverviewPage() {
   } : null
 
   return (
-    <AccountOverviewClient 
-      stats={stats} 
-      recentOrders={recentOrders} 
-      defaultAddress={defaultAddress} 
+    <AccountOverviewClient
+      stats={stats}
+      recentOrders={recentOrders}
+      defaultAddress={defaultAddress}
       affiliateStatus={affiliateStatus}
+      userName={userName}
+      spending={spending}
     />
   )
 }

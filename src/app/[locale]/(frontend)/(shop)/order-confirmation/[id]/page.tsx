@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { OrderConfirmationClient } from './OrderConfirmationClient'
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata = {
   title: 'Order Confirmed | 99 Purity Peptides',
@@ -10,6 +11,7 @@ export const metadata = {
 
 export default async function OrderConfirmationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  const t = await getTranslations('orderConfirmation')
 
   if (!id || id === 'success') {
     return notFound()
@@ -65,7 +67,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
      // Use product object since depth > 0 populates relationships
      const productData = typeof item.product === 'object' ? item.product : item.productSnapshot
      
-     let displayVariant = item.variant || 'Standard';
+     let displayVariant = item.variant || t('defaultVariant');
      if (productData?.variants?.length) {
         for (const v of productData.variants) {
            const vTitle = v.options?.map((o:any) => o.value).join(' ') || `Variant`;
@@ -83,7 +85,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
 
      return {
         id: item.id || String(i),
-        name: productData?.title || productData?.name || 'Product',
+        name: productData?.title || productData?.name || t('unknownProductName'),
         variant: displayVariant, 
         quantity: item.quantity,
         price: typeof item.price === 'number' ? item.price : (productData?.price || productData?.basePrice || 0),
@@ -94,7 +96,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
   // Format OrderData
   const orderData = {
     id: order.orderNumber || String(order.id),
-    customerName: `${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || 'Customer',
+    customerName: `${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || t('defaultCustomerName'),
     email: order.guestEmail || '',
     shippingAddress: {
       line1: order.shippingAddress?.line1 || '',
@@ -103,7 +105,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
       postalCode: order.shippingAddress?.postalCode || '',
       country: order.shippingAddress?.country || 'US'
     },
-    estimatedDelivery: order.shippingMethod === 'express' ? '1-3 Business Days' : '5-7 Business Days',
+    estimatedDeliveryType: (order.shippingMethod?.toLowerCase().includes('express') ? 'express' : 'standard') as 'express' | 'standard',
     items: formattedItems,
     subtotal: order.subtotal || 0,
     shipping: order.shippingTotal || 0,
@@ -112,7 +114,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
     discountTotal: order.discountTotal || 0,
     redeemedPoints: order.redeemedPoints || 0,
     couponCode: order.couponCode || '',
-    paymentMethod: 'Credit Card' 
+    paymentMethod: order.paymentMethod || 'stripe',
   }
 
   return (

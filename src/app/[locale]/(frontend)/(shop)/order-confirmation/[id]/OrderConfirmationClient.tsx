@@ -8,6 +8,7 @@ import { Check, Printer } from 'lucide-react'
 import { Container } from '@/components/ui/container'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { buttonVariants } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 type OrderItem = {
   id: string
@@ -29,7 +30,7 @@ type OrderData = {
     postalCode: string
     country: string
   }
-  estimatedDelivery: string
+  estimatedDeliveryType: 'express' | 'standard'
   items: OrderItem[]
   subtotal: number
   shipping: number
@@ -38,10 +39,20 @@ type OrderData = {
   discountTotal?: number
   redeemedPoints?: number
   couponCode?: string
-  paymentMethod: string
+  paymentMethod: 'stripe' | 'zelle'
 }
 
+const ZELLE_RECIPIENT_EMAIL = 'orders@99puritypeptides.com'
+
 export function OrderConfirmationClient({ order }: { order: OrderData }) {
+  const t = useTranslations('orderConfirmation')
+  const isZelle = order.paymentMethod === 'zelle'
+
+  const PAYMENT_METHOD_LABELS: Record<OrderData['paymentMethod'], string> = {
+    stripe: t('paymentMethodCard'),
+    zelle: t('paymentMethodZelle'),
+  }
+
   return (
     <>
       <style dangerouslySetInnerHTML={{__html: `
@@ -72,13 +83,52 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
           
           <FadeUp delay={0.1}>
             <h1 className="text-3xl md:text-4xl font-display font-bold text-ink mb-3">
-              Payment Successful
+              {isZelle ? t('orderPlaced') : t('paymentSuccessful')}
             </h1>
             <p className="text-ink/60 text-sm md:text-base">
-              Thank you, {order.customerName}. Your order is confirmed.
+              {isZelle
+                ? t('thankYouZelle', { name: order.customerName })
+                : t('thankYouConfirmed', { name: order.customerName })}
             </p>
           </FadeUp>
         </div>
+
+        {/* Zelle Payment Card - only shown for pending Zelle orders */}
+        {isZelle && (
+          <FadeUp delay={0.15} className="w-full max-w-lg mb-8 md:mb-10 print:hidden">
+            <div className="bg-purple-50 border border-purple-100 rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-xl font-display">
+                Z
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-purple-800 mb-2">{t('completeZellePayment')}</h2>
+                <p className="text-sm text-purple-700/80">
+                  {t.rich('sendViaZelle', {
+                    amount: `$${order.total.toFixed(2)}`,
+                    bold: (chunks) => <span className="font-bold">{chunks}</span>,
+                  })}
+                </p>
+              </div>
+
+              <div className="w-44 h-44 bg-white border border-purple-100 rounded-2xl overflow-hidden flex items-center justify-center p-2">
+                {/* eslint-disable-next-line @next/next/no-img-element -- res.cloudinary.com isn't in next.config.ts remotePatterns, matching the existing pattern for this Cloudinary account elsewhere in the app */}
+                <img src="https://res.cloudinary.com/denskvdyt/image/upload/v1783110064/zelle-qr_h2xhvt.jpg" alt="Zelle payment QR code" className="w-full h-full object-contain" />
+              </div>
+
+              <div className="bg-white rounded-xl px-6 py-3 shadow-sm">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-purple-400 mb-0.5">{t('sendTo')}</p>
+                <p className="text-sm font-bold text-purple-800">{ZELLE_RECIPIENT_EMAIL}</p>
+              </div>
+
+              <p className="text-xs text-purple-700/60 max-w-sm">
+                {t.rich('includeOrderNumber', {
+                  orderId: order.id,
+                  bold: (chunks) => <span className="font-bold">{chunks}</span>,
+                })}
+              </p>
+            </div>
+          </FadeUp>
+        )}
 
         {/* Invoice Card */}
         <FadeUp delay={0.2} className="w-full max-w-5xl print:max-w-none print:w-full">
@@ -93,11 +143,11 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
             {/* Invoice Header */}
             <div className="p-6 sm:p-8 md:p-10 border-b border-ink/5 bg-[#fafafa]/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 print:bg-transparent print:py-4 print:px-0 print:border-b-0">
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-1">Receipt</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-1">{t('receipt')}</p>
                 <h2 className="text-lg sm:text-xl font-bold text-ink tracking-tight break-all">#{order.id}</h2>
               </div>
               <div className="text-left sm:text-right text-sm">
-                <p className="text-ink/60 mb-1">A confirmation email has been sent to:</p>
+                <p className="text-ink/60 mb-1">{t('confirmationEmailSent')}</p>
                 <p className="font-medium text-ink break-all">{order.email}</p>
               </div>
             </div>
@@ -106,7 +156,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
               {/* Shipping & Delivery Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10 md:mb-12 print:gap-4 print:mb-6">
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">Shipping Address</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">{t('shippingAddress')}</h3>
                   <div className="text-sm text-ink/80 flex flex-col gap-1">
                     <p className="font-bold text-ink">{order.customerName}</p>
                     <p>{order.shippingAddress.line1}</p>
@@ -115,15 +165,15 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">Delivery & Payment</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">{t('deliveryAndPayment')}</h3>
                   <div className="text-sm text-ink/80 flex flex-col gap-3">
                     <div>
-                      <p className="text-ink/40 text-[10px] sm:text-xs font-medium uppercase tracking-wider mb-1">Est. Delivery</p>
-                      <p className="font-bold text-ink">{order.estimatedDelivery}</p>
+                      <p className="text-ink/40 text-[10px] sm:text-xs font-medium uppercase tracking-wider mb-1">{t('estDelivery')}</p>
+                      <p className="font-bold text-ink">{t(order.estimatedDeliveryType === 'express' ? 'estimatedDeliveryExpress' : 'estimatedDeliveryStandard')}</p>
                     </div>
                     <div>
-                      <p className="text-ink/40 text-[10px] sm:text-xs font-medium uppercase tracking-wider mb-1">Payment Method</p>
-                      <p className="font-bold text-ink">{order.paymentMethod}</p>
+                      <p className="text-ink/40 text-[10px] sm:text-xs font-medium uppercase tracking-wider mb-1">{t('paymentMethod')}</p>
+                      <p className="font-bold text-ink">{PAYMENT_METHOD_LABELS[order.paymentMethod]}</p>
                     </div>
                   </div>
                 </div>
@@ -134,10 +184,10 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
                 <table className="w-full text-sm text-left min-w-[500px] print:min-w-full">
                   <thead>
                     <tr className="border-b border-ink/10 text-[10px] sm:text-xs uppercase tracking-widest text-ink/40 bg-[#fafafa]/50 print:bg-transparent">
-                      <th className="py-3 px-4 font-medium rounded-tl-lg print:px-0">Product</th>
-                      <th className="py-3 px-4 font-medium text-center">Qty</th>
-                      <th className="py-3 px-4 font-medium text-right">Price</th>
-                      <th className="py-3 px-4 font-medium text-right rounded-tr-lg print:px-0">Total</th>
+                      <th className="py-3 px-4 font-medium rounded-tl-lg print:px-0">{t('product')}</th>
+                      <th className="py-3 px-4 font-medium text-center">{t('qty')}</th>
+                      <th className="py-3 px-4 font-medium text-right">{t('price')}</th>
+                      <th className="py-3 px-4 font-medium text-right rounded-tr-lg print:px-0">{t('total')}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-ink/5">
@@ -171,31 +221,31 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
                   <table className="w-full text-sm text-right">
                     <tbody className="divide-y divide-transparent">
                       <tr>
-                        <td className="py-2 text-ink/60">Subtotal</td>
+                        <td className="py-2 text-ink/60">{t('subtotal')}</td>
                         <td className="py-2 text-ink font-medium">${order.subtotal.toFixed(2)}</td>
                       </tr>
                       {!!order.discountTotal && order.discountTotal > 0 && (
                         <tr>
-                          <td className="py-2 text-ink/60">Discount {order.couponCode ? `(${order.couponCode})` : ''}</td>
+                          <td className="py-2 text-ink/60">{t('discount')} {order.couponCode ? `(${order.couponCode})` : ''}</td>
                           <td className="py-2 font-medium text-green-600 print:text-green-600">-${order.discountTotal.toFixed(2)}</td>
                         </tr>
                       )}
                       <tr>
-                        <td className="py-2 text-ink/60">Shipping</td>
-                        <td className="py-2 text-ink font-medium">{order.shipping === 0 ? 'Free' : `$${order.shipping.toFixed(2)}`}</td>
+                        <td className="py-2 text-ink/60">{t('shipping')}</td>
+                        <td className="py-2 text-ink font-medium">{order.shipping === 0 ? t('free') : `$${order.shipping.toFixed(2)}`}</td>
                       </tr>
                       <tr>
-                        <td className={`py-2 text-ink/60 ${!order.redeemedPoints ? 'pb-3 sm:pb-4' : ''}`}>Processing Fee</td>
+                        <td className={`py-2 text-ink/60 ${!order.redeemedPoints ? 'pb-3 sm:pb-4' : ''}`}>{t('processingFee')}</td>
                         <td className={`py-2 text-ink font-medium ${!order.redeemedPoints ? 'pb-3 sm:pb-4' : ''}`}>${order.processingFee.toFixed(2)}</td>
                       </tr>
                       {!!order.redeemedPoints && order.redeemedPoints > 0 && (
                         <tr>
-                          <td className="py-2 text-ink/60 pb-3 sm:pb-4">Maxx Points</td>
+                          <td className="py-2 text-ink/60 pb-3 sm:pb-4">{t('purityPoints')}</td>
                           <td className="py-2 font-medium text-green-600 print:text-green-600 pb-3 sm:pb-4">-${order.redeemedPoints.toFixed(2)}</td>
                         </tr>
                       )}
                       <tr className="border-t border-ink/10">
-                        <td className="pt-3 sm:pt-4 text-base font-bold text-ink">Total USD</td>
+                        <td className="pt-3 sm:pt-4 text-base font-bold text-ink">{t('totalUsd')}</td>
                         <td className="pt-3 sm:pt-4 text-lg sm:text-xl font-bold text-ink">${order.total.toFixed(2)}</td>
                       </tr>
                     </tbody>
@@ -207,17 +257,21 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
             {/* Action Bar - Hidden on Print */}
             <div className="bg-[#fafafa] border-t border-ink/5 p-4 px-6 md:px-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-ink/60 print:hidden">
               <button onClick={() => window.print()} className="flex items-center gap-2 hover:text-ink transition-colors font-medium">
-                <Printer size={16} /> Print Receipt
+                <Printer size={16} /> {t('printReceipt')}
               </button>
-              <span className="text-center sm:text-left">Questions? <a href="mailto:support@peptides7.com" className="text-ink underline hover:no-underline font-medium">Contact Support</a></span>
+              <span className="text-center sm:text-left">
+                {t.rich('questionsContactSupport', {
+                  link: (chunks) => <a href="mailto:support@peptides7.com" className="text-ink underline hover:no-underline font-medium">{chunks}</a>,
+                })}
+              </span>
             </div>
           </div>
         </FadeUp>
 
         {/* Footer Actions - Hidden on Print */}
         <FadeUp delay={0.3} className="mt-10 md:mt-12 w-full flex flex-col items-center print:hidden">
-          <Link href="/shop" className={buttonVariants({ variant: 'dark', size: 'lg', className: 'w-full sm:w-auto min-w-[200px] rounded-full px-8 tracking-widest text-sm uppercase shadow-md hover:-translate-y-0.5 transition-all h-14' })}>
-            Continue Shopping
+          <Link href="/shop" className={buttonVariants({ variant: 'dark', size: 'lg', className: 'w-full sm:w-auto min-w-[200px] !rounded-full px-8 tracking-widest text-sm uppercase shadow-md hover:-translate-y-0.5 transition-all h-14' })}>
+            {t('continueShopping')}
           </Link>
         </FadeUp>
         

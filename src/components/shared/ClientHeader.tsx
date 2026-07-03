@@ -372,7 +372,9 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
 
   return (
     <>
-      <div className="fixed top-0 inset-x-0 z-sticky flex flex-col pointer-events-none print:hidden">
+      {!pathname.includes('/account') && (
+        <>
+          <div className="fixed top-0 inset-x-0 z-sticky flex flex-col pointer-events-none print:hidden">
         
         <motion.div
           variants={{
@@ -619,6 +621,8 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           </div>
         </div>
       </div>
+        </>
+      )}
       <MobileMenu 
         isOpen={mobileMenuOpen} 
         onClose={() => setMobileMenuOpen(false)} 

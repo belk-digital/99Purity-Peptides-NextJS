@@ -2,12 +2,11 @@
 
 import React from 'react'
 import { Link } from '@/i18n/navigation'
-import { ArrowRight, Package, LifeBuoy, TrendingUp, Heart, Calendar, MapPin, Wallet, Users, BarChart3 } from 'lucide-react'
-import { Space_Grotesk } from 'next/font/google'
+import { ArrowRight, Package, LifeBuoy, Heart, Calendar, MapPin, Users, BarChart3, Search, Bell, Hexagon, Star, ChevronRight, Truck, Headphones } from 'lucide-react'
 import { motion, Variants } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
+import Image from 'next/image'
+import { getMappedStatus, type DisplayOrderStatus } from '@/lib/orders/statusLabel'
 
 export interface AccountOverviewProps {
   stats: {
@@ -32,11 +31,27 @@ export interface AccountOverviewProps {
     country: string;
   } | null;
   affiliateStatus?: 'none' | 'pending' | 'approved' | 'rejected' | 'suspended';
+  userName?: string;
+  spending: {
+    year: number;
+    totalSpent: number;
+    categories: { label: string; color: string; value: number; pct: number }[];
+  };
 }
 
-export function AccountOverviewClient({ stats, recentOrders, defaultAddress, affiliateStatus = 'none' }: AccountOverviewProps) {
+export function AccountOverviewClient({ stats, recentOrders, defaultAddress, affiliateStatus = 'none', userName = 'User', spending }: AccountOverviewProps) {
+  const DONUT_RADIUS = 35
+  const DONUT_CIRCUMFERENCE = 2 * Math.PI * DONUT_RADIUS
+  let cumulativePct = 0
   const t = useTranslations('account.overview')
-  // Animation variants
+
+  const STATUS_LABELS: Record<DisplayOrderStatus, string> = {
+    Placed: t('statusPlaced'),
+    Processing: t('statusProcessing'),
+    Shipped: t('statusShipped'),
+    Delivered: t('statusDelivered'),
+  }
+
   const containerVars: Variants = {
     hidden: { opacity: 0 },
     show: {
@@ -55,207 +70,271 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
       variants={containerVars}
       initial="hidden"
       animate="show"
-      className="flex flex-col gap-12"
+      className="flex flex-col gap-8 w-full"
     >
       
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center bg-white text-[#1e5661] text-xl font-bold shrink-0 font-heading">
+            99
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 flex items-center gap-1 font-heading">{t('welcomeBack')}, <span className="text-sm">👋</span></span>
+            <h1 className="text-3xl lg:text-[40px] font-bold text-[#1e5661] tracking-tighter leading-none mt-1 mb-1 font-heading uppercase">
+              {userName}
+            </h1>
+            <span className="text-[11px] text-gray-500 mt-0.5">{t('subtitle')}</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 self-end sm:self-auto">
+          <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center bg-white text-gray-500 hover:text-black hover:border-gray-300 transition-colors">
+            <Search size={18} />
+          </button>
+          <button className="relative w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center bg-white text-gray-500 hover:text-black hover:border-gray-300 transition-colors">
+            <Bell size={18} />
+            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-[#1e5661] rounded-full border-[1.5px] border-white" />
+          </button>
+        </div>
+      </div>
+
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-        <motion.div variants={itemVars} className="group relative bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 transition-all duration-500 overflow-hidden">
-          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 text-amber-500">
-            <Wallet size={64} />
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+        <motion.div variants={itemVars} className="relative bg-[#112a2e] p-4 sm:p-6 rounded-2xl shadow-sm overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[160px] lg:col-span-2">
+          <div className="absolute inset-0 z-0">
+            <img src="https://res.cloudinary.com/denskvdyt/image/upload/v1783098784/Maxx_points_dluokr.webp" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-screen" />
           </div>
-          <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('maxxPoints')}</span>
-            <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{Number(stats.maxxPoints.toFixed(2))}</span>
+          <div className="relative z-10 flex justify-between items-start">
+            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white flex items-center gap-1">
+              {t('maxxPoints')} <Hexagon size={10} className="text-white ml-0.5 hidden sm:block" />
+            </span>
+            <Star size={32} strokeWidth={1.5} className="text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] sm:w-[42px] sm:h-[42px]" />
           </div>
-        </motion.div>
-
-        <motion.div variants={itemVars} className="group relative bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 transition-all duration-500 overflow-hidden">
-          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">
-            <Package size={64} />
-          </div>
-          <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('ordersPlaced')}</span>
-            <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{stats.ordersPlaced}</span>
-          </div>
-        </motion.div>
-
-        <motion.div variants={itemVars} className="group relative bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 transition-all duration-500 overflow-hidden">
-          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 text-red-500">
-            <Heart size={64} />
-          </div>
-          <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('wishlistItems')}</span>
-            <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{stats.wishlistCount}</span>
+          <div className="relative z-10 flex flex-col mt-2 sm:mt-4">
+            <div className="flex flex-col sm:flex-row sm:items-baseline gap-0 sm:gap-2">
+              <span className={`text-2xl sm:text-4xl text-white font-bold tracking-tighter font-heading`}>{Number(stats.maxxPoints.toFixed(2))}</span>
+              <span className="text-[10px] sm:text-xs text-gray-300 font-medium font-heading">(${stats.maxxPoints.toFixed(2)})</span>
+            </div>
+            <p className="text-[8px] sm:text-[9px] text-gray-300 mt-1 sm:mt-2 leading-tight hidden sm:block">{t('maxxPointsDescription')}</p>
           </div>
         </motion.div>
 
-        <motion.div variants={itemVars} className="group relative bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 transition-all duration-500 overflow-hidden">
-          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 text-blue-500">
-            <Calendar size={64} />
+        <motion.div variants={itemVars} className="bg-white p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2 sm:gap-4 text-center min-h-[140px] sm:min-h-[160px]">
+          <Package size={24} className="text-black sm:w-[32px] sm:h-[32px]" />
+          <div className="flex flex-col items-center">
+            <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-black font-heading mb-1 text-center">{t('ordersPlaced')}</span>
+            <span className={`text-2xl sm:text-3xl text-black font-bold tracking-tighter font-heading`}>{stats.ordersPlaced}</span>
           </div>
-          <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('memberSince')}</span>
-            <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{stats.memberSince}</span>
+        </motion.div>
+
+        <motion.div variants={itemVars} className="bg-white p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2 sm:gap-4 text-center min-h-[140px] sm:min-h-[160px]">
+          <Heart size={24} className="text-black sm:w-[32px] sm:h-[32px]" />
+          <div className="flex flex-col items-center">
+            <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-black font-heading mb-1 text-center">{t('wishlistItems')}</span>
+            <span className={`text-2xl sm:text-3xl text-black font-bold tracking-tighter font-heading`}>{stats.wishlistCount}</span>
+          </div>
+        </motion.div>
+
+        <motion.div variants={itemVars} className="bg-white p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2 sm:gap-4 text-center min-h-[140px] sm:min-h-[160px]">
+          <Calendar size={24} className="text-black sm:w-[32px] sm:h-[32px]" />
+          <div className="flex flex-col items-center">
+            <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-black font-heading mb-1 text-center">{t('memberSince')}</span>
+            <span className={`text-2xl sm:text-3xl text-black font-bold tracking-tighter font-heading`}>{stats.memberSince || new Date().getFullYear()}</span>
           </div>
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        {/* Left Column: Recent Orders */}
-        <motion.div variants={itemVars} className="flex flex-col gap-6">
-          <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-            <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-black">{t('recentOrders')}</h3>
-            <Link href="/account/orders" className="text-[10px] font-bold uppercase tracking-[0.1em] text-purple-600 hover:text-purple-700 transition-colors bg-purple-50 px-3 py-1.5 rounded-full hover:bg-purple-100">
+        {/* Recent Orders */}
+        <motion.div variants={itemVars} className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-black font-heading">{t('recentOrders')}</h3>
+            <Link href="/account/orders" className="text-[10px] font-bold uppercase tracking-widest text-[#2b646c] hover:underline font-heading">
               {t('viewAll')}
             </Link>
           </div>
           
-          <div className="flex flex-col gap-4">
-            {recentOrders.map((order, i) => (
-              <motion.div 
-                key={order.id} 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 + 0.3 }}
-                className="group flex flex-col sm:flex-row sm:items-center justify-between p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-lg hover:shadow-black/5 hover:border-gray-200 transition-all duration-300 gap-4 cursor-pointer relative overflow-hidden"
-              >
-                {/* Highlight bar on hover */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-black translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
-                
-                <div className="flex flex-col gap-2 pl-2">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-black">{t('orderNumber', { id: order.id })}</span>
-                  <span className="text-xs font-medium text-gray-500">{order.date}</span>
-                </div>
-                
-                <div className="flex flex-col sm:items-end gap-2">
-                  <span className="text-sm text-black font-bold">${order.total.toFixed(2)}</span>
-                  <div className="flex items-center gap-2 bg-gray-50 px-2.5 py-1 rounded-full">
-                    <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'Processing' ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]' : 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]'}`} />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-600">{order.status}</span>
-                  </div>
-                </div>
-                
-                <Link href={`/account/orders/${order.id}`} className="bg-black text-white rounded-full px-6 py-3 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-all duration-300 mt-2 sm:mt-0 whitespace-nowrap text-center shadow-md">
-                  {t('viewDetails')}
-                </Link>
-              </motion.div>
-            ))}
+          <div className="bg-white rounded-2xl border border-gray-100 p-8 flex flex-col shadow-sm min-h-[320px]">
+            {recentOrders.length > 0 ? (
+              <div className="flex flex-col gap-3">
+                {recentOrders.map((order) => (
+                  <Link href={`/account/orders/${order.id}`} key={order.id} className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:border-gray-300 transition-colors group">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-black">#{order.orderNumber}</span>
+                      <span className="text-[10px] text-gray-500">{order.date}</span>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="text-sm font-bold text-black">${order.total.toFixed(2)}</span>
+                      {(() => {
+                        const mappedStatus = getMappedStatus(order.status)
+                        return (
+                          <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${mappedStatus === 'Processing' ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-600'}`}>
+                            {STATUS_LABELS[mappedStatus]}
+                          </span>
+                        )
+                      })()}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center flex-1 text-center h-full">
+                <Package size={40} className="text-black mb-4" />
+                <p className="text-[13px] font-medium text-black font-heading">{t('noOrdersYetTitle')}</p>
+                <p className="text-[11px] text-gray-500 mt-1 font-heading">{t('noOrdersYetSubtitle')}</p>
+              </div>
+            )}
           </div>
         </motion.div>
 
-        {/* Right Column: Address & Quick Links */}
-        <motion.div variants={itemVars} className="flex flex-col gap-12">
+        {/* Default Address */}
+        <motion.div variants={itemVars} className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-black font-heading">{t('defaultAddress')}</h3>
+            <Link href="/account/addresses" className="text-[10px] font-bold uppercase tracking-widest text-[#2b646c] hover:underline font-heading">
+              {t('edit')}
+            </Link>
+          </div>
           
-          {/* Default Address */}
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-              <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-black">{t('defaultAddress')}</h3>
-              <Link href="/account/addresses" className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400 hover:text-black transition-colors">
-                {t('edit')}
-              </Link>
-            </div>
-            
+          <div className="bg-white rounded-2xl border border-gray-100 p-8 flex flex-col shadow-sm min-h-[320px]">
             {defaultAddress ? (
-              <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col text-sm text-gray-600 leading-relaxed hover:shadow-md transition-shadow">
-                <span className="text-black font-bold mb-3 uppercase tracking-[0.15em] text-[11px] bg-gray-50 px-3 py-1.5 rounded-full self-start inline-flex items-center gap-2">
+              <div className="flex flex-col text-[13px] text-gray-600 leading-relaxed pt-2">
+                <span className="text-black font-bold uppercase tracking-widest text-[11px] bg-gray-50 px-3 py-1.5 rounded-full self-start inline-flex items-center gap-2 mb-4">
                   <MapPin size={12} className="text-gray-400" />
                   {defaultAddress.name}
                 </span>
-                <div className="flex flex-col gap-1 pl-1">
-                  <span>{defaultAddress.street}</span>
-                  <span>{defaultAddress.city}, {defaultAddress.state} {defaultAddress.zip}</span>
-                  <span>{defaultAddress.country}</span>
-                </div>
+                <span className="font-medium text-black">{defaultAddress.street}</span>
+                <span>{defaultAddress.city}, {defaultAddress.state} {defaultAddress.zip}</span>
+                <span>{defaultAddress.country}</span>
               </div>
             ) : (
-              <div className="bg-white p-8 rounded-3xl border border-dashed border-gray-200 flex flex-col items-center justify-center text-center gap-4 text-gray-500">
-                <p className="text-sm">{t('noAddressYet')}</p>
-                <Link href="/account/addresses" className="text-[11px] font-bold uppercase tracking-[0.15em] text-black hover:underline">
+              <div className="flex flex-col items-center justify-center flex-1 text-center h-full">
+                <MapPin size={40} className="text-black mb-4" />
+                <p className="text-[13px] font-medium text-black font-heading">{t('noAddressYet')}</p>
+                <Link href="/account/addresses" className="mt-4 bg-black text-white px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-lg font-heading">
                   {t('addAddress')}
                 </Link>
               </div>
             )}
           </div>
+        </motion.div>
 
-          {/* Quick Links */}
-          <div className="flex flex-col gap-6">
-            <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-black border-b border-gray-200 pb-4">{t('supportAndPrograms')}</h3>
-            <div className="flex flex-col gap-3">
-              
-              {/* Affiliate Status Cards */}
-              {affiliateStatus === 'approved' && (
-                <Link href="/affiliates/dashboard" className="flex items-center justify-between p-5 border border-blue-100 rounded-2xl hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 group bg-gradient-to-br from-[#f8faff] to-[#eef4ff] relative overflow-hidden">
-                  <div className="flex items-center gap-4 text-black relative z-10">
-                    <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center group-hover:bg-blue-600 transition-colors shadow-sm">
-                      <BarChart3 size={16} />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#008B8B]">{t('affiliateDashboard')}</span>
-                      <span className="text-xs text-blue-900/60 mt-0.5">{t('manageLinksAndPayouts')}</span>
-                    </div>
-                  </div>
-                  <ArrowRight size={16} className="text-[#008B8B] group-hover:translate-x-2 transition-all duration-300 relative z-10" />
-                </Link>
-              )}
-              
-              {affiliateStatus === 'none' && (
-                <Link href="/affiliates" className="flex items-center justify-between p-5 border border-amber-100 rounded-2xl hover:border-amber-200 hover:shadow-lg hover:shadow-amber-500/10 hover:-translate-y-1 transition-all duration-300 group bg-gradient-to-br from-amber-50 to-orange-50 relative overflow-hidden">
-                  <div className="flex items-center gap-4 text-black relative z-10">
-                    <div className="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center group-hover:bg-amber-600 transition-colors shadow-sm">
-                      <Users size={16} />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-amber-600">{t('earnCommission')}</span>
-                      <span className="text-xs text-amber-900/60 mt-0.5">{t('joinPartnerProgram')}</span>
-                    </div>
-                  </div>
-                  <ArrowRight size={16} className="text-amber-500 group-hover:translate-x-2 transition-all duration-300 relative z-10" />
-                </Link>
-              )}
+        {/* Spending Overview */}
+        <motion.div variants={itemVars} className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-black font-heading">{t('spendingOverview')}</h3>
+            <span className="text-[9px] font-bold uppercase tracking-widest text-black border border-gray-200 rounded-lg px-3 py-1.5 flex items-center gap-1 font-heading">
+              {spending.year}
+            </span>
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 flex flex-row items-center gap-8 shadow-sm min-h-[320px]">
+            <div className="relative w-48 h-48 shrink-0 ml-4">
+              <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
+                <circle cx="50" cy="50" r="35" fill="transparent" stroke="#f0f8f9" strokeWidth="25" />
+                {spending.categories.map((cat, i) => {
+                  const segmentLength = (cat.pct / 100) * DONUT_CIRCUMFERENCE
+                  const offset = -((cumulativePct / 100) * DONUT_CIRCUMFERENCE)
+                  cumulativePct += cat.pct
+                  return (
+                    <circle
+                      key={i}
+                      cx="50"
+                      cy="50"
+                      r={DONUT_RADIUS}
+                      fill="transparent"
+                      stroke={cat.color}
+                      strokeWidth="25"
+                      strokeDasharray={`${segmentLength} ${DONUT_CIRCUMFERENCE - segmentLength}`}
+                      strokeDashoffset={offset}
+                    />
+                  )
+                })}
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white rounded-full m-4">
+                <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400 mt-1 font-heading">{t('totalSpent')}</span>
+                <span className="text-[15px] font-bold text-black leading-tight font-heading">${spending.totalSpent.toFixed(2)}</span>
+              </div>
+            </div>
 
-              {affiliateStatus === 'pending' && (
-                <div className="flex items-center justify-between p-5 border border-gray-200 rounded-2xl bg-gray-50 relative overflow-hidden">
-                  <div className="flex items-center gap-4 text-black relative z-10">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center shadow-sm">
-                      <Users size={16} />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-500">{t('partnerProgram')}</span>
-                      <span className="text-xs text-gray-400 mt-0.5">{t('applicationUnderReview')}</span>
-                    </div>
+            <div className="flex-1 flex flex-col gap-3 justify-center text-[11px]">
+              {spending.categories.length > 0 ? spending.categories.map((item, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 w-[90px]">
+                    <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: item.color }} />
+                    <span className="text-gray-600">{item.label}</span>
                   </div>
+                  <span className="font-medium text-black w-[40px] text-right">${item.value.toFixed(2)}</span>
+                  <span className="text-gray-400 w-[30px] text-right">{item.pct}%</span>
                 </div>
+              )) : (
+                <p className="text-gray-400 text-center">{t('noPurchasesYet')}</p>
               )}
-              
-              <Link href="/track" className="flex items-center justify-between p-5 border border-gray-100 rounded-2xl hover:border-transparent hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1 transition-all duration-300 group bg-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-50 to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                <div className="flex items-center gap-4 text-black relative z-10">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-white transition-colors shadow-sm">
-                    <TrendingUp size={16} className="text-gray-500 group-hover:text-black transition-colors" />
-                  </div>
-                  <span className="text-[11px] font-bold uppercase tracking-[0.15em]">{t('trackOrder')}</span>
-                </div>
-                <ArrowRight size={16} className="text-gray-300 group-hover:text-black transition-all duration-300 group-hover:translate-x-2 relative z-10" />
-              </Link>
-              
-              <Link href="/contact" className="flex items-center justify-between p-5 border border-gray-100 rounded-2xl hover:border-transparent hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1 transition-all duration-300 group bg-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-50 to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                <div className="flex items-center gap-4 text-black relative z-10">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-white transition-colors shadow-sm">
-                    <LifeBuoy size={16} className="text-gray-500 group-hover:text-black transition-colors" />
-                  </div>
-                  <span className="text-[11px] font-bold uppercase tracking-[0.15em]">{t('contactUs')}</span>
-                </div>
-                <ArrowRight size={16} className="text-gray-300 group-hover:text-black transition-all duration-300 group-hover:translate-x-2 relative z-10" />
-              </Link>
             </div>
           </div>
-
         </motion.div>
+
+        {/* Support & Programs */}
+        <motion.div variants={itemVars} className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-black font-heading">{t('supportAndPrograms')}</h3>
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-100 p-3 flex flex-col justify-center gap-1 shadow-sm min-h-[320px]">
+            
+            {affiliateStatus === 'approved' ? (
+              <Link href="/affiliates/dashboard" className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors group">
+                <div className="flex items-center gap-4 text-black">
+                  <BarChart3 size={24} className="text-black" />
+                  <div className="flex flex-col ml-2">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-black font-heading">{t('affiliateDashboard')}</span>
+                    <span className="text-[11px] text-gray-500 mt-0.5">{t('manageLinksAndPayouts')}</span>
+                  </div>
+                </div>
+                <ChevronRight size={16} className="text-gray-400 group-hover:text-black transition-colors" />
+              </Link>
+            ) : (
+              <Link href="/affiliates" className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors group">
+                <div className="flex items-center gap-4 text-black">
+                  <Users size={24} className="text-black" />
+                  <div className="flex flex-col ml-2">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-black font-heading">{t('earnCommission')}</span>
+                    <span className="text-[11px] text-gray-500 mt-0.5">{t('joinPartnerProgram')}</span>
+                  </div>
+                </div>
+                <ChevronRight size={16} className="text-gray-400 group-hover:text-black transition-colors" />
+              </Link>
+            )}
+
+            <div className="h-px bg-gray-100 w-[90%] mx-auto" />
+
+            <Link href="/track" className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors group">
+              <div className="flex items-center gap-4 text-black">
+                <Package size={24} className="text-black" />
+                <div className="flex flex-col ml-2">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-black font-heading">{t('trackOrder')}</span>
+                  <span className="text-[11px] text-gray-500 mt-0.5">{t('trackOrderDescription')}</span>
+                </div>
+              </div>
+              <ChevronRight size={16} className="text-gray-400 group-hover:text-black transition-colors" />
+            </Link>
+
+            <div className="h-px bg-gray-100 w-[90%] mx-auto" />
+            
+            <Link href="/contact" className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors group">
+              <div className="flex items-center gap-4 text-black">
+                <Headphones size={24} className="text-black" />
+                <div className="flex flex-col ml-2">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-black font-heading">{t('contactUs')}</span>
+                  <span className="text-[11px] text-gray-500 mt-0.5">{t('contactUsDescription')}</span>
+                </div>
+              </div>
+              <ChevronRight size={16} className="text-gray-400 group-hover:text-black transition-colors" />
+            </Link>
+
+          </div>
+        </motion.div>
+
       </div>
     </motion.div>
   )
 }
-

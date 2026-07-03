@@ -217,6 +217,10 @@ export interface User {
   role?: ('customer' | 'admin' | 'staff') | null;
   emailVerified?: boolean | null;
   acceptsMarketing?: boolean | null;
+  /**
+   * Send SMS notifications for order status updates.
+   */
+  orderSmsUpdates?: boolean | null;
   preferredLocale?: ('en' | 'es') | null;
   dateOfBirth?: string | null;
   stripeCustomerId?: string | null;
@@ -233,7 +237,7 @@ export interface User {
     | boolean
     | null;
   /**
-   * Maxx Points ($1 per point). Can be used by users at checkout.
+   * Purity Points ($1 per point). Can be used by users at checkout.
    */
   maxxPoints?: number | null;
   updatedAt: string;
@@ -680,7 +684,7 @@ export interface Order {
   subtotal?: number | null;
   discountTotal?: number | null;
   /**
-   * Maxx Points used in this order ($1 per point)
+   * Purity Points used in this order ($1 per point)
    */
   redeemedPoints?: number | null;
   shippingTotal?: number | null;
@@ -702,6 +706,10 @@ export interface Order {
       }[]
     | null;
   shippingMethod?: string | null;
+  /**
+   * Zelle orders require manual payment confirmation before fulfillment.
+   */
+  paymentMethod?: ('stripe' | 'zelle') | null;
   couponCode?: string | null;
   customerNote?: string | null;
   /**
@@ -1376,6 +1384,7 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   emailVerified?: T;
   acceptsMarketing?: T;
+  orderSmsUpdates?: T;
   preferredLocale?: T;
   dateOfBirth?: T;
   stripeCustomerId?: T;
@@ -1728,6 +1737,7 @@ export interface OrdersSelect<T extends boolean = true> {
         id?: T;
       };
   shippingMethod?: T;
+  paymentMethod?: T;
   couponCode?: T;
   customerNote?: T;
   guestEmail?: T;

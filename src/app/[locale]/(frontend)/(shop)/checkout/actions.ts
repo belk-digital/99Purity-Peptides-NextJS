@@ -1,10 +1,13 @@
 'use server'
 
+import crypto from 'crypto'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import Stripe from 'stripe'
 import { verifyCoupon, getUserMaxxPoints } from '../actions'
 import { cookies } from 'next/headers'
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
+import { establishSessionForNewUser } from '@/lib/auth/establishSession'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2024-04-10' as any,
@@ -22,10 +25,11 @@ export async function getShippingMethods() {
     return zones.docs[0].methods
   }
   
-  // Fallback if none exist
+  // Fallback if none exist (no ShippingZones doc currently exists in this project's DB,
+  // so this fallback is what's actually active in production right now)
   return [
-    { method: 'Standard Shipping', price: 0, estimatedDays: 5 },
-    { method: 'Express Shipping', price: 25, estimatedDays: 2 }
+    { method: 'Standard Shipping', price: 20, estimatedDays: 5 },
+    { method: 'Express Shipping', price: 30, estimatedDays: 2 }
   ]
 }
 
@@ -109,8 +113,11 @@ export async function createPaymentIntent(
 
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
   const isExpressShipping = shippingMethodName.toLowerCase().includes('express')
-  const finalShipping = (freeShipping && !isExpressShipping) ? 0 : shippingCost
-  
+  // Subtotal is checked before coupon discount, per the $300 free-standard-shipping threshold.
+  // Express is never discounted (matches how a coupon's freeShipping flag already behaves).
+  const qualifiesForFreeShipping = freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
+
   // Calculate dynamic processing fees
   const activeFees = await getActiveProcessingFees()
   let feeTotal = 0
@@ -166,13 +173,15 @@ export async function createPaymentIntent(
 }
 
 export async function createPayloadOrder(
-  items: any[], 
+  items: any[],
   shippingMethodName: string,
   couponCode: string | undefined,
   isRedeemingPoints: boolean,
   formData: any,
   paymentIntentId: string,
-  userId?: string
+  userId?: string,
+  paymentMethod: 'stripe' | 'zelle' = 'stripe',
+  isNewAddress = false
 ) {
   const payload = await getPayload({ config: configPromise })
 
@@ -235,8 +244,11 @@ export async function createPayloadOrder(
 
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
   const isExpressShipping = shippingMethodName.toLowerCase().includes('express')
-  const finalShipping = (freeShipping && !isExpressShipping) ? 0 : shippingCost
-  
+  // Subtotal is checked before coupon discount, per the $300 free-standard-shipping threshold.
+  // Express is never discounted (matches how a coupon's freeShipping flag already behaves).
+  const qualifiesForFreeShipping = freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
+
   // Calculate dynamic processing fees
   const activeFees = await getActiveProcessingFees()
   let feeTotal = 0
@@ -270,7 +282,41 @@ export async function createPayloadOrder(
 
   try {
     // userId is the Payload user's own id (from the NextAuth session), not an external IdP id.
-    const payloadUserId = userId ? Number(userId) : null
+    let payloadUserId: number | null = userId ? Number(userId) : null
+    let isNewAccount = false
+    const normalizedEmail = (formData.email || '').toLowerCase().trim()
+
+    if (!payloadUserId && normalizedEmail) {
+      // Guest checkout — link to an existing account with this email if one exists,
+      // otherwise auto-create one so the customer has an account for this order going forward.
+      const existingUser = await payload.find({
+        collection: 'users',
+        where: { email: { equals: normalizedEmail } },
+        limit: 1,
+        overrideAccess: true,
+      })
+
+      if (existingUser.docs.length > 0) {
+        payloadUserId = existingUser.docs[0].id
+      } else {
+        const created = await payload.create({
+          collection: 'users',
+          data: {
+            email: normalizedEmail,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            phone: formData.phone,
+            role: 'customer',
+            authProvider: 'credentials',
+            // Random unusable password — the customer sets a real one via the password-setup email below.
+            password: crypto.randomBytes(32).toString('hex'),
+          },
+          overrideAccess: true,
+        })
+        payloadUserId = created.id
+        isNewAccount = true
+      }
+    }
 
     // Format order items for Payload
     const orderItems = items.map(item => {
@@ -304,7 +350,9 @@ export async function createPayloadOrder(
         },
         items: orderItems,
         status: total <= 0 ? 'paid' : 'pending',
+        // Zelle has no payment API — orders stay unpaid until a human confirms the transfer manually.
         paymentStatus: total <= 0 ? 'captured' : 'unpaid',
+        paymentMethod,
         fulfillmentStatus: 'unfulfilled',
         subtotal: subtotal,
         discountTotal: discountAmount,
@@ -319,8 +367,8 @@ export async function createPayloadOrder(
       }
     })
 
-    // Update Stripe PaymentIntent with the Order ID (unless it's a free order)
-    if (paymentIntentId && paymentIntentId !== 'free_order') {
+    // Update Stripe PaymentIntent with the Order ID (unless it's a free order or Zelle, which has no PaymentIntent)
+    if (paymentMethod === 'stripe' && paymentIntentId && paymentIntentId !== 'free_order') {
        await stripe.paymentIntents.update(paymentIntentId, {
           metadata: {
              orderId: String(order.id)
@@ -336,9 +384,70 @@ export async function createPayloadOrder(
        })
     }
 
+    // Save this shipping address to the account for next time, if it's a newly-typed one
+    // (not one they picked from their existing saved addresses).
+    if (payloadUserId && isNewAddress && formData.address) {
+      try {
+        const existingAddresses = await payload.find({
+          collection: 'addresses',
+          where: { user: { equals: payloadUserId } },
+          overrideAccess: true,
+        })
+        const alreadySaved = existingAddresses.docs.some(
+          (addr: any) =>
+            addr.line1?.toLowerCase() === formData.address?.toLowerCase() &&
+            addr.postalCode === formData.zip
+        )
+        if (!alreadySaved) {
+          await payload.create({
+            collection: 'addresses',
+            data: {
+              user: payloadUserId,
+              label: formData.address,
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              line1: formData.address,
+              line2: formData.apartment || '',
+              city: formData.city,
+              state: formData.state,
+              postalCode: formData.zip,
+              country: 'US',
+              phone: formData.phone,
+              isDefaultShipping: existingAddresses.docs.length === 0,
+            },
+            overrideAccess: true,
+          })
+        }
+      } catch (err) {
+        // Don't fail the order over a non-critical address save
+        console.error('Failed to save address to account:', err)
+      }
+    }
+
+    // A brand-new account was just auto-created for this guest — sign them in immediately
+    // and send a password-setup email so they can log back in on a future visit.
+    if (isNewAccount && payloadUserId) {
+      try {
+        await establishSessionForNewUser({
+          id: payloadUserId,
+          email: normalizedEmail,
+          role: 'customer',
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+        })
+        await payload.forgotPassword({
+          collection: 'users',
+          data: { email: normalizedEmail },
+          disableEmail: false,
+        })
+      } catch (err) {
+        console.error('Failed to finish new-account setup:', err)
+      }
+    }
+
     // Set a cookie to authorize the order confirmation page
     const cookieStore = await cookies()
-    cookieStore.set(`order_auth_${order.id}`, 'true', { 
+    cookieStore.set(`order_auth_${order.id}`, 'true', {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

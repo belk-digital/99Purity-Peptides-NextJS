@@ -86,7 +86,7 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
 
   const pointsRow = redeemedPoints > 0 ? `
     <tr>
-      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Maxx Points Redeemed</td>
+      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Purity Points Redeemed</td>
       <td align="right" style="padding: 8px 0; font-size: 14px; color: #16a34a;">-${formatMoney(redeemedPoints)}</td>
     </tr>
   ` : '';

@@ -17,6 +17,9 @@ export default async function SettingsPage() {
     email: user.email,
     phone: user.phone || null,
     authProvider: (user as any).authProvider || 'credentials',
+    preferredLocale: user.preferredLocale || 'en',
+    acceptsMarketing: user.acceptsMarketing || false,
+    orderSmsUpdates: (user as any).orderSmsUpdates || false,
   }
 
   return <SettingsClient user={userData} />

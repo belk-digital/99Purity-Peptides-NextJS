@@ -6,12 +6,11 @@ import { Link } from '@/i18n/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ShoppingBag, Heart } from 'lucide-react'
 import { EmptyState } from '@/components/shared/EmptyState'
-import { Space_Grotesk } from 'next/font/google'
 import { useWishlistStore } from '@/lib/wishlist/store'
-import { useEffect, useState } from 'react'
+import { useCartStore } from '@/lib/cart/store'
+import { useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
+import { toast } from 'sonner'
 
 export interface WishlistItem {
   id: string;
@@ -26,16 +25,37 @@ export interface AccountWishlistProps {
   items: WishlistItem[];
 }
 
+function parsePrice(price: string): number {
+  return parseFloat(price.replace(/[^0-9.]/g, '')) || 0
+}
+
 export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
   const t = useTranslations('account.wishlist')
-  const { items: localItems, removeItem } = useWishlistStore()
-  const [mounted, setMounted] = useState(false)
+  const { removeItem, setItems } = useWishlistStore()
+  const cartStore = useCartStore()
 
+  // Sync the global wishlist store (used for heart-icon state elsewhere) with the
+  // real Payload data this page just fetched server-side. Intentionally runs once on mount.
   useEffect(() => {
-    setMounted(true)
+    setItems(serverItems.map(({ id, name, slug, image }) => ({ id, name, slug, image })))
   }, [])
 
-  const displayItems = mounted ? localItems : []
+  const displayItems = serverItems
+
+  const addToCart = (item: WishlistItem) => {
+    cartStore.addItem(
+      { id: item.id, name: item.name, imageUrl: item.image },
+      'Default',
+      1,
+      parsePrice(item.price)
+    )
+    toast.success(t('addToCart'), { action: { label: t('addToCart'), onClick: cartStore.openCart } })
+  }
+
+  const moveAllToCart = () => {
+    displayItems.forEach((item) => addToCart(item))
+    cartStore.openCart()
+  }
 
   return (
     <motion.div 
@@ -48,13 +68,17 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 border-b border-gray-200 pb-6">
         <div className="flex flex-col gap-2">
-          <h1 className={`text-4xl text-black font-bold tracking-tighter ${spaceGrotesk.className}`}>
+          <h1 className="text-4xl text-black font-bold tracking-tighter font-heading">
             {t('title')}
           </h1>
-          <p className="text-sm text-gray-500">{t('itemsSaved', { count: displayItems.length })}</p>
+          <p className="text-sm text-gray-500 font-heading">{t('itemsSaved', { count: displayItems.length })}</p>
         </div>
 
-        <button className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-all w-full sm:w-auto shadow-lg">
+        <button
+          onClick={moveAllToCart}
+          disabled={displayItems.length === 0}
+          className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-all w-full sm:w-auto shadow-lg font-heading disabled:opacity-40 disabled:pointer-events-none"
+        >
           <ShoppingBag size={14} />
           {t('moveAllToCart')}
         </button>
@@ -75,11 +99,11 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="group flex flex-col w-full bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 hover:border-gray-200 transition-all duration-500"
+                className="group flex flex-col p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 hover:border-gray-200 transition-all duration-500 relative overflow-hidden"
               >
                 
                 {/* Image Area */}
-                <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-50">
+                <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-50 rounded-2xl mb-6">
                   <Link href={`/products/${product.slug}`}>
                     <motion.div
                       whileHover={{ scale: 1.05 }}
@@ -87,7 +111,7 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
                       className="w-full h-full relative"
                     >
                       <Image
-                        src={typeof product.image === 'string' ? product.image : product.image?.url || '/99 Images/placeholder.webp'}
+                        src={product.image || '/99 Images/placeholder.webp'}
                         alt={product.name}
                         fill
                         className="object-cover"
@@ -109,23 +133,26 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
                 </div>
 
                 {/* Info Area */}
-                <div className="flex flex-col flex-1 p-6">
+                <div className="flex flex-col flex-1">
                   <Link href={`/products/${product.slug}`}>
-                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2 block">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2 block font-heading">
                       {/* @ts-ignore */}
                       {product.descriptor || t('productFallback')}
                     </span>
-                    <h3 className={`text-2xl font-bold text-black mb-1 transition-colors duration-300 group-hover:text-purple-600 tracking-tight ${spaceGrotesk.className}`}>
+                    <h3 className="text-xl font-bold text-black tracking-tight leading-tight group-hover:text-purple-600 transition-colors font-heading mb-4">
                       {product.name}
                     </h3>
                   </Link>
                   
-                  <div className="mt-6 flex items-center justify-between gap-4 pt-4 border-t border-gray-50">
-                    <span className={`text-xl font-bold text-black tracking-tighter ${spaceGrotesk.className}`}>
+                  <div className="mt-auto flex items-center justify-between gap-4 pt-4 border-t border-gray-50">
+                    <span className="text-xl font-bold text-black tracking-tighter font-heading">
                       {/* @ts-ignore */}
                       {product.price || product.priceRange || ''}
                     </span>
-                    <button className="bg-gray-50 hover:bg-black text-black hover:text-white rounded-full px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.1em] transition-colors shrink-0">
+                    <button
+                      onClick={() => addToCart(product)}
+                      className="bg-gray-50 hover:bg-black text-black hover:text-white rounded-full px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.1em] transition-colors shrink-0 font-heading"
+                    >
                       {t('addToCart')}
                     </button>
                   </div>
@@ -140,14 +167,14 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="w-full bg-gray-50 border border-dashed border-gray-200 rounded-3xl p-12"
+            className="w-full bg-gray-50 border border-dashed border-gray-200 rounded-2xl p-12"
           >
             <EmptyState
               icon={Heart}
               title={t('emptyTitle')}
               description={t('emptyDescription')}
               action={
-                <Link href="/shop" className="inline-flex items-center justify-center bg-black hover:bg-gray-800 text-white rounded-full px-8 py-4 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors shadow-lg">
+                <Link href="/shop" className="inline-flex items-center justify-center bg-black hover:bg-gray-800 text-white rounded-full px-8 py-4 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors shadow-lg font-heading">
                   {t('startBrowsing')}
                 </Link>
               }

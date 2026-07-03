@@ -1,18 +1,15 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import { usePathname } from 'next/navigation'
-import { Space_Grotesk } from 'next/font/google'
-import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, Wallet, BarChart3, Users } from 'lucide-react'
+import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, ArrowRight, Bot, Truck, LifeBuoy, Send } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 
 import { signOut } from 'next-auth/react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog'
-import { useState } from 'react'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 const NAV_ITEMS = [
   { key: 'overview', href: '/account', icon: LayoutDashboard },
@@ -36,40 +33,18 @@ export function AccountSidebar({
   const [open, setOpen] = useState(false)
 
   return (
-    <aside className="w-full h-fit flex flex-col gap-8 lg:sticky lg:top-32 z-10">
-      {/* Greeting */}
-      <div className="hidden lg:flex flex-col gap-1">
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{t('welcomeBack')}</span>
-        <h2 className={`text-2xl font-bold text-black tracking-tight ${spaceGrotesk.className}`}>
-          {userName}
-        </h2>
+    <aside className="w-full h-full flex flex-col gap-6 p-6 lg:py-10 lg:px-6">
+      
+      {/* Logo & Section Title */}
+      <div className="flex flex-col gap-1 px-4 lg:px-0">
+        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2 mb-6">
+          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-10 sm:h-12 w-auto object-contain filter invert opacity-80" style={{ filter: 'brightness(0) saturate(100%) invert(29%) sepia(18%) saturate(1637%) hue-rotate(143deg) brightness(97%) contrast(93%)' }} />
+        </Link>
       </div>
 
-      {/* Maxx Points Widget */}
-      <div className="flex flex-col gap-3 bg-white border border-amber-200/60 shadow-sm p-5 rounded-2xl w-full relative overflow-hidden group">
-        <div className="absolute top-0 right-0 -mt-2 -mr-2 p-4 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500 text-amber-500 pointer-events-none">
-          <Wallet size={80} />
-        </div>
-        <div className="flex items-center gap-3 relative z-10">
-          <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 shadow-inner border border-amber-100/50">
-            <Wallet size={18} />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-500">{t('maxxPoints')}</span>
-            <span className="text-xl font-bold text-black leading-none mt-1">{Number(maxxPoints.toFixed(2))} <span className="text-sm font-medium text-gray-400">(${maxxPoints.toFixed(2)})</span></span>
-          </div>
-        </div>
-        <div className="relative z-10 bg-amber-50/50 rounded-xl p-3.5 border border-amber-100/50 mt-1 shadow-sm">
-          <p className="text-[10px] text-amber-800/90 leading-relaxed font-medium">
-            {t.rich('maxxPointsDescription', { strong: (chunks) => <strong className="text-amber-900 font-bold">{chunks}</strong> })}
-          </p>
-        </div>
-      </div>
-      
       {/* Navigation */}
-      <nav className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col gap-2 pb-4 lg:pb-0">
+      <nav className="flex flex-col gap-1">
         {NAV_ITEMS.map((item) => {
-          // Strict exact match for root /account
           const isActive = item.href === '/account' 
             ? pathname.endsWith('/account') 
             : pathname.includes(item.href)
@@ -81,51 +56,40 @@ export function AccountSidebar({
               key={item.href}
               href={item.href}
               className={`
-                relative flex items-center justify-center lg:justify-start gap-3 shrink-0 px-4 py-3.5 rounded-2xl text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300
+                relative flex items-center justify-start gap-4 px-5 py-3 rounded-xl text-[12px] font-bold uppercase tracking-[0.1em] transition-all duration-300
                 ${isActive 
-                  ? 'text-white' 
-                  : 'text-gray-500 hover:text-black hover:bg-black/5 bg-gray-50 lg:bg-transparent'
+                  ? 'text-white shadow-md' 
+                  : 'text-[#1e5661] hover:bg-gray-100/50 bg-transparent'
                 }
               `}
             >
               {isActive && (
                 <motion.div 
-                  layoutId="active-pill"
-                  className="absolute inset-0 bg-black rounded-2xl z-0 shadow-md shadow-black/10"
+                  layoutId="active-nav"
+                  className="absolute inset-0 bg-[#2b646c] rounded-xl z-0"
                   initial={false}
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
-              <Icon size={16} className={`relative z-10 transition-colors duration-300 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-black'}`} />
-              <span className="relative z-10">{t(`nav.${item.key}`)}</span>
+              <Icon size={16} className={`relative z-10 transition-colors duration-300 ${isActive ? 'text-white' : 'text-gray-500'}`} />
+              <span className="relative z-10 font-heading">{t(`nav.${item.key}`)}</span>
             </Link>
           )
         })}
 
-        {/* Affiliate Link (if approved) */}
-        {affiliateStatus === 'approved' && (
-          <Link
-            href="/affiliates/dashboard"
-            className="relative flex items-center justify-center lg:justify-start gap-3 shrink-0 px-4 py-3.5 rounded-2xl text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-[#008B8B] hover:bg-blue-50/50 bg-blue-50 lg:bg-transparent group"
-          >
-            <BarChart3 size={16} className="relative z-10 transition-colors duration-300 text-[#008B8B] group-hover:text-blue-600" />
-            <span className="relative z-10 group-hover:text-blue-600">{t('affiliateDashboard')}</span>
-          </Link>
-        )}
-
-        <div className="hidden lg:block w-full h-px bg-gray-200 my-4" />
+        <div className="w-full h-px bg-gray-200 my-4" />
 
         {/* Sign out */}
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <button className="flex items-center justify-center lg:justify-start gap-3 shrink-0 px-4 py-3.5 rounded-2xl text-[11px] font-bold uppercase tracking-[0.15em] text-red-500 hover:text-white hover:bg-red-500 transition-all duration-300 group bg-red-50 lg:bg-transparent">
-              <LogOut size={16} className="text-red-400 group-hover:text-white transition-colors duration-300" />
-              <span className="relative z-10">{t('signOut')}</span>
+            <button className="flex items-center justify-start gap-4 px-5 py-3 rounded-xl text-[12px] font-bold uppercase tracking-[0.1em] text-black hover:bg-gray-100/50 transition-all duration-300 group bg-transparent">
+              <LogOut size={16} className="text-gray-400 group-hover:text-black transition-colors duration-300 transform rotate-180" />
+              <span className="relative z-10 font-heading">{t('signOut')}</span>
             </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md bg-white border border-gray-100 p-8 rounded-3xl shadow-2xl">
             <DialogHeader>
-              <DialogTitle className={`text-2xl font-bold tracking-tight text-black ${spaceGrotesk.className}`}>
+              <DialogTitle className={`text-2xl font-bold tracking-tight text-black font-heading`}>
                 {t('signOutDialogTitle')}
               </DialogTitle>
               <DialogDescription className="text-sm text-gray-500 mt-2">
@@ -149,34 +113,60 @@ export function AccountSidebar({
         </Dialog>
       </nav>
 
-      {/* Promotional Affiliate Box if not affiliate */}
-      {affiliateStatus === 'none' && (
-        <div className="hidden lg:flex flex-col gap-3 mt-4 bg-gradient-to-br from-[#f8faff] to-[#eef4ff] border border-blue-100/50 shadow-sm p-5 rounded-2xl w-full relative overflow-hidden group">
-          <div className="absolute top-0 right-0 -mt-2 -mr-2 p-4 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500 text-blue-500 pointer-events-none">
-            <Users size={80} />
-          </div>
-          <div className="relative z-10 flex flex-col gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#008B8B]">{t('partnerProgram')}</span>
-            <p className="text-[11px] text-blue-900/80 leading-relaxed font-medium">
-              {t.rich('partnerProgramDescription', { strong: (chunks) => <strong className="text-blue-900 font-bold">{chunks}</strong> })}
-            </p>
-          </div>
-          <Link href="/affiliates" className="relative z-10 mt-2 bg-white text-[#008B8B] hover:bg-blue-50 hover:text-blue-600 border border-blue-100 rounded-xl px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.15em] transition-all duration-300 text-center shadow-sm">
+      {/* Partner Program Banner */}
+      <div className="mt-4 flex flex-col gap-4 bg-[#112a2e] rounded-2xl relative overflow-hidden shadow-lg border border-[#2b646c] min-h-[280px]">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://res.cloudinary.com/denskvdyt/image/upload/v1783098784/partner_program_ub13f7.webp" 
+            alt="Partner Program Background" 
+            className="absolute inset-0 w-full h-full object-cover object-right opacity-60 mix-blend-overlay"
+          />
+        </div>
+        <div className="relative z-10 p-6 flex flex-col gap-3 h-[280px] justify-start">
+          <span className="text-xs font-bold text-white tracking-widest font-heading uppercase">{t('partnerProgram')}</span>
+          <p className="text-[13px] text-gray-200 leading-snug max-w-[80%] font-heading">
+            {t.rich('partnerProgramDescription', { strong: (chunks) => <strong className="text-white font-bold">{chunks}</strong> })}
+          </p>
+          <Link href="/affiliates" className="mt-2 w-max inline-flex items-center gap-2 bg-white text-[#112a2e] px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider hover:bg-gray-100 transition-colors font-heading">
             {t('applyNow')}
+            <ArrowRight size={14} />
           </Link>
         </div>
-      )}
+      </div>
 
-      {affiliateStatus === 'pending' && (
-        <div className="hidden lg:flex flex-col gap-3 mt-4 bg-gray-50 border border-gray-200/50 shadow-sm p-5 rounded-2xl w-full relative overflow-hidden">
-          <div className="relative z-10 flex flex-col gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500">{t('partnerProgram')}</span>
-            <p className="text-[11px] text-gray-600 leading-relaxed font-medium">
-              {t('applicationUnderReview')}
-            </p>
+      {/* AI Assistant & Quick Links */}
+      <div className="flex flex-col gap-3 mt-2">
+        <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 mb-3">
+            <Bot size={16} className="text-[#2b646c]" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-black font-heading">{t('aiAssistant')}</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-auto shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder={t('askMeAnything')}
+              className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-[11px] focus:outline-none focus:ring-1 focus:ring-[#2b646c] pr-12 font-heading"
+            />
+            <button className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors">
+              <Send size={16} />
+            </button>
           </div>
         </div>
-      )}
+
+        <div className="flex flex-col gap-3 w-full">
+          <Link href="/track" className="flex-1 flex items-center justify-center gap-2 bg-white rounded-xl py-3 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+            <Truck size={14} className="text-gray-500" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-black whitespace-nowrap font-heading">{t('trackOrder')}</span>
+          </Link>
+          <Link href="/contact" className="flex-1 flex items-center justify-center gap-2 bg-white rounded-xl py-3 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+            <LifeBuoy size={14} className="text-gray-500" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-black whitespace-nowrap font-heading">{t('helpCenter')}</span>
+          </Link>
+        </div>
+      </div>
+
     </aside>
   )
 }

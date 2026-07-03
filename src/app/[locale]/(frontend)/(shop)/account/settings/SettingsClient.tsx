@@ -7,12 +7,10 @@ import { Switch } from '@/components/ui/switch'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ExternalLink, Shield, Save, Bell, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { Space_Grotesk } from 'next/font/google'
-import { toast } from 'sonner'
-import { UpdatePasswordDialog, ChangeEmailDialog } from '@/components/account/SecurityDialogs'
 import { useTranslations } from 'next-intl'
 
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
+import { toast } from 'sonner'
+import { UpdatePasswordDialog, ChangeEmailDialog } from '@/components/account/SecurityDialogs'
 
 export interface AccountSettingsProps {
   user: {
@@ -21,14 +19,28 @@ export interface AccountSettingsProps {
     email: string;
     phone?: string | null;
     authProvider?: string;
+    preferredLocale?: string;
+    acceptsMarketing?: boolean;
+    orderSmsUpdates?: boolean;
   }
 }
 
 export function SettingsClient({ user }: AccountSettingsProps) {
   const t = useTranslations('account.settings')
   const [isPending, startTransition] = React.useTransition()
-  const [marketingEmails, setMarketingEmails] = React.useState(true)
-  const [orderSms, setOrderSms] = React.useState(true)
+  const [language, setLanguage] = React.useState(user.preferredLocale || 'en')
+  const [marketingEmails, setMarketingEmails] = React.useState(user.acceptsMarketing ?? false)
+  const [orderSms, setOrderSms] = React.useState(user.orderSmsUpdates ?? false)
+
+  async function savePreferences(update: Partial<{ preferredLocale: 'en' | 'es'; acceptsMarketing: boolean; orderSmsUpdates: boolean }>) {
+    const { updatePreferencesAction } = await import('./actions')
+    const result = await updatePreferencesAction(update)
+    if (!result.success) {
+      toast.error(result.error || t('toastUpdateFailed'))
+      return
+    }
+    toast.success(t('toastUpdateSuccess'))
+  }
 
   // Custom dialog states
   const [passwordOpen, setPasswordOpen] = React.useState(false)
@@ -60,7 +72,7 @@ export function SettingsClient({ user }: AccountSettingsProps) {
       
       {/* Header */}
       <div className="flex flex-col gap-2 mb-10 border-b border-gray-200 pb-6">
-        <h1 className={`text-4xl text-black font-bold tracking-tighter ${spaceGrotesk.className}`}>
+        <h1 className="text-4xl text-black font-bold tracking-tighter font-heading">
           {t('title')}
         </h1>
         <p className="text-sm text-gray-500">{t('subtitle')}</p>
@@ -79,25 +91,25 @@ export function SettingsClient({ user }: AccountSettingsProps) {
             <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
               <Shield size={14} />
             </div>
-            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black">{t('personalInformation')}</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black font-heading">{t('personalInformation')}</h2>
           </div>
 
-          <form action={handleSubmit} className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+          <form action={handleSubmit} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="firstName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('firstName')}</Label>
-                <Input name="firstName" id="firstName" defaultValue={user.firstName || ''} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                <Label htmlFor="firstName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('firstName')}</Label>
+                <Input name="firstName" id="firstName" defaultValue={user.firstName || ''} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="lastName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('lastName')}</Label>
-                <Input name="lastName" id="lastName" defaultValue={user.lastName || ''} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                <Label htmlFor="lastName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('lastName')}</Label>
+                <Input name="lastName" id="lastName" defaultValue={user.lastName || ''} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
               </div>
               <div className="flex flex-col gap-2 md:col-span-2">
-                <Label htmlFor="phone" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('phoneNumber')}</Label>
-                <Input name="phone" id="phone" type="tel" defaultValue={user.phone || ''} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                <Label htmlFor="phone" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('phoneNumber')}</Label>
+                <Input name="phone" id="phone" type="tel" defaultValue={user.phone || ''} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
               </div>
               <div className="md:col-span-2 mt-4">
-                <button disabled={isPending} className="flex items-center gap-2 bg-black hover:bg-gray-800 text-white rounded-full px-8 py-4 text-[11px] font-bold uppercase tracking-[0.15em] transition-all shadow-lg disabled:opacity-50">
+                <button disabled={isPending} className="flex items-center gap-2 bg-black hover:bg-gray-800 text-white rounded-full px-8 py-4 text-[11px] font-bold uppercase tracking-[0.15em] transition-all shadow-lg disabled:opacity-50 font-heading">
                   <Save size={16} />
                   {isPending ? t('saving') : t('saveChanges')}
                 </button>
@@ -117,17 +129,17 @@ export function SettingsClient({ user }: AccountSettingsProps) {
             <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
               <Shield size={14} />
             </div>
-            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black">{t('signInAndSecurity')}</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black font-heading">{t('signInAndSecurity')}</h2>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm max-w-2xl flex flex-col gap-8 relative overflow-hidden group">
+          <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm max-w-2xl flex flex-col gap-8 relative overflow-hidden group">
 
             <div className="flex items-start gap-5 relative z-10">
               <div className="w-12 h-12 bg-white rounded-full border border-gray-100 text-black flex items-center justify-center shadow-sm shrink-0">
                 <Shield size={20} />
               </div>
               <div className="flex flex-col gap-2">
-                <span className="text-sm font-bold text-black tracking-wide">{t('authManagedSecurely')}</span>
+                <span className="text-sm font-bold text-black tracking-wide font-heading">{t('authManagedSecurely')}</span>
                 <p className="text-sm text-gray-500 leading-relaxed">
                   {t.rich('authDescription', {
                     strong: (chunks) => <strong className="text-black font-semibold">{chunks}</strong>,
@@ -141,14 +153,14 @@ export function SettingsClient({ user }: AccountSettingsProps) {
               <button
                 type="button"
                 onClick={() => setPasswordOpen(true)}
-                className="flex items-center justify-center gap-2 bg-white hover:bg-black hover:text-white border border-gray-200 hover:border-black text-black rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors w-full sm:w-auto shadow-sm"
+                className="flex items-center justify-center gap-2 bg-white hover:bg-black hover:text-white border border-gray-200 hover:border-black text-black rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors w-full sm:w-auto shadow-sm font-heading"
               >
                 {t('updatePassword')} <ExternalLink size={14} />
               </button>
               <button
                 type="button"
                 onClick={() => setEmailOpen(true)}
-                className="flex items-center justify-center gap-2 bg-white hover:bg-black hover:text-white border border-gray-200 hover:border-black text-black rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors w-full sm:w-auto shadow-sm"
+                className="flex items-center justify-center gap-2 bg-white hover:bg-black hover:text-white border border-gray-200 hover:border-black text-black rounded-full px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors w-full sm:w-auto shadow-sm font-heading"
               >
                 {t('changeEmail')} <ExternalLink size={14} />
               </button>
@@ -167,32 +179,34 @@ export function SettingsClient({ user }: AccountSettingsProps) {
             <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
               <Globe size={14} />
             </div>
-            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black">{t('preferences')}</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black font-heading">{t('preferences')}</h2>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm max-w-2xl">
+          <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm max-w-2xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col gap-3">
-                <Label htmlFor="language" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('language')}</Label>
-                <Select defaultValue="en">
-                  <SelectTrigger id="language" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl text-sm font-medium">
+                <Label htmlFor="language" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('language')}</Label>
+                <Select
+                  value={language}
+                  onValueChange={(value) => {
+                    setLanguage(value)
+                    startTransition(() => { savePreferences({ preferredLocale: value as 'en' | 'es' }) })
+                  }}
+                >
+                  <SelectTrigger id="language" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl text-sm font-medium font-heading">
                     <SelectValue placeholder={t('selectLanguage')} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-gray-100 rounded-xl shadow-xl">
-                    <SelectItem value="en" className="rounded-lg">{t('languageEnglishUs')}</SelectItem>
+                    <SelectItem value="en" className="rounded-lg font-heading">{t('languageEnglishUs')}</SelectItem>
+                    <SelectItem value="es" className="rounded-lg font-heading">{t('languageSpanish')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="flex flex-col gap-3">
-                <Label htmlFor="currency" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('currency')}</Label>
-                <Select defaultValue="usd">
-                  <SelectTrigger id="currency" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl text-sm font-medium">
-                    <SelectValue placeholder={t('selectCurrency')} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-gray-100 rounded-xl shadow-xl">
-                    <SelectItem value="usd" className="rounded-lg">{t('currencyUsd')}</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="currency" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('currency')}</Label>
+                <div id="currency" className="h-12 flex items-center bg-gray-50 border border-gray-100 rounded-xl px-4 text-sm font-medium text-gray-500 font-heading">
+                  {t('currencyUsd')}
+                </div>
               </div>
             </div>
           </div>
@@ -209,28 +223,28 @@ export function SettingsClient({ user }: AccountSettingsProps) {
             <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
               <Bell size={14} />
             </div>
-            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black">{t('notifications')}</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black font-heading">{t('notifications')}</h2>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm max-w-2xl flex flex-col gap-8">
+          <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm max-w-2xl flex flex-col gap-8">
 
             <div className="flex items-center justify-between gap-6 group hover:bg-gray-50 -mx-4 p-4 rounded-2xl transition-colors">
               <div className="flex flex-col gap-1.5 flex-1">
-                <span className="text-sm font-bold text-black">{t('marketingEmails')}</span>
+                <span className="text-sm font-bold text-black font-heading">{t('marketingEmails')}</span>
                 <span className="text-xs text-gray-500">{t('marketingEmailsDescription')}</span>
               </div>
               <div className="flex bg-gray-100 rounded-full p-1 border border-gray-200 shadow-inner shrink-0 relative z-10">
                 <button
                   type="button"
-                  onClick={() => setMarketingEmails(true)}
-                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all ${marketingEmails ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                  onClick={() => { setMarketingEmails(true); startTransition(() => { savePreferences({ acceptsMarketing: true }) }) }}
+                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all font-heading ${marketingEmails ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   {t('on')}
                 </button>
                 <button
                   type="button"
-                  onClick={() => setMarketingEmails(false)}
-                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all ${!marketingEmails ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                  onClick={() => { setMarketingEmails(false); startTransition(() => { savePreferences({ acceptsMarketing: false }) }) }}
+                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all font-heading ${!marketingEmails ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   {t('off')}
                 </button>
@@ -239,21 +253,21 @@ export function SettingsClient({ user }: AccountSettingsProps) {
 
             <div className="flex items-center justify-between gap-6 group hover:bg-gray-50 -mx-4 p-4 rounded-2xl transition-colors border-t border-gray-50 pt-8">
               <div className="flex flex-col gap-1.5 flex-1">
-                <span className="text-sm font-bold text-black">{t('orderSmsUpdates')}</span>
+                <span className="text-sm font-bold text-black font-heading">{t('orderSmsUpdates')}</span>
                 <span className="text-xs text-gray-500">{t('orderSmsUpdatesDescription')}</span>
               </div>
               <div className="flex bg-gray-100 rounded-full p-1 border border-gray-200 shadow-inner shrink-0 relative z-10">
                 <button
                   type="button"
-                  onClick={() => setOrderSms(true)}
-                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all ${orderSms ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                  onClick={() => { setOrderSms(true); startTransition(() => { savePreferences({ orderSmsUpdates: true }) }) }}
+                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all font-heading ${orderSms ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   {t('on')}
                 </button>
                 <button
                   type="button"
-                  onClick={() => setOrderSms(false)}
-                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all ${!orderSms ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                  onClick={() => { setOrderSms(false); startTransition(() => { savePreferences({ orderSmsUpdates: false }) }) }}
+                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] rounded-full transition-all font-heading ${!orderSms ? 'bg-white text-black shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   {t('off')}
                 </button>

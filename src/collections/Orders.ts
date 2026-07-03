@@ -6,7 +6,7 @@ import { afterOrderChange } from '@/hooks/orders'
 export const Orders: CollectionConfig = {
   slug: 'orders',
   admin: {
-    defaultColumns: ['orderNumber', 'status', 'paymentStatus', 'fulfillmentStatus', 'owner', 'orderTime'],
+    defaultColumns: ['orderNumber', 'status', 'paymentStatus', 'paymentMethod', 'fulfillmentStatus', 'owner', 'orderTime'],
     description: 'Customer orders – generated server‑side only.',
   },
   access: {
@@ -219,7 +219,7 @@ export const Orders: CollectionConfig = {
     },
     { name: 'subtotal', type: 'number', admin: { position: 'sidebar', description: 'Before discounts/shipping/tax' } },
     { name: 'discountTotal', type: 'number', admin: { position: 'sidebar' } },
-    { name: 'redeemedPoints', type: 'number', defaultValue: 0, admin: { position: 'sidebar', description: 'Maxx Points used in this order ($1 per point)' } },
+    { name: 'redeemedPoints', type: 'number', defaultValue: 0, admin: { position: 'sidebar', description: 'Purity Points used in this order ($1 per point)' } },
     { name: 'shippingTotal', type: 'number', admin: { position: 'sidebar' }, defaultValue: 0 },
     {
       name: 'taxTotal',
@@ -251,6 +251,19 @@ export const Orders: CollectionConfig = {
       ],
     },
     { name: 'shippingMethod', type: 'text', admin: { position: 'sidebar' } },
+    {
+      name: 'paymentMethod',
+      type: 'select',
+      defaultValue: 'stripe',
+      options: [
+        { label: 'Card (Stripe)', value: 'stripe' },
+        { label: 'Zelle', value: 'zelle' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Zelle orders require manual payment confirmation before fulfillment.',
+      },
+    },
     { name: 'couponCode', type: 'text', admin: { position: 'sidebar' } },
     { name: 'customerNote', type: 'textarea' },
     { name: 'guestEmail', type: 'text', admin: { position: 'sidebar', description: 'For orders without a registered user account' } },

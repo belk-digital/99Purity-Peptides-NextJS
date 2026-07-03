@@ -9,10 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { motion } from 'framer-motion'
-import { Space_Grotesk } from 'next/font/google'
 import { useTranslations } from 'next-intl'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 export interface AddressItem {
   id: string;
@@ -160,7 +157,7 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
       
       {/* Header */}
       <div className="flex flex-col gap-2 mb-10 border-b border-gray-200 pb-6">
-        <h1 className={`text-4xl text-black font-bold tracking-tighter ${spaceGrotesk.className}`}>
+        <h1 className="text-4xl text-black font-bold tracking-tighter font-heading">
           {t('title')}
         </h1>
         <p className="text-sm text-gray-500">{t('subtitle')}</p>
@@ -173,22 +170,22 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
           <DialogTrigger asChild>
             <button 
               onClick={() => setEditingId(null)}
-              className="h-full min-h-[300px] bg-gray-50/50 border-2 border-dashed border-gray-200 rounded-3xl flex flex-col items-center justify-center gap-6 text-gray-400 hover:text-black hover:border-gray-400 hover:bg-gray-50 transition-colors group relative overflow-hidden"
+              className="h-full min-h-[300px] bg-gray-50/50 border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-6 text-gray-400 hover:text-black hover:border-gray-400 hover:bg-gray-50 transition-colors group relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.02)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="w-16 h-16 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors duration-500 relative z-10">
                 <Plus size={24} />
               </div>
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] relative z-10">{t('addNewAddress')}</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] relative z-10 font-heading">{t('addNewAddress')}</span>
             </button>
           </DialogTrigger>
 
           {/* Address Modal */}
-          <DialogContent className="sm:max-w-[600px] bg-white border border-gray-100 p-0 overflow-hidden rounded-3xl shadow-2xl">
+          <DialogContent className="sm:max-w-[600px] bg-white border border-gray-100 p-0 overflow-hidden rounded-2xl shadow-2xl">
             <form action={handleAddSubmit} key={editingId || 'new'}>
               <div className="p-8 border-b border-gray-100 bg-gray-50/50">
                 <DialogHeader>
-                  <DialogTitle className={`text-2xl font-bold tracking-tight text-black ${spaceGrotesk.className}`}>
+                  <DialogTitle className="text-2xl font-bold tracking-tight text-black font-heading">
                     {editingId ? t('editAddressTitle') : t('addAddressTitle')}
                   </DialogTitle>
                   <DialogDescription className="text-sm text-gray-500 mt-2">
@@ -200,29 +197,29 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
               <div className="p-8 overflow-y-auto max-h-[60vh] custom-scrollbar" data-lenis-prevent>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="firstName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('firstName')}</Label>
-                    <Input name="firstName" id="firstName" defaultValue={editingAddress?.firstName || ''} required placeholder={t('firstName')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                    <Label htmlFor="firstName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('firstName')}</Label>
+                    <Input name="firstName" id="firstName" defaultValue={editingAddress?.firstName || ''} required placeholder={t('firstName')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="lastName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('lastName')}</Label>
-                    <Input name="lastName" id="lastName" defaultValue={editingAddress?.lastName || ''} required placeholder={t('lastName')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                    <Label htmlFor="lastName" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('lastName')}</Label>
+                    <Input name="lastName" id="lastName" defaultValue={editingAddress?.lastName || ''} required placeholder={t('lastName')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
                   </div>
                   <div className="col-span-2 flex flex-col gap-2">
-                    <Label htmlFor="line1" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('streetAddress')}</Label>
-                    <Input name="line1" id="line1" defaultValue={editingAddress?.line1 || ''} required placeholder={t('streetAddress')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                    <Label htmlFor="line1" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('streetAddress')}</Label>
+                    <Input name="line1" id="line1" defaultValue={editingAddress?.line1 || ''} required placeholder={t('streetAddress')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
                   </div>
                   <div className="col-span-2 flex flex-col gap-2">
-                    <Label htmlFor="line2" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('apartmentOptional')}</Label>
-                    <Input name="line2" id="line2" defaultValue={editingAddress?.line2 || ''} placeholder={t('apartmentPlaceholder')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                    <Label htmlFor="line2" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('apartmentOptional')}</Label>
+                    <Input name="line2" id="line2" defaultValue={editingAddress?.line2 || ''} placeholder={t('apartmentPlaceholder')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="city" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('city')}</Label>
-                    <Input name="city" id="city" defaultValue={editingAddress?.city || ''} required placeholder={t('city')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                    <Label htmlFor="city" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('city')}</Label>
+                    <Input name="city" id="city" defaultValue={editingAddress?.city || ''} required placeholder={t('city')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="state" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('state')}</Label>
+                    <Label htmlFor="state" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('state')}</Label>
                     <Select name="state" defaultValue={editingAddress?.state || undefined}>
-                      <SelectTrigger id="state" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl text-sm">
+                      <SelectTrigger id="state" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl text-sm font-heading">
                         <SelectValue placeholder={t('selectState')} />
                       </SelectTrigger>
                       <SelectContent className="bg-white border-gray-100 rounded-xl shadow-xl max-h-[300px]">
@@ -235,28 +232,28 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
                               onChange={(e) => setSearchQuery(e.target.value)}
                               onKeyDown={(e) => e.stopPropagation()}
                               onClick={(e) => e.stopPropagation()}
-                              className="h-8 pl-8 text-xs border-none bg-gray-50 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              className="h-8 pl-8 text-xs border-none bg-gray-50 focus-visible:ring-0 focus-visible:ring-offset-0 font-heading"
                             />
                           </div>
                         </div>
                         {filteredStates.map((state) => (
-                          <SelectItem key={state.value} value={state.value}>
+                          <SelectItem key={state.value} value={state.value} className="font-heading">
                             {state.label}
                           </SelectItem>
                         ))}
                         {filteredStates.length === 0 && (
-                          <div className="py-4 text-center text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('noStatesFound')}</div>
+                          <div className="py-4 text-center text-[10px] text-gray-400 font-medium uppercase tracking-wider font-heading">{t('noStatesFound')}</div>
                         )}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="zip" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('zipCode')}</Label>
-                    <Input name="zip" id="zip" defaultValue={editingAddress?.postalCode || ''} required placeholder={t('zipCode')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                    <Label htmlFor="zip" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('zipCode')}</Label>
+                    <Input name="zip" id="zip" defaultValue={editingAddress?.postalCode || ''} required placeholder={t('zipCode')} className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="phone" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em]">{t('phone')}</Label>
-                    <Input name="phone" id="phone" defaultValue={editingAddress?.phone || ''} required type="tel" placeholder="(555) 555-5555" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl" />
+                    <Label htmlFor="phone" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('phone')}</Label>
+                    <Input name="phone" id="phone" defaultValue={editingAddress?.phone || ''} required type="tel" placeholder="(555) 555-5555" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
                   </div>
                   <div className="col-span-2 flex items-center space-x-3 mt-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
                     <Checkbox name="isDefault" id="default" defaultChecked={editingAddress?.isDefault || false} className="border-gray-300 data-[state=checked]:bg-black data-[state=checked]:border-black" />
@@ -270,13 +267,13 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
                 </div>
               </div>
 
-              <DialogFooter className="p-8 border-t border-gray-100 bg-white flex sm:justify-end gap-3">
+              <DialogFooter className="p-8 border-t border-gray-100 bg-white flex sm:justify-end gap-3 rounded-b-2xl">
                 <DialogClose asChild>
-                  <button type="button" className="px-6 py-3 rounded-full text-xs font-bold uppercase tracking-[0.1em] text-gray-500 hover:text-black hover:bg-gray-50 transition-colors">
+                  <button type="button" className="px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-[0.1em] text-gray-500 hover:text-black hover:bg-gray-50 transition-colors font-heading">
                     {t('cancel')}
                   </button>
                 </DialogClose>
-                <button disabled={isPending} type="submit" className="px-8 py-3 rounded-full bg-black text-white text-xs font-bold uppercase tracking-[0.1em] hover:bg-gray-800 transition-all shadow-lg shadow-black/10 disabled:opacity-50">
+                <button disabled={isPending} type="submit" className="px-8 py-3 rounded-full bg-black text-white text-[11px] font-bold uppercase tracking-[0.1em] hover:bg-gray-800 transition-all shadow-lg shadow-black/10 disabled:opacity-50 font-heading">
                   {isPending ? t('saving') : t('saveAddress')}
                 </button>
               </DialogFooter>
@@ -291,10 +288,10 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 + 0.1 }}
-            className="relative p-8 border border-gray-100 rounded-3xl flex flex-col justify-between bg-white shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 transition-all duration-500 overflow-hidden group"
+            className="relative p-8 border border-gray-100 rounded-2xl flex flex-col justify-between bg-white shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 transition-all duration-500 overflow-hidden group"
           >
             {address.isDefault && (
-              <div className="absolute top-6 right-6 bg-green-50 text-green-600 border border-green-200 text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
+              <div className="absolute top-6 right-6 bg-green-50 text-green-600 border border-green-200 text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5 font-heading">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
                 {t('default')}
               </div>
@@ -305,21 +302,21 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
                 <MapPin size={20} />
               </div>
               <div className="flex flex-col gap-1 text-sm text-gray-500 leading-relaxed">
-                <span className={`text-xl text-black font-bold tracking-tight mb-2 ${spaceGrotesk.className}`}>{address.firstName} {address.lastName}</span>
-                <span>{address.line1}</span>
-                {address.line2 && <span>{address.line2}</span>}
-                <span>{address.city}, {address.state} {address.postalCode}</span>
-                <span>{address.country}</span>
-                <span className="mt-4 inline-flex px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-600 text-xs self-start font-medium">{address.phone}</span>
+                <span className="text-xl text-black font-bold tracking-tight mb-2 font-heading">{address.firstName} {address.lastName}</span>
+                <span className="font-heading">{address.line1}</span>
+                {address.line2 && <span className="font-heading">{address.line2}</span>}
+                <span className="font-heading">{address.city}, {address.state} {address.postalCode}</span>
+                <span className="font-heading">{address.country}</span>
+                <span className="mt-4 inline-flex px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-600 text-xs self-start font-medium font-heading">{address.phone}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3 pt-8 mt-4 border-t border-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button disabled={isPending} onClick={() => handleEdit(address.id)} className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-black hover:text-white text-black py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] transition-all disabled:opacity-50">
+              <button disabled={isPending} onClick={() => handleEdit(address.id)} className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-black hover:text-white text-black py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] transition-all disabled:opacity-50 font-heading">
                 <Edit2 size={14} />
                 {t('edit')}
               </button>
-              <button disabled={isPending} onClick={() => handleDelete(address.id)} className="flex-1 flex items-center justify-center gap-2 bg-red-50 hover:bg-red-500 hover:text-white text-red-600 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] transition-all disabled:opacity-50">
+              <button disabled={isPending} onClick={() => handleDelete(address.id)} className="flex-1 flex items-center justify-center gap-2 bg-red-50 hover:bg-red-500 hover:text-white text-red-600 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] transition-all disabled:opacity-50 font-heading">
                 <Trash2 size={14} />
                 {t('delete')}
               </button>

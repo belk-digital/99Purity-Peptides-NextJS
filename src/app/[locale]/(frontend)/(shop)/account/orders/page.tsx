@@ -4,6 +4,7 @@ import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { redirect } from 'next/navigation'
+import { getLocale } from 'next-intl/server'
 
 export const metadata = {
   title: 'Order History | 99 Purity Peptides',
@@ -15,6 +16,7 @@ export default async function OrdersPage() {
   const user = await getPayloadUser()
   if (!user) redirect('/login')
 
+  const locale = await getLocale()
   const payload = await getPayload({ config })
 
   const { docs: orders } = await payload.find({
@@ -32,7 +34,7 @@ export default async function OrdersPage() {
 
   const orderItems: OrderItem[] = orders.map(order => ({
     id: order.orderNumber || String(order.id),
-    date: new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    date: new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     status: order.status,
     total: order.total,
     itemCount: order.items?.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) || 0

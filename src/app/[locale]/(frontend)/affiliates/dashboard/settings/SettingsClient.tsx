@@ -3,9 +3,11 @@
 import React from 'react'
 import { Space_Grotesk } from 'next/font/google'
 import { motion, Variants } from 'framer-motion'
-import { Settings2, Save } from 'lucide-react'
+import { Settings2, Save, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
+import { toast } from 'sonner'
+import { updatePayoutCurrency } from './actions'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
@@ -15,6 +17,19 @@ interface SettingsClientProps {
 
 export function SettingsClient({ initialCurrency }: SettingsClientProps) {
   const t = useTranslations('affiliate.dashboardSettings')
+  const [currency, setCurrency] = React.useState(initialCurrency || 'USD')
+  const [isPending, startTransition] = React.useTransition()
+
+  function handleSave() {
+    startTransition(async () => {
+      const result = await updatePayoutCurrency(currency)
+      if (!result.success) {
+        toast.error(result.error || 'Failed to save preferences')
+        return
+      }
+      toast.success('Preferences saved')
+    })
+  }
   // Animation variants
   const containerVars: Variants = {
     hidden: { opacity: 0 },
@@ -59,7 +74,8 @@ export function SettingsClient({ initialCurrency }: SettingsClientProps) {
               <label className="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-500">{t('preferredCurrencyLabel')}</label>
               <div className="relative">
                 <select
-                  defaultValue={initialCurrency || 'USD'}
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
                   className="w-full appearance-none bg-gray-50 border border-gray-200 text-black text-sm rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm cursor-pointer"
                 >
                   <option value="USD">{t('currencyUsd')}</option>
@@ -78,8 +94,13 @@ export function SettingsClient({ initialCurrency }: SettingsClientProps) {
             </div>
 
             <div className="pt-4 flex justify-end">
-              <Button type="button" className="rounded-xl h-12 px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#008B8B] hover:bg-blue-600 text-white border-none shadow-md">
-                <Save size={16} />
+              <Button
+                type="button"
+                onClick={handleSave}
+                disabled={isPending}
+                className="rounded-xl h-12 px-8 text-xs font-bold uppercase tracking-widest gap-2 bg-[#008B8B] hover:bg-blue-600 text-white border-none shadow-md disabled:opacity-50"
+              >
+                {isPending ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                 {t('savePreferencesButton')}
               </Button>
             </div>
