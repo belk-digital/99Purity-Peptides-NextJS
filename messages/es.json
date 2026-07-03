@@ -510,6 +510,34 @@
           "description": "Los certificados de análisis detallados incluyen porcentajes de pureza, perfiles de impurezas y métodos de prueba analítica para una trazabilidad completa de la investigación."
         }
       }
+    },
+    "trustBadges": {
+      "eyebrow": "El Estándar 99 Purity",
+      "titleLine1": "DISEÑADO PARA UNA",
+      "titleLine2": "PRECISIÓN ABSOLUTA",
+      "subtitle": "Fabricado en EE. UU. Verificado por terceros.",
+      "ctaText": "Descubre la Calidad",
+      "description": "Cada péptido de investigación se sintetiza en instalaciones de EE. UU. bajo estándares de fabricación 503A y 503B, se verifica de forma independiente mediante pruebas analíticas de terceros y se liofiliza al vacío para preservar la estabilidad molecular desde el lote hasta el laboratorio.",
+      "cards": {
+        "purity": {
+          "title": "Pureza Verificada del 99.1%+",
+          "description": "Nunca confiamos en las afirmaciones del fabricante. Cada lote es probado de forma independiente por laboratorios acreditados de terceros en EE. UU. para confirmar una pureza mínima del 99% antes de llegar al inventario.",
+          "tag": "Verificado en EE. UU.",
+          "microcopy": "Estándares 503A · 503B"
+        },
+        "stability": {
+          "title": "Estabilidad Liofilizada",
+          "description": "Cada compuesto de investigación se liofiliza (se seca por congelación) al vacío, preservando la integridad molecular a largo plazo y la estabilidad estructural durante el tránsito y el almacenamiento en frío.",
+          "tag": "Sellado al Vacío",
+          "microcopy": "Lote Probado para Estabilidad"
+        },
+        "dosing": {
+          "title": "Dosificación Exacta en Miligramos",
+          "description": "La precisión no es negociable. Garantizamos el contenido exacto de miligramos por vial bajo sistemas de calidad compatibles con 505A, eliminando las conjeturas de dosificación de su investigación.",
+          "tag": "Dosificación Precisa",
+          "microcopy": "Sistemas de Calidad 505A"
+        }
+      }
     }
   },
   "shop": {

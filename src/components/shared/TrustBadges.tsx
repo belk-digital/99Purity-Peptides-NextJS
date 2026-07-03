@@ -5,8 +5,11 @@ import { ArrowRight, ShieldCheck, FlaskConical, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PinterestGlassCard } from '../home/PinterestGlassCard';
 import { FluidButton } from '@/components/ui/fluid-button';
+import { useTranslations } from 'next-intl';
 
 export function TrustBadges() {
+  const t = useTranslations('home.trustBadges');
+
   const cardContainerVariants: any = {
     hidden: { opacity: 0 },
     visible: { 
@@ -35,21 +38,21 @@ export function TrustBadges() {
           className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8 md:gap-0"
         >
           <div className="w-full md:w-1/2">
-            <p className="text-primary text-xs sm:text-sm tracking-[0.2em] uppercase mb-3 sm:mb-4 font-bold">The 99 Purity Standard</p>
+            <p className="text-primary text-xs sm:text-sm tracking-[0.2em] uppercase mb-3 sm:mb-4 font-bold">{t('eyebrow')}</p>
             <h2 className="font-heading text-[2.5rem] sm:text-4xl md:text-5xl lg:text-7xl font-black text-zinc-900 leading-[0.9] tracking-tighter uppercase mb-2 md:mb-4 break-words">
-              ENGINEERED FOR <br className="hidden md:block" /> ABSOLUTE PRECISION<span className="text-primary">.</span>
+              {t('titleLine1')} <br className="hidden md:block" /> {t('titleLine2')}<span className="text-primary">.</span>
             </h2>
             <p className="text-zinc-500 font-bold text-xs sm:text-sm md:text-base tracking-[0.15em] uppercase mb-0 md:mb-8">
-              USA-Manufactured. Third-Party Verified.
+              {t('subtitle')}
             </p>
           </div>
           
           <div className="flex flex-col items-start md:items-end gap-6 sm:gap-8 max-w-md mt-2 sm:mt-6 md:mt-0">
-            <div title="See Our Lab Results →">
-              <FluidButton href="/about" text="Discover Quality" className="relative z-10" />
+            <div title={`${t('ctaText')} →`}>
+              <FluidButton href="/about" text={t('ctaText')} className="relative z-10" />
             </div>
             <p className="text-zinc-600 text-sm sm:text-base md:text-lg text-left md:text-right leading-relaxed font-medium">
-              Every research peptide is synthesized in U.S. facilities under 503A and 503B manufacturing standards, independently verified through third-party analytical testing, and lyophilized under vacuum to preserve molecular stability from batch to bench.
+              {t('description')}
             </p>
           </div>
         </motion.div>
@@ -65,33 +68,33 @@ export function TrustBadges() {
           {/* Card 1 */}
           <motion.div variants={cardVariants} className="flex justify-center h-full">
             <PinterestGlassCard 
-              title="99.1%+ Verified Purity"
-              description="We never rely on manufacturer claims. Every batch is independently tested by accredited U.S. third-party laboratories to confirm minimum 99% purity before it reaches inventory."
+              title={t('cards.purity.title')}
+              description={t('cards.purity.description')}
               icon={<ShieldCheck className="w-5 h-5" />}
-              tag="USA Verified"
-              microcopy="503A · 503B Standards"
+              tag={t('cards.purity.tag')}
+              microcopy={t('cards.purity.microcopy')}
             />
           </motion.div>
 
           {/* Card 2 */}
           <motion.div variants={cardVariants} className="flex justify-center h-full lg:mt-16">
             <PinterestGlassCard 
-              title="Lyophilized Stability"
-              description="Each research compound is lyophilized (freeze-dried) under vacuum, preserving long-term molecular integrity and structural stability throughout transit and cold storage."
+              title={t('cards.stability.title')}
+              description={t('cards.stability.description')}
               icon={<FlaskConical className="w-5 h-5" />}
-              tag="Vacuum Sealed"
-              microcopy="Batch-Tested for Stability"
+              tag={t('cards.stability.tag')}
+              microcopy={t('cards.stability.microcopy')}
             />
           </motion.div>
 
           {/* Card 3 */}
           <motion.div variants={cardVariants} className="flex justify-center h-full lg:mt-32">
             <PinterestGlassCard 
-              title="Exact Milligram Dosing"
-              description="Precision is non-negotiable. We guarantee exact milligram content per vial under 505A-compliant quality systems, removing dosing guesswork from your research."
+              title={t('cards.dosing.title')}
+              description={t('cards.dosing.description')}
               icon={<Target className="w-5 h-5" />}
-              tag="Precision Dosed"
-              microcopy="505A Quality Systems"
+              tag={t('cards.dosing.tag')}
+              microcopy={t('cards.dosing.microcopy')}
             />
           </motion.div>
         </motion.div>
