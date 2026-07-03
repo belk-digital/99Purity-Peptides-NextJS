@@ -11,7 +11,7 @@ import { BlogPostCard } from '@/components/editorial/BlogPostCard'
 import { BlogBentoGrid } from '@/components/editorial/BlogBentoGrid'
 import { Button } from '@/components/ui/button'
 import { FluidButton } from '@/components/ui/fluid-button'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
 import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
 
@@ -28,6 +28,7 @@ const MOCK_IMAGES = [
 
 export default function BlogIndexPage() {
   const locale = useLocale()
+  const t = useTranslations('blog')
   const BLOG_POSTS = locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
   const CATEGORIES = locale === 'es' ? CATEGORIES_ES : CATEGORIES_EN
   const ALL_LABEL = CATEGORIES[0]
@@ -124,7 +125,7 @@ export default function BlogIndexPage() {
                 style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 0v100h100A100 100 0 0 1 0 0Z' fill='%23FAF7F2'/%3E%3C/svg%3E")` }}
               />
               <FluidButton 
-                text={<><span className="hidden sm:inline">Explore Latest Articles</span><span className="sm:hidden">Explore Articles</span></>} 
+                text={<><span className="hidden sm:inline">{t('hero.exploreLatestLong')}</span><span className="sm:hidden">{t('hero.exploreLatestShort')}</span></>} 
                 className="relative z-10" 
               />
             </div>
@@ -138,7 +139,7 @@ export default function BlogIndexPage() {
               className="w-full max-w-6xl mx-auto"
             >
               <h1 className="w-full font-heading text-[8vw] sm:text-[5vw] md:text-[4.5vw] lg:text-[56px] xl:text-[72px] leading-[1.1] md:leading-[1.05] text-white tracking-tighter uppercase font-black drop-shadow-2xl mb-6">
-                The U.S. Authority in Advanced Peptide Research & Scientific Insights
+                {t('hero.title')}
               </h1>
             </motion.div>
 
@@ -148,7 +149,7 @@ export default function BlogIndexPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-2 text-white/80 text-sm sm:text-base md:text-lg lg:text-xl max-w-4xl font-light leading-relaxed tracking-wide mx-auto"
             >
-              Explore peer-reviewed peptide research, advanced laboratory protocols, reconstitution guides, and analytical testing standards curated for American scientific professionals. Trusted educational resources for 99%+ pure research compounds—strictly for in-vitro laboratory use only.
+              {t('hero.description')}
             </motion.p>
           </div>
         </div>
@@ -168,10 +169,10 @@ export default function BlogIndexPage() {
                 <svg className="w-4 h-4 text-ink/60 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
-                Compliance
+                {t('compliance.title')}
               </h3>
               <p className="text-sm text-ink/70 leading-relaxed font-medium">
-                All products offered by 99PurityPeptides are strictly intended for in-vitro laboratory research and analytical applications only. Products are not approved for human consumption, therapeutic use, or medical application.
+                {t('compliance.description')}
               </p>
             </div>
           </div>
@@ -182,7 +183,7 @@ export default function BlogIndexPage() {
       <section className="px-4 md:px-6 mb-24 lg:mb-32 max-w-[1280px] mx-auto">
         <FadeUp delay={0.4}>
           <div className="mb-6 lg:mb-8 px-2 lg:px-4">
-            <h2 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tighter text-ink/60">Latest Article</h2>
+            <h2 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tighter text-ink/60">{t('latestArticle')}</h2>
           </div>
           <Link href={`/${latestPost?.slug}`} className="group flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch w-full bg-white p-4 sm:p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-ink/5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
             <div className="relative w-full lg:w-[55%] aspect-[4/3] lg:aspect-auto rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden border border-ink/5 shrink-0">
@@ -222,7 +223,7 @@ export default function BlogIndexPage() {
               </p>
               <div className="flex items-center justify-between mt-auto">
                 <div className="w-[155px] md:w-[215px] flex shrink-0 items-center">
-                  <FluidButton text="Read article" className="scale-[0.75] origin-left" />
+                  <FluidButton text={t('readArticle')} className="scale-[0.75] origin-left" />
                 </div>
                 
                 <button
@@ -237,12 +238,12 @@ export default function BlogIndexPage() {
                       }).catch(console.error);
                     } else {
                       navigator.clipboard.writeText(window.location.origin + '/' + latestPost?.slug);
-                      alert('Link copied to clipboard!');
+                      alert(t('linkCopied'));
                     }
                   }}
                   className="p-2 sm:p-3 bg-cream border border-ink/5 rounded-full hover:bg-primary/10 hover:text-primary transition-colors text-ink/40 group-hover:border-primary/20 shrink-0"
-                  aria-label="Share article"
-                  title="Share article"
+                  aria-label={t('shareArticle')}
+                  title={t('shareArticle')}
                 >
                   <svg className="w-4 h-4 sm:w-[18px] sm:h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="18" cy="5" r="3" />
@@ -307,8 +308,8 @@ export default function BlogIndexPage() {
           </div>
         ) : (
           <FadeUp className="w-full flex flex-col items-center justify-center py-24 text-center">
-            <h3 className="text-2xl font-black font-sans text-ink mb-4">No articles found</h3>
-            <p className="text-ink/60">We couldn't find any articles in the "{activeCategory}" category.</p>
+            <h3 className="text-2xl font-black font-sans text-ink mb-4">{t('noArticlesFound')}</h3>
+            <p className="text-ink/60">{t('noArticlesDesc', { category: activeCategory })}</p>
             <button 
               onClick={() => {
                 setActiveCategory(ALL_LABEL)
@@ -316,7 +317,7 @@ export default function BlogIndexPage() {
               }} 
               className="mt-8 px-6 py-2.5 rounded-full bg-ink text-white font-bold text-sm tracking-wide hover:bg-primary transition-colors"
             >
-              View all articles
+              {t('viewAllArticles')}
             </button>
           </FadeUp>
         )}
@@ -327,7 +328,7 @@ export default function BlogIndexPage() {
         <section className="pb-32 flex justify-center">
           <FadeUp>
             <FluidButton 
-              text="Load More Posts" 
+              text={t('loadMore')} 
               className="w-full sm:w-auto"
               onClick={() => setVisibleCount(prev => prev + 6)}
             />

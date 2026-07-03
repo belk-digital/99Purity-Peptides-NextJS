@@ -2286,5 +2286,25 @@
         }
       }
     }
+  },
+  "blog": {
+    "hero": {
+      "title": "La Autoridad de EE. UU. en Investigación Avanzada de Péptidos y Conocimientos Científicos",
+      "description": "Explore investigaciones de péptidos revisadas por pares, protocolos de laboratorio avanzados, guías de reconstitución y estándares de pruebas analíticas seleccionados para profesionales científicos estadounidenses. Recursos educativos confiables para compuestos de investigación con pureza del 99%+ —estrictamente para uso en laboratorio in vitro.",
+      "exploreLatestLong": "Explorar Últimos Artículos",
+      "exploreLatestShort": "Explorar Artículos"
+    },
+    "compliance": {
+      "title": "Cumplimiento",
+      "description": "Todos los productos ofrecidos por 99PurityPeptides están destinados estrictamente a la investigación de laboratorio in vitro y aplicaciones analíticas. Los productos no están aprobados para el consumo humano, uso terapéutico o aplicación médica."
+    },
+    "latestArticle": "Último Artículo",
+    "readArticle": "Leer artículo",
+    "noArticlesFound": "No se encontraron artículos",
+    "noArticlesDesc": "No pudimos encontrar ningún artículo en la categoría \"{category}\".",
+    "viewAllArticles": "Ver todos los artículos",
+    "loadMore": "Cargar Más Publicaciones",
+    "shareArticle": "Compartir artículo",
+    "linkCopied": "¡Enlace copiado al portapapeles!"
   }
 }

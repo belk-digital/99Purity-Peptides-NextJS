@@ -10,6 +10,9 @@ export function LanguageSwitcher({ className = '' }: { className?: string }) {
   const router = useRouter()
 
   function handleChange(nextLocale: string) {
+    // Explicitly set the NEXT_LOCALE cookie to prevent the middleware from
+    // reading the old cookie when navigating to the default locale (which lacks a URL prefix)
+    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`
     router.replace(pathname, { locale: nextLocale })
   }
 
