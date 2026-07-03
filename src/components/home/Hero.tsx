@@ -26,16 +26,30 @@ export function Hero() {
     const video = videoRef.current
     if (!video) return
 
+    // Ensure defaultMuted is set for Safari/iOS autoplay policies
+    video.defaultMuted = true;
+    video.muted = true;
+    video.playsInline = true;
+
     // Track the in-flight play() promise so we never call pause() while it's
     // still settling — doing so throws an unhandled AbortError in some browsers.
     let playPromise: Promise<void> | undefined
 
     const safePlay = () => {
-      playPromise = video.play().catch(() => {})
+      const p = video.play();
+      if (p !== undefined) {
+        playPromise = p.catch(() => {});
+      }
     }
 
     const safePause = () => {
-      Promise.resolve(playPromise).finally(() => video.pause())
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          video.pause();
+        }).catch(() => {});
+      } else {
+        video.pause();
+      }
     }
 
     // Attempt initial play on mount
