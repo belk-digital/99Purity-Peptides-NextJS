@@ -35,6 +35,7 @@ export default async function AffiliateDashboardOverview() {
     where: { affiliate: { equals: affiliate.id } },
     sort: '-createdAt',
     limit: 5,
+    depth: 1,
     overrideAccess: true,
   })
 
@@ -51,12 +52,16 @@ export default async function AffiliateDashboardOverview() {
   }
 
   // 4. Format Recent Conversions
-  const recentConversions = conversions.map(conv => ({
-    id: String(conv.id),
-    date: new Date(conv.approvedAt || conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    amount: conv.commissionAmount || 0,
-    status: conv.status || 'pending',
-  }))
+  const recentConversions = conversions.map(conv => {
+    const orderObj = typeof conv.order === 'object' ? conv.order : null;
+    const displayId = orderObj?.orderNumber || orderObj?.id || conv.order || conv.id;
+    return {
+      id: String(displayId),
+      date: new Date(conv.approvedAt || conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      amount: conv.commissionAmount || 0,
+      status: conv.status || 'pending',
+    }
+  })
 
   return (
     <DashboardClient stats={stats} recentConversions={recentConversions} />
