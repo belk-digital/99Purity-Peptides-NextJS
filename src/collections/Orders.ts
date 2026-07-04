@@ -23,14 +23,12 @@ export const Orders: CollectionConfig = {
       async ({ operation, originalDoc, data, req }) => {
         if (operation === 'create') {
           if (!data.orderNumber) {
-            const year = new Date().getFullYear()
             const db = req.payload.db as any
-            const counterRes: any = await db.drizzle.execute(sql`INSERT INTO "order_counters" ("id", "counter", "created_at", "updated_at") VALUES (${year}, 1, now(), now())
+            const counterRes: any = await db.drizzle.execute(sql`INSERT INTO "order_counters" ("id", "counter", "created_at", "updated_at") VALUES (0, 7000, now(), now())
                         ON CONFLICT ("id") DO UPDATE SET "counter" = "order_counters"."counter" + 1, "updated_at" = now()
                         RETURNING "counter"`)
             const counter = (counterRes.rows ? counterRes.rows[0].counter : counterRes[0].counter)
-            const padded = String(counter).padStart(5, '0')
-            data.orderNumber = `PEP-${year}-${padded}`
+            data.orderNumber = String(counter)
           }
 
           if (Array.isArray(data.items)) {
@@ -97,7 +95,7 @@ export const Orders: CollectionConfig = {
     {
       name: 'orderNumber',
       type: 'text',
-      admin: { readOnly: true, description: 'Auto‑generated order identifier (PEP‑YYYY‑NNNNN).' },
+      admin: { readOnly: true, description: 'Auto‑generated order identifier (e.g., 7000).' },
     },
     {
       name: 'owner',

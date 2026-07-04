@@ -62,10 +62,10 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
     year: 'numeric'
   }).format(new Date(order.createdAt))
 
-  const subtotal = order.subtotal || 0
-  const shipping = order.shippingTotal || 0
-  const processingFee = (order.feeTotal ? order.feeTotal / 100 : order.taxTotal) || 0
-  const total = order.total || 0
+  const subtotal = (order.subtotal || 0) / 100
+  const shipping = (order.shippingTotal || 0) / 100
+  const processingFee = (order.feeTotal ? order.feeTotal / 100 : (order.taxTotal || 0) / 100)
+  const total = (order.total || 0) / 100
 
   return (
     <motion.div 
@@ -155,7 +155,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
                 // Prioritize the live populated product relation to get the actual image media objects
                 const product = item.product || item.productSnapshot || {}
                 const title = product.title || product.name || t('unknownProduct')
-                const price = typeof item.price === 'number' ? item.price : (product.basePrice || product.price || 0)
+                const price = (typeof item.price === 'number' ? item.price : (product.basePrice || product.price || 0)) / 100
                 const imageUrl = product.images?.[0]?.image?.url || product.images?.[0]?.url || '/temp-products/product-image.png'
 
                 let displayVariant = item.variant || t('standardVariant');
@@ -244,7 +244,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
               {!!order.discountTotal && order.discountTotal > 0 && (
                 <div className="flex justify-between text-green-500">
                   <span>{order.couponCode ? t('discountWithCode', { code: order.couponCode }) : t('discount')}</span>
-                  <span>-${order.discountTotal.toFixed(2)}</span>
+                  <span>-${(order.discountTotal / 100).toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between text-gray-500">
