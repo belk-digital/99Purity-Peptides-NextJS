@@ -67,7 +67,12 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
   const y1 = useTransform(smoothProgress, [0, 1], [80, -80])
   const y2 = useTransform(smoothProgress, [0, 1], [-80, 80])
 
-  const getImageUrl = (prod: any) => prod.images?.[0]?.image?.url || '/99 Images/product-image.webp';
+  // Real products from getShopProducts() use flat `image`/`category`/`shortDescription`/`priceRange`
+  // fields; FALLBACK_PRODUCTS uses the older nested shape — support both.
+  const getImageUrl = (prod: any) => prod.image || prod.images?.[0]?.image?.url || '/99 Images/product-image.webp';
+  const getCategory = (prod: any) => prod.category || prod.categories?.[0]?.title;
+  const getDescription = (prod: any) => prod.shortDescription || prod.meta?.description;
+  const getPrice = (prod: any) => prod.priceRange ?? prod.price;
 
   // Use passed products or fallback to hardcoded ones if API is empty
   const sourceProducts = products.length > 0 ? products : FALLBACK_PRODUCTS;
@@ -130,11 +135,11 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                         {product.name}
                       </h3>
                       <p className="text-primary text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 sm:mt-1">
-                        {product.categories?.[0]?.title || t('fallbackCategory')}
+                        {getCategory(product) || t('fallbackCategory')}
                       </p>
                     </div>
                     <p className="text-ink/60 text-[9px] sm:text-[13px] leading-tight sm:leading-relaxed line-clamp-2">
-                      {isFallback && product.key ? t(`products.${product.key}`) : (product.meta?.description || t('fallbackDescription'))}
+                      {isFallback && product.key ? t(`products.${product.key}`) : (getDescription(product) || t('fallbackDescription'))}
                     </p>
                   </div>
 
@@ -163,7 +168,10 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
                             </span>
                           )}
                           <span className="text-white text-base sm:text-xl lg:text-2xl font-light tracking-tighter">
-                            {typeof product.price === 'string' && product.price.includes('$') ? product.price.replace('From ', '') : `$${product.price}`}
+                            {(() => {
+                              const price = getPrice(product)
+                              return typeof price === 'string' && price.includes('$') ? price.replace('From ', '') : `$${price}`
+                            })()}
                           </span>
                         </div>
                       </div>

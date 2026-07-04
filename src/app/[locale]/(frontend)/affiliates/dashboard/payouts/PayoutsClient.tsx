@@ -1,13 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Space_Grotesk } from 'next/font/google'
 import { motion, Variants } from 'framer-motion'
 import { WalletCards, ArrowRight, Loader2, CheckCircle2, Clock } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 interface PayoutsClientProps {
   payoutRequests: {
@@ -126,7 +123,7 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
         {/* Available Balance Card */}
         <motion.div variants={itemVars} className="bg-black p-8 rounded-3xl text-white shadow-xl flex flex-col justify-between min-h-[200px]">
           <div>
-            <h1 className={`text-2xl font-bold tracking-tight mb-2 ${spaceGrotesk.className}`}>
+            <h1 className="text-2xl font-bold tracking-tight mb-2 font-heading">
               {t('availableBalanceTitle')}
             </h1>
             <p className="text-gray-400 text-sm">{t('availableBalanceDesc')}</p>
@@ -141,7 +138,7 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Clock className="w-5 h-5 text-gray-400" />
-              <h1 className={`text-xl font-bold tracking-tight text-black ${spaceGrotesk.className}`}>
+              <h1 className="text-xl font-bold tracking-tight text-black font-heading">
                 {t('dayHoldTitle', { days: pendingPeriodDays })}
               </h1>
             </div>
@@ -154,7 +151,7 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
       </div>
 
       <motion.div variants={itemVars} className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm">
-        <h2 className={`text-2xl font-bold tracking-tight text-black mb-6 ${spaceGrotesk.className}`}>
+        <h2 className="text-2xl font-bold tracking-tight text-black mb-6 font-heading">
           {t('requestPayoutTitle')}
         </h2>
 
@@ -221,7 +218,7 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
       </motion.div>
       
       <div className="flex flex-col gap-4">
-        <h2 className={`text-xl font-bold tracking-tight text-black px-2 ${spaceGrotesk.className}`}>
+        <h2 className="text-xl font-bold tracking-tight text-black px-2 font-heading">
           {t('payoutHistoryTitle')}
         </h2>
         {payoutRequests.length === 0 ? (

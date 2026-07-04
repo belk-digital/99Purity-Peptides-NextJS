@@ -1,19 +1,24 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { usePathname } from '@/i18n/navigation'
 import { useCartStore } from '@/lib/cart/store'
 
-export function LayoutClientWrapper({ 
+const HIDDEN_HEADER_PREFIXES = ['/affiliates/dashboard']
+
+export function LayoutClientWrapper({
   children,
   header,
   footer
-}: { 
+}: {
   children: React.ReactNode
   header: React.ReactNode
   footer: React.ReactNode
 }) {
   const setCoupon = useCartStore(state => state.setCoupon)
   const couponCode = useCartStore(state => state.couponCode)
+  const pathname = usePathname() || ''
+  const hideHeader = HIDDEN_HEADER_PREFIXES.some(prefix => pathname.startsWith(prefix))
 
   useEffect(() => {
     // Check if we have an auto_coupon cookie
@@ -30,7 +35,7 @@ export function LayoutClientWrapper({
 
   return (
     <div className="flex min-h-screen flex-col relative z-0 isolate">
-      {header}
+      {!hideHeader && header}
       <main className="flex-1 flex flex-col relative">
         {children}
       </main>

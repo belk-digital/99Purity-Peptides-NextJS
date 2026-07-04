@@ -472,6 +472,18 @@ export interface Product {
    */
   coaFile?: (number | null) | Document;
   /**
+   * Batch number shown on the /certificates COA library page (e.g. BPC-2603-A)
+   */
+  coaBatchNumber?: string | null;
+  /**
+   * Purity/potency percentage shown on the /certificates COA library page (e.g. 99.8). Potency assays can exceed 100% (overfill), so no upper bound is enforced.
+   */
+  coaPurity?: number | null;
+  /**
+   * Date the batch was analyzed, shown on the /certificates COA library page
+   */
+  coaAnalyzedDate?: string | null;
+  /**
    * Add frequently asked questions specifically for this product.
    */
   faqs?:
@@ -483,6 +495,10 @@ export interface Product {
     | null;
   status?: ('draft' | 'active' | 'archived') | null;
   isVisible?: boolean | null;
+  /**
+   * Feature this product in the homepage Best Sellers section.
+   */
+  isBestSeller?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1578,6 +1594,9 @@ export interface ProductsSelect<T extends boolean = true> {
   complianceNoticeTitle?: T;
   complianceNoticeDescription?: T;
   coaFile?: T;
+  coaBatchNumber?: T;
+  coaPurity?: T;
+  coaAnalyzedDate?: T;
   faqs?:
     | T
     | {
@@ -1587,6 +1606,7 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   status?: T;
   isVisible?: T;
+  isBestSeller?: T;
   updatedAt?: T;
   createdAt?: T;
 }

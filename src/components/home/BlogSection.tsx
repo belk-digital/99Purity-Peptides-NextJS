@@ -93,23 +93,7 @@ export function BlogSection() {
           </div>
         </motion.div>
 
-        <div className="flex justify-center mb-12">
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex rounded-full border border-white/10 p-1.5 bg-white/5 backdrop-blur-md"
-          >
-            <button className="px-6 py-2 rounded-full bg-white text-black text-sm font-semibold shadow-md">
-              {t('tabPeptideScience')}
-            </button>
-            <button className="px-6 py-2 rounded-full text-white/70 hover:text-white text-sm font-semibold transition-colors">
-              {t('tabLabUpdates')}
-            </button>
-          </motion.div>
-        </div>
-
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -143,11 +127,10 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-            <motion.div layout custom={1} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
           </motion.div>
 
           {/* Middle Column */}
-          <motion.div 
+          <motion.div
             layout
             onMouseEnter={() => setHoveredCol(1)}
             onMouseLeave={() => setHoveredCol(null)}
@@ -185,7 +168,6 @@ export function BlogSection() {
               hoveredCol === 2 ? 'md:w-1/2' : (hoveredCol === null ? 'md:w-1/4' : 'md:w-1/4')
             }`}
           >
-            <motion.div layout custom={3} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
             <motion.div layout custom={4} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
               <Link href={`/${BLOG_POSTS[2].slug}`} className="block w-full h-full relative">
                 <Image 
@@ -224,7 +206,6 @@ export function BlogSection() {
               hoveredCol2 === 0 ? 'md:w-1/2' : (hoveredCol2 === null ? 'md:w-1/4' : 'md:w-1/4')
             }`}
           >
-            <motion.div layout custom={5} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-start rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
             <motion.div layout custom={6} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
               <Link href={`/${BLOG_POSTS[3].slug}`} className="block w-full h-full relative">
                 <Image 
@@ -300,7 +281,6 @@ export function BlogSection() {
                 </div>
               </Link>
             </motion.div>
-            <motion.div layout custom={1} variants={itemVariants} className="w-[80%] aspect-square md:aspect-auto md:flex-1 max-h-[30%] self-end rounded-[32px] bg-white/5 border border-white/5 hidden md:block" />
           </motion.div>
         </motion.div>
       </div>

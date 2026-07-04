@@ -101,9 +101,9 @@ function SlideToCartButton({ onAdd, disabled, isAdded }: { onAdd: () => void, di
   return (
     <div 
       ref={containerRef} 
-      className={`relative flex-1 h-16 bg-white border border-ink/10 rounded-full flex items-center overflow-hidden z-10 transition-colors hover:border-ink/30 ${disabled ? 'opacity-50 pointer-events-none' : ''}`}
+      className={`relative flex-1 h-16 bg-white border border-black/10 rounded-full flex items-center overflow-hidden z-10 transition-colors hover:border-black/30 ${disabled ? 'opacity-50 pointer-events-none' : ''}`}
     >
-      <div className="absolute inset-0 flex items-center justify-center pl-10 text-[13px] font-bold text-ink uppercase tracking-widest pointer-events-none select-none">
+      <div className="absolute inset-0 flex items-center justify-center pl-10 text-[13px] font-bold text-black uppercase tracking-widest pointer-events-none select-none">
         {isAdded ? t('addedToCart') : <>{t('slideToAdd')} <ChevronRight size={16} className="inline ml-1 opacity-50" /></>}
       </div>
       
@@ -116,7 +116,7 @@ function SlideToCartButton({ onAdd, disabled, isAdded }: { onAdd: () => void, di
         onDragEnd={handleDragEnd}
         whileTap={disabled || isAdded ? {} : { scale: 0.95 }}
         className={`absolute left-2 w-12 h-12 rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing z-20 shadow-sm transition-colors duration-300 ${
-          isAdded ? 'bg-green-600 text-white' : 'bg-ink text-white'
+          isAdded ? 'bg-green-600 text-white' : 'bg-black text-white'
         }`}
       >
         {isAdded ? <Check size={20} /> : <ShoppingCart size={20} />}
@@ -311,19 +311,19 @@ export function ProductClient({ product }: ProductClientProps) {
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-cream">
+    <div className="flex flex-col w-full min-h-screen bg-white">
       {/* 1. Hero Section */}
-      <section className="w-full relative z-10 flex flex-col lg:flex-row bg-cream">
+      <section className="w-full relative z-10 flex flex-col lg:flex-row bg-white">
 
         {/* Left: Sticky Image Panel */}
-        <div className="w-full lg:w-1/2 lg:h-screen lg:sticky lg:top-0 flex items-start lg:items-center justify-center bg-cream-warm relative">
-          <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[84%] pt-[130px] pb-6 sm:pt-[140px] sm:pb-10 lg:pt-[130px] lg:pb-14">
+        <div className="w-full lg:w-1/2 lg:h-screen lg:sticky lg:top-0 flex items-start justify-center bg-gray-50 relative lg:overflow-hidden">
+          <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[84%] pt-[160px] pb-6 sm:pt-[170px] sm:pb-10 lg:pt-[160px] lg:pb-6">
             <ImageGallery images={product.images} />
           </div>
         </div>
 
         {/* Right: Editorial Product Info */}
-        <div className="w-full lg:w-1/2 flex flex-col px-4 sm:px-6 py-8 lg:px-16 xl:px-20 lg:pt-[160px] lg:pb-28 relative z-10">
+        <div className="w-full lg:w-1/2 flex flex-col px-4 sm:px-6 py-8 lg:px-16 xl:px-20 lg:pt-[190px] lg:pb-28 relative z-10">
 
           {/* Breadcrumbs */}
           <div className="flex items-center gap-1.5 text-[10px] font-medium text-black/30 uppercase tracking-widest mb-8">
@@ -575,7 +575,7 @@ export function ProductClient({ product }: ProductClientProps) {
       </section>
 
       {/* 2. Dark Credentials Section */}
-      <section className="w-full relative overflow-hidden bg-ink">
+      <section className="w-full relative overflow-hidden bg-black">
         {/* Ghost watermark */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 font-heading font-black text-white/[0.025] select-none pointer-events-none leading-none tracking-tighter text-[180px] sm:text-[260px] lg:text-[380px] pr-4">
           99.9
@@ -632,19 +632,19 @@ export function ProductClient({ product }: ProductClientProps) {
       </section>
 
       {/* 3. Details Tab Section */}
-      <section className="w-full relative z-10 py-20 lg:py-32 bg-cream">
+      <section className="w-full relative z-10 py-20 lg:py-32 bg-white">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <ProductDetailTabs tabs={product.tabs} />
         </div>
       </section>
 
       {/* 5. Related Editorial Carousel */}
-      <section className="w-full py-24 bg-cream overflow-hidden relative">
+      <section className="w-full py-24 bg-white overflow-hidden relative">
         <Container size="wide" className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
               <span className="text-primary text-[9px] sm:text-label-sm uppercase tracking-[0.2em] font-bold mb-3 sm:mb-4 block">{t('continueExploring')}</span>
-              <h2 className="font-heading text-[28px] sm:text-[36px] lg:text-[48px] leading-none font-black tracking-tighter text-ink uppercase break-words">
+              <h2 className="font-heading text-[28px] sm:text-[36px] lg:text-[48px] leading-none font-black tracking-tighter text-black uppercase break-words">
                 {t('alsoConsidered')}
               </h2>
             </div>
@@ -653,14 +653,14 @@ export function ProductClient({ product }: ProductClientProps) {
             <div className="flex gap-2 sm:gap-3">
               <button
                 onClick={() => relatedEmblaApi?.scrollPrev()}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-primary/30 flex items-center justify-center text-ink hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm bg-white"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-primary/30 flex items-center justify-center text-black hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm bg-white"
                 aria-label={t('previousProducts')}
               >
                 <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
               </button>
               <button
                 onClick={() => relatedEmblaApi?.scrollNext()}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-primary/30 flex items-center justify-center text-ink hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm bg-white"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-primary/30 flex items-center justify-center text-black hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm bg-white"
                 aria-label={t('nextProducts')}
               >
                 <ChevronRight size={18} className="sm:w-5 sm:h-5" />
@@ -697,16 +697,16 @@ export function ProductClient({ product }: ProductClientProps) {
 
       {/* 3. Suggested Blogs Section */}
       {product.suggestedBlogs && product.suggestedBlogs.length > 0 && (
-        <section className="w-full py-24 bg-cream border-t border-gray-100">
+        <section className="w-full py-24 bg-white border-t border-gray-100">
           <Container size="wide">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
               <div>
                 <span className="text-primary text-label-sm uppercase tracking-[0.2em] font-bold mb-4 block">{t('educationAndResearch')}</span>
-                <h2 className="font-heading text-[44px] sm:text-[56px] lg:text-[64px] leading-none font-black tracking-tighter text-ink uppercase">
+                <h2 className="font-heading text-[44px] sm:text-[56px] lg:text-[64px] leading-none font-black tracking-tighter text-black uppercase">
                   {t('furtherReading')}
                 </h2>
               </div>
-              <Button variant="outline" className="rounded-full font-bold border-ink/20 hover:bg-ink hover:text-white transition-all shadow-sm w-fit shrink-0">
+              <Button variant="outline" className="rounded-full font-bold border-black/20 hover:bg-black hover:text-white transition-all shadow-sm w-fit shrink-0">
                 {t('viewAllResearch')}
               </Button>
             </div>
@@ -734,7 +734,7 @@ export function ProductClient({ product }: ProductClientProps) {
               whileHover={isWishlistPending ? {} : { scale: 1.05 }}
               whileTap={isWishlistPending ? {} : { scale: 0.9 }}
               className={`relative w-11 h-11 p-0 flex-shrink-0 rounded-full font-bold border transition-colors duration-300 flex items-center justify-center group outline-none disabled:opacity-70 ${
-                inWishlist ? 'border-red-500 bg-red-50 text-red-500 shadow-sm' : 'border-ink/10 bg-white text-ink/60 hover:text-ink hover:bg-gray-50'
+                inWishlist ? 'border-red-500 bg-red-50 text-red-500 shadow-sm' : 'border-black/10 bg-white text-black/60 hover:text-black hover:bg-gray-50'
               }`}
               aria-label={t('toggleWishlist')}
               onClick={handleWishlistClick}
@@ -768,7 +768,7 @@ export function ProductClient({ product }: ProductClientProps) {
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
                 {isWishlistPending ? (
-                  <Loader2 size={18} className={`animate-spin ${inWishlist ? 'text-red-500' : 'text-ink/60'}`} />
+                  <Loader2 size={18} className={`animate-spin ${inWishlist ? 'text-red-500' : 'text-black/60'}`} />
                 ) : (
                   <Heart size={18} className={`transition-colors duration-300 ${inWishlist ? 'fill-current' : ''}`} strokeWidth={inWishlist ? 2.5 : 2} />
                 )}
@@ -777,7 +777,7 @@ export function ProductClient({ product }: ProductClientProps) {
 
             <Button 
               variant="outline" 
-              className="w-11 h-11 p-0 flex-shrink-0 rounded-full font-bold text-ink border border-ink bg-white hover:bg-ink hover:text-white transition-all duration-300 flex items-center justify-center group"
+              className="w-11 h-11 p-0 flex-shrink-0 rounded-full font-bold text-black border border-black bg-white hover:bg-black hover:text-white transition-all duration-300 flex items-center justify-center group"
               aria-label={t('addToCart')}
               onClick={handleAddToCart}
               disabled={!selectedVariant?.inStock || justAdded}
@@ -797,7 +797,7 @@ export function ProductClient({ product }: ProductClientProps) {
 
             <Button 
               variant="dark" 
-              className="flex-1 h-11 rounded-full font-bold text-white bg-gradient-to-r from-ink to-gray-800 hover:from-black hover:to-ink transition-all duration-300 text-[11px] uppercase tracking-widest border-none shadow-[0_4px_14px_rgba(0,0,0,0.1)] hover:-translate-y-0.5"
+              className="flex-1 h-11 rounded-full font-bold text-white bg-gradient-to-r from-black to-gray-800 hover:from-black hover:to-black transition-all duration-300 text-[11px] uppercase tracking-widest border-none shadow-[0_4px_14px_rgba(0,0,0,0.1)] hover:-translate-y-0.5"
               onClick={() => {
                 handleAddToCart()
                 setTimeout(() => window.location.href = '/checkout', 300)
@@ -822,7 +822,7 @@ export function ProductClient({ product }: ProductClientProps) {
             }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            className="fixed top-0 left-0 h-[72px] bg-white/90 backdrop-blur-md text-ink rounded-full flex items-center justify-center pointer-events-none z-[100] text-[10px] font-bold tracking-[0.2em] shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-ink/10 hidden md:flex overflow-hidden"
+            className="fixed top-0 left-0 h-[72px] bg-white/90 backdrop-blur-md text-black rounded-full flex items-center justify-center pointer-events-none z-[100] text-[10px] font-bold tracking-[0.2em] shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-black/10 hidden md:flex overflow-hidden"
             style={{
               x: cursorXSpring,
               y: cursorYSpring,

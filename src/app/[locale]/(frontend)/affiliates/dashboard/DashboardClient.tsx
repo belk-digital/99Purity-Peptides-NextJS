@@ -3,14 +3,13 @@
 import React, { useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import { ArrowRight, MousePointerClick, Target, DollarSign, Wallet, Copy, Check, ExternalLink } from 'lucide-react'
-import { Space_Grotesk } from 'next/font/google'
 import { motion, Variants } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
-
 export interface DashboardClientProps {
+  userName?: string;
+  tier?: string;
   stats: {
     totalClicks: number;
     totalConversions: number;
@@ -29,7 +28,7 @@ export interface DashboardClientProps {
   }[];
 }
 
-export function DashboardClient({ stats, recentConversions }: DashboardClientProps) {
+export function DashboardClient({ userName = 'Partner', tier = 'standard', stats, recentConversions }: DashboardClientProps) {
   const t = useTranslations('affiliate.dashboard')
   const [copiedLink, setCopiedLink] = useState(false)
   const [copiedCode, setCopiedCode] = useState(false)
@@ -81,18 +80,34 @@ export function DashboardClient({ stats, recentConversions }: DashboardClientPro
       variants={containerVars}
       initial="hidden"
       animate="show"
-      className="flex flex-col gap-12"
+      className="flex flex-col gap-8"
     >
-      
+
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center bg-white text-[#1e5661] text-xl font-bold shrink-0 font-heading">
+            99
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-heading">{t('overviewEyebrow')}</span>
+            <h1 className="text-3xl lg:text-[40px] font-bold text-[#1e5661] tracking-tighter leading-none mt-1 mb-1 font-heading uppercase">
+              {userName}
+            </h1>
+            <span className="text-[11px] text-gray-500 mt-0.5 capitalize">{tier} {t('tierSuffix')}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
         <motion.div variants={itemVars} className="group relative bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 transition-all duration-500 overflow-hidden">
-          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 text-blue-500">
+          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 text-[#2b646c]">
             <MousePointerClick size={64} />
           </div>
           <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('totalClicks')}</span>
-            <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{stats.totalClicks}</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4 font-heading">{t('totalClicks')}</span>
+            <span className="text-5xl text-black leading-none font-bold tracking-tighter font-heading">{stats.totalClicks}</span>
           </div>
         </motion.div>
 
@@ -101,9 +116,9 @@ export function DashboardClient({ stats, recentConversions }: DashboardClientPro
             <Target size={64} />
           </div>
           <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('conversions')}</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4 font-heading">{t('conversions')}</span>
             <div className="flex items-end gap-3">
-              <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{stats.totalConversions}</span>
+              <span className="text-5xl text-black leading-none font-bold tracking-tighter font-heading">{stats.totalConversions}</span>
               <span className="text-sm font-bold text-emerald-500 bg-emerald-50 px-2 py-1 rounded-md mb-1">{stats.conversionRate}</span>
             </div>
           </div>
@@ -114,8 +129,8 @@ export function DashboardClient({ stats, recentConversions }: DashboardClientPro
             <DollarSign size={64} />
           </div>
           <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('pendingCommission')}</span>
-            <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{formatMoney(stats.totalCommissionPending)}</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4 font-heading">{t('pendingCommission')}</span>
+            <span className="text-5xl text-black leading-none font-bold tracking-tighter font-heading">{formatMoney(stats.totalCommissionPending)}</span>
           </div>
         </motion.div>
 
@@ -124,8 +139,8 @@ export function DashboardClient({ stats, recentConversions }: DashboardClientPro
             <Wallet size={64} />
           </div>
           <div className="relative z-10 flex flex-col h-full justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">{t('totalPaidOut')}</span>
-            <span className={`text-5xl text-black leading-none font-bold tracking-tighter ${spaceGrotesk.className}`}>{formatMoney(stats.totalCommissionPaid)}</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4 font-heading">{t('totalPaidOut')}</span>
+            <span className="text-5xl text-black leading-none font-bold tracking-tighter font-heading">{formatMoney(stats.totalCommissionPaid)}</span>
           </div>
         </motion.div>
       </div>

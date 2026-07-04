@@ -641,6 +641,7 @@ export async function getShopProducts(params: {
   minPrice?: number
   maxPrice?: number
   sort?: string
+  bestSellersOnly?: boolean
 }) {
   try {
     const payload = await getPayload({ config: configPromise })
@@ -674,6 +675,10 @@ export async function getShopProducts(params: {
 
     if (params.onSale) {
       where.and.push({ salePrice: { greater_than: 0 } })
+    }
+
+    if (params.bestSellersOnly) {
+      where.and.push({ isBestSeller: { equals: true } })
     }
 
     if (params.minPrice !== undefined || params.maxPrice !== undefined) {
