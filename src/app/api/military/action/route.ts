@@ -27,6 +27,29 @@ export async function GET(req: Request) {
     const payload = await getPayload({ config: configPromise });
 
     if (action === 'approve') {
+      // Prevent double-clicking from generating multiple coupons
+      const existingCoupons = await payload.find({
+        collection: 'coupons',
+        where: {
+          and: [
+            { code: { like: 'MIL-' } },
+            { 'lockedEmails.email': { equals: email } }
+          ]
+        },
+        depth: 0,
+      });
+
+      if (existingCoupons.totalDocs > 0) {
+        return new NextResponse(`
+          <div style="font-family: sans-serif; padding: 40px; text-align: center;">
+            <h2 style="color: #f59e0b;">Already Processed</h2>
+            <p>This verification request has already been approved.</p>
+            <p>A military discount coupon (<strong>${existingCoupons.docs[0].code}</strong>) was previously generated for ${email}.</p>
+            <p>You may now close this window.</p>
+          </div>
+        `, { headers: { 'Content-Type': 'text/html' } });
+      }
+
       const couponCode = `MIL-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
       await payload.create({
