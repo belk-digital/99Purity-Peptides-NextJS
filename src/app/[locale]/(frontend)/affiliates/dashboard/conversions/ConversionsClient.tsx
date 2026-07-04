@@ -1,12 +1,9 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { Space_Grotesk } from 'next/font/google'
 import { motion, Variants } from 'framer-motion'
 import { Target } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 interface ConversionsClientProps {
   conversions: {
@@ -67,7 +64,7 @@ export function ConversionsClient({ conversions }: ConversionsClientProps) {
       className="flex flex-col gap-8"
     >
       <motion.div variants={itemVars}>
-        <h1 className={`text-3xl font-bold tracking-tight text-black mb-2 ${spaceGrotesk.className}`}>
+        <h1 className="text-3xl font-bold tracking-tight text-[#1e5661] mb-2 font-heading">
           {t('title')}
         </h1>
         <p className="text-gray-500">{t('subtitle')}</p>

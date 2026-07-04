@@ -1452,6 +1452,13 @@
       "shopButton": "Shop Verified Products",
       "libraryTitle": "Recent Testing Library",
       "filterPlaceholder": "Filter by category",
+      "allCategories": "All",
+      "emptyLibrary": "COA documents are being added for our current catalogue. Check back soon, or contact us for a specific batch's Certificate of Analysis.",
+      "statBatchesLabel": "Batches Verified",
+      "statLabsValue": "3rd-Party",
+      "statLabsLabel": "US Laboratories",
+      "statTestedValue": "100%",
+      "statTestedLabel": "Independently Tested",
       "tableProduct": "Product",
       "tablePurity": "Purity",
       "tableBatch": "Batch #",
@@ -1732,7 +1739,28 @@
       "termsDesc": "I agree to the Affiliate Program Terms of Service and acknowledge that I will only promote products in accordance with legal and platform guidelines.",
       "submitButton": "Submit Application"
     },
+    "sidebar": {
+      "defaultPartnerName": "Partner",
+      "currentStatus": "Current Status",
+      "tierSuffix": "Tier",
+      "nav": {
+        "overview": "Overview",
+        "links": "Links & Assets",
+        "conversions": "Conversions",
+        "payouts": "Payouts",
+        "settings": "Settings"
+      },
+      "backToAccount": "Back to Account",
+      "signOut": "Sign out",
+      "signOutDialogTitle": "Sign Out",
+      "signOutDialogDescription": "Are you sure you want to sign out of your account?",
+      "cancel": "Cancel",
+      "confirmSignOut": "Yes, Sign Out",
+      "dashboard": "Affiliate Dashboard"
+    },
     "dashboard": {
+      "overviewEyebrow": "Affiliate Dashboard",
+      "tierSuffix": "Tier",
       "totalClicks": "Total Clicks",
       "conversions": "Conversions",
       "pendingCommission": "Pending Commission",

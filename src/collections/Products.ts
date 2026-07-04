@@ -5,7 +5,7 @@ import { productsBeforeChange } from '../hooks/products'
 export const Products: CollectionConfig = {
   slug: 'products',
   admin: {
-    defaultColumns: ['name', 'price', 'hasVariants', 'status'],
+    defaultColumns: ['name', 'price', 'hasVariants', 'status', 'isBestSeller'],
     useAsTitle: 'name',
   },
   access: productsAccess,
@@ -247,6 +247,29 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'coaBatchNumber',
+      type: 'text',
+      admin: {
+        description: 'Batch number shown on the /certificates COA library page (e.g. BPC-2603-A)',
+      },
+    },
+    {
+      name: 'coaPurity',
+      type: 'number',
+      min: 0,
+      admin: {
+        description: 'Purity/potency percentage shown on the /certificates COA library page (e.g. 99.8). Potency assays can exceed 100% (overfill), so no upper bound is enforced.',
+      },
+    },
+    {
+      name: 'coaAnalyzedDate',
+      type: 'date',
+      admin: {
+        description: 'Date the batch was analyzed, shown on the /certificates COA library page',
+        date: { pickerAppearance: 'dayOnly' },
+      },
+    },
+    {
       name: 'faqs',
       type: 'array',
       labels: {
@@ -285,6 +308,15 @@ export const Products: CollectionConfig = {
       name: 'isVisible',
       type: 'checkbox',
       defaultValue: true,
+    },
+    {
+      name: 'isBestSeller',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description: 'Feature this product in the homepage Best Sellers section.',
+        position: 'sidebar',
+      },
     },
   ],
 }

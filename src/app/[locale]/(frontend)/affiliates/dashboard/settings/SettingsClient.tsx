@@ -1,15 +1,12 @@
 'use client'
 
 import React from 'react'
-import { Space_Grotesk } from 'next/font/google'
 import { motion, Variants } from 'framer-motion'
 import { Settings2, Save, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import { updatePayoutCurrency } from './actions'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 interface SettingsClientProps {
   initialCurrency: string;
@@ -52,7 +49,7 @@ export function SettingsClient({ initialCurrency }: SettingsClientProps) {
       className="flex flex-col gap-8 max-w-3xl"
     >
       <motion.div variants={itemVars}>
-        <h1 className={`text-3xl font-bold tracking-tight text-black mb-2 ${spaceGrotesk.className}`}>
+        <h1 className="text-3xl font-bold tracking-tight text-[#1e5661] mb-2 font-heading">
           {t('title')}
         </h1>
         <p className="text-gray-500">{t('subtitle')}</p>

@@ -4,12 +4,14 @@ import { DashboardClient } from './DashboardClient'
 import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata = {
   title: 'Affiliate Dashboard | 99 Purity Peptides',
 }
 
 export default async function AffiliateDashboardOverview() {
+  const t = await getTranslations('affiliate.sidebar')
   const user = await getPayloadUser()
   if (!user) redirect('/login')
 
@@ -28,6 +30,8 @@ export default async function AffiliateDashboardOverview() {
   }
 
   const affiliate = affiliates[0]
+  const userName = affiliate.displayName || user?.firstName || user?.email?.split('@')[0] || t('defaultPartnerName')
+  const tier = affiliate.tier || 'standard'
 
   // 2. Fetch Recent Conversions
   const { docs: conversions } = await payload.find({
@@ -64,6 +68,6 @@ export default async function AffiliateDashboardOverview() {
   })
 
   return (
-    <DashboardClient stats={stats} recentConversions={recentConversions} />
+    <DashboardClient userName={userName} tier={tier} stats={stats} recentConversions={recentConversions} />
   )
 }

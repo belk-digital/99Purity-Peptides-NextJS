@@ -21,11 +21,20 @@ export const metadata: Metadata = {
 import { getShopProducts } from '@/app/[locale]/(frontend)/(shop)/actions'
 
 export default async function Homepage() {
-  let products = []
+  let products: any[] = []
   try {
-    const res = await getShopProducts({ limit: 8, sort: 'newest' })
-    if (res.success && res.products) {
-      products = res.products as any[]
+    const bestSellers = await getShopProducts({ limit: 8, sort: 'newest', bestSellersOnly: true })
+    products = bestSellers.success && bestSellers.products ? (bestSellers.products as any[]) : []
+
+    // Fill any remaining slots with other live products so the section is never sparse
+    // before best sellers have been curated in the admin.
+    if (products.length < 8) {
+      const fallback = await getShopProducts({ limit: 8, sort: 'newest' })
+      if (fallback.success && fallback.products) {
+        const existingIds = new Set(products.map((p: any) => p.id))
+        const filler = (fallback.products as any[]).filter(p => !existingIds.has(p.id))
+        products = [...products, ...filler].slice(0, 8)
+      }
     }
   } catch (e) {
     console.error("Failed to fetch featured products", e)
@@ -36,10 +45,10 @@ export default async function Homepage() {
       <div className="flex flex-col w-full min-h-screen relative z-10 bg-black overflow-x-clip">
         <Hero />
         <BestSellerSection products={products} />
-        <MilitaryDiscountSection />
-        <TrustBadges />
         <DifferenceSection />
-        <MerchandiseSection />
+        <TrustBadges />
+        <MilitaryDiscountSection />
+        {/* <MerchandiseSection /> */}
         <WhatSetsUsApart />
         <CategoriesSection />
         <ParallaxImageSection />

@@ -1,14 +1,11 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Space_Grotesk } from 'next/font/google'
 import { motion, Variants, AnimatePresence } from 'framer-motion'
 import { Copy, Check, ExternalLink, Edit2, X, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { updateCouponCode } from './actions'
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 interface LinksClientProps {
   referralLink: string;
@@ -89,7 +86,7 @@ export function LinksClient({ referralLink, couponCode: initialCouponCode, custo
       className="flex flex-col gap-8 max-w-3xl"
     >
       <motion.div variants={itemVars}>
-        <h1 className={`text-3xl font-bold tracking-tight text-black mb-2 ${spaceGrotesk.className}`}>
+        <h1 className="text-3xl font-bold tracking-tight text-[#1e5661] mb-2 font-heading">
           {t('title')}
         </h1>
         <p className="text-gray-500">{t('subtitle')}</p>

@@ -1452,6 +1452,13 @@
       "shopButton": "Comprar Productos Verificados",
       "libraryTitle": "Biblioteca de Pruebas Recientes",
       "filterPlaceholder": "Filtrar por categoría",
+      "allCategories": "Todas",
+      "emptyLibrary": "Estamos añadiendo los documentos COA de nuestro catálogo actual. Vuelve pronto o contáctanos para solicitar el Certificado de Análisis de un lote específico.",
+      "statBatchesLabel": "Lotes Verificados",
+      "statLabsValue": "Terceros",
+      "statLabsLabel": "Laboratorios de EE. UU.",
+      "statTestedValue": "100%",
+      "statTestedLabel": "Probado Independientemente",
       "tableProduct": "Producto",
       "tablePurity": "Pureza",
       "tableBatch": "Lote #",
@@ -1732,7 +1739,28 @@
       "termsDesc": "Acepto los Términos de Servicio del Programa de Afiliados y reconozco que solo promocionaré productos de acuerdo con las pautas legales y de la plataforma.",
       "submitButton": "Enviar Solicitud"
     },
+    "sidebar": {
+      "defaultPartnerName": "Socio",
+      "currentStatus": "Estado Actual",
+      "tierSuffix": "Nivel",
+      "nav": {
+        "overview": "Resumen",
+        "links": "Enlaces y Recursos",
+        "conversions": "Conversiones",
+        "payouts": "Pagos",
+        "settings": "Configuración"
+      },
+      "backToAccount": "Volver a la Cuenta",
+      "signOut": "Cerrar sesión",
+      "signOutDialogTitle": "Cerrar Sesión",
+      "signOutDialogDescription": "¿Estás seguro de que deseas cerrar sesión en tu cuenta?",
+      "cancel": "Cancelar",
+      "confirmSignOut": "Sí, Cerrar Sesión",
+      "dashboard": "Panel de Afiliados"
+    },
     "dashboard": {
+      "overviewEyebrow": "Panel de Afiliados",
+      "tierSuffix": "Nivel",
       "totalClicks": "Clics Totales",
       "conversions": "Conversiones",
       "pendingCommission": "Comisión Pendiente",
