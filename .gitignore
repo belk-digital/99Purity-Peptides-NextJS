@@ -51,3 +51,7 @@ node_modules/
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# Already hosted on Cloudflare R2 — kept locally for reference only
+/public/99pp Products images
+/public/BioTide COA
