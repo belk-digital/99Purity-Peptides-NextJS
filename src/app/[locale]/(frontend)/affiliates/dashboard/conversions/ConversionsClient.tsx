@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { Space_Grotesk } from 'next/font/google'
 import { motion, Variants } from 'framer-motion'
 import { Target } from 'lucide-react'
@@ -44,6 +44,21 @@ export function ConversionsClient({ conversions }: ConversionsClientProps) {
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   }
 
+  // Pagination and sorting
+  const [page, setPage] = useState(1)
+  const itemsPerPage = 10
+  
+  // Sort from newest to oldest just to be absolutely sure
+  const sortedConversions = useMemo(() => {
+    return [...conversions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  }, [conversions])
+
+  const paginatedConversions = useMemo(() => {
+    return sortedConversions.slice(0, page * itemsPerPage)
+  }, [sortedConversions, page])
+
+  const hasMore = paginatedConversions.length < sortedConversions.length
+
   return (
     <motion.div 
       variants={containerVars}
@@ -68,7 +83,7 @@ export function ConversionsClient({ conversions }: ConversionsClientProps) {
             </div>
           </motion.div>
         ) : (
-          conversions.map((conv) => (
+          paginatedConversions.map((conv) => (
             <motion.div 
               key={conv.id} 
               variants={itemVars}
@@ -111,6 +126,17 @@ export function ConversionsClient({ conversions }: ConversionsClientProps) {
           ))
         )}
       </div>
+
+      {hasMore && (
+        <motion.div variants={itemVars} className="flex justify-center mt-4">
+          <button
+            onClick={() => setPage(p => p + 1)}
+            className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all shadow-md"
+          >
+            Load More
+          </button>
+        </motion.div>
+      )}
     </motion.div>
   )
 }

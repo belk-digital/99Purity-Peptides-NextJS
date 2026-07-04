@@ -32,6 +32,7 @@ export default async function AffiliateConversionsPage() {
     collection: 'affiliate-conversions',
     where: { affiliate: { equals: affiliate.id } },
     sort: '-createdAt',
+    limit: 0,
     depth: 1,
     overrideAccess: true,
   })
