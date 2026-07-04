@@ -1,23 +1,28 @@
 'use client'
 
-import React from 'react'
+import React, { useTransition } from 'react'
 import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
 import { Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { setLocaleCookie } from '@/app/actions/setLocale'
 
 export function LanguageSwitcher({ className = '', variant = 'dark' }: { className?: string, variant?: 'dark' | 'light' }) {
   const locale = useLocale()
   const pathname = usePathname()
   const router = useRouter()
   const uniqueId = React.useId()
+  const [isPending, startTransition] = useTransition()
 
-  function handleChange(nextLocale: string) {
-    // Explicitly set the NEXT_LOCALE cookie to prevent the middleware from
-    // reading the old cookie when navigating to the default locale (which lacks a URL prefix)
-    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`
-    router.replace(pathname, { locale: nextLocale })
+  async function handleChange(nextLocale: string) {
+    // Set cookie on the server first to guarantee the middleware sees it
+    await setLocaleCookie(nextLocale)
+    
+    startTransition(() => {
+      router.replace(pathname, { locale: nextLocale })
+      router.refresh()
+    })
   }
 
   const isDark = variant === 'dark'

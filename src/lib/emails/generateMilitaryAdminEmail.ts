@@ -5,29 +5,79 @@ export function generateMilitaryAdminEmail(name: string, email: string, branch: 
 
   return `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Military Discount Verification Request</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f9fafb;">
-  <div style="font-family: sans-serif; color: #111827; width: 100%; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 20px; line-height: 1.6;">
-    <h2 style="color: #000; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">Military Discount Verification Request</h2>
-    <p>A new user has submitted their ID for military discount verification.</p>
-    
-    <div style="background-color: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Branch:</strong> <span style="text-transform: capitalize;">${branch}</span></p>
-    </div>
+<body style="margin: 0; padding: 0; background-color: #f9fafb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f9fafb; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="100%" max-width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+          
+          <!-- Header -->
+          <tr>
+            <td style="padding: 40px 40px 30px 40px; text-align: center; border-bottom: 1px solid #f3f4f6;">
+              <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #000000; letter-spacing: -1px;">99 Purity Peptides</h1>
+              <p style="margin: 12px 0 0 0; font-size: 16px; color: #6b7280;">Verification Request Received</p>
+            </td>
+          </tr>
 
-    <p><strong>Please review the attached ID photo.</strong></p>
+          <!-- Request Info -->
+          <tr>
+            <td style="padding: 30px 40px;">
+              <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #111827;">Applicant Details</h3>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f3f4f6; border-radius: 8px; padding: 20px;">
+                <tr>
+                  <td style="padding-bottom: 10px;">
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 600;">Name</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #111827; font-weight: 500;">${name}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-bottom: 10px;">
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 600;">Email</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #111827; font-weight: 500;">${email}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 600;">Service Branch</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #111827; font-weight: 500; text-transform: capitalize;">${branch}</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-    <div style="margin-top: 30px; text-align: center;">
-      <a href="${approveUrl}" style="display: inline-block; padding: 12px 24px; background-color: #10b981; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold; margin-right: 10px;">Approve Verification</a>
-      <a href="${rejectUrl}" style="display: inline-block; padding: 12px 24px; background-color: #ef4444; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold;">Deny Request</a>
-    </div>
-  </div>
+          <tr>
+            <td style="padding: 0 40px 10px 40px; text-align: center;">
+              <p style="margin: 0; font-size: 14px; color: #4b5563;">Please review the attached ID photo.</p>
+            </td>
+          </tr>
+
+          <!-- Action Buttons -->
+          <tr>
+            <td style="padding: 20px 40px 40px 40px; text-align: center; border-bottom: 1px solid #f3f4f6;">
+              <a href="${approveUrl}" style="display: inline-block; padding: 14px 28px; background-color: #10b981; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600; border-radius: 6px; margin: 5px;">Approve Verification</a>
+              <a href="${rejectUrl}" style="display: inline-block; padding: 14px 28px; background-color: #ef4444; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600; border-radius: 6px; margin: 5px;">Deny Request</a>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center; background-color: #f9fafb;">
+              <p style="margin: 0; font-size: 12px; color: #9ca3af;">This is an automated system notification.</p>
+              <p style="margin: 8px 0 0 0; font-size: 12px; color: #d1d5db;">&copy; ${new Date().getFullYear()} 99 Purity Peptides. All rights reserved.</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
   `;

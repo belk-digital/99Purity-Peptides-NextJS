@@ -86,6 +86,27 @@ export async function GET(req: Request) {
       `, { headers: { 'Content-Type': 'text/html' } });
 
     } else if (action === 'reject') {
+      // If the admin is changing their mind after an approval, we need to revoke/delete the coupon
+      const existingCoupons = await payload.find({
+        collection: 'coupons',
+        where: {
+          and: [
+            { code: { like: 'MIL-' } },
+            { 'lockedEmails.email': { equals: email } }
+          ]
+        },
+        depth: 0,
+      });
+
+      if (existingCoupons.totalDocs > 0) {
+        for (const doc of existingCoupons.docs) {
+          await payload.delete({
+            collection: 'coupons',
+            id: doc.id,
+          });
+        }
+      }
+
       // Send Rejection Email
       const emailHtml = generateMilitaryRejectionEmail(name);
       await payload.sendEmail({
@@ -99,6 +120,7 @@ export async function GET(req: Request) {
         <div style="font-family: sans-serif; padding: 40px; text-align: center;">
           <h2 style="color: #ef4444;">Verification Denied</h2>
           <p>A rejection email has been sent to ${email}.</p>
+          ${existingCoupons.totalDocs > 0 ? `<p style="color: #f59e0b; font-weight: bold;">Note: The previously generated discount coupon was successfully revoked and deleted.</p>` : ''}
           <p>You may now close this window.</p>
         </div>
       `, { headers: { 'Content-Type': 'text/html' } });
