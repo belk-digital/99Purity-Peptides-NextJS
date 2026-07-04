@@ -16,7 +16,8 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
   const customerName = `${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || 'Customer';
   const email = order.guestEmail || 'Customer';
   const shipAddr = order.shippingAddress || {};
-  const billAddr = order.billingAddress || {};
+  const hasBilling = order.billingAddress && order.billingAddress.line1;
+  const billAddr = hasBilling ? order.billingAddress : shipAddr;
 
   let itemsHtml = '';
   if (order.items && Array.isArray(order.items)) {
@@ -124,10 +125,23 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
           ${customNote ? `
           <!-- Custom Admin Note -->
           <tr>
-            <td style="padding: 0 40px;">
+            <td style="padding: 0 40px; padding-bottom: 20px;">
               <div style="background-color: #FFFBEB; border-left: 4px solid #F59E0B; padding: 20px; border-radius: 4px;">
                 <h3 style="margin: 0 0 8px 0; color: #92400E; font-size: 15px; font-weight: 600;">Message regarding your order</h3>
                 <p style="margin: 0; color: #92400E; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${customNote}</p>
+              </div>
+            </td>
+          </tr>
+          ` : ''}
+
+          ${order.trackingLink ? `
+          <!-- Tracking Link -->
+          <tr>
+            <td style="padding: 0 40px; padding-bottom: 20px;">
+              <div style="background-color: #ECFDF5; border-left: 4px solid #10B981; padding: 20px; border-radius: 4px;">
+                <h3 style="margin: 0 0 8px 0; color: #065F46; font-size: 15px; font-weight: 600;">Track Your Order</h3>
+                <p style="margin: 0 0 12px 0; color: #065F46; font-size: 14px; line-height: 1.6;">Your package is on the way! You can track its progress using the link below.</p>
+                <a href="${order.trackingLink}" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #10B981; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 4px;">Track Package</a>
               </div>
             </td>
           </tr>

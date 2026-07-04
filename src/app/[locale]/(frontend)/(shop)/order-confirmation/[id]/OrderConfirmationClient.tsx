@@ -30,6 +30,13 @@ type OrderData = {
     postalCode: string
     country: string
   }
+  billingAddress: {
+    line1: string
+    city: string
+    state: string
+    postalCode: string
+    country: string
+  }
   estimatedDeliveryType: 'express' | 'standard'
   items: OrderItem[]
   subtotal: number
@@ -154,7 +161,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
 
             <div className="p-6 sm:p-8 md:p-10 print:py-4 print:px-0 print:border-t print:border-ink/10">
               {/* Shipping & Delivery Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10 md:mb-12 print:gap-4 print:mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10 md:mb-12 print:gap-4 print:mb-6">
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">{t('shippingAddress')}</h3>
                   <div className="text-sm text-ink/80 flex flex-col gap-1">
@@ -162,6 +169,15 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
                     <p>{order.shippingAddress.line1}</p>
                     <p>{order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.postalCode}</p>
                     <p>{order.shippingAddress.country}</p>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">{t('billingAddress', { fallback: 'Billing Address' })}</h3>
+                  <div className="text-sm text-ink/80 flex flex-col gap-1">
+                    <p className="font-bold text-ink">{order.customerName}</p>
+                    <p>{order.billingAddress.line1}</p>
+                    <p>{order.billingAddress.city}, {order.billingAddress.state} {order.billingAddress.postalCode}</p>
+                    <p>{order.billingAddress.country}</p>
                   </div>
                 </div>
                 <div>

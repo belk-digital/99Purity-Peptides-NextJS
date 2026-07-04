@@ -56,7 +56,7 @@ export function ApplyForm() {
             {t('websiteUrlLabel')}
           </label>
           <input
-            type="url"
+            type="text"
             id="websiteUrl"
             name="websiteUrl"
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
@@ -125,19 +125,19 @@ export function ApplyForm() {
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <label htmlFor="social_instagram" className="block text-xs font-medium text-gray-500 dark:text-gray-400">{t('instagramUrlLabel')}</label>
-              <input type="url" id="social_instagram" name="social_instagram" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
+              <input type="text" id="social_instagram" name="social_instagram" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
             </div>
             <div>
               <label htmlFor="social_youtube" className="block text-xs font-medium text-gray-500 dark:text-gray-400">{t('youtubeUrlLabel')}</label>
-              <input type="url" id="social_youtube" name="social_youtube" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
+              <input type="text" id="social_youtube" name="social_youtube" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
             </div>
             <div>
               <label htmlFor="social_tiktok" className="block text-xs font-medium text-gray-500 dark:text-gray-400">{t('tiktokUrlLabel')}</label>
-              <input type="url" id="social_tiktok" name="social_tiktok" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
+              <input type="text" id="social_tiktok" name="social_tiktok" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
             </div>
             <div>
               <label htmlFor="social_twitter" className="block text-xs font-medium text-gray-500 dark:text-gray-400">{t('twitterUrlLabel')}</label>
-              <input type="url" id="social_twitter" name="social_twitter" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
+              <input type="text" id="social_twitter" name="social_twitter" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
             </div>
           </div>
         </div>

@@ -47,7 +47,27 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
 
   // Handle custom email notes from admin
   if (req.context.queuedCustomerNotes && Array.isArray(req.context.queuedCustomerNotes)) {
-    const customerEmail = doc.owner?.email || doc.guestEmail
+    let customerEmail = doc.guestEmail
+    
+    // Resolve owner email if not a guest
+    if (!customerEmail && doc.owner) {
+      if (typeof doc.owner === 'object' && doc.owner !== null && doc.owner.email) {
+        customerEmail = doc.owner.email
+      } else {
+        try {
+          const user = await req.payload.findByID({
+            collection: 'users',
+            id: typeof doc.owner === 'object' ? doc.owner.id : doc.owner,
+            depth: 0,
+          })
+          if (user && user.email) {
+            customerEmail = user.email
+          }
+        } catch (e) {
+          req.payload.logger.error(`Could not resolve owner email for order ${doc.id}`)
+        }
+      }
+    }
     
     if (customerEmail) {
       try {
@@ -68,6 +88,41 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
         }
       } catch (err) {
         req.payload.logger.error({ err }, `Failed to send custom order note email for order ${doc.id}`)
+      }
+    } else {
+      req.payload.logger.error(`No customer email found to send order notes for order ${doc.id}`)
+    }
+  }
+
+  // Handle tracking link email
+  if (req.context.queueTrackingEmail && doc.trackingLink) {
+    let customerEmail = doc.guestEmail
+    if (!customerEmail && doc.owner) {
+      if (typeof doc.owner === 'object' && doc.owner !== null && doc.owner.email) {
+        customerEmail = doc.owner.email
+      } else {
+        try {
+          const user = await req.payload.findByID({ collection: 'users', id: typeof doc.owner === 'object' ? doc.owner.id : doc.owner, depth: 0 })
+          if (user && user.email) customerEmail = user.email
+        } catch (e) {}
+      }
+    }
+
+    if (customerEmail) {
+      try {
+        const { generateOrderInvoiceHtml } = await import('@/lib/emails/generateOrderEmail')
+        const invoiceHtml = await generateOrderInvoiceHtml(doc, req.payload, "Great news! Your order has been shipped. You can track your package using the tracking link below.")
+        
+        await req.payload.sendEmail({
+          from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
+          to: customerEmail,
+          subject: `Your Order #${doc.orderNumber || doc.id} has shipped!`,
+          html: invoiceHtml,
+        })
+        
+        req.payload.logger.info(`Sent tracking email to ${customerEmail} for order ${doc.id}`)
+      } catch (err) {
+        req.payload.logger.error({ err }, `Failed to send tracking email for order ${doc.id}`)
       }
     }
   }

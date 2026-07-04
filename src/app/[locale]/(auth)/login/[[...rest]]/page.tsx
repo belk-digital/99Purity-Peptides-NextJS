@@ -4,6 +4,7 @@ import React, { Suspense, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { Eye, EyeOff } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
@@ -23,6 +24,7 @@ function LoginForm() {
   const callbackUrl = searchParams.get('callbackUrl') || '/account'
   const [serverError, setServerError] = useState('')
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     register,
@@ -107,13 +109,23 @@ function LoginForm() {
               {t('forgotPassword')}
             </Link>
           </div>
-          <Input
-            id="password"
-            type="password"
-            autoComplete="current-password"
-            error={errors.password?.message}
-            {...register('password')}
-          />
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="current-password"
+              error={errors.password?.message}
+              className="pr-10"
+              {...register('password')}
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-[15px] text-ink/60 hover:text-ink transition-colors"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
         </div>
         {serverError && <p className="text-sm font-medium text-red-500">{serverError}</p>}
         <Button type="submit" variant="dark" size="lg" className="w-full rounded-full mt-2" isLoading={isSubmitting}>

@@ -62,10 +62,10 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
     year: 'numeric'
   }).format(new Date(order.createdAt))
 
-  const subtotal = (order.subtotal || 0) / 100
-  const shipping = (order.shippingTotal || 0) / 100
-  const processingFee = (order.feeTotal ? order.feeTotal / 100 : (order.taxTotal || 0) / 100)
-  const total = (order.total || 0) / 100
+  const subtotal = order.subtotal || 0
+  const shipping = order.shippingTotal || 0
+  const processingFee = (order.feeTotal ? order.feeTotal / 100 : order.taxTotal || 0)
+  const total = order.total || 0
 
   return (
     <motion.div 
@@ -147,6 +147,34 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
             )}
           </div>
 
+          {/* Tracking Link Container */}
+          {order.trackingLink ? (
+            <div className="bg-[#ECFDF5] border border-[#10B981]/20 p-6 md:p-8 rounded-3xl shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex flex-col gap-2">
+                <h2 className="text-lg font-bold text-[#065F46] tracking-tight">Track Your Package</h2>
+                <p className="text-sm text-[#065F46]/80">Your order is on its way. Use the tracking link to monitor your shipment.</p>
+              </div>
+              <a 
+                href={order.trackingLink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-colors shadow-sm whitespace-nowrap"
+              >
+                Track Package
+              </a>
+            </div>
+          ) : (
+            <div className="bg-gray-50/50 border border-gray-100 border-dashed p-6 md:p-8 rounded-3xl flex flex-col items-center justify-center text-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 shadow-sm">
+                <Package size={16} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <h3 className="text-sm font-bold text-gray-800">Tracking Information Pending</h3>
+                <p className="text-xs text-gray-500 max-w-sm mx-auto">Your tracking link will be available here automatically once your product has been shipped.</p>
+              </div>
+            </div>
+          )}
+
           {/* Items List */}
           <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm">
             <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black mb-6 border-b border-gray-100 pb-4">{t('itemsOrdered')}</h2>
@@ -155,7 +183,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
                 // Prioritize the live populated product relation to get the actual image media objects
                 const product = item.product || item.productSnapshot || {}
                 const title = product.title || product.name || t('unknownProduct')
-                const price = (typeof item.price === 'number' ? item.price : (product.basePrice || product.price || 0)) / 100
+                const price = (typeof item.price === 'number' ? item.price : (product.basePrice || product.price || 0))
                 const imageUrl = product.images?.[0]?.image?.url || product.images?.[0]?.url || '/temp-products/product-image.png'
 
                 let displayVariant = item.variant || t('standardVariant');
@@ -228,6 +256,26 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
               </div>
             </div>
           )}
+
+          {/* Billing Summary */}
+          {(order.billingAddress?.line1 || order.shippingAddress) && (
+            <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm flex flex-col gap-6">
+              <div className="flex items-center gap-3 border-b border-gray-100 pb-4 text-black">
+                <CreditCard size={16} />
+                <h2 className="text-xs font-bold uppercase tracking-[0.15em]">{t('billingAddress', { fallback: 'Billing Address' })}</h2>
+              </div>
+              
+              <div className="flex flex-col gap-1 text-sm text-gray-500 leading-relaxed">
+                <span className={`text-lg text-black font-bold tracking-tight mb-2 ${spaceGrotesk.className}`}>
+                  {order.customerFirstName} {order.customerLastName}
+                </span>
+                <span>{order.billingAddress?.line1 || order.shippingAddress?.line1}</span>
+                {(order.billingAddress?.line2 || order.shippingAddress?.line2) && <span>{order.billingAddress?.line2 || order.shippingAddress?.line2}</span>}
+                <span>{order.billingAddress?.city || order.shippingAddress?.city}, {order.billingAddress?.state || order.shippingAddress?.state} {order.billingAddress?.postalCode || order.shippingAddress?.postalCode}</span>
+                <span>{order.billingAddress?.country || order.shippingAddress?.country}</span>
+              </div>
+            </div>
+          )}
           
           {/* Order Summary */}
           <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm flex flex-col gap-6">
@@ -244,7 +292,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
               {!!order.discountTotal && order.discountTotal > 0 && (
                 <div className="flex justify-between text-green-500">
                   <span>{order.couponCode ? t('discountWithCode', { code: order.couponCode }) : t('discount')}</span>
-                  <span>-${(order.discountTotal / 100).toFixed(2)}</span>
+                  <span>-${order.discountTotal.toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between text-gray-500">

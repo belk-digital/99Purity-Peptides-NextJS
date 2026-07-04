@@ -105,6 +105,13 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
       postalCode: order.shippingAddress?.postalCode || '',
       country: order.shippingAddress?.country || 'US'
     },
+    billingAddress: {
+      line1: order.billingAddress?.line1 || order.shippingAddress?.line1 || '',
+      city: order.billingAddress?.city || order.shippingAddress?.city || '',
+      state: order.billingAddress?.state || order.shippingAddress?.state || '',
+      postalCode: order.billingAddress?.postalCode || order.shippingAddress?.postalCode || '',
+      country: order.billingAddress?.country || order.shippingAddress?.country || 'US'
+    },
     estimatedDeliveryType: (order.shippingMethod?.toLowerCase().includes('express') ? 'express' : 'standard') as 'express' | 'standard',
     items: formattedItems,
     subtotal: order.subtotal || 0,

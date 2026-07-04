@@ -135,15 +135,20 @@ export function CheckoutClient() {
   const subtotal = items.reduce((acc, item) => acc + item.priceSnapshot * item.quantity, 0)
 
   // Fire the free-shipping toast once per crossing, not on every render while above the threshold.
-  const hasShownFreeShippingToast = useRef(false)
+  const previousSubtotal = useRef(subtotal)
+  const [isReady, setIsReady] = useState(false)
+  
   useEffect(() => {
-    if (subtotal >= FREE_SHIPPING_THRESHOLD && !hasShownFreeShippingToast.current) {
+    const timer = setTimeout(() => setIsReady(true), 500) // wait for hydration
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    if (isReady && subtotal >= FREE_SHIPPING_THRESHOLD && previousSubtotal.current < FREE_SHIPPING_THRESHOLD) {
       toast.success(t('freeShippingUnlockedToast'))
-      hasShownFreeShippingToast.current = true
-    } else if (subtotal < FREE_SHIPPING_THRESHOLD) {
-      hasShownFreeShippingToast.current = false
     }
-  }, [subtotal])
+    previousSubtotal.current = subtotal
+  }, [subtotal, isReady, t])
 
   const visibleShippingMethods = availableShippingMethods.filter((method: any) => {
     if (method.minOrderAmount && method.minOrderAmount > 0) {

@@ -46,7 +46,11 @@ export const Orders: CollectionConfig = {
           }
 
           if (data.shippingAddress) data.shippingAddress = { ...data.shippingAddress }
-          if (data.billingAddress) data.billingAddress = { ...data.billingAddress }
+          if (data.billingAddress && data.billingAddress.line1) {
+            data.billingAddress = { ...data.billingAddress }
+          } else if (data.shippingAddress) {
+            data.billingAddress = { ...data.shippingAddress }
+          }
         }
 
         if (operation === 'update' && originalDoc) {
@@ -55,6 +59,11 @@ export const Orders: CollectionConfig = {
           if (oldStatus && newStatus && oldStatus !== newStatus) {
             validateStatusTransition(oldStatus, newStatus)
           }
+        }
+
+        if (data.sendTrackingEmail) {
+          req.context.queueTrackingEmail = true
+          data.sendTrackingEmail = null
         }
 
         // Handle notes processing
@@ -83,7 +92,7 @@ export const Orders: CollectionConfig = {
       },
     ],
     afterChange: [
-      // temporarily disabled for migration: afterOrderChange,
+      afterOrderChange,
       async ({ operation, doc }) => {
         if (operation === 'update') {
           // TODO: send status change email (Phase 14)
@@ -252,6 +261,13 @@ export const Orders: CollectionConfig = {
       ],
     },
     { name: 'shippingMethod', type: 'text', admin: { position: 'sidebar' } },
+    { name: 'trackingLink', type: 'text', admin: { position: 'sidebar', description: 'URL to track the package' } },
+    { 
+      name: 'sendTrackingEmail', 
+      type: 'checkbox', 
+      virtual: true, 
+      admin: { position: 'sidebar', description: 'Check this box before saving to email the tracking link to the customer.' } 
+    },
     {
       name: 'paymentMethod',
       type: 'select',

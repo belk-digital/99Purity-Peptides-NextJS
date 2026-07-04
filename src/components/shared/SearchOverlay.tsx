@@ -13,14 +13,14 @@ interface SearchOverlayProps {
 }
 
 const QUICK_CATEGORIES = [
-  { key: 'metabolic', icon: Zap, href: '/shop/metabolic' },
-  { key: 'growthFactor', icon: Sparkles, href: '/shop/growth-factor' },
-  { key: 'recovery', icon: BatteryCharging, href: '/shop/recovery' },
-  { key: 'cellularHealth', icon: Dna, href: '/shop/cellular-health' },
-  { key: 'bioregulators', icon: Activity, href: '/shop/bioregulators' },
-  { key: 'cognitive', icon: Brain, href: '/shop/cognitive' },
-  { key: 'essentials', icon: ShieldPlus, href: '/shop/essentials' },
-  { key: 'receptorAgonist', icon: Network, href: '/shop/receptor-agonist' },
+  { key: 'metabolic', icon: Zap, href: '/shop?category=metabolic' },
+  { key: 'growthFactor', icon: Sparkles, href: '/shop?category=growth-factor' },
+  { key: 'recovery', icon: BatteryCharging, href: '/shop?category=recovery' },
+  { key: 'cellularHealth', icon: Dna, href: '/shop?category=cellular-health' },
+  { key: 'bioregulators', icon: Activity, href: '/shop?category=bioregulators' },
+  { key: 'cognitive', icon: Brain, href: '/shop?category=cognitive' },
+  { key: 'essentials', icon: ShieldPlus, href: '/shop?category=essentials' },
+  { key: 'receptorAgonist', icon: Network, href: '/shop?category=receptor-agonist' },
 ]
 
 export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {

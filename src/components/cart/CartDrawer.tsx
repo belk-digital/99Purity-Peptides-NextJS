@@ -50,15 +50,20 @@ export function CartDrawer() {
   const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - subtotal
 
   // Fire the free-shipping toast once per crossing, not on every render while above the threshold.
-  const hasShownFreeShippingToast = useRef(false)
+  const previousSubtotal = useRef(subtotal)
+  const [isReady, setIsReady] = useState(false)
+  
   useEffect(() => {
-    if (subtotal >= FREE_SHIPPING_THRESHOLD && !hasShownFreeShippingToast.current) {
+    const timer = setTimeout(() => setIsReady(true), 500) // wait for hydration
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    if (isReady && subtotal >= FREE_SHIPPING_THRESHOLD && previousSubtotal.current < FREE_SHIPPING_THRESHOLD) {
       toast.success(t('freeShippingUnlockedToast'))
-      hasShownFreeShippingToast.current = true
-    } else if (subtotal < FREE_SHIPPING_THRESHOLD) {
-      hasShownFreeShippingToast.current = false
     }
-  }, [subtotal, t])
+    previousSubtotal.current = subtotal
+  }, [subtotal, isReady, t])
 
   return (
     <AnimatePresence>
