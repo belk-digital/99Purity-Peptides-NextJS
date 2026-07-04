@@ -199,7 +199,6 @@ export const Orders: CollectionConfig = {
     { 
       name: 'sendTrackingEmail', 
       type: 'checkbox', 
-      virtual: true, 
       admin: { position: 'sidebar', description: 'Check this box before saving to email the tracking link to the customer.' } 
     },
     {
