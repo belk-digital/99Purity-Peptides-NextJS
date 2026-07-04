@@ -37,8 +37,8 @@ export default async function AffiliateConversionsPage() {
 
   const mappedConversions = conversionsRes.docs.map(conv => ({
     id: String(conv.id),
-    date: new Date(conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    orderValue: conv.orderSubtotal || 0,
+    date: new Date(conv.approvedAt || conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    orderValue: conv.orderSubtotal || conv.eligibleSubtotal || 0,
     commissionAmount: conv.commissionAmount || 0,
     status: conv.status || 'pending',
   }))

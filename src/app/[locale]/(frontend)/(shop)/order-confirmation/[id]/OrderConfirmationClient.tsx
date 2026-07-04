@@ -137,7 +137,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
             {/* Print Branding Header */}
             <div className="hidden print:flex items-center justify-between py-4 px-0 border-b border-ink/10">
               <h1 className="text-2xl font-display font-bold tracking-tight text-ink uppercase">99 Purity Peptides</h1>
-              <p className="text-sm font-medium text-ink/60">peptides7.com</p>
+              <p className="text-sm font-medium text-ink/60">99puritypeptides.com</p>
             </div>
 
             {/* Invoice Header */}
@@ -261,7 +261,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
               </button>
               <span className="text-center sm:text-left">
                 {t.rich('questionsContactSupport', {
-                  link: (chunks) => <a href="mailto:support@peptides7.com" className="text-ink underline hover:no-underline font-medium">{chunks}</a>,
+                  link: (chunks) => <a href="mailto:support@99puritypeptides.com" className="text-ink underline hover:no-underline font-medium">{chunks}</a>,
                 })}
               </span>
             </div>

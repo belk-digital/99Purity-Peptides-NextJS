@@ -1,7 +1,7 @@
 export async function generateOrderInvoiceHtml(order: any, payload?: any, customNote?: string): Promise<string> {
   const orderNumber = order.orderNumber || order.id;
   const orderDate = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://peptides7.com';
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   
   const formatMoney = (amount: number) => `$${(amount).toFixed(2)}`;
   

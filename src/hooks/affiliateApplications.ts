@@ -157,11 +157,11 @@ export const afterAffiliateApplicationChange: CollectionAfterChangeHook = async 
           // Send Notification Email to Admin
           const adminHtml = generateAdminAffiliateNotificationEmail(doc, newAffiliate, userDoc)
           await req.payload.sendEmail({
-            to: 'support@peptides7.com',
+            to: 'support@99puritypeptides.com',
             subject: `New Affiliate Registered: ${newAffiliate.displayName}`,
             html: adminHtml,
           })
-          req.payload.logger.info(`Sent admin notification to support@peptides7.com`)
+          req.payload.logger.info(`Sent admin notification to support@99puritypeptides.com`)
         }
       } catch (emailErr) {
         req.payload.logger.error({ err: emailErr }, 'Error sending affiliate emails')

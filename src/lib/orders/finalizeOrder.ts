@@ -134,7 +134,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
 
             await payload.sendEmail({
                 to: customerEmail,
-                bcc: 'support@peptides7.com',
+                bcc: 'support@99puritypeptides.com',
                 subject: `Order Confirmation #${order.orderNumber || order.id}`,
                 html: invoiceHtml,
             })

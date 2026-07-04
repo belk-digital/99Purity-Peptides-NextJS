@@ -53,7 +53,7 @@ export default async function AffiliateDashboardOverview() {
   // 4. Format Recent Conversions
   const recentConversions = conversions.map(conv => ({
     id: String(conv.id),
-    date: new Date(conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    date: new Date(conv.approvedAt || conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     amount: conv.commissionAmount || 0,
     status: conv.status || 'pending',
   }))

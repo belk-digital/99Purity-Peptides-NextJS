@@ -33,7 +33,7 @@ export async function submitContactForm(formData: FormData) {
     `
 
     await payload.sendEmail({
-      to: 'support@peptides7.com',
+      to: 'support@99puritypeptides.com',
       replyTo: email,
       subject: `[Contact Form] ${subject}`,
       html: html,

@@ -1,5 +1,5 @@
 export async function generateAffiliateWelcomeEmail(affiliate: any, user: any): Promise<string> {
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://peptides7.com';
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   
   const affiliateName = affiliate.displayName || user?.firstName || 'Partner';
   const referralLink = `${serverUrl}/ref/${affiliate.referralSlug}`;

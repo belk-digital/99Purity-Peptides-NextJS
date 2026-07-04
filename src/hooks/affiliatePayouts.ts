@@ -2,6 +2,8 @@ import type { CollectionAfterChangeHook } from 'payload'
 import { updateAffiliateStats } from '@/lib/affiliates/stats'
 
 export const afterAffiliatePayoutChange: CollectionAfterChangeHook = async ({ doc, previousDoc, operation, req }) => {
+  if (req.context?.disableHooks) return doc
+  
   if (operation === 'create' || operation === 'update') {
     const isNowPaid = doc.status === 'paid' && (operation === 'create' || previousDoc?.status !== 'paid')
     

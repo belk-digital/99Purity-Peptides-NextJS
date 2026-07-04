@@ -22,14 +22,16 @@ export const Orders: CollectionConfig = {
     beforeChange: [
       async ({ operation, originalDoc, data, req }) => {
         if (operation === 'create') {
-          const year = new Date().getFullYear()
-          const db = req.payload.db as any
-          const counterRes: any = await db.drizzle.execute(sql`INSERT INTO "order_counters" ("id", "counter", "created_at", "updated_at") VALUES (${year}, 1, now(), now())
-                      ON CONFLICT ("id") DO UPDATE SET "counter" = "order_counters"."counter" + 1, "updated_at" = now()
-                      RETURNING "counter"`)
-          const counter = (counterRes.rows ? counterRes.rows[0].counter : counterRes[0].counter)
-          const padded = String(counter).padStart(5, '0')
-          data.orderNumber = `PEP-${year}-${padded}`
+          if (!data.orderNumber) {
+            const year = new Date().getFullYear()
+            const db = req.payload.db as any
+            const counterRes: any = await db.drizzle.execute(sql`INSERT INTO "order_counters" ("id", "counter", "created_at", "updated_at") VALUES (${year}, 1, now(), now())
+                        ON CONFLICT ("id") DO UPDATE SET "counter" = "order_counters"."counter" + 1, "updated_at" = now()
+                        RETURNING "counter"`)
+            const counter = (counterRes.rows ? counterRes.rows[0].counter : counterRes[0].counter)
+            const padded = String(counter).padStart(5, '0')
+            data.orderNumber = `PEP-${year}-${padded}`
+          }
 
           if (Array.isArray(data.items)) {
             const snapshotItems = await Promise.all(
@@ -83,7 +85,7 @@ export const Orders: CollectionConfig = {
       },
     ],
     afterChange: [
-      afterOrderChange,
+      // temporarily disabled for migration: afterOrderChange,
       async ({ operation, doc }) => {
         if (operation === 'update') {
           // TODO: send status change email (Phase 14)
@@ -95,7 +97,7 @@ export const Orders: CollectionConfig = {
     {
       name: 'orderNumber',
       type: 'text',
-      admin: { disabled: true, description: 'Auto‑generated order identifier (PEP‑YYYY‑NNNNN).' },
+      admin: { readOnly: true, description: 'Auto‑generated order identifier (PEP‑YYYY‑NNNNN).' },
     },
     {
       name: 'owner',
