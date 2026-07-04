@@ -29,7 +29,7 @@ export interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, variant, error, ...props }, ref) => {
     return (
-      <div className="w-full">
+      <div className={cn("w-full", className)}>
         <input
           className={cn(inputVariants({ variant: error ? "error" : variant }), className)}
           ref={ref}

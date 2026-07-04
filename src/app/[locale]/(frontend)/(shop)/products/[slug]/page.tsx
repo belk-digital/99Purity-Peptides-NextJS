@@ -129,6 +129,7 @@ export default async function ProductPage({
       price: `$${Number(v.price || 0).toFixed(2)}`,
       salePrice: v.salePrice ? `$${Number(v.salePrice).toFixed(2)}` : undefined,
       inStock: (v.stock || 0) > 0,
+      image: typeof v.image === 'object' && v.image?.url ? v.image.url : undefined,
     }))
   } else {
     mappedVariants = [

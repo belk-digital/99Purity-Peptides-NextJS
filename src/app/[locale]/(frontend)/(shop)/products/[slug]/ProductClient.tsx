@@ -222,6 +222,10 @@ export function ProductClient({ product }: ProductClientProps) {
   const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
   const currentStock = selectedVariant?.inStock ? 50 : 0 // Fake stock level for testing
 
+  const galleryImages = selectedVariant?.image
+    ? [selectedVariant.image, ...product.images.filter(img => img !== selectedVariant.image)]
+    : product.images
+
   const [justAdded, setJustAdded] = useState(false)
   const cartStore = useCartStore()
   
@@ -293,7 +297,7 @@ export function ProductClient({ product }: ProductClientProps) {
     if (!selectedVariant?.inStock) return
 
     cartStore.addItem(
-      { id: product.id, name: product.name, imageUrl: product.images[0] },
+      { id: product.id, name: product.name, imageUrl: selectedVariant.image || product.images[0] },
       selectedVariant.sku || selectedVariant.title,
       quantity,
       parseFloat((selectedVariant.salePrice || selectedVariant.price).replace(/[^0-9.]/g, '')),
@@ -319,7 +323,7 @@ export function ProductClient({ product }: ProductClientProps) {
         {/* Left: Sticky Image Panel */}
         <div className="w-full lg:w-1/2 lg:h-screen lg:sticky lg:top-0 flex items-start justify-center bg-gray-50 relative lg:overflow-hidden">
           <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[84%] pt-[100px] sm:pt-[120px] lg:pt-[160px] pb-6 sm:pb-10 lg:pb-6">
-            <ImageGallery images={product.images} />
+            <ImageGallery key={selectedVariant?.id} images={galleryImages} />
           </div>
         </div>
 

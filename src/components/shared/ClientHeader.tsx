@@ -510,8 +510,8 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           <div className="w-full flex flex-col md:flex-row relative z-10 text-white min-h-[350px] xl:min-h-[450px]">
             {/* Left side: Massive typography list (40%) */}
             <div className="w-full md:w-2/5 flex flex-col justify-center py-6 px-8 xl:px-16 border-r border-white/5 relative z-20">
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] mb-4 xl:mb-6">{t('megaMenu.navigation')}</span>
-              <div className="flex flex-col gap-2 xl:gap-4">
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] mb-3 xl:mb-4">{t('megaMenu.navigation')}</span>
+              <div className="flex flex-col gap-0.5 xl:gap-1">
                 {isLoadingMenu ? (
                   Array.from({ length: 5 }).map((_, i) => (
                     <div key={i} className="h-10 w-3/4 bg-white/5 rounded-md animate-pulse" />
@@ -524,9 +524,9 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                       href={`/shop?category=${encodeURIComponent(cat.name)}#products-grid`}
                       onClick={() => setIsMegaMenuOpen(false)}
                       onMouseEnter={() => setActiveCategory(cat.id)}
-                      className={`group relative w-full block transition-all duration-500 py-1 cursor-pointer ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
+                      className={`group relative w-full block transition-all duration-500 py-0.5 cursor-pointer ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
                     >
-                      <h3 className={`text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light tracking-tight transition-all duration-500 ${isActive ? 'text-primary translate-x-4' : 'text-white'}`}>
+                      <h3 className={`text-xs lg:text-sm xl:text-base 2xl:text-lg font-light tracking-tight transition-all duration-500 ${isActive ? 'text-primary translate-x-4' : 'text-white'}`}>
                         {cat.name}
                       </h3>
                       {/* Animated indicator dot */}

@@ -73,13 +73,13 @@ export default async function AccountOverviewPage() {
   const categoryTotals = new Map<string, number>()
   let shippingTotal = 0
   for (const order of yearOrders) {
-    shippingTotal += (order.shippingTotal || 0) / 100
+    shippingTotal += (order.shippingTotal || 0)
     for (const item of order.items || []) {
       const product = typeof item.product === 'object' ? item.product : null
       const categoryName = (product?.categories?.[0] && typeof product.categories[0] === 'object')
         ? product.categories[0].name
         : t('categoryOther')
-      const lineTotal = ((item.price || 0) / 100) * (item.quantity || 0)
+      const lineTotal = (item.price || 0) * (item.quantity || 0)
       categoryTotals.set(categoryName, (categoryTotals.get(categoryName) || 0) + lineTotal)
     }
   }
@@ -88,7 +88,7 @@ export default async function AccountOverviewPage() {
     categoryTotals.set(shippingLabel, (categoryTotals.get(shippingLabel) || 0) + shippingTotal)
   }
 
-  const totalSpent = yearOrders.reduce((sum, o) => sum + ((o.total || 0) / 100), 0)
+  const totalSpent = yearOrders.reduce((sum, o) => sum + (o.total || 0), 0)
   const PALETTE = ['#112a2e', '#1e5661', '#84d0d9', '#d1e8eb', '#9ca3af']
   const sortedCategories = [...categoryTotals.entries()].sort((a, b) => b[1] - a[1])
   const topCategories = sortedCategories.slice(0, 4)
@@ -121,7 +121,7 @@ export default async function AccountOverviewPage() {
     orderNumber: order.orderNumber || String(order.id),
     date: order.createdAt ? new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Unknown Date',
     status: order.status,
-    total: order.total ? order.total / 100 : 0
+    total: order.total || 0
   }))
 
   const defaultAddress = defaultAddressDoc ? {
