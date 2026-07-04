@@ -23,7 +23,8 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
     const itemPromises = order.items.map(async (item: any) => {
       const product = item.productSnapshot || {};
       const name = product.name || 'Product';
-      const variant = item.variant && item.variant !== 'DEFAULT' ? ` - ${item.variant}` : '';
+      const variantText = item.variantTitle || item.variant;
+      const variant = variantText && variantText !== 'DEFAULT' ? ` - ${variantText}` : '';
       
       let imageUrl = '';
       if (product.images && product.images.length > 0) {

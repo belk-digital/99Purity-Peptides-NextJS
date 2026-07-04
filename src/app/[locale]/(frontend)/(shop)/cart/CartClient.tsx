@@ -160,6 +160,24 @@ export function CartClient() {
       const coupon = data?.docs?.find((c: any) => c.code.toLowerCase() === code.trim().toLowerCase())
       
       if (coupon) {
+        // Prevent Self-Referral Coupon Usage
+        try {
+          const meRes = await fetch('/api/users/me')
+          const meData = await meRes.json()
+          const userId = meData?.user?.id
+          
+          if (userId) {
+            const affRes = await fetch(`/api/affiliates?where[user][equals]=${userId}&where[couponCode][equals]=${coupon.code}`)
+            const affData = await affRes.json()
+            if (affData?.docs?.length > 0) {
+              setCouponState('error')
+              setCouponMessage('You cannot use your own affiliate coupon.')
+              return
+            }
+          }
+        } catch (e) {
+          console.error("Error checking coupon affiliate:", e)
+        }
         
         // Validate Expiration
         if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) {

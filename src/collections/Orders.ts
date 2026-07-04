@@ -128,6 +128,7 @@ export const Orders: CollectionConfig = {
           required: false,
         },
         { name: 'variant', type: 'text', admin: { description: 'The variant or bundle purchased' } },
+        { name: 'variantTitle', type: 'text', admin: { description: 'The display title of the variant' } },
         { name: 'price', type: 'number', admin: { description: 'Price paid per unit at the time of order' } },
         { name: 'quantity', type: 'number', required: true },
         {

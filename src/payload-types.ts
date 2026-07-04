@@ -497,6 +497,7 @@ export interface Cart {
     | {
         product?: (number | null) | Product;
         variantSku: string;
+        variantTitle?: string | null;
         quantity: number;
         addedAt: string;
         priceSnapshot: number;
@@ -611,7 +612,7 @@ export interface Coupon {
 export interface Order {
   id: number;
   /**
-   * Auto‑generated order identifier (PEP‑YYYY‑NNNNN).
+   * Auto‑generated order identifier (e.g., 7000).
    */
   orderNumber?: string | null;
   /**
@@ -631,6 +632,10 @@ export interface Order {
          * The variant or bundle purchased
          */
         variant?: string | null;
+        /**
+         * The display title of the variant
+         */
+        variantTitle?: string | null;
         /**
          * Price paid per unit at the time of order
          */
@@ -1601,6 +1606,7 @@ export interface CartsSelect<T extends boolean = true> {
     | {
         product?: T;
         variantSku?: T;
+        variantTitle?: T;
         quantity?: T;
         addedAt?: T;
         priceSnapshot?: T;
@@ -1685,6 +1691,7 @@ export interface OrdersSelect<T extends boolean = true> {
     | {
         product?: T;
         variant?: T;
+        variantTitle?: T;
         price?: T;
         quantity?: T;
         productSnapshot?: T;

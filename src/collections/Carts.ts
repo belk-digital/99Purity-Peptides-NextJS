@@ -32,6 +32,11 @@ export const Carts: CollectionConfig = {
           required: true,
         },
         {
+          name: 'variantTitle',
+          type: 'text',
+          required: false,
+        },
+        {
           name: 'quantity',
           type: 'number',
           required: true,
