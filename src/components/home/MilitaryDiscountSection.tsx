@@ -12,6 +12,9 @@ export function MilitaryDiscountSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const branches = [
     { id: 'army', key: 'army' },
@@ -37,9 +40,42 @@ export function MilitaryDiscountSection() {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    if (!selectedFile) {
+      alert("Please upload your ID photo.");
+      return;
+    }
+    
+    // 5MB limit to prevent server overload
+    if (selectedFile.size > 5 * 1024 * 1024) {
+      alert("Your ID photo is too large. Please upload an image smaller than 5MB.");
+      return;
+    }
+    if (!selectedBranch) {
+      alert("Please select a service branch.");
+      return;
+    }
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("branch", selectedBranch);
+    formData.append("idPhoto", selectedFile);
+
+    setIsLoading(true);
+    try {
+      const res = await fetch('/api/military/submit', {
+        method: 'POST',
+        body: formData,
+      });
+      if (res.ok) {
+        setIsSubmitted(true);
+      } else {
+        alert("There was an error submitting your application. Please try again.");
+      }
+    } catch (err) {
+      alert("An unexpected error occurred.");
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -146,8 +182,26 @@ export function MilitaryDiscountSection() {
                       <div className="w-px h-8 bg-black/10"></div>
                       <div className="flex-1 flex justify-between items-center pl-2">
                         <span className="font-bold text-ink text-sm">{t('idPhotoLabel')}</span>
-                        <button type="button" className="flex items-center gap-2 border border-dashed border-ink/30 px-3 md:px-4 py-2 rounded-lg text-ink/70 hover:text-primary hover:border-primary transition-colors text-[10px] md:text-xs font-bold uppercase tracking-wide">
-                          <Upload className="w-3.5 h-3.5" /> <span className="hidden sm:inline">{t('uploadButton')}</span>
+                        <input 
+                          type="file" 
+                          accept="image/*" 
+                          className="hidden" 
+                          ref={fileInputRef}
+                          onChange={(e) => {
+                            if (e.target.files && e.target.files.length > 0) {
+                              setSelectedFile(e.target.files[0]);
+                            }
+                          }}
+                        />
+                        <button 
+                          type="button" 
+                          onClick={() => fileInputRef.current?.click()}
+                          className="flex items-center gap-2 border border-dashed border-ink/30 px-3 md:px-4 py-2 rounded-lg text-ink/70 hover:text-primary hover:border-primary transition-colors text-[10px] md:text-xs font-bold uppercase tracking-wide max-w-[150px]"
+                        >
+                          <Upload className="w-3.5 h-3.5 flex-shrink-0" /> 
+                          <span className="hidden sm:inline truncate">
+                            {selectedFile ? selectedFile.name : t('uploadButton')}
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -160,7 +214,7 @@ export function MilitaryDiscountSection() {
                       <div className="w-px h-8 bg-black/10"></div>
                       <div className="flex-1 flex flex-col justify-center pl-2">
                         <label className="font-bold text-ink text-sm">{t('fullNameLabel')}</label>
-                        <input required type="text" placeholder={t('fullNamePlaceholder')} className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
+                        <input required type="text" name="fullName" placeholder={t('fullNamePlaceholder')} className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
                       </div>
                     </div>
 
@@ -172,7 +226,7 @@ export function MilitaryDiscountSection() {
                       <div className="w-px h-8 bg-black/10"></div>
                       <div className="flex-1 flex flex-col justify-center pl-2">
                         <label className="font-bold text-ink text-sm">{t('emailLabel')}</label>
-                        <input required type="email" placeholder={t('emailPlaceholder')} className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
+                        <input required type="email" name="email" placeholder={t('emailPlaceholder')} className="bg-transparent border-none outline-none text-ink/70 text-sm placeholder:text-ink/40 w-full mt-0.5" />
                       </div>
                     </div>
 
@@ -230,7 +284,7 @@ export function MilitaryDiscountSection() {
                     </div>
 
                     <div className="mt-4">
-                      <FluidButton type="submit" text={t('submitButton')} className="w-full min-w-full" variant="dark" />
+                      <FluidButton disabled={isLoading} type="submit" text={isLoading ? "Submitting..." : t('submitButton')} className="w-full min-w-full" variant="dark" />
                     </div>
                   </motion.form>
                 ) : (

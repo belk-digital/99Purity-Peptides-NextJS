@@ -61,7 +61,14 @@ export async function POST(request: Request) {
     // Send email to admin
     try {
       const emailHtml = `
-        <div style="font-family: sans-serif; color: #111827; max-width: 600px; margin: 0 auto;">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f9fafb;">
+        <div style="font-family: sans-serif; color: #111827; width: 100%; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 20px; line-height: 1.6;">
           <h2 style="color: #000; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">New Affiliate Payout Request</h2>
           <p><strong>Affiliate:</strong> ${affiliate.displayName || affiliate.referralSlug || 'Unknown'} (${user.email})</p>
           <p><strong>Amount:</strong> $${amount.toFixed(2)}</p>
@@ -70,9 +77,11 @@ export async function POST(request: Request) {
           <p style="background: #f3f4f6; padding: 12px; border-radius: 6px; font-family: monospace;">${details}</p>
           <p style="margin-top: 30px; font-size: 14px; color: #6b7280;">Please log in to the Payload admin panel to review, approve, and process this payout request.</p>
         </div>
+</body>
+</html>
       `
       await payload.sendEmail({
-        to: 'support@99puritypeptides.com',
+        to: 'affiliates@99puritypeptides.com',
         subject: `[Payout Request] $${amount.toFixed(2)} from ${affiliate.displayName || affiliate.referralSlug}`,
         html: emailHtml,
       })

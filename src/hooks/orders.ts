@@ -58,6 +58,7 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
           const invoiceHtml = await generateOrderInvoiceHtml(doc, req.payload, customNote)
           
           await req.payload.sendEmail({
+            from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
             to: customerEmail,
             subject: `Update regarding your Order #${doc.orderNumber || doc.id}`,
             html: invoiceHtml,

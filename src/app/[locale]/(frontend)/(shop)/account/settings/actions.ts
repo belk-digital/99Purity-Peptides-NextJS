@@ -98,6 +98,44 @@ export async function updatePasswordAction(input: {
       data: { password: input.newPassword } as any,
       overrideAccess: true,
     })
+
+    try {
+      const emailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f9fafb;">
+        <div style="font-family: sans-serif; color: #111827; width: 100%; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 20px; line-height: 1.6;">
+          <h2 style="color: #000; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">Security Alert: Password Changed</h2>
+          <p>Hi ${user.firstName || 'there'},</p>
+          <p>This is a confirmation that the password for your 99 Purity Peptides account (${user.email}) has been changed.</p>
+          <p>If you made this change, no further action is required.</p>
+          <p><strong>If you did not make this change, please contact our support team immediately.</strong></p>
+          <p style="margin-top: 30px;">Best regards,<br>The 99 Purity Peptides Team</p>
+        </div>
+</body>
+</html>
+      `
+      await payload.sendEmail({
+        from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
+        to: user.email,
+        subject: 'Your password has been changed',
+        html: emailHtml,
+      })
+
+      // Notify admin
+      await payload.sendEmail({
+        to: 'support@99puritypeptides.com',
+        subject: `Security Alert: User Password Changed`,
+        html: `<p>The password for the user <strong>${user.email}</strong> was recently changed.</p>`
+      })
+    } catch (emailErr) {
+      console.error('Failed to send password change confirmation email', emailErr)
+    }
+
     return { success: true }
   } catch {
     return { success: false, error: t('passwordUpdateError') }
@@ -137,9 +175,25 @@ export async function requestEmailChangeAction(newEmail: string) {
     })
 
     await payload.sendEmail({
+      from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
       to: normalizedEmail,
       subject: 'Verify your new email address',
-      html: `<p>Your verification code is:</p><p style="font-size:24px;font-weight:bold;letter-spacing:4px;">${code}</p><p>This code expires in 10 minutes.</p>`,
+      html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f9fafb;">
+        <div style="font-family: sans-serif; color: #111827; width: 100%; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 20px; line-height: 1.6;">
+          <p>Your verification code is:</p>
+          <p style="font-size:24px;font-weight:bold;letter-spacing:4px;">${code}</p>
+          <p>This code expires in 10 minutes.</p>
+        </div>
+</body>
+</html>
+      `,
     })
 
     return { success: true }

@@ -17,6 +17,8 @@ export function generateAdminAffiliateNotificationEmail(application: any, affili
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { font-family: sans-serif; line-height: 1.5; color: #333; }
     h2 { color: #000; }
