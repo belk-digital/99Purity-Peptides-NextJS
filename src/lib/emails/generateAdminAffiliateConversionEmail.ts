@@ -1,5 +1,5 @@
 export function generateAdminAffiliateConversionEmail(order: any, affiliate: any, commissionAmount: number): string {
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://peptides7.com';
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   
   const affiliateName = affiliate.displayName || 'Partner';
   const orderNumber = order.orderNumber || order.id || 'N/A';
@@ -12,6 +12,8 @@ export function generateAdminAffiliateConversionEmail(order: any, affiliate: any
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { font-family: sans-serif; line-height: 1.5; color: #333; }
     h2 { color: #000; }

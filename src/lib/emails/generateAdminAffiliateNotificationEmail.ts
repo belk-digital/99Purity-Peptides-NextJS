@@ -10,13 +10,15 @@ export function generateAdminAffiliateNotificationEmail(application: any, affili
     socialLinksHtml = application.socialLinks.map((link: any) => `${link.platform}: <a href="${link.url}">${link.url}</a>`).join('<br>');
   }
 
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://peptides7.com';
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   const adminUrl = `${serverUrl}/admin/collections/affiliates/${affiliate.id}`;
 
   return `
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { font-family: sans-serif; line-height: 1.5; color: #333; }
     h2 { color: #000; }

@@ -36,7 +36,7 @@ export default async function OrdersPage() {
     id: order.orderNumber || String(order.id),
     date: new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     status: order.status,
-    total: order.total,
+    total: order.total ? order.total / 100 : 0,
     itemCount: order.items?.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) || 0
   }))
 

@@ -39,6 +39,7 @@ export async function Header() {
               lineId: item.id || Math.random().toString(36).substring(2, 15),
               productId: String(prod.id || item.product),
               variantSku: item.variantSku || 'default',
+              variantTitle: item.variantTitle || item.variantSku || null,
               quantity: item.quantity || 1,
               priceSnapshot: item.priceSnapshot || 0,
               product: {

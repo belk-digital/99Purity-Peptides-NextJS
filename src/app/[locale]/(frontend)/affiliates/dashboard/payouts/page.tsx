@@ -37,17 +37,18 @@ export default async function AffiliatePayoutsPage() {
 
   const mappedPayouts = payoutsRes.docs.map(req => ({
     id: String(req.id),
-    date: new Date(req.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    date: new Date(req.processedAt || req.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     amount: req.amountCents || 0,
-    method: req.payoutMethod,
-    details: req.payoutDetails,
+    method: req.payoutMethod || 'Unknown',
+    details: req.payoutDetails || '',
     status: req.status || 'pending',
   }))
 
   const totalApproved = affiliate.totalCommissionApproved || 0
   const totalRequested = affiliate.totalCommissionRequested || 0
+  const totalPaid = affiliate.totalCommissionPaid || 0
   const totalPendingHold = affiliate.totalCommissionPending || 0
-  const availableBalance = Math.max(0, totalApproved - totalRequested)
+  const availableBalance = Math.max(0, totalApproved - totalRequested - totalPaid)
 
   let settings: any = null;
   try {

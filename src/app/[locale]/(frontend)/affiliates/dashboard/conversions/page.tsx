@@ -32,16 +32,22 @@ export default async function AffiliateConversionsPage() {
     collection: 'affiliate-conversions',
     where: { affiliate: { equals: affiliate.id } },
     sort: '-createdAt',
+    limit: 0,
+    depth: 1,
     overrideAccess: true,
   })
 
-  const mappedConversions = conversionsRes.docs.map(conv => ({
-    id: String(conv.id),
-    date: new Date(conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    orderValue: conv.orderSubtotal || 0,
-    commissionAmount: conv.commissionAmount || 0,
-    status: conv.status || 'pending',
-  }))
+  const mappedConversions = conversionsRes.docs.map(conv => {
+    const orderObj = typeof conv.order === 'object' ? conv.order : null;
+    const displayId = orderObj?.orderNumber || orderObj?.id || conv.order || conv.id;
+    return {
+      id: String(displayId),
+      date: new Date(conv.approvedAt || conv.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      orderValue: conv.orderSubtotal || conv.eligibleSubtotal || 0,
+      commissionAmount: conv.commissionAmount || 0,
+      status: conv.status || 'pending',
+    }
+  })
 
   return (
     <ConversionsClient conversions={mappedConversions} />

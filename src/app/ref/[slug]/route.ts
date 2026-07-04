@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import crypto from 'crypto'
+import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 
 export async function GET(request: Request, { params }: { params: Promise<{ slug: string }> }) {
   const payload = await getPayload({ config })
@@ -17,6 +18,14 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
   const affiliate = result.docs[0]
 
   if (!affiliate || affiliate.status !== 'approved') {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
+  // Prevent self-referral
+  const user = await getPayloadUser()
+  const affiliateUserId = typeof affiliate.user === 'object' ? affiliate.user.id : affiliate.user
+  if (user && user.id === affiliateUserId) {
+    // Redirect to home without setting any affiliate cookies or tracking clicks
     return NextResponse.redirect(new URL('/', request.url))
   }
 

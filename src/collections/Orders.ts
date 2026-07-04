@@ -22,14 +22,14 @@ export const Orders: CollectionConfig = {
     beforeChange: [
       async ({ operation, originalDoc, data, req }) => {
         if (operation === 'create') {
-          const year = new Date().getFullYear()
-          const db = req.payload.db as any
-          const counterRes: any = await db.drizzle.execute(sql`INSERT INTO "order_counters" ("id", "counter", "created_at", "updated_at") VALUES (${year}, 1, now(), now())
-                      ON CONFLICT ("id") DO UPDATE SET "counter" = "order_counters"."counter" + 1, "updated_at" = now()
-                      RETURNING "counter"`)
-          const counter = (counterRes.rows ? counterRes.rows[0].counter : counterRes[0].counter)
-          const padded = String(counter).padStart(5, '0')
-          data.orderNumber = `PEP-${year}-${padded}`
+          if (!data.orderNumber) {
+            const db = req.payload.db as any
+            const counterRes: any = await db.drizzle.execute(sql`INSERT INTO "order_counters" ("id", "counter", "created_at", "updated_at") VALUES (0, 7000, now(), now())
+                        ON CONFLICT ("id") DO UPDATE SET "counter" = "order_counters"."counter" + 1, "updated_at" = now()
+                        RETURNING "counter"`)
+            const counter = (counterRes.rows ? counterRes.rows[0].counter : counterRes[0].counter)
+            data.orderNumber = String(counter)
+          }
 
           if (Array.isArray(data.items)) {
             const snapshotItems = await Promise.all(
@@ -83,7 +83,7 @@ export const Orders: CollectionConfig = {
       },
     ],
     afterChange: [
-      afterOrderChange,
+      // temporarily disabled for migration: afterOrderChange,
       async ({ operation, doc }) => {
         if (operation === 'update') {
           // TODO: send status change email (Phase 14)
@@ -95,7 +95,7 @@ export const Orders: CollectionConfig = {
     {
       name: 'orderNumber',
       type: 'text',
-      admin: { disabled: true, description: 'Auto‑generated order identifier (PEP‑YYYY‑NNNNN).' },
+      admin: { readOnly: true, description: 'Auto‑generated order identifier (e.g., 7000).' },
     },
     {
       name: 'owner',
@@ -128,6 +128,7 @@ export const Orders: CollectionConfig = {
           required: false,
         },
         { name: 'variant', type: 'text', admin: { description: 'The variant or bundle purchased' } },
+        { name: 'variantTitle', type: 'text', admin: { description: 'The display title of the variant' } },
         { name: 'price', type: 'number', admin: { description: 'Price paid per unit at the time of order' } },
         { name: 'quantity', type: 'number', required: true },
         {

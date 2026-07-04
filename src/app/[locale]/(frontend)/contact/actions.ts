@@ -20,7 +20,14 @@ export async function submitContactForm(formData: FormData) {
     }
 
     const html = `
-      <div style="font-family: sans-serif; color: #111827;">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f9fafb;">
+      <div style="font-family: sans-serif; color: #111827; width: 100%; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 20px; line-height: 1.6;">
         <h2 style="color: #000;">New Contact Form Submission</h2>
         <p><strong>Department:</strong> ${department || 'general'}</p>
         <p><strong>Name:</strong> ${name}</p>
@@ -30,10 +37,12 @@ export async function submitContactForm(formData: FormData) {
         <p><strong>Message:</strong></p>
         <p style="white-space: pre-wrap; background: #f9fafb; padding: 15px; border-radius: 6px;">${message}</p>
       </div>
+</body>
+</html>
     `
 
     await payload.sendEmail({
-      to: 'support@peptides7.com',
+      to: 'contact@99puritypeptides.com',
       replyTo: email,
       subject: `[Contact Form] ${subject}`,
       html: html,

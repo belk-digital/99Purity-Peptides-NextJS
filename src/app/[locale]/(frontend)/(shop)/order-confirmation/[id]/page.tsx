@@ -67,10 +67,10 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
      // Use product object since depth > 0 populates relationships
      const productData = typeof item.product === 'object' ? item.product : item.productSnapshot
      
-     let displayVariant = item.variant || t('defaultVariant');
-     if (productData?.variants?.length) {
+     let displayVariant = item.variantTitle || item.variant || t('defaultVariant');
+     if (productData?.variants?.length && !item.variantTitle) {
         for (const v of productData.variants) {
-           const vTitle = v.options?.map((o:any) => o.value).join(' ') || `Variant`;
+           const vTitle = v.title || v.options?.map((o:any) => o.value).join(' ') || `Variant`;
            
            if (displayVariant === v.sku) {
               displayVariant = vTitle;

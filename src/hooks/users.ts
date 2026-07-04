@@ -21,9 +21,33 @@ export const beforeChangeEmailLowercase: CollectionBeforeChangeHook = async ({ d
  */
 export const afterCreateUserTodo: CollectionAfterChangeHook = async ({ doc, operation, req }) => {
   if (operation === 'create') {
-    console.log(
-      `[TODO] After user creation – add Stripe customer & welcome email for user ${doc.id}`,
-    )
+    if (doc.email) {
+      try {
+        const { generateWelcomeEmail } = await import('@/lib/emails/generateWelcomeEmail')
+        const welcomeHtml = await generateWelcomeEmail(doc)
+        
+        try {
+          await req.payload.sendEmail({
+            from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
+            to: doc.email,
+            subject: 'Welcome to 99 Purity Peptides!',
+            html: welcomeHtml,
+          })
+          req.payload.logger.info(`Sent welcome email to new user ${doc.email}`)
+        } catch (err) {
+          req.payload.logger.error({ err }, `Failed to send welcome email to ${doc.email}`)
+        }
+
+        // Notify admin
+        await req.payload.sendEmail({
+          to: 'support@99puritypeptides.com',
+          subject: `New User Registration: ${doc.firstName || ''} ${doc.lastName || ''}`,
+          html: `<p>A new user has registered an account.</p><p><strong>Email:</strong> ${doc.email}</p><p><strong>Name:</strong> ${doc.firstName || ''} ${doc.lastName || ''}</p>`
+        })
+      } catch (err) {
+        req.payload.logger.error({ err }, `Failed to set up welcome emails for ${doc.email}`)
+      }
+    }
 
     // Retroactive Order Binding
     if (doc.email) {

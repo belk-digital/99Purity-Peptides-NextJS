@@ -8,7 +8,7 @@ import { attributeOrder } from '@/lib/affiliates/commission'
 import { cookies } from 'next/headers'
 import { getLocale } from 'next-intl/server'
 
-export async function addToCart(productId: string | number, quantity: number = 1, providedVariantSku?: string, providedPriceSnapshot?: number) {
+export async function addToCart(productId: string | number, quantity: number = 1, providedVariantSku?: string, providedPriceSnapshot?: number, providedVariantTitle?: string) {
   try {
     const user = await getPayloadUser()
     if (!user) return { success: false, error: 'Must be logged in to add to cart' }
@@ -44,6 +44,7 @@ export async function addToCart(productId: string | number, quantity: number = 1
           items: [{
             product: numericProductId as any,
             variantSku,
+            variantTitle: providedVariantTitle || null,
             quantity,
             priceSnapshot,
             addedAt: new Date().toISOString(),
@@ -55,6 +56,7 @@ export async function addToCart(productId: string | number, quantity: number = 1
       const items = (cart.items || []).map((i: any) => ({
         product: Number(typeof i.product === 'object' ? i.product.id : i.product),
         variantSku: String(i.variantSku ?? ''),
+        variantTitle: i.variantTitle ?? null,
         quantity: Number(i.quantity ?? 1),
         priceSnapshot: Number(i.priceSnapshot ?? 0),
       }))
@@ -65,8 +67,9 @@ export async function addToCart(productId: string | number, quantity: number = 1
 
       if (existingItemIndex > -1) {
         items[existingItemIndex].quantity += quantity
+        if (providedVariantTitle) items[existingItemIndex].variantTitle = providedVariantTitle
       } else {
-        items.push({ product: numericProductId, quantity, variantSku, priceSnapshot })
+        items.push({ product: numericProductId, quantity, variantSku, variantTitle: providedVariantTitle || null, priceSnapshot })
       }
 
       cart = await payload.update({
@@ -268,6 +271,25 @@ export async function verifyCoupon(couponCode: string, subtotal: number, clientC
 
     const coupon = coupons.docs[0]
     if (!coupon) return { valid: false, error: 'Coupon code not found' }
+
+    // Prevent Self-Referral
+    if (user) {
+      const affiliates = await payload.find({
+        collection: 'affiliates',
+        where: {
+          and: [
+            { user: { equals: user.id } },
+            { couponCode: { equals: coupon.code } }
+          ]
+        },
+        limit: 1,
+        overrideAccess: true,
+      })
+      
+      if (affiliates.docs.length > 0) {
+        return { valid: false, error: 'You cannot use your own affiliate coupon' }
+      }
+    }
 
     // Check expiration
     if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) {
@@ -566,6 +588,7 @@ export async function processCheckout(formData: FormData) {
           product: typeof item.product === 'object' ? item.product.id : item.product,
           quantity: item.quantity,
           variant: item.variantSku || 'DEFAULT',
+          variantTitle: item.variantTitle || null,
           price: typeof item.priceSnapshot === 'number' ? item.priceSnapshot : 0
         })) as any,
         shippingAddress: finalAddress
