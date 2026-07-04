@@ -728,6 +728,14 @@ export interface Order {
     | null;
   shippingMethod?: string | null;
   /**
+   * URL to track the package
+   */
+  trackingLink?: string | null;
+  /**
+   * Check this box before saving to email the tracking link to the customer.
+   */
+  sendTrackingEmail?: boolean | null;
+  /**
    * Zelle orders require manual payment confirmation before fulfillment.
    */
   paymentMethod?: ('stripe' | 'zelle') | null;
@@ -1764,6 +1772,8 @@ export interface OrdersSelect<T extends boolean = true> {
         id?: T;
       };
   shippingMethod?: T;
+  trackingLink?: T;
+  sendTrackingEmail?: T;
   paymentMethod?: T;
   couponCode?: T;
   customerNote?: T;

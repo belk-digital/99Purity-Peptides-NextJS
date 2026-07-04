@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
       <div className="w-full flex flex-col gap-6">
         {submitted ? (
           <div className="flex flex-col items-center justify-center text-center space-y-6 py-8">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#1e5661]/10 text-[#1e5661] dark:bg-[#1e5661]/20 dark:text-[#84d0d9]">
               <MailCheck size={32} strokeWidth={1.5} />
             </div>
             <div className="space-y-2">

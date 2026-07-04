@@ -1,7 +1,4 @@
 import { CollectionConfig } from 'payload'
-import { validateStatusTransition } from '../lib/orders/state'
-import { sql } from '@payloadcms/db-postgres'
-import { afterOrderChange } from '@/hooks/orders'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -20,79 +17,16 @@ export const Orders: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      async ({ operation, originalDoc, data, req }) => {
-        if (operation === 'create') {
-          if (!data.orderNumber) {
-            const db = req.payload.db as any
-            const counterRes: any = await db.drizzle.execute(sql`INSERT INTO "order_counters" ("id", "counter", "created_at", "updated_at") VALUES (0, 7000, now(), now())
-                        ON CONFLICT ("id") DO UPDATE SET "counter" = "order_counters"."counter" + 1, "updated_at" = now()
-                        RETURNING "counter"`)
-            const counter = (counterRes.rows ? counterRes.rows[0].counter : counterRes[0].counter)
-            data.orderNumber = String(counter)
-          }
-
-          if (Array.isArray(data.items)) {
-            const snapshotItems = await Promise.all(
-              data.items.map(async (item: any) => {
-                const product = await req.payload.find({
-                  collection: 'products',
-                  where: { id: { equals: item.product } },
-                  depth: 0,
-                })
-                return { ...item, productSnapshot: product?.docs?.[0] ?? null }
-              }),
-            )
-            data.items = snapshotItems
-          }
-
-          if (data.shippingAddress) data.shippingAddress = { ...data.shippingAddress }
-          if (data.billingAddress && data.billingAddress.line1) {
-            data.billingAddress = { ...data.billingAddress }
-          } else if (data.shippingAddress) {
-            data.billingAddress = { ...data.shippingAddress }
-          }
-        }
-
-        if (operation === 'update' && originalDoc) {
-          const oldStatus = originalDoc.status as any
-          const newStatus = data.status as any
-          if (oldStatus && newStatus && oldStatus !== newStatus) {
-            validateStatusTransition(oldStatus, newStatus)
-          }
-        }
-
-        if (data.sendTrackingEmail) {
-          req.context.queueTrackingEmail = true
-          data.sendTrackingEmail = null
-        }
-
-        // Handle notes processing
-        if (data.notes && Array.isArray(data.notes)) {
-          const queuedCustomerNotes: string[] = []
-          
-          data.notes = data.notes.map((note: any) => {
-            // Auto-stamp the date for new notes
-            if (!note.date) {
-              note.date = new Date().toISOString()
-            }
-            
-            // Queue customer notes to be emailed if they haven't been sent yet
-            if (note.type === 'customer' && !note.isEmailed) {
-              queuedCustomerNotes.push(note.note)
-              note.isEmailed = true // Mark as emailed so it doesn't get sent again
-            }
-            
-            return note
-          })
-
-          if (queuedCustomerNotes.length > 0) {
-            req.context.queuedCustomerNotes = queuedCustomerNotes
-          }
-        }
+      async (args) => {
+        const { beforeOrderChange } = await import('@/hooks/orders')
+        return beforeOrderChange(args)
       },
     ],
     afterChange: [
-      afterOrderChange,
+      async (args) => {
+        const { afterOrderChange } = await import('@/hooks/orders')
+        return afterOrderChange(args)
+      },
       async ({ operation, doc }) => {
         if (operation === 'update') {
           // TODO: send status change email (Phase 14)

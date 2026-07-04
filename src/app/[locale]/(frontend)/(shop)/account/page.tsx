@@ -110,16 +110,16 @@ export default async function AccountOverviewPage() {
     ordersPlaced,
     wishlistCount,
     maxxPoints: user.maxxPoints || 0,
-    memberSince: new Date(user.createdAt).getFullYear().toString()
+    memberSince: user.createdAt ? new Date(user.createdAt).getFullYear().toString() : new Date().getFullYear().toString()
   }
 
   const userName = user?.firstName || user?.email?.split('@')[0] || 'User'
 
   // Map to simple types for client component to keep it clean
   const recentOrders = orders.map(order => ({
-    id: String(order.id), // Payload IDs can be number or string, we convert to string for safety in URLs
+    id: String(order.id),
     orderNumber: order.orderNumber || String(order.id),
-    date: new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    date: order.createdAt ? new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Unknown Date',
     status: order.status,
     total: order.total ? order.total / 100 : 0
   }))
@@ -138,7 +138,7 @@ export default async function AccountOverviewPage() {
       stats={stats}
       recentOrders={recentOrders}
       defaultAddress={defaultAddress}
-      affiliateStatus={affiliateStatus}
+      affiliateStatus={affiliateStatus as any}
       userName={userName}
       spending={spending}
     />

@@ -16,12 +16,13 @@ export function LanguageSwitcher({ className = '', variant = 'dark' }: { classNa
   const [isPending, startTransition] = useTransition()
 
   async function handleChange(nextLocale: string) {
+    if (nextLocale === locale) return;
+    
     // Set cookie on the server first to guarantee the middleware sees it
     await setLocaleCookie(nextLocale)
     
     startTransition(() => {
       router.replace(pathname, { locale: nextLocale })
-      router.refresh()
     })
   }
 
@@ -37,6 +38,7 @@ export function LanguageSwitcher({ className = '', variant = 'dark' }: { classNa
             <button
               key={loc}
               type="button"
+              disabled={isActive || isPending}
               onClick={() => handleChange(loc)}
               aria-current={isActive}
               className={`relative z-10 px-2 py-1 text-[9px] font-bold tracking-widest uppercase transition-colors duration-300 ${
