@@ -63,15 +63,15 @@ export const Affiliates: CollectionConfig = {
         {
           label: 'Stats',
           fields: [
-            { name: 'totalClicks', type: 'number', defaultValue: 0, admin: { readOnly: true } },
-            { name: 'uniqueClicks', type: 'number', defaultValue: 0, admin: { readOnly: true } },
-            { name: 'totalConversions', type: 'number', defaultValue: 0, admin: { readOnly: true } },
-            { name: 'totalRevenue', type: 'number', defaultValue: 0, admin: { readOnly: true, description: 'In cents' } },
-            { name: 'totalCommissionEarned', type: 'number', defaultValue: 0, admin: { readOnly: true, description: 'In cents' } },
-            { name: 'totalCommissionPending', type: 'number', defaultValue: 0, admin: { readOnly: true, description: 'In cents' } },
-            { name: 'totalCommissionApproved', type: 'number', defaultValue: 0, admin: { readOnly: true, description: 'In cents' } },
-            { name: 'totalCommissionRequested', type: 'number', defaultValue: 0, admin: { readOnly: true, description: 'In cents (pending/approved payout requests)' } },
-            { name: 'totalCommissionPaid', type: 'number', defaultValue: 0, admin: { readOnly: true, description: 'In cents' } },
+            { name: 'totalClicks', type: 'number', defaultValue: 0 },
+            { name: 'uniqueClicks', type: 'number', defaultValue: 0 },
+            { name: 'totalConversions', type: 'number', defaultValue: 0 },
+            { name: 'totalRevenue', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
+            { name: 'totalCommissionEarned', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
+            { name: 'totalCommissionPending', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
+            { name: 'totalCommissionApproved', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
+            { name: 'totalCommissionRequested', type: 'number', defaultValue: 0, admin: { description: 'In cents (pending/approved payout requests)' } },
+            { name: 'totalCommissionPaid', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
           ]
         },
         {
