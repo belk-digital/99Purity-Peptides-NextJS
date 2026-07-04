@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
