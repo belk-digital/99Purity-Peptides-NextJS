@@ -9,6 +9,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import { Heart, ChevronRight, ChevronLeft, Download, Check, ShieldCheck, FlaskConical, MapPin, Zap, ShoppingCart, Truck, Sparkles, Loader2, Award } from 'lucide-react'
 import { Container } from '@/components/ui/container'
 import { Button } from '@/components/ui/button'
+import { PinterestGlassCard } from '@/components/home/PinterestGlassCard'
 import { Badge } from '@/components/ui/badge'
 import { StockIndicator } from '@/components/ui/stock-indicator'
 import { useCartStore } from '@/lib/cart/store'
@@ -311,13 +312,13 @@ export function ProductClient({ product }: ProductClientProps) {
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-white">
+    <div className="flex flex-col w-full min-h-screen bg-white overflow-x-clip">
       {/* 1. Hero Section */}
       <section className="w-full relative z-10 flex flex-col lg:flex-row bg-white">
 
         {/* Left: Sticky Image Panel */}
         <div className="w-full lg:w-1/2 lg:h-screen lg:sticky lg:top-0 flex items-start justify-center bg-gray-50 relative lg:overflow-hidden">
-          <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[84%] pt-[160px] pb-6 sm:pt-[170px] sm:pb-10 lg:pt-[160px] lg:pb-6">
+          <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[84%] pt-[100px] sm:pt-[120px] lg:pt-[160px] pb-6 sm:pb-10 lg:pb-6">
             <ImageGallery images={product.images} />
           </div>
         </div>
@@ -361,7 +362,7 @@ export function ProductClient({ product }: ProductClientProps) {
             initial={{ opacity: 0.6, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="flex items-baseline gap-3 mb-8"
+            className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5 mb-8"
           >
             <span className="text-[28px] sm:text-[32px] lg:text-[40px] font-bold text-black leading-none tracking-tight">
               {selectedVariant?.salePrice || selectedVariant?.price}
@@ -604,28 +605,23 @@ export function ProductClient({ product }: ProductClientProps) {
             )}
           </div>
 
-          {/* Stat cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { value: '≥99%',    label: t('statVerifiedPurityLabel'),  desc: t('statVerifiedPurityDesc')          },
               { value: t('statLabTestedValue'), label: t('statLabTestedLabel'),       desc: t('statLabTestedDesc')    },
               { value: t('statGradeQualityValue'),  label: t('statGradeQualityLabel'),    desc: t('statGradeQualityDesc')        },
               { value: 'COA',       label: t('statDocumentedLabel'),       desc: t('statDocumentedDesc')       },
             ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.45, delay: i * 0.07, ease: 'easeOut' }}
-                className="border border-white/[0.07] rounded-2xl p-4 sm:p-5 lg:p-7 bg-white/[0.02] hover:bg-white/[0.04] transition-colors"
-              >
-                <div className="font-heading text-[20px] sm:text-[24px] lg:text-[32px] font-black text-white leading-none tracking-tighter mb-3 break-words">
-                  {stat.value}
-                </div>
-                <div className="text-[10px] font-bold text-white/55 uppercase tracking-[0.18em] mb-1.5">{stat.label}</div>
-                <div className="text-[11px] text-white/25 leading-relaxed">{stat.desc}</div>
-              </motion.div>
+              <div key={stat.label} className={`h-full ${i % 2 !== 0 ? "md:translate-y-8 lg:translate-y-0" : ""}`}>
+                <PinterestGlassCard
+                  title={stat.value}
+                  description={stat.desc}
+                  tag={stat.label}
+                  iconPosition="none"
+                  theme="black"
+                  className="h-full"
+                />
+              </div>
             ))}
           </div>
         </div>

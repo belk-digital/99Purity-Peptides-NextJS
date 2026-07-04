@@ -59,7 +59,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Thumbnails Sidebar (Left on Desktop, Bottom on Mobile) */}
       {images.length > 1 && (
-        <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto scrollbar-none w-full lg:w-[68px] shrink-0 pb-1 lg:pb-0 lg:max-h-[680px]">
+        <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto scrollbar-none w-full lg:w-[68px] shrink-0 pb-1 lg:pb-0 lg:max-h-[calc(100vh-184px)]">
           {images.map((img, idx) => {
             const isActive = activeIndex === idx
             return (
@@ -89,7 +89,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Main Image */}
       <div
-        className="relative w-full aspect-[4/5] lg:aspect-auto lg:h-[680px] bg-cream-warm rounded-2xl overflow-hidden cursor-zoom-in group"
+        className="relative w-full aspect-[4/5] lg:aspect-auto lg:h-[calc(100vh-184px)] lg:min-h-[420px] bg-gray-50 rounded-2xl overflow-hidden cursor-zoom-in group"
         ref={emblaRef}
       >
         <div className="flex h-full">
@@ -105,7 +105,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                 alt={t('productViewAlt', { number: idx + 1 })}
                 fill
                 priority={idx === 0}
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+                className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.07]"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
