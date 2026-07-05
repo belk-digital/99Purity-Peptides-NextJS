@@ -38,6 +38,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (webpackConfig) => {

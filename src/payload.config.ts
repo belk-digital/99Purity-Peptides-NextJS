@@ -5,6 +5,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { resendAdapter } from '@payloadcms/email-resend'
 
 import { Users } from './collections/Users'
@@ -169,6 +170,17 @@ export default buildConfig({
         },
       })
     ] : []),
+    seoPlugin({
+      collections: ['pages', 'blog-posts'],
+      tabbedUI: true,
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }: any) => (doc?.title ? `${doc.title} | 99 Purity Peptides` : '99 Purity Peptides'),
+      generateDescription: ({ doc }: any) => doc?.excerpt || doc?.seoDescription || '',
+      generateURL: ({ doc }: any) => {
+        const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+        return `${base}/${doc?.slug || ''}`
+      },
+    }),
   ],
   email: resendAdapter({
     defaultFromAddress: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',

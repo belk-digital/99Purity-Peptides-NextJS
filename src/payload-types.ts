@@ -849,6 +849,11 @@ export interface BlogPost {
   title: string;
   slug?: string | null;
   author: number | User;
+  featuredImage?: (number | null) | Media;
+  /**
+   * Short summary shown on blog listing cards and used as the default SEO/social description.
+   */
+  excerpt?: string | null;
   content?: {
     root: {
       type: string;
@@ -866,6 +871,14 @@ export interface BlogPost {
   } | null;
   publishedAt?: string | null;
   status?: ('draft' | 'published') | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -893,6 +906,14 @@ export interface Page {
     [k: string]: unknown;
   } | null;
   status?: ('draft' | 'published') | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1831,9 +1852,18 @@ export interface BlogPostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   author?: T;
+  featuredImage?: T;
+  excerpt?: T;
   content?: T;
   publishedAt?: T;
   status?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1846,6 +1876,13 @@ export interface PagesSelect<T extends boolean = true> {
   slug?: T;
   content?: T;
   status?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

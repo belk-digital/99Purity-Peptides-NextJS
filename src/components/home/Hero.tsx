@@ -253,17 +253,17 @@ export function Hero() {
                     initial={{ opacity: 0, x: 20, scale: 0.95 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -20, scale: 0.95 }}
-                    transition={{ 
-                      x: { type: "spring", stiffness: 300, damping: 30 },
-                      opacity: { duration: 0.4 },
-                      scale: { duration: 0.4 }
+                    transition={{
+                      x: { type: "spring", stiffness: 120, damping: 26 },
+                      opacity: { duration: 0.8, ease: "easeInOut" },
+                      scale: { duration: 0.8, ease: "easeInOut" }
                     }}
                     className="absolute inset-0 flex flex-col items-start justify-center pb-8 cursor-pointer active:cursor-grabbing"
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.6}
                     whileTap={{ cursor: "grabbing" }}
-                    onTap={() => router.push(`/product/${HERO_PRODUCTS[currentSlide].slug}`)}
+                    onTap={() => router.push(`/products/${HERO_PRODUCTS[currentSlide].slug}`)}
                     onDragEnd={(e, { offset, velocity }) => {
                       const swipePower = offset.x + velocity.x * 0.2;
                       if (swipePower < -40) {
@@ -307,7 +307,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
                         className="absolute inset-0 text-white text-2xl font-bold font-heading"
                       >
                         {HERO_PRODUCTS[currentSlide].price}
