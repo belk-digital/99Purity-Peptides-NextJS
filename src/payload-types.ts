@@ -239,7 +239,7 @@ export interface User {
   /**
    * Purity Points ($1 per point). Can be used by users at checkout.
    */
-  maxxPoints?: number | null;
+  purityPoints?: number | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -747,6 +747,10 @@ export interface Order {
   guestEmail?: string | null;
   createdAt: string;
   updatedAt: string;
+  /**
+   * True if inventory, coupons, and points have been processed for this order.
+   */
+  isFinalized?: boolean | null;
   /**
    * Keep a running history of internal notes or send messages directly to the customer.
    */
@@ -1442,7 +1446,7 @@ export interface UsersSelect<T extends boolean = true> {
   defaultBillingAddress?: T;
   lastLoginAt?: T;
   metadata?: T;
-  maxxPoints?: T;
+  purityPoints?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1801,6 +1805,7 @@ export interface OrdersSelect<T extends boolean = true> {
   guestEmail?: T;
   createdAt?: T;
   updatedAt?: T;
+  isFinalized?: T;
   notes?:
     | T
     | {

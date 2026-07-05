@@ -146,7 +146,8 @@ export const Users: CollectionConfig = {
       type: 'json',
     },
     {
-      name: 'maxxPoints',
+      name: 'purityPoints',
+      label: 'Purity Points',
       type: 'number',
       defaultValue: 0,
       admin: {

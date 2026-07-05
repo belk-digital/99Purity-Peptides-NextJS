@@ -26,8 +26,8 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
     }
 
     // Double-check to prevent duplicate finalization
-    if (order.paymentStatus === 'captured' && order.fulfillmentStatus !== 'unfulfilled') {
-      console.warn(`finalizeOrder: Order ${orderId} already captured and processed. Skipping.`)
+    if (order.isFinalized) {
+      console.warn(`finalizeOrder: Order ${orderId} already finalized. Skipping.`)
       return true
     }
 
@@ -41,6 +41,9 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
           paymentStatus: 'captured',
         }
       })
+      // Update in-memory object so subsequent emails don't show unpaid instructions
+      order.status = 'paid';
+      order.paymentStatus = 'captured';
     }
 
     // 2. Decrement Inventory
@@ -86,7 +89,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       const userId = typeof order.owner === 'object' ? order.owner.id : order.owner
       const user = await payload.findByID({ collection: 'users', id: userId })
       
-      let currentPoints = user.maxxPoints || 0
+      let currentPoints = user.purityPoints || 0
       // Deduct redeemed
       if (order.redeemedPoints && order.redeemedPoints > 0) {
           currentPoints = Math.max(0, currentPoints - order.redeemedPoints)
@@ -95,7 +98,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       await payload.update({
           collection: 'users',
           id: userId,
-          data: { maxxPoints: currentPoints }
+          data: { purityPoints: currentPoints }
       })
 
       // Clear user's Payload cart instantly
@@ -144,7 +147,12 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
         console.error('Failed to send confirmation email', err)
     }
 
-
+    // 7. Mark as Finalized
+    await payload.update({
+      collection: 'orders',
+      id: idToUse,
+      data: { isFinalized: true }
+    })
 
     return true
 

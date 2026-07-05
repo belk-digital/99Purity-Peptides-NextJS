@@ -4,7 +4,7 @@ import crypto from 'crypto'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import Stripe from 'stripe'
-import { verifyCoupon, getUserMaxxPoints } from '../actions'
+import { verifyCoupon, getUserPurityPoints } from '../actions'
 import { cookies } from 'next/headers'
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
 import { establishSessionForNewUser } from '@/lib/auth/establishSession'
@@ -136,7 +136,7 @@ export async function createPaymentIntent(
 
   let pointsToRedeem = 0;
   if (isRedeemingPoints) {
-    const availablePoints = await getUserMaxxPoints()
+    const availablePoints = await getUserPurityPoints()
     pointsToRedeem = Math.min(availablePoints, totalBeforePoints)
   }
 
@@ -274,7 +274,7 @@ export async function createPayloadOrder(
 
   let pointsToRedeem = 0;
   if (isRedeemingPoints) {
-    const availablePoints = await getUserMaxxPoints()
+    const availablePoints = await getUserPurityPoints()
     pointsToRedeem = Math.min(availablePoints, totalBeforePoints)
   }
 
@@ -382,6 +382,29 @@ export async function createPayloadOrder(
           affiliateId: (await cookies()).get('affiliate_ref')?.value,
           clickId: (await cookies()).get('affiliate_click_id')?.value,
        })
+    } else if (paymentMethod === 'zelle') {
+       // Send initial order invoice immediately for Zelle orders
+       try {
+           let customerEmail = order.guestEmail;
+           if (!customerEmail && order.owner) {
+               const userDoc = typeof order.owner === 'object' ? order.owner : await payload.findByID({ collection: 'users', id: order.owner });
+               customerEmail = userDoc.email;
+           }
+           if (customerEmail) {
+               const { generateOrderInvoiceHtml } = await import('@/lib/emails/generateOrderEmail');
+               const invoiceHtml = await generateOrderInvoiceHtml(order, payload);
+
+               await payload.sendEmail({
+                   from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
+                   to: customerEmail,
+                   bcc: 'orders@99puritypeptides.com',
+                   subject: `Order Invoice #${order.orderNumber || order.id}`,
+                   html: invoiceHtml,
+               })
+           }
+       } catch (err) {
+           console.error('Failed to send initial Zelle confirmation email', err)
+       }
     }
 
     // Save this shipping address to the account for next time, if it's a newly-typed one

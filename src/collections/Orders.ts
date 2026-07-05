@@ -230,6 +230,16 @@ export const Orders: CollectionConfig = {
       },
     },
     {
+      name: 'isFinalized',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+        description: 'True if inventory, coupons, and points have been processed for this order.',
+      },
+    },
+    {
       name: 'notes',
       type: 'array',
       label: 'Order Notes',

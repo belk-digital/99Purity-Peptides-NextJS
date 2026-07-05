@@ -78,8 +78,7 @@ export const beforeOrderChange: CollectionBeforeChangeHook = async ({ operation,
 
 export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previousDoc, operation, req }) => {
   // Sync to Google Sheets if it became paid, captured, or completed
-  const becamePaid = (doc.paymentStatus === 'paid' || doc.paymentStatus === 'captured') && 
-                     (previousDoc?.paymentStatus !== 'paid' && previousDoc?.paymentStatus !== 'captured')
+  const becamePaid = doc.paymentStatus === 'captured' && previousDoc?.paymentStatus !== 'captured'
   const becameCompleted = doc.status === 'completed' && previousDoc?.status !== 'completed'
 
   if (becamePaid || becameCompleted) {
@@ -88,6 +87,24 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
       req.payload.logger.info(`Synced Order ${doc.id} to Google Sheets from hook`)
     } catch (err) {
       req.payload.logger.error({ err }, `Failed to sync Order ${doc.id} to Google Sheets`)
+    }
+  }
+
+  // Trigger finalizeOrder if the admin marks it as paid, shipped, fulfilled, or completed,
+  // or if payment is captured, AND it hasn't been finalized yet.
+  const statusImpliesPaid = ['paid', 'shipped', 'fulfilled', 'completed'].includes(doc.status)
+  const previousStatusImpliesPaid = previousDoc?.status ? ['paid', 'shipped', 'fulfilled', 'completed'].includes(previousDoc.status) : false
+  const becameStatusPaid = statusImpliesPaid && !previousStatusImpliesPaid
+
+  if ((becamePaid || becameStatusPaid) && !doc.isFinalized) {
+    try {
+      const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
+      // Running it asynchronously so it doesn't block the UI response
+      finalizeOrder(doc.id).catch(err => {
+        req.payload.logger.error({ err }, `Failed to finalize Order ${doc.id} in background`)
+      })
+    } catch (err) {
+      req.payload.logger.error({ err }, `Failed to import finalizeOrder for Order ${doc.id}`)
     }
   }
 
