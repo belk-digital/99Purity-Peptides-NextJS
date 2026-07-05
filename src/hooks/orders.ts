@@ -2,6 +2,8 @@ import type { CollectionAfterChangeHook, CollectionBeforeChangeHook } from 'payl
 import { appendOrderToSheet } from '@/lib/google/sheets'
 import { sql } from '@payloadcms/db-postgres'
 import { validateStatusTransition } from '@/lib/orders/state'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
+import { releaseStock, releaseCouponUsage, releasePoints } from '@/lib/orders/reserve'
 
 export const beforeOrderChange: CollectionBeforeChangeHook = async ({ operation, originalDoc, data, req }) => {
   if (operation === 'create') {
@@ -139,20 +141,65 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
       if (doc.redeemedPoints && doc.redeemedPoints > 0 && doc.owner) {
         try {
           const userId = typeof doc.owner === 'object' ? doc.owner.id : doc.owner
-          const user = await req.payload.findByID({ collection: 'users', id: userId, overrideAccess: true })
-          
-          if (user && typeof user.purityPoints === 'number') {
-            await req.payload.update({
-              collection: 'users',
-              id: userId,
-              data: { purityPoints: user.purityPoints + doc.redeemedPoints },
-              overrideAccess: true,
-            })
-            req.payload.logger.info(`Refunded ${doc.redeemedPoints} purity points to user ${userId} for voided order ${doc.id}`)
-          }
+          await releasePoints(req.payload, userId, doc.redeemedPoints)
+          req.payload.logger.info(`Refunded ${doc.redeemedPoints} purity points to user ${userId} for voided order ${doc.id}`)
         } catch (err) {
           req.payload.logger.error({ err }, `Failed to refund purity points for order ${doc.id}`)
         }
+      }
+
+      // Release the reserved stock back to inventory
+      if (Array.isArray(doc.items) && doc.items.length > 0) {
+        try {
+          await releaseStock(
+            req.payload,
+            doc.items.map((item: any) => ({
+              productId: typeof item.product === 'object' ? item.product?.id : item.product,
+              quantity: item.quantity || 1,
+            })).filter((i: any) => i.productId),
+          )
+        } catch (err) {
+          req.payload.logger.error({ err }, `Failed to release reserved stock for order ${doc.id}`)
+        }
+      }
+
+      // Release the coupon's usage slot / store credit balance
+      if (doc.couponCode) {
+        try {
+          const coupons = await req.payload.find({
+            collection: 'coupons',
+            where: { code: { equals: doc.couponCode } },
+            overrideAccess: true,
+            limit: 1,
+          })
+          const coupon = coupons.docs[0]
+          if (coupon) {
+            await releaseCouponUsage(req.payload, coupon.id, Math.round((doc.discountTotal || 0) * 100), coupon.type === 'store_credit')
+          }
+        } catch (err) {
+          req.payload.logger.error({ err }, `Failed to release coupon usage for order ${doc.id}`)
+        }
+      }
+
+      // Notify the customer their order was cancelled/refunded
+      try {
+        let customerEmail = doc.guestEmail
+        if (!customerEmail && doc.owner) {
+          const ownerId = typeof doc.owner === 'object' ? doc.owner.id : doc.owner
+          const user = typeof doc.owner === 'object' ? doc.owner : await req.payload.findByID({ collection: 'users', id: ownerId, depth: 0 })
+          customerEmail = user?.email
+        }
+        if (customerEmail) {
+          const label = doc.status === 'refunded' ? 'refunded' : 'cancelled'
+          await sendTrackedEmail(req.payload, {
+            from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
+            to: customerEmail,
+            subject: `Your Order #${doc.orderNumber || doc.id} has been ${label}`,
+            html: `<p>Hi,</p><p>Your order <strong>#${doc.orderNumber || doc.id}</strong> has been <strong>${label}</strong>.</p>${doc.redeemedPoints ? `<p>Any Purity Points used on this order have been credited back to your account.</p>` : ''}<p>If you have questions, just reply to this email.</p>`,
+          })
+        }
+      } catch (err) {
+        req.payload.logger.error({ err }, `Failed to send cancellation/refund email for order ${doc.id}`)
       }
     }
   }
@@ -189,7 +236,7 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
           // Pass the note into the email generator
           const invoiceHtml = await generateOrderInvoiceHtml(doc, req.payload, customNote)
           
-          await req.payload.sendEmail({
+          await sendTrackedEmail(req.payload, {
             from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
             to: customerEmail,
             subject: `Update regarding your Order #${doc.orderNumber || doc.id}`,
@@ -225,7 +272,7 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
         const { generateOrderInvoiceHtml } = await import('@/lib/emails/generateOrderEmail')
         const invoiceHtml = await generateOrderInvoiceHtml(doc, req.payload, "Great news! Your order has been shipped. You can track your package using the tracking link below.")
         
-        await req.payload.sendEmail({
+        await sendTrackedEmail(req.payload, {
           from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
           to: customerEmail,
           subject: `Your Order #${doc.orderNumber || doc.id} has shipped!`,

@@ -2,6 +2,7 @@ import type { CollectionAfterChangeHook } from 'payload'
 import slugify from 'slugify'
 import { generateAffiliateWelcomeEmail } from '@/lib/emails/generateAffiliateWelcomeEmail'
 import { generateAdminAffiliateNotificationEmail } from '@/lib/emails/generateAdminAffiliateNotificationEmail'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 
 function generateRandomString(length: number) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -147,7 +148,7 @@ export const afterAffiliateApplicationChange: CollectionAfterChangeHook = async 
         if (userDoc && userDoc.email) {
           // Send Welcome Email to Affiliate
           const welcomeHtml = await generateAffiliateWelcomeEmail(newAffiliate, userDoc)
-          await req.payload.sendEmail({
+          await sendTrackedEmail(req.payload, {
             from: 'Affiliates | 99 Purity Peptides <affiliates@99puritypeptides.com>',
             to: userDoc.email,
             subject: 'Welcome to the Partner Program! 🎉',
@@ -157,7 +158,7 @@ export const afterAffiliateApplicationChange: CollectionAfterChangeHook = async 
           
           // Send Notification Email to Admin
           const adminHtml = generateAdminAffiliateNotificationEmail(doc, newAffiliate, userDoc)
-          await req.payload.sendEmail({
+          await sendTrackedEmail(req.payload, {
             to: 'affiliates@99puritypeptides.com',
             subject: `New Affiliate Registered: ${newAffiliate.displayName}`,
             html: adminHtml,

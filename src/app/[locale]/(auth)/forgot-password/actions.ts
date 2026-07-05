@@ -3,6 +3,8 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { forgotPasswordSchema, type ForgotPasswordInput } from '@/lib/validations/auth'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
+import { checkRateLimit } from '@/lib/rateLimit'
 
 export async function requestPasswordReset(input: ForgotPasswordInput) {
   const parsed = forgotPasswordSchema.safeParse(input)
@@ -11,6 +13,11 @@ export async function requestPasswordReset(input: ForgotPasswordInput) {
   }
 
   const payload = await getPayload({ config })
+
+  const { allowed } = await checkRateLimit(`forgot-password:${parsed.data.email.toLowerCase()}`, 5, 60 * 60)
+  if (!allowed) {
+    return { success: true as const }
+  }
 
   // Always return success regardless of whether the email exists, to avoid leaking account existence.
   try {
@@ -36,7 +43,7 @@ export async function requestPasswordReset(input: ForgotPasswordInput) {
         const { generateForgotPasswordEmail } = await import('@/lib/emails/generateForgotPasswordEmail')
         const html = await generateForgotPasswordEmail(url, user)
 
-        await payload.sendEmail({
+        await sendTrackedEmail(payload, {
           from: 'support@99puritypeptides.com',
           to: parsed.data.email,
           subject: 'Reset Your Password - 99 Purity Peptides',
@@ -45,7 +52,9 @@ export async function requestPasswordReset(input: ForgotPasswordInput) {
       }
     }
   } catch (err) {
-    // swallow — same reasoning as above
+    // Still return success to the caller (same reasoning as above — don't leak account
+    // existence), but log so a broken email provider doesn't fail completely silently.
+    console.error('Failed to process password reset request:', err)
   }
 
   return { success: true as const }

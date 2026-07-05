@@ -37,6 +37,18 @@ import { OrderCounters } from './collections/OrderCounters'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// Fail fast on boot rather than silently signing tokens/emails with an empty secret or
+// sending customer-facing email from Resend's shared sandbox domain in production.
+if (!process.env.PAYLOAD_SECRET) {
+  throw new Error('PAYLOAD_SECRET environment variable is required and was not set.')
+}
+if (process.env.NODE_ENV === 'production' && !process.env.RESEND_API_KEY) {
+  throw new Error('RESEND_API_KEY environment variable is required in production and was not set.')
+}
+if (process.env.NODE_ENV === 'production' && !process.env.RESEND_FROM_EMAIL) {
+  console.error('RESEND_FROM_EMAIL is not set — emails without an explicit "from" will send from Resend\'s sandbox domain.')
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -117,7 +129,7 @@ export default buildConfig({
     locales: ['en', 'es'],
     defaultLocale: 'en',
   },
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

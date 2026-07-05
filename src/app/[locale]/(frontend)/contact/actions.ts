@@ -3,10 +3,20 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { getTranslations } from 'next-intl/server'
+import { escapeHtml } from '@/lib/emails/escapeHtml'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
+import { checkRateLimit } from '@/lib/rateLimit'
+import { headers } from 'next/headers'
 
 export async function submitContactForm(formData: FormData) {
   const t = await getTranslations('content.contactForm')
   try {
+    const ip = (await headers()).get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const { allowed } = await checkRateLimit(`contact:${ip}`, 5, 60 * 60)
+    if (!allowed) {
+      return { error: t('errorUnexpected') }
+    }
+
     const payload = await getPayload({ config: configPromise })
 
     const department = formData.get('department') as string
@@ -18,6 +28,12 @@ export async function submitContactForm(formData: FormData) {
     if (!name || !email || !subject || !message) {
       return { error: t('errorRequiredFields') }
     }
+
+    const safeName = escapeHtml(name)
+    const safeEmail = escapeHtml(email)
+    const safeDepartment = escapeHtml(department)
+    const safeSubject = escapeHtml(subject)
+    const safeMessage = escapeHtml(message)
 
     const html = `
 <!DOCTYPE html>
@@ -49,22 +65,22 @@ export async function submitContactForm(formData: FormData) {
                 <tr>
                   <td style="padding: 24px;">
                     <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #8A8A8A;">Name</p>
-                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #0A0A0A; font-weight: 500; word-break: break-word;">${name}</p>
-                    
+                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #0A0A0A; font-weight: 500; word-break: break-word;">${safeName}</p>
+
                     <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #8A8A8A;">Email Address</p>
-                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #0A0A0A; font-weight: 500; word-break: break-word;">${email}</p>
-                    
+                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #0A0A0A; font-weight: 500; word-break: break-word;">${safeEmail}</p>
+
                     <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #8A8A8A;">Department</p>
-                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #0A0A0A; font-weight: 500; text-transform: capitalize;">${department || 'General'}</p>
-                    
+                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #0A0A0A; font-weight: 500; text-transform: capitalize;">${safeDepartment || 'General'}</p>
+
                     <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #8A8A8A;">Subject</p>
-                    <p style="margin: 0; font-size: 16px; color: #0A0A0A; font-weight: 500; word-break: break-word;">${subject}</p>
+                    <p style="margin: 0; font-size: 16px; color: #0A0A0A; font-weight: 500; word-break: break-word;">${safeSubject}</p>
                   </td>
                 </tr>
               </table>
 
               <h3 style="margin: 0 0 12px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: #8C7A55;">Message</h3>
-              <div style="background-color: #ffffff; padding: 20px; border-radius: 6px; border: 1px dashed #C9B58E; font-size: 16px; color: #4A4A4A; line-height: 1.6; white-space: pre-wrap; word-break: break-word;">${message}</div>
+              <div style="background-color: #ffffff; padding: 20px; border-radius: 6px; border: 1px dashed #C9B58E; font-size: 16px; color: #4A4A4A; line-height: 1.6; white-space: pre-wrap; word-break: break-word;">${safeMessage}</div>
               
             </td>
           </tr>
@@ -84,7 +100,7 @@ export async function submitContactForm(formData: FormData) {
 </html>
     `
 
-    await payload.sendEmail({
+    await sendTrackedEmail(payload, {
       from: '99 Purity Peptides <contact@99puritypeptides.com>',
       to: 'contact@99puritypeptides.com',
       replyTo: email,

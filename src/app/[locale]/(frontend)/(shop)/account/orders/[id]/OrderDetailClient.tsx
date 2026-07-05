@@ -26,6 +26,17 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
   const router = useRouter()
   const addItem = useCartStore(state => state.addItem)
   const openCart = useCartStore(state => state.openCart)
+  const [feePercentage, setFeePercentage] = React.useState<number | null>(null)
+
+  React.useEffect(() => {
+    fetch('/api/processing-fees')
+      .then(r => r.json())
+      .then(d => {
+        const active = d.docs?.find((f: any) => f.isActive && f.type === 'percentage')
+        if (active) setFeePercentage(active.amount)
+      })
+      .catch(console.error)
+  }, [])
 
   const STATUS_LABELS: Record<OrderStatus, string> = {
     Placed: t('statusPlaced'),
@@ -300,7 +311,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
                 <span>{shipping === 0 ? t('free') : `$${shipping.toFixed(2)}`}</span>
               </div>
               <div className={`flex justify-between text-gray-500 ${!order.redeemedPoints ? 'border-b border-gray-100 pb-4' : ''}`}>
-                <span>{t('processingFee')}</span>
+                <span>{t('processingFee')}{feePercentage ? ` (${feePercentage}%)` : ''}</span>
                 <span>${processingFee.toFixed(2)}</span>
               </div>
               {!!order.redeemedPoints && order.redeemedPoints > 0 && (

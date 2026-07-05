@@ -1,5 +1,6 @@
 // src/hooks/users.ts
 import type { CollectionBeforeChangeHook, CollectionAfterChangeHook } from 'payload'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 
 /**
  * Lower‑case the email on create / update.
@@ -16,8 +17,9 @@ export const beforeChangeEmailLowercase: CollectionBeforeChangeHook = async ({ d
 }
 
 /**
- * Placeholder hook after a new user is created.
- * TODO: create Stripe customer + send welcome email.
+ * Runs after a new user is created: sends the welcome email, notifies admin, and
+ * retroactively binds any past guest orders placed with this email to the new account.
+ * (Stripe customer creation isn't wired in yet — not needed while Stripe checkout is off.)
  */
 export const afterCreateUserTodo: CollectionAfterChangeHook = async ({ doc, operation, req }) => {
   if (operation === 'create') {
@@ -27,7 +29,7 @@ export const afterCreateUserTodo: CollectionAfterChangeHook = async ({ doc, oper
         const welcomeHtml = await generateWelcomeEmail(doc)
         
         try {
-          await req.payload.sendEmail({
+          await sendTrackedEmail(req.payload, {
             from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
             to: doc.email,
             subject: 'Welcome to 99 Purity Peptides!',
@@ -39,10 +41,12 @@ export const afterCreateUserTodo: CollectionAfterChangeHook = async ({ doc, oper
         }
 
         // Notify admin
-        await req.payload.sendEmail({
+        const { escapeHtml } = await import('@/lib/emails/escapeHtml')
+        await sendTrackedEmail(req.payload, {
+          from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
           to: 'support@99puritypeptides.com',
           subject: `New User Registration: ${doc.firstName || ''} ${doc.lastName || ''}`,
-          html: `<p>A new user has registered an account.</p><p><strong>Email:</strong> ${doc.email}</p><p><strong>Name:</strong> ${doc.firstName || ''} ${doc.lastName || ''}</p>`
+          html: `<p>A new user has registered an account.</p><p><strong>Email:</strong> ${escapeHtml(doc.email)}</p><p><strong>Name:</strong> ${escapeHtml(doc.firstName || '')} ${escapeHtml(doc.lastName || '')}</p>`
         })
       } catch (err) {
         req.payload.logger.error({ err }, `Failed to set up welcome emails for ${doc.email}`)

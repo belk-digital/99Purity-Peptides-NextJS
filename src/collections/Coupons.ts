@@ -26,6 +26,16 @@ export const Coupons: CollectionConfig = {
       admin: { readOnly: true },
     },
     {
+      name: 'isActive',
+      type: 'checkbox',
+      label: 'Active',
+      defaultValue: true,
+      admin: {
+        description: 'Turn off to instantly pause this coupon without deleting its usage history.',
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'freeShipping',
       type: 'checkbox',
       label: 'Free Shipping',

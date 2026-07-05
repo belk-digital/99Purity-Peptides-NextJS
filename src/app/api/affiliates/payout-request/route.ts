@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { getPayloadUser } from '@/lib/auth/getPayloadUser'
+import { updateAffiliateStats } from '@/lib/affiliates/stats'
+import { escapeHtml } from '@/lib/emails/escapeHtml'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 
 export async function POST(request: Request) {
   try {
@@ -35,10 +38,14 @@ export async function POST(request: Request) {
     }
 
     const requestedCents = Math.round(amount * 100)
-    
-    // Validate balance
-    const approved = affiliate.totalCommissionApproved || 0
-    const requested = affiliate.totalCommissionRequested || 0
+
+    // Recompute totals from the real conversions/payout-requests instead of trusting the
+    // affiliate doc's cached fields, which are now write-protected but could still be stale.
+    await updateAffiliateStats(affiliate.id, payload)
+    const freshAffiliate = await payload.findByID({ collection: 'affiliates', id: affiliate.id, overrideAccess: true })
+
+    const approved = freshAffiliate.totalCommissionApproved || 0
+    const requested = freshAffiliate.totalCommissionRequested || 0
     const available = approved - requested
     
     if (requestedCents > available) {
@@ -70,17 +77,17 @@ export async function POST(request: Request) {
 <body style="margin: 0; padding: 0; background-color: #f9fafb;">
         <div style="font-family: sans-serif; color: #111827; width: 100%; max-width: 600px; margin: 0 auto; background: #ffffff; padding: 20px; line-height: 1.6;">
           <h2 style="color: #000; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">New Affiliate Payout Request</h2>
-          <p><strong>Affiliate:</strong> ${affiliate.displayName || affiliate.referralSlug || 'Unknown'} (${user.email})</p>
+          <p><strong>Affiliate:</strong> ${escapeHtml(affiliate.displayName || affiliate.referralSlug || 'Unknown')} (${escapeHtml(user.email)})</p>
           <p><strong>Amount:</strong> $${amount.toFixed(2)}</p>
-          <p><strong>Method:</strong> <span style="text-transform: uppercase;">${method}</span></p>
+          <p><strong>Method:</strong> <span style="text-transform: uppercase;">${escapeHtml(method)}</span></p>
           <p><strong>Payout Details:</strong></p>
-          <p style="background: #f3f4f6; padding: 12px; border-radius: 6px; font-family: monospace;">${details}</p>
+          <p style="background: #f3f4f6; padding: 12px; border-radius: 6px; font-family: monospace;">${escapeHtml(details)}</p>
           <p style="margin-top: 30px; font-size: 14px; color: #6b7280;">Please log in to the Payload admin panel to review, approve, and process this payout request.</p>
         </div>
 </body>
 </html>
       `
-      await payload.sendEmail({
+      await sendTrackedEmail(payload, {
         to: 'affiliates@99puritypeptides.com',
         subject: `[Payout Request] $${amount.toFixed(2)} from ${affiliate.displayName || affiliate.referralSlug}`,
         html: emailHtml,

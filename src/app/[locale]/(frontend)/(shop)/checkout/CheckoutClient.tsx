@@ -178,9 +178,11 @@ export function CheckoutClient() {
   
   // Calculate dynamic fees
   let processingFeeAmount = 0
+  let activeFeePercentage: number | null = null
   activeFees.forEach((fee: any) => {
     if (fee.type === 'percentage') {
       processingFeeAmount += subtotalAfterDiscount * (fee.amount / 100)
+      activeFeePercentage = fee.amount
     } else if (fee.type === 'fixed_amount') {
       processingFeeAmount += (fee.amount / 100)
     }
@@ -520,7 +522,7 @@ export function CheckoutClient() {
                       <span className="text-ink font-bold">{finalShipping === 0 ? t('free') : `$${finalShipping.toFixed(2)}`}</span>
                     </div>
                     <div className="flex justify-between items-center text-sm font-medium text-ink/70">
-                      <span>{t('processingFee')}</span>
+                      <span>{t('processingFee')}{activeFeePercentage ? ` (${activeFeePercentage}%)` : ''}</span>
                       <span className="text-ink font-bold">${processingFeeAmount.toFixed(2)}</span>
                     </div>
                   </div>

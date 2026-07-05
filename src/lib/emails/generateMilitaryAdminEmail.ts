@@ -1,7 +1,12 @@
-export function generateMilitaryAdminEmail(name: string, email: string, branch: string, token: string): string {
+import { escapeHtml } from './escapeHtml'
+
+export function generateMilitaryAdminEmail(rawName: string, rawEmail: string, rawBranch: string, token: string): string {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   const approveUrl = `${serverUrl}/api/military/action?action=approve&token=${token}`;
   const rejectUrl = `${serverUrl}/api/military/action?action=reject&token=${token}`;
+  const name = escapeHtml(rawName)
+  const email = escapeHtml(rawEmail)
+  const branch = escapeHtml(rawBranch)
 
   return `
 <!DOCTYPE html>

@@ -7,7 +7,8 @@ export const AffiliateSettings: GlobalConfig = {
   },
   access: {
     read: () => true,
-    update: ({ req: { user } }) => !!user,
+    // These defaults apply to every affiliate site-wide — only admins/staff may change them.
+    update: ({ req: { user } }) => !!user && ['admin', 'staff'].includes(user.role as string),
   },
   fields: [
     {

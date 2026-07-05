@@ -4,6 +4,7 @@ import { getPayload } from 'payload';
 import configPromise from '@payload-config';
 import { generateMilitaryApprovalEmail } from '@/lib/emails/generateMilitaryApprovalEmail';
 import { generateMilitaryRejectionEmail } from '@/lib/emails/generateMilitaryRejectionEmail';
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail';
 
 export async function GET(req: Request) {
   try {
@@ -15,10 +16,15 @@ export async function GET(req: Request) {
       return new NextResponse('Missing token or action', { status: 400 });
     }
 
+    if (!process.env.PAYLOAD_SECRET) {
+      console.error('PAYLOAD_SECRET is not set — refusing to verify military discount token')
+      return new NextResponse('Internal server error', { status: 500 });
+    }
+
     // Verify token
     let decoded: any;
     try {
-      decoded = jwt.verify(token, process.env.PAYLOAD_SECRET || 'fallback-secret');
+      decoded = jwt.verify(token, process.env.PAYLOAD_SECRET);
     } catch (err) {
       return new NextResponse('Invalid or expired token', { status: 400 });
     }
@@ -70,7 +76,7 @@ export async function GET(req: Request) {
 
       // Send Approval Email
       const emailHtml = generateMilitaryApprovalEmail(name, couponCode);
-      await payload.sendEmail({
+      await sendTrackedEmail(payload, {
         from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
         to: email,
         subject: 'Military Discount Verified - Here is your code!',
@@ -109,7 +115,7 @@ export async function GET(req: Request) {
 
       // Send Rejection Email
       const emailHtml = generateMilitaryRejectionEmail(name);
-      await payload.sendEmail({
+      await sendTrackedEmail(payload, {
         from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
         to: email,
         subject: 'Update on your Military Discount Request',

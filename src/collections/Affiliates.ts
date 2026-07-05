@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+const staffOnly = ({ req: { user } }: any) => !!user && ['admin', 'staff'].includes(user.role)
+
 export const Affiliates: CollectionConfig = {
   slug: 'affiliates',
   admin: {
@@ -27,57 +29,59 @@ export const Affiliates: CollectionConfig = {
         {
           label: 'Identity',
           fields: [
-            { name: 'user', type: 'relationship', relationTo: 'users', required: true, hasMany: false, unique: true },
-            { name: 'status', type: 'select', defaultValue: 'pending', options: ['pending', 'approved', 'rejected', 'suspended'] },
-            { name: 'applicationDate', type: 'date', admin: { readOnly: true } },
-            { name: 'approvedAt', type: 'date', admin: { readOnly: true } },
-            { name: 'approvedBy', type: 'relationship', relationTo: 'users', admin: { readOnly: true } },
-            { name: 'suspendedAt', type: 'date', admin: { readOnly: true } },
-            { name: 'suspensionReason', type: 'textarea' },
+            { name: 'user', type: 'relationship', relationTo: 'users', required: true, hasMany: false, unique: true, access: { update: staffOnly } },
+            { name: 'status', type: 'select', defaultValue: 'pending', options: ['pending', 'approved', 'rejected', 'suspended'], access: { update: staffOnly } },
+            { name: 'applicationDate', type: 'date', admin: { readOnly: true }, access: { update: staffOnly } },
+            { name: 'approvedAt', type: 'date', admin: { readOnly: true }, access: { update: staffOnly } },
+            { name: 'approvedBy', type: 'relationship', relationTo: 'users', admin: { readOnly: true }, access: { update: staffOnly } },
+            { name: 'suspendedAt', type: 'date', admin: { readOnly: true }, access: { update: staffOnly } },
+            { name: 'suspensionReason', type: 'textarea', access: { update: staffOnly } },
+            // Safe for the affiliate themselves to edit — profile/marketing info only.
             { name: 'displayName', type: 'text' },
             { name: 'websiteUrl', type: 'text' },
             { name: 'socialLinks', type: 'array', fields: [{ name: 'platform', type: 'select', options: ['instagram', 'youtube', 'tiktok', 'twitter', 'reddit'] }, { name: 'url', type: 'text' }] },
-            { name: 'parentAffiliate', type: 'relationship', relationTo: 'affiliates', admin: { description: 'For Multi-Tier / MLM. The affiliate who recruited this affiliate.' } },
+            { name: 'parentAffiliate', type: 'relationship', relationTo: 'affiliates', admin: { description: 'For Multi-Tier / MLM. The affiliate who recruited this affiliate.' }, access: { update: staffOnly } },
           ]
         },
         {
           label: 'Referral',
           fields: [
-            { name: 'referralSlug', type: 'text', unique: true, index: true },
-            { name: 'couponCode', type: 'text', unique: true },
-            { name: 'coupon', type: 'relationship', relationTo: 'coupons', admin: { readOnly: true } },
-            { name: 'cookieDurationDays', type: 'number', defaultValue: 30 },
+            { name: 'referralSlug', type: 'text', unique: true, index: true, access: { update: staffOnly } },
+            { name: 'couponCode', type: 'text', unique: true, access: { update: staffOnly } },
+            { name: 'coupon', type: 'relationship', relationTo: 'coupons', admin: { readOnly: true }, access: { update: staffOnly } },
+            { name: 'cookieDurationDays', type: 'number', defaultValue: 30, access: { update: staffOnly } },
           ]
         },
         {
           label: 'Commission',
           fields: [
-            { name: 'commissionRate', type: 'number', admin: { description: 'Leave blank to use Global Default. Percentage of eligible order value or fixed amount in cents.' } },
-            { name: 'commissionType', type: 'select', options: ['percentage', 'fixed_amount'], admin: { description: 'Leave blank to use Global Default.' } },
-            { name: 'customerDiscount', type: 'number', defaultValue: 10, admin: { description: '% discount the customer gets using their coupon' } },
-            { name: 'pendingPeriodDays', type: 'number', admin: { description: 'Leave blank to use Global Default. Days before commission is approved.' } },
-            { name: 'commissionOn', type: 'select', options: ['subtotal_after_coupon', 'subtotal_before_coupon'], admin: { description: 'Leave blank to use Global Default.' } },
-            { name: 'tier', type: 'select', defaultValue: 'standard', options: ['standard', 'silver', 'gold', 'vip'] },
+            { name: 'commissionRate', type: 'number', admin: { description: 'Leave blank to use Global Default. Percentage of eligible order value or fixed amount in cents.' }, access: { update: staffOnly } },
+            { name: 'commissionType', type: 'select', options: ['percentage', 'fixed_amount'], admin: { description: 'Leave blank to use Global Default.' }, access: { update: staffOnly } },
+            { name: 'customerDiscount', type: 'number', defaultValue: 10, admin: { description: '% discount the customer gets using their coupon' }, access: { update: staffOnly } },
+            { name: 'pendingPeriodDays', type: 'number', admin: { description: 'Leave blank to use Global Default. Days before commission is approved.' }, access: { update: staffOnly } },
+            { name: 'commissionOn', type: 'select', options: ['subtotal_after_coupon', 'subtotal_before_coupon'], admin: { description: 'Leave blank to use Global Default.' }, access: { update: staffOnly } },
+            { name: 'tier', type: 'select', defaultValue: 'standard', options: ['standard', 'silver', 'gold', 'vip'], access: { update: staffOnly } },
           ]
         },
         {
           label: 'Stats',
           fields: [
-            { name: 'totalClicks', type: 'number', defaultValue: 0 },
-            { name: 'uniqueClicks', type: 'number', defaultValue: 0 },
-            { name: 'totalConversions', type: 'number', defaultValue: 0 },
-            { name: 'totalRevenue', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
-            { name: 'totalCommissionEarned', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
-            { name: 'totalCommissionPending', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
-            { name: 'totalCommissionApproved', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
-            { name: 'totalCommissionRequested', type: 'number', defaultValue: 0, admin: { description: 'In cents (pending/approved payout requests)' } },
-            { name: 'totalCommissionPaid', type: 'number', defaultValue: 0, admin: { description: 'In cents' } },
+            { name: 'totalClicks', type: 'number', defaultValue: 0, access: { update: staffOnly } },
+            { name: 'uniqueClicks', type: 'number', defaultValue: 0, access: { update: staffOnly } },
+            { name: 'totalConversions', type: 'number', defaultValue: 0, access: { update: staffOnly } },
+            { name: 'totalRevenue', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
+            { name: 'totalCommissionEarned', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
+            { name: 'totalCommissionPending', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
+            { name: 'totalCommissionApproved', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
+            { name: 'totalCommissionRequested', type: 'number', defaultValue: 0, admin: { description: 'In cents (pending/approved payout requests)' }, access: { update: staffOnly } },
+            { name: 'totalCommissionPaid', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
           ]
         },
         {
           label: 'Payout',
           fields: [
-            { name: 'minimumPayoutThreshold', type: 'number', admin: { description: 'Leave blank to use Global Default. Minimum payout threshold in cents (e.g. 5000 = $50.00).' } },
+            { name: 'minimumPayoutThreshold', type: 'number', admin: { description: 'Leave blank to use Global Default. Minimum payout threshold in cents (e.g. 5000 = $50.00).' }, access: { update: staffOnly } },
+            // payoutCurrency + payoutMethods stay self-editable — the affiliate needs to be able to set where they get paid.
             { name: 'payoutCurrency', type: 'select', defaultValue: 'USD', options: ['USD', 'BTC', 'ETH', 'USDT_ERC20', 'USDT_TRC20', 'STORE_CREDIT'] },
             {
               name: 'payoutMethods',
@@ -96,11 +100,11 @@ export const Affiliates: CollectionConfig = {
         {
           label: 'Fraud & Internal',
           fields: [
-            { name: 'flaggedForReview', type: 'checkbox' },
-            { name: 'fraudScore', type: 'number' },
-            { name: 'fraudNotes', type: 'textarea' },
-            { name: 'adminNotes', type: 'textarea' },
-            { name: 'agreedToTermsAt', type: 'date' },
+            { name: 'flaggedForReview', type: 'checkbox', access: { update: staffOnly } },
+            { name: 'fraudScore', type: 'number', access: { update: staffOnly } },
+            { name: 'fraudNotes', type: 'textarea', access: { update: staffOnly } },
+            { name: 'adminNotes', type: 'textarea', access: { update: staffOnly } },
+            { name: 'agreedToTermsAt', type: 'date', access: { update: staffOnly } },
           ]
         }
       ]

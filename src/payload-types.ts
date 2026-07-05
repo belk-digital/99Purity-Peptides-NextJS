@@ -552,6 +552,10 @@ export interface Coupon {
   id: number;
   code: string;
   usageCount?: number | null;
+  /**
+   * Turn off to instantly pause this coupon without deleting its usage history.
+   */
+  isActive?: boolean | null;
   freeShipping?: boolean | null;
   type: 'percentage' | 'fixed_amount' | 'free_shipping' | 'buy_one_get_one' | 'store_credit';
   /**
@@ -1674,6 +1678,7 @@ export interface WishlistsSelect<T extends boolean = true> {
 export interface CouponsSelect<T extends boolean = true> {
   code?: T;
   usageCount?: T;
+  isActive?: T;
   freeShipping?: T;
   type?: T;
   minSpend?: T;

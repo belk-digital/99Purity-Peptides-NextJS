@@ -108,11 +108,11 @@ export function AgeGate() {
             animate={{ y: "0%" }}
             exit={{ y: exitDirection === 'up' ? "-100vh" : "100%" }}
             transition={{ type: 'spring', damping: 25, stiffness: 120 }}
-            className="fixed inset-0 pointer-events-none z-10"
+            className="fixed inset-0 pointer-events-none z-10 transform-gpu will-change-transform"
           >
             {/* Inner wrapper */}
             <motion.div
-              className={`absolute bottom-0 left-0 right-0 bg-cream shadow-[0_-20px_60px_rgba(0,0,0,0.15)] flex flex-col md:flex-row overflow-hidden pointer-events-auto border-t border-white/50 transition-[border-radius,opacity,transform] duration-700 ease-in-out h-auto min-h-[85vh] md:min-h-[70vh] max-h-[95vh] rounded-t-[2rem] md:rounded-t-[3rem] opacity-100 translate-y-0`}
+              className={`absolute bottom-0 left-0 right-0 bg-cream flex flex-col md:flex-row overflow-hidden pointer-events-auto border-t border-white/50 transition-[border-radius,opacity,transform] duration-700 ease-in-out h-auto min-h-[85vh] md:min-h-[70vh] max-h-[95vh] rounded-t-[2rem] md:rounded-t-[3rem] opacity-100 translate-y-0`}
             >
               <AnimatePresence mode="wait">
                 {!isDenied ? (

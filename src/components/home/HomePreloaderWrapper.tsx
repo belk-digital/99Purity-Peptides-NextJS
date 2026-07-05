@@ -68,10 +68,9 @@ export function HomePreloaderWrapper({ children }: { children: React.ReactNode }
       ease: "back.out(1.7)" 
     }, "-=0.3")
 
-    // Glow the whole molecule
-    tl.to(wrapperRef.current, {
-      filter: "drop-shadow(0px 0px 30px rgba(0,139,139,0.8))",
-      duration: 0.4
+    // Instantly apply glow (do not animate filter as it causes extreme frame drops)
+    tl.set(wrapperRef.current, {
+      filter: "drop-shadow(0px 0px 30px rgba(0,139,139,0.5))"
     }, "<")
 
     // Fade in brand text
@@ -94,7 +93,7 @@ export function HomePreloaderWrapper({ children }: { children: React.ReactNode }
 
       <div 
         ref={preloaderRef}
-        className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#050505] overflow-hidden"
+        className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#050505] overflow-hidden transform-gpu will-change-transform"
       >
          <div className="relative flex flex-col items-center justify-center z-10 gap-8">
            

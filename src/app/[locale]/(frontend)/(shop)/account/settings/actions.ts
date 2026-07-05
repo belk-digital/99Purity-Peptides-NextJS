@@ -6,6 +6,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { revalidatePath } from 'next/cache'
 import { getTranslations } from 'next-intl/server'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 
 const CODE_TTL_MS = 10 * 60 * 1000
 
@@ -119,7 +120,7 @@ export async function updatePasswordAction(input: {
 </body>
 </html>
       `
-      await payload.sendEmail({
+      await sendTrackedEmail(payload, {
         from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
         to: user.email,
         subject: 'Your password has been changed',
@@ -127,7 +128,7 @@ export async function updatePasswordAction(input: {
       })
 
       // Notify admin
-      await payload.sendEmail({
+      await sendTrackedEmail(payload, {
         to: 'support@99puritypeptides.com',
         subject: `Security Alert: User Password Changed`,
         html: `<p>The password for the user <strong>${user.email}</strong> was recently changed.</p>`
@@ -174,7 +175,7 @@ export async function requestEmailChangeAction(newEmail: string) {
       overrideAccess: true,
     })
 
-    await payload.sendEmail({
+    await sendTrackedEmail(payload, {
       from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
       to: normalizedEmail,
       subject: 'Verify your new email address',

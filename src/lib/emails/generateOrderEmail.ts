@@ -1,3 +1,5 @@
+import { escapeHtml } from './escapeHtml'
+
 export async function generateOrderInvoiceHtml(order: any, payload?: any, customNote?: string): Promise<string> {
   const orderNumber = order.orderNumber || order.id;
   const orderDate = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -13,11 +15,20 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
   const feeTotal = (order.feeTotal || 0) / 100; // stored in cents
   const total = order.total || 0;
   
-  const customerName = `${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || 'Customer';
-  const email = order.guestEmail || 'Customer';
-  const shipAddr = order.shippingAddress || {};
-  const hasBilling = order.billingAddress && order.billingAddress.line1;
-  const billAddr = hasBilling ? order.billingAddress : shipAddr;
+  const customerName = escapeHtml(`${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || 'Customer');
+  const rawShipAddr = order.shippingAddress || {};
+  const rawHasBilling = order.billingAddress && order.billingAddress.line1;
+  const rawBillAddr = rawHasBilling ? order.billingAddress : rawShipAddr;
+  const escapeAddr = (a: any) => ({
+    line1: escapeHtml(a.line1),
+    line2: escapeHtml(a.line2),
+    city: escapeHtml(a.city),
+    state: escapeHtml(a.state),
+    postalCode: escapeHtml(a.postalCode),
+    country: escapeHtml(a.country),
+  })
+  const shipAddr = escapeAddr(rawShipAddr);
+  const billAddr = escapeAddr(rawBillAddr);
 
   let itemsHtml = '';
   if (order.items && Array.isArray(order.items)) {
@@ -93,9 +104,29 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
     </tr>
   ` : '';
 
+  // Fetch active percentage fee to display dynamic label in email
+  let feeLabel = 'Processing Fees'
+  if (payload) {
+    try {
+      const activeFees = await payload.find({
+        collection: 'processing-fees',
+        where: { isActive: { equals: true } },
+        depth: 0,
+      })
+      const activePercentageFee = activeFees.docs.find((f: any) => f.type === 'percentage')
+      if (activePercentageFee) feeLabel = `Processing Fees (${activePercentageFee.amount}%)`
+    } catch (err) {
+      console.error('Failed to fetch processing fee label for email', err)
+    }
+  }
+
+  const safeTrackingLink = typeof order.trackingLink === 'string' && /^https?:\/\//i.test(order.trackingLink)
+    ? escapeHtml(order.trackingLink)
+    : ''
+
   const feeRow = feeTotal > 0 ? `
     <tr>
-      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Processing Fees</td>
+      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">${feeLabel}</td>
       <td align="right" style="padding: 8px 0; font-size: 14px; color: #111827;">${formatMoney(feeTotal)}</td>
     </tr>
   ` : '';
@@ -128,7 +159,7 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
             <td style="padding: 0 40px; padding-bottom: 20px;">
               <div style="background-color: #FFFBEB; border-left: 4px solid #F59E0B; padding: 20px; border-radius: 4px;">
                 <h3 style="margin: 0 0 8px 0; color: #92400E; font-size: 15px; font-weight: 600;">Message regarding your order</h3>
-                <p style="margin: 0; color: #92400E; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${customNote}</p>
+                <p style="margin: 0; color: #92400E; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(customNote)}</p>
               </div>
             </td>
           </tr>
@@ -159,14 +190,14 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
           </tr>
           ` : ''}
 
-          ${order.trackingLink ? `
+          ${safeTrackingLink ? `
           <!-- Tracking Link -->
           <tr>
             <td style="padding: 0 40px; padding-bottom: 20px;">
               <div style="background-color: #ECFDF5; border-left: 4px solid #10B981; padding: 20px; border-radius: 4px;">
                 <h3 style="margin: 0 0 8px 0; color: #065F46; font-size: 15px; font-weight: 600;">Track Your Order</h3>
                 <p style="margin: 0 0 12px 0; color: #065F46; font-size: 14px; line-height: 1.6;">Your package is on the way! You can track its progress using the link below.</p>
-                <a href="${order.trackingLink}" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #10B981; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 4px;">Track Package</a>
+                <a href="${safeTrackingLink}" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #10B981; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 4px;">Track Package</a>
               </div>
             </td>
           </tr>

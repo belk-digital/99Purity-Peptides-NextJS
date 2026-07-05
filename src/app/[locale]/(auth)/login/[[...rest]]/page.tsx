@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { loginSchema, type LoginInput } from '@/lib/validations/auth'
+import { resendVerificationEmail } from '@/app/[locale]/(auth)/register/resendVerification'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
@@ -25,6 +26,8 @@ function LoginForm() {
   const [serverError, setServerError] = useState('')
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [unverifiedEmail, setUnverifiedEmail] = useState('')
+  const [resendState, setResendState] = useState<'idle' | 'sending' | 'sent'>('idle')
 
   const {
     register,
@@ -34,6 +37,8 @@ function LoginForm() {
 
   const onSubmit = async (data: LoginInput) => {
     setServerError('')
+    setUnverifiedEmail('')
+    setResendState('idle')
     const result = await signIn('credentials', {
       email: data.email,
       password: data.password,
@@ -42,12 +47,26 @@ function LoginForm() {
     })
 
     if (!result || result.error) {
-      setServerError(t('invalidCredentials'))
+      if (result?.error === 'EMAIL_NOT_VERIFIED') {
+        setServerError(t('emailNotVerified') || "Please verify your email before logging in.")
+        setUnverifiedEmail(data.email)
+      } else if (result?.error === 'TOO_MANY_ATTEMPTS') {
+        setServerError(t('tooManyAttempts') || 'Too many attempts. Please wait a few minutes and try again.')
+      } else {
+        setServerError(t('invalidCredentials'))
+      }
       return
     }
 
     router.push(callbackUrl)
     router.refresh()
+  }
+
+  const handleResendVerification = async () => {
+    if (!unverifiedEmail) return
+    setResendState('sending')
+    await resendVerificationEmail(unverifiedEmail)
+    setResendState('sent')
   }
 
   const handleGoogle = () => {
@@ -127,7 +146,29 @@ function LoginForm() {
             </button>
           </div>
         </div>
-        {serverError && <p className="text-sm font-medium text-red-500">{serverError}</p>}
+        {serverError && (
+          <div className="flex flex-col gap-1.5">
+            <p className="text-sm font-medium text-red-500">{serverError}</p>
+            {unverifiedEmail && (
+              resendState === 'sent' ? (
+                <p className="text-sm text-ink/60">
+                  {t('verificationResent') || 'A new verification email is on its way — check your inbox.'}
+                </p>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleResendVerification}
+                  disabled={resendState === 'sending'}
+                  className="text-xs font-bold text-ink hover:underline self-start disabled:opacity-50"
+                >
+                  {resendState === 'sending'
+                    ? (t('resending') || 'Sending…')
+                    : (t('resendVerification') || 'Resend verification email')}
+                </button>
+              )
+            )}
+          </div>
+        )}
         <Button type="submit" variant="dark" size="lg" className="w-full rounded-full mt-2" isLoading={isSubmitting}>
           {t('submit')}
         </Button>

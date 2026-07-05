@@ -5,6 +5,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { User } from '@/payload-types'
+import { checkRateLimit } from '@/lib/rateLimit'
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -20,6 +21,11 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null
 
+        const { allowed } = await checkRateLimit(`login:${credentials.email.toLowerCase()}`, 10, 10 * 60)
+        if (!allowed) {
+          throw new Error('TOO_MANY_ATTEMPTS')
+        }
+
         const payload = await getPayload({ config })
         try {
           const result = await payload.login({
@@ -29,8 +35,15 @@ export const authOptions: NextAuthOptions = {
           })
           if (!result.user) return null
           const user = result.user as User
+          // Credentials accounts must verify their email before logging in — existing
+          // accounts were grandfathered in via a migration when this was introduced, so
+          // this only affects new signups. Google accounts are verified at signup time.
+          if (user.authProvider !== 'google' && !user.emailVerified) {
+            throw new Error('EMAIL_NOT_VERIFIED')
+          }
           return { id: String(user.id), email: user.email, role: user.role ?? 'customer' }
-        } catch {
+        } catch (err) {
+          if (err instanceof Error && (err.message === 'EMAIL_NOT_VERIFIED' || err.message === 'TOO_MANY_ATTEMPTS')) throw err
           return null
         }
       },
@@ -48,6 +61,9 @@ export const authOptions: NextAuthOptions = {
       const googleId = account.providerAccountId
       const email = profile?.email || user.email
       if (!email) return false
+      // Google self-reports whether it has verified this address — only trust it, and only
+      // auto-link/auto-create an account, when that flag is true.
+      if ((profile as any)?.email_verified === false) return false
 
       const byGoogleId = await payload.find({
         collection: 'users',
@@ -78,6 +94,19 @@ export const authOptions: NextAuthOptions = {
         })
         user.id = String(linked.id)
         user.role = linked.role ?? 'customer'
+        // Let the account owner know a new sign-in method was just linked, in case it
+        // wasn't them.
+        try {
+          const { sendTrackedEmail } = await import('@/lib/emails/sendTrackedEmail')
+          await sendTrackedEmail(payload, {
+            from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
+            to: linked.email,
+            subject: 'A new sign-in method was added to your account',
+            html: `<p>Google sign-in was just linked to your 99 Purity Peptides account (${linked.email}). If this wasn't you, please contact support immediately.</p>`,
+          })
+        } catch (err) {
+          console.error('Failed to send Google-link notice email:', err)
+        }
         return true
       }
 

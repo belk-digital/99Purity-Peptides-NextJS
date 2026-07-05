@@ -15,7 +15,12 @@
       "password": "Contraseña",
       "forgotPassword": "¿Olvidaste tu contraseña?",
       "submit": "Iniciar Sesión",
-      "invalidCredentials": "Correo electrónico o contraseña inválidos"
+      "invalidCredentials": "Correo electrónico o contraseña inválidos",
+      "emailNotVerified": "Por favor verifica tu correo electrónico antes de iniciar sesión.",
+      "tooManyAttempts": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo.",
+      "resendVerification": "Reenviar correo de verificación",
+      "resending": "Enviando…",
+      "verificationResent": "Un nuevo correo de verificación está en camino — revisa tu bandeja de entrada."
     },
     "register": {
       "title": "Regístrate en 99 Purity Peptides",
@@ -901,6 +906,7 @@
       "itemsOrdered": "Artículos Pedidos",
       "standardVariant": "Estándar",
       "shippingInfo": "Información de Envío",
+      "billingAddress": "Dirección de Facturación",
       "orderSummary": "Resumen del Pedido",
       "subtotal": "Subtotal",
       "discount": "Descuento",

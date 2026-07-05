@@ -11,10 +11,14 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const query = searchParams.get('q')
 
+    // Nothing to search — skip the full collection fetch entirely.
+    if (!query) {
+      return NextResponse.json([])
+    }
+
     const payload = await getPayload({ config: configPromise })
-    
-    // Fetch all active products
-    // We only need a few fields for search to keep memory lightweight
+
+    // Fetch active products (name/description/categories only, kept lightweight for fuzzy search)
     const productsRes = await payload.find({
       collection: 'products',
       where: {
@@ -22,7 +26,17 @@ export async function GET(request: Request) {
         isVisible: { equals: true }
       },
       depth: 1, // To get categories
-      limit: 1000,
+      limit: 500,
+      select: {
+        name: true,
+        slug: true,
+        description: true,
+        seoDescription: true,
+        price: true,
+        images: true,
+        categories: true,
+        descriptor: true,
+      } as any,
     })
 
     const products = productsRes.docs.map((doc: any) => {
@@ -40,11 +54,6 @@ export async function GET(request: Request) {
         descriptor: doc.descriptor || ''
       }
     })
-
-    if (!query) {
-      // If no query, just return empty array
-      return NextResponse.json([])
-    }
 
     // Configure Fuse.js for fuzzy searching
     const fuse = new Fuse(products, {

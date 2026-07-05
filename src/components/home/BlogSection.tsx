@@ -46,16 +46,14 @@ export function BlogSection() {
       x: scatterData[i % scatterData.length]?.x || 0,
       y: scatterData[i % scatterData.length]?.y || 60,
       rotate: scatterData[i % scatterData.length]?.rotate || 0,
-      scale: 0.85, 
-      filter: 'blur(15px)' 
+      scale: 0.85
     }),
     visible: { 
       opacity: 1, 
       x: 0,
       y: 0, 
       rotate: 0,
-      scale: 1, 
-      filter: 'blur(0px)',
+      scale: 1,
       transition: { 
         type: 'spring',
         damping: 25,

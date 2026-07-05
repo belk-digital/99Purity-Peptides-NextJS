@@ -140,7 +140,7 @@ export function AccountSidebar({
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
             <div className="flex justify-between items-center bg-green-500/10 text-green-700 py-3 px-4 rounded-xl mb-4">
               <span className="text-sm font-medium">Purity Points</span>
-              <span className="font-bold text-lg">{purityPoints}</span>
+              <span className="font-bold text-lg">{Number(purityPoints).toFixed(2)}</span>
             </div>
           <div className="flex items-center gap-2 mb-3">
             <Bot size={16} className="text-[#2b646c]" />

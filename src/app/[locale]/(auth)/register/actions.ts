@@ -1,10 +1,21 @@
 'use server'
 
+import jwt from 'jsonwebtoken'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { registerSchema, type RegisterInput } from '@/lib/validations/auth'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
+import { generateVerifyEmailEmail } from '@/lib/emails/generateVerifyEmailEmail'
+import { checkRateLimit } from '@/lib/rateLimit'
+import { headers } from 'next/headers'
 
 export async function registerUser(input: RegisterInput) {
+  const ip = (await headers()).get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+  const { allowed } = await checkRateLimit(`register:${ip}`, 5, 60 * 60)
+  if (!allowed) {
+    return { success: false as const, error: 'generic' as const }
+  }
+
   const parsed = registerSchema.safeParse(input)
   if (!parsed.success) {
     return { success: false as const, error: 'invalid' as const }
@@ -25,7 +36,7 @@ export async function registerUser(input: RegisterInput) {
   }
 
   try {
-    await payload.create({
+    const created = await payload.create({
       collection: 'users',
       data: {
         firstName,
@@ -37,6 +48,27 @@ export async function registerUser(input: RegisterInput) {
       },
       overrideAccess: true,
     })
+
+    // Send a verification email; login is blocked for credentials accounts until this
+    // completes (see authorize() in authOptions.ts) — keeps a random email address from
+    // being able to sign up and place orders as someone else.
+    if (process.env.PAYLOAD_SECRET) {
+      try {
+        const token = jwt.sign({ userId: created.id, purpose: 'verify-email' }, process.env.PAYLOAD_SECRET, { expiresIn: '48h' })
+        const base = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+        const verifyUrl = `${base}/api/verify-email?token=${token}`
+        const html = generateVerifyEmailEmail(firstName, verifyUrl)
+        await sendTrackedEmail(payload, {
+          from: 'Support | 99 Purity Peptides <support@99puritypeptides.com>',
+          to: email.toLowerCase(),
+          subject: 'Verify your email - 99 Purity Peptides',
+          html,
+        })
+      } catch (err) {
+        console.error('Failed to send verification email:', err)
+      }
+    }
+
     return { success: true as const }
   } catch {
     return { success: false as const, error: 'generic' as const }

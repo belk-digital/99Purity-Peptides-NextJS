@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Order, Affiliate, AffiliateClick } from '@/payload-types'
 import { generateAdminAffiliateConversionEmail } from '@/lib/emails/generateAdminAffiliateConversionEmail'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 
 export async function computeCommission(order: Order, affiliateId: string | number): Promise<number> {
   const payload = await getPayload({ config })
@@ -77,8 +78,15 @@ export async function attributeOrder(
   // Basic fraud checks
   const customerEmail = (typeof order.owner === 'object' && order.owner !== null ? order.owner.email : order.guestEmail) || ''
   let isSelfReferral = false
-  
-  // Check if affiliate's user email matches customer email
+
+  const affiliateUserId = typeof affiliate.user === 'object' && affiliate.user !== null ? affiliate.user.id : affiliate.user
+  const orderOwnerId = typeof order.owner === 'object' && order.owner !== null ? order.owner.id : order.owner
+
+  // Check by account id (catches a logged-in affiliate buying through their own link even
+  // with a different contact email) as well as by email (catches the guest-checkout case).
+  if (affiliateUserId && orderOwnerId && String(affiliateUserId) === String(orderOwnerId)) {
+    isSelfReferral = true
+  }
   if (typeof affiliate.user === 'object' && affiliate.user !== null && 'email' in affiliate.user) {
      if (String(affiliate.user.email).toLowerCase() === customerEmail.toLowerCase()) {
        isSelfReferral = true
@@ -124,7 +132,7 @@ export async function attributeOrder(
   // Send admin notification
   try {
     const adminHtml = generateAdminAffiliateConversionEmail(order, affiliate, isVoid ? 0 : commissionAmount)
-    await payload.sendEmail({
+    await sendTrackedEmail(payload, {
       to: 'support@99puritypeptides.com',
       subject: `New Affiliate Sale! ${affiliate.displayName} made a conversion`,
       html: adminHtml,

@@ -1,12 +1,21 @@
 import { getPayload } from 'payload'
+import { sql } from '@payloadcms/db-postgres'
 import configPromise from '@payload-config'
 import { attributeOrder } from '@/lib/affiliates/commission'
 import { appendOrderToSheet } from '@/lib/google/sheets'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 
 /**
- * Centralized post-checkout logic.
- * Safely processes inventory, coupons, user points, and affiliate tracking.
- * This should be called exactly once when an order is finalized.
+ * Centralized post-checkout logic: marks the order paid, clears the cart, attributes the
+ * affiliate conversion, and sends the confirmation email. Inventory and the coupon's
+ * usage/store-credit balance are NOT touched here anymore — they're reserved atomically at
+ * order-creation time (see lib/orders/reserve.ts) to avoid the oversell/over-redeem race
+ * that existed when they were only decremented here.
+ *
+ * The Stripe webhook, the client-triggered sync fallback, and the admin "mark as paid"
+ * action can all call this for the same order — the isFinalized claim below is a single
+ * atomic UPDATE, so only the first caller to arrive actually runs the side effects below;
+ * every other concurrent/duplicate call is a safe no-op.
  */
 export async function finalizeOrder(orderId: string | number, paymentIntentMetadata?: any) {
   try {
@@ -25,9 +34,21 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       return false
     }
 
-    // Double-check to prevent duplicate finalization
     if (order.isFinalized) {
       console.warn(`finalizeOrder: Order ${orderId} already finalized. Skipping.`)
+      return true
+    }
+
+    // Atomically claim this order for finalization — whichever caller wins this UPDATE is
+    // the only one that proceeds past this point.
+    const db = payload.db as any
+    const claim: any = await db.drizzle.execute(sql`
+      UPDATE "orders" SET "is_finalized" = true
+      WHERE "id" = ${typeof idToUse === 'number' ? idToUse : Number(idToUse)} AND ("is_finalized" IS NOT TRUE)
+      RETURNING "id"`)
+    const claimRows = claim.rows || claim
+    if (!claimRows || claimRows.length === 0) {
+      console.warn(`finalizeOrder: Order ${orderId} was claimed by a concurrent call. Skipping.`)
       return true
     }
 
@@ -46,45 +67,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       order.paymentStatus = 'captured';
     }
 
-    // 2. Decrement Inventory
-    if (order.items && Array.isArray(order.items)) {
-      for (const item of order.items) {
-        const productId = item.product && typeof item.product === 'object' ? item.product.id : item.product;
-        if (productId) {
-          const productDoc = await payload.findByID({ collection: 'products', id: productId });
-          if (productDoc) {
-            const newStock = Math.max(0, (productDoc.stock || 0) - (item.quantity || 1));
-            await payload.update({ collection: 'products', id: productId, data: { stock: newStock } });
-          }
-        }
-      }
-    }
-
-    // 3. Update Coupon Usage & Deduct Store Credit
-    if (order.couponCode) {
-      const coupons = await payload.find({ collection: 'coupons', where: { code: { equals: order.couponCode } }, overrideAccess: true })
-      if (coupons.docs.length > 0) {
-        const coupon = coupons.docs[0]
-        
-        const updateData: any = {
-          usageCount: (coupon.usageCount || 0) + 1
-        }
-
-        // Properly deduct remaining balance for store credit coupons!
-        if (coupon.type === 'store_credit' && typeof coupon.remainingBalance === 'number') {
-          updateData.remainingBalance = Math.max(0, coupon.remainingBalance - (order.discountTotal || 0))
-        }
-
-        await payload.update({
-          collection: 'coupons',
-          id: coupon.id,
-          data: updateData,
-          overrideAccess: true
-        })
-      }
-    }
-
-    // 4. Clear User Cart
+    // 2. Clear User Cart
     if (order.owner) {
       const userId = typeof order.owner === 'object' ? order.owner.id : order.owner
 
@@ -98,7 +81,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       await payload.update({ collection: 'carts', id: paymentIntentMetadata.cartId, data: { items: [] } });
     }
 
-    // 5. Affiliate Attribution
+    // 3. Affiliate Attribution
     const affiliateId = paymentIntentMetadata?.affiliateId;
     const clickId = paymentIntentMetadata?.clickId; 
     
@@ -111,7 +94,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       ).catch(console.error)
     }
 
-    // 6. Send Email
+    // 4. Send Email
     try {
         let customerEmail = order.guestEmail;
         if (!customerEmail && order.owner) {
@@ -122,7 +105,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
             const { generateOrderInvoiceHtml } = await import('@/lib/emails/generateOrderEmail');
             const invoiceHtml = await generateOrderInvoiceHtml(order, payload);
 
-            await payload.sendEmail({
+            await sendTrackedEmail(payload, {
                 from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
                 to: customerEmail,
                 bcc: 'orders@99puritypeptides.com',
@@ -133,13 +116,6 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
     } catch (err) {
         console.error('Failed to send confirmation email', err)
     }
-
-    // 7. Mark as Finalized
-    await payload.update({
-      collection: 'orders',
-      id: idToUse,
-      data: { isFinalized: true }
-    })
 
     return true
 

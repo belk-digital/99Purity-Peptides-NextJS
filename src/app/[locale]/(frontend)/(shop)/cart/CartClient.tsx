@@ -153,13 +153,11 @@ export function CartClient() {
     setCouponMessage('')
     
     try {
-      // Use 'like' for case-insensitive partial match from payload, then strict exact match on the client
-      const res = await fetch(`/api/coupons?where[code][like]=${code.trim()}`)
+      const res = await fetch(`/api/validate-coupon?code=${encodeURIComponent(code.trim())}`)
       const data = await res.json()
-      
-      const coupon = data?.docs?.find((c: any) => c.code.toLowerCase() === code.trim().toLowerCase())
-      
-      if (coupon) {
+      const coupon = data?.coupon
+
+      if (coupon && coupon.isActive !== false) {
         // Prevent Self-Referral Coupon Usage
         try {
           const meRes = await fetch('/api/users/me')

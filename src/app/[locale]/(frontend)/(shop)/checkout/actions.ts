@@ -1,13 +1,14 @@
 'use server'
 
-import crypto from 'crypto'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import Stripe from 'stripe'
 import { verifyCoupon, getUserPurityPoints } from '../actions'
 import { cookies } from 'next/headers'
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
-import { establishSessionForNewUser } from '@/lib/auth/establishSession'
+import { reserveStock, releaseStock, reserveCouponUsage, releaseCouponUsage, reservePoints, releasePoints } from '@/lib/orders/reserve'
+import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
+import { escapeHtml } from '@/lib/emails/escapeHtml'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2024-04-10' as any,
@@ -282,41 +283,92 @@ export async function createPayloadOrder(
 
   try {
     // userId is the Payload user's own id (from the NextAuth session), not an external IdP id.
-    let payloadUserId: number | null = userId ? Number(userId) : null
-    let isNewAccount = false
-    const normalizedEmail = (formData.email || '').toLowerCase().trim()
+    // Guests are never resolved or linked to an existing account by typing an email — that
+    // would let anyone attach an order (and, previously, redeem points) to a stranger's
+    // account. Guest orders stay unowned; guestEmail is enough for confirmation emails and
+    // for the order to show up automatically once they register with the same address
+    // (see the retroactive-binding logic in hooks/users.ts).
+    const payloadUserId: number | null = userId ? Number(userId) : null
 
-    if (!payloadUserId && normalizedEmail) {
-      // Guest checkout — link to an existing account with this email if one exists,
-      // otherwise auto-create one so the customer has an account for this order going forward.
-      const existingUser = await payload.find({
-        collection: 'users',
-        where: { email: { equals: normalizedEmail } },
+    // Guard against duplicate orders from a double-click or a retried request after a slow
+    // response — if an identical pending order for this same buyer was just created, reuse
+    // it instead of reserving stock/points a second time.
+    const dedupeWindow = new Date(Date.now() - 3 * 60 * 1000).toISOString()
+    const recentOrders = await payload.find({
+      collection: 'orders',
+      where: {
+        and: [
+          payloadUserId ? { owner: { equals: payloadUserId } } : { guestEmail: { equals: formData.email } },
+          { status: { equals: 'pending' } },
+          { paymentMethod: { equals: paymentMethod } },
+          { createdAt: { greater_than: dedupeWindow } },
+        ],
+      },
+      sort: '-createdAt',
+      limit: 1,
+      overrideAccess: true,
+    })
+    const possibleDuplicate = recentOrders.docs[0]
+    if (
+      possibleDuplicate &&
+      Array.isArray(possibleDuplicate.items) &&
+      possibleDuplicate.items.length === items.length
+    ) {
+      return { orderId: String(possibleDuplicate.id) }
+    }
+
+    // Reserve stock atomically before creating the order — closes the race where two
+    // concurrent checkouts for the last unit could both pass a stale availability check.
+    const stockReservation = await reserveStock(
+      payload,
+      items.map((item) => ({
+        productId: !isNaN(Number(item.productId)) ? Number(item.productId) : item.productId,
+        quantity: item.quantity,
+      })),
+    )
+    if (!stockReservation.success) {
+      return { error: stockReservation.error }
+    }
+
+    // Reserve the coupon's usage slot / store-credit balance atomically too, so a
+    // usage-limited or store-credit coupon can't be over-redeemed by concurrent checkouts.
+    let reservedCouponId: number | null = null
+    let reservedCouponIsStoreCredit = false
+    if (couponCode && discountAmount > 0) {
+      const couponLookup = await payload.find({
+        collection: 'coupons',
+        where: { code: { equals: couponCode.trim().toUpperCase() } },
         limit: 1,
         overrideAccess: true,
       })
-
-      if (existingUser.docs.length > 0) {
-        payloadUserId = existingUser.docs[0].id
-      } else {
-        const created = await payload.create({
-          collection: 'users',
-          data: {
-            email: normalizedEmail,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            phone: formData.phone,
-            role: 'customer',
-            authProvider: 'credentials',
-            // Random unusable password — the customer sets a real one via the password-setup email below.
-            password: crypto.randomBytes(32).toString('hex'),
-          },
-          overrideAccess: true,
-        })
-        payloadUserId = created.id
-        isNewAccount = true
+      const couponDoc = couponLookup.docs[0]
+      if (couponDoc) {
+        reservedCouponId = couponDoc.id
+        reservedCouponIsStoreCredit = couponDoc.type === 'store_credit'
+        const couponReservation = await reserveCouponUsage(
+          payload,
+          couponDoc.id,
+          Math.round(discountAmount * 100),
+          reservedCouponIsStoreCredit,
+        )
+        if (!couponReservation.success) {
+          await releaseStock(payload, items.map((item) => ({
+            productId: !isNaN(Number(item.productId)) ? Number(item.productId) : item.productId,
+            quantity: item.quantity,
+          })))
+          return { error: couponReservation.error }
+        }
       }
     }
+
+    // Reserve points atomically and use the CONFIRMED amount for the total — never the
+    // earlier estimate — so a concurrent redemption on another order can't double-spend
+    // the same balance.
+    let confirmedPointsToRedeem = 0
+    if (pointsToRedeem > 0 && payloadUserId) {
+      confirmedPointsToRedeem = await reservePoints(payload, payloadUserId, pointsToRedeem)
+    }
+    const confirmedTotal = totalBeforePoints - confirmedPointsToRedeem
 
     // Format order items for Payload
     const orderItems = items.map(item => {
@@ -349,35 +401,36 @@ export async function createPayloadOrder(
           country: 'US', // default
         },
         items: orderItems,
-        status: total <= 0 ? 'paid' : 'pending',
+        status: confirmedTotal <= 0 ? 'paid' : 'pending',
         // Zelle has no payment API — orders stay unpaid until a human confirms the transfer manually.
-        paymentStatus: total <= 0 ? 'captured' : 'unpaid',
+        paymentStatus: confirmedTotal <= 0 ? 'captured' : 'unpaid',
         paymentMethod,
         fulfillmentStatus: 'unfulfilled',
         subtotal: subtotal,
         discountTotal: discountAmount,
-        redeemedPoints: pointsToRedeem,
+        redeemedPoints: confirmedPointsToRedeem,
         shippingTotal: finalShipping,
         taxTotal: tax,
         feeTotal: Math.round(feeTotal * 100),
         appliedFees,
-        total: total,
+        total: confirmedTotal,
         shippingMethod: shippingMethodName,
         couponCode: couponCode || '',
       }
-    })
-
-    // Immediately deduct points to prevent infinite reuse on unpaid Zelle orders
-    if (pointsToRedeem > 0 && payloadUserId) {
-      const userDoc = await payload.findByID({ collection: 'users', id: payloadUserId })
-      if (userDoc && typeof userDoc.purityPoints === 'number') {
-        await payload.update({
-          collection: 'users',
-          id: payloadUserId,
-          data: { purityPoints: Math.max(0, userDoc.purityPoints - pointsToRedeem) }
-        })
+    }).catch(async (err) => {
+      // Order creation itself failed — release everything we already reserved above.
+      await releaseStock(payload, items.map((item) => ({
+        productId: !isNaN(Number(item.productId)) ? Number(item.productId) : item.productId,
+        quantity: item.quantity,
+      })))
+      if (reservedCouponId) {
+        await releaseCouponUsage(payload, reservedCouponId, Math.round(discountAmount * 100), reservedCouponIsStoreCredit)
       }
-    }
+      if (confirmedPointsToRedeem > 0 && payloadUserId) {
+        await releasePoints(payload, payloadUserId, confirmedPointsToRedeem)
+      }
+      throw err
+    })
 
     // Update Stripe PaymentIntent with the Order ID (unless it's a free order or Zelle, which has no PaymentIntent)
     if (paymentMethod === 'stripe' && paymentIntentId && paymentIntentId !== 'free_order') {
@@ -386,7 +439,7 @@ export async function createPayloadOrder(
              orderId: String(order.id)
           }
        })
-    } else if (total <= 0) {
+    } else if (confirmedTotal <= 0) {
        // Instantly finalize the free order (deduct inventory, use coupons, give points)
        const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
        await finalizeOrder(order.id, {
@@ -397,16 +450,12 @@ export async function createPayloadOrder(
     } else if (paymentMethod === 'zelle') {
        // Send initial order invoice immediately for Zelle orders
        try {
-           let customerEmail = order.guestEmail;
-           if (!customerEmail && order.owner) {
-               const userDoc = typeof order.owner === 'object' ? order.owner : await payload.findByID({ collection: 'users', id: order.owner });
-               customerEmail = userDoc.email;
-           }
+           const customerEmail = order.guestEmail;
            if (customerEmail) {
                const { generateOrderInvoiceHtml } = await import('@/lib/emails/generateOrderEmail');
                const invoiceHtml = await generateOrderInvoiceHtml(order, payload);
 
-               await payload.sendEmail({
+               await sendTrackedEmail(payload, {
                    from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
                    to: customerEmail,
                    bcc: 'orders@99puritypeptides.com',
@@ -459,27 +508,6 @@ export async function createPayloadOrder(
       }
     }
 
-    // A brand-new account was just auto-created for this guest — sign them in immediately
-    // and send a password-setup email so they can log back in on a future visit.
-    if (isNewAccount && payloadUserId) {
-      try {
-        await establishSessionForNewUser({
-          id: payloadUserId,
-          email: normalizedEmail,
-          role: 'customer',
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-        })
-        await payload.forgotPassword({
-          collection: 'users',
-          data: { email: normalizedEmail },
-          disableEmail: false,
-        })
-      } catch (err) {
-        console.error('Failed to finish new-account setup:', err)
-      }
-    }
-
     // Set a cookie to authorize the order confirmation page
     const cookieStore = await cookies()
     cookieStore.set(`order_auth_${order.id}`, 'true', {
@@ -499,13 +527,35 @@ export async function createPayloadOrder(
 export async function syncPaymentStatus(paymentIntentId: string, orderId: string) {
   try {
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
-    
-    if (paymentIntent.status === 'succeeded') {
-      const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
-      await finalizeOrder(orderId, paymentIntent.metadata)
-      return { success: true }
+
+    if (paymentIntent.status !== 'succeeded') {
+      return { success: false, status: paymentIntent.status }
     }
-    return { success: false, status: paymentIntent.status }
+
+    // Never trust the caller-supplied orderId — this action is a public endpoint (any
+    // server action is just a POST route), so anyone could otherwise pay a trivial amount
+    // for a PaymentIntent of their own and pass a stranger's orderId to mark it paid.
+    // The order to finalize is only ever the one this PaymentIntent's own metadata names,
+    // exactly like the webhook handler already does it.
+    const trueOrderId = paymentIntent.metadata?.orderId
+    if (!trueOrderId || trueOrderId !== String(orderId)) {
+      console.error(`syncPaymentStatus: orderId mismatch (requested ${orderId}, PaymentIntent belongs to ${trueOrderId})`)
+      return { error: 'Order/payment mismatch' }
+    }
+
+    const payload = await getPayload({ config: configPromise })
+    const order = await payload.findByID({ collection: 'orders', id: Number(trueOrderId), depth: 0, overrideAccess: true })
+    if (!order) return { error: 'Order not found' }
+
+    const expectedCents = Math.round((order.total || 0) * 100)
+    if (paymentIntent.amount !== expectedCents) {
+      console.error(`syncPaymentStatus: amount mismatch for order ${trueOrderId} (paid ${paymentIntent.amount}, expected ${expectedCents})`)
+      return { error: 'Payment amount does not match order total' }
+    }
+
+    const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
+    await finalizeOrder(trueOrderId, paymentIntent.metadata)
+    return { success: true }
   } catch (error: any) {
     console.error('Failed to sync payment status:', error)
     return { error: error.message }
@@ -531,15 +581,16 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
       <h2>Payment Failed Alert</h2>
       <p>A customer attempted to checkout but their payment failed.</p>
       <ul>
-        <li><strong>Order ID:</strong> ${orderId}</li>
-        <li><strong>Customer Email:</strong> ${customerEmail}</li>
-        <li><strong>Total:</strong> ${total}</li>
-        <li><strong>Error Message:</strong> ${errorMessage}</li>
+        <li><strong>Order ID:</strong> ${escapeHtml(orderId)}</li>
+        <li><strong>Customer Email:</strong> ${escapeHtml(customerEmail)}</li>
+        <li><strong>Total:</strong> ${escapeHtml(total)}</li>
+        <li><strong>Error Message:</strong> ${escapeHtml(errorMessage)}</li>
       </ul>
       <p>You can check their cart/order details in the Payload Admin panel to see what they were trying to buy.</p>
     `
 
-    await payload.sendEmail({
+    await sendTrackedEmail(payload, {
+      from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
       to: 'support@99puritypeptides.com',
       subject: `⚠️ Payment Failed - Order ${orderId}`,
       html: html,

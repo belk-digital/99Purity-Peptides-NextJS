@@ -27,11 +27,9 @@ export const Orders: CollectionConfig = {
         const { afterOrderChange } = await import('@/hooks/orders')
         return afterOrderChange(args)
       },
-      async ({ operation, doc }) => {
-        if (operation === 'update') {
-          // TODO: send status change email (Phase 14)
-        }
-      },
+      // Status-change emails are now handled directly in afterOrderChange: refunded/cancelled
+      // sends a customer email, shipped uses the sendTrackingEmail checkbox + trackingLink,
+      // and paid is handled by finalizeOrder's confirmation email.
     ],
   },
   fields: [

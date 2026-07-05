@@ -2,6 +2,8 @@ import type { CollectionConfig } from 'payload'
 import { beforeChangeEmailLowercase, afterCreateUserTodo } from '@/hooks/users'
 import { accessUsers } from '@/access/users'
 
+const staffOnly = ({ req: { user } }: any) => !!user && ['admin', 'staff'].includes(user.role)
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
@@ -78,12 +80,16 @@ export const Users: CollectionConfig = {
         { label: 'Admin', value: 'admin' },
         { label: 'Staff', value: 'staff' },
       ],
+      // A customer's own update access only lets them PATCH their own record — without this,
+      // that's enough to self-promote to admin. Only admins/staff may change this field.
+      access: { update: staffOnly },
     },
 
     {
       name: 'emailVerified',
       type: 'checkbox',
       defaultValue: false,
+      access: { update: staffOnly },
     },
     {
       name: 'acceptsMarketing',
@@ -118,6 +124,7 @@ export const Users: CollectionConfig = {
         readOnly: true,
         condition: ({ user }) => !!user?.role && ['admin', 'staff'].includes(user.role),
       },
+      access: { update: staffOnly },
     },
     {
       name: 'defaultShippingAddress',
@@ -140,10 +147,12 @@ export const Users: CollectionConfig = {
         readOnly: true,
         condition: ({ user }) => !!user?.role && ['admin', 'staff'].includes(user.role),
       },
+      access: { update: staffOnly },
     },
     {
       name: 'metadata',
       type: 'json',
+      access: { update: staffOnly },
     },
     {
       name: 'purityPoints',
@@ -153,6 +162,9 @@ export const Users: CollectionConfig = {
       admin: {
         description: 'Purity Points ($1 per point). Can be used by users at checkout.',
       },
+      // Only server-side code (checkout, refund hooks) using overrideAccess may change this —
+      // never a customer's own PATCH request, or they could mint free store credit for themselves.
+      access: { update: staffOnly },
     },
   ],
   hooks: {
