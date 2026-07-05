@@ -86,10 +86,10 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
           animate="open"
           exit="exit"
           variants={menuVariants}
-          className="fixed inset-0 z-[100] bg-cream flex flex-col pointer-events-auto"
+          className="fixed inset-0 z-[100] bg-cream flex flex-col pointer-events-auto transform-gpu will-change-transform"
         >
           {/* Performant static noise texture (0 GPU overhead) */}
-          <div className="absolute inset-0 opacity-[0.15] pointer-events-none z-0 mix-blend-multiply bg-noise" />
+          <div className="absolute inset-0 opacity-10 pointer-events-none z-0 bg-noise" />
 
           {/* Header Block */}
           <motion.div variants={itemVariants} className="h-[72px] flex items-center justify-between px-6 shrink-0 relative z-10 border-b border-black/5">

@@ -89,14 +89,13 @@ export function Hero() {
         <div className="absolute inset-0 rounded-[2rem] md:rounded-[4rem] ring-1 ring-inset ring-white/5 pointer-events-none z-20" />
 
         {/* Background Gradients */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 opacity-50" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 opacity-50" />
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[64px] -translate-y-1/2 translate-x-1/3 opacity-50 transform-gpu" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[64px] translate-y-1/3 -translate-x-1/3 opacity-50 transform-gpu" />
 
         {/* Background Video */}
         <video
           suppressHydrationWarning
           ref={videoRef}
-          src="/videos/homepage-hero-video.webm"
           autoPlay
           loop
           muted
@@ -104,7 +103,10 @@ export function Hero() {
           disablePictureInPicture
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover z-[5] pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
-        />
+        >
+          <source src="/videos/homepage-hero-video.mp4" type="video/mp4" />
+          <source src="/videos/homepage-hero-video.webm" type="video/webm" />
+        </video>
 
         {/* Dark Gradient Overlay inside card */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-10 pointer-events-none" />
@@ -214,7 +216,7 @@ export function Hero() {
 
             {/* The Glass Card (Masked perfectly with CSS mask on the SAME element to avoid WebKit bounding box bugs) */}
             <div 
-              className="absolute inset-0 bg-white/[0.03] backdrop-blur-3xl z-10 pointer-events-none"
+              className="absolute inset-0 bg-white/[0.05] backdrop-blur-md z-10 pointer-events-none transform-gpu"
               style={{
                 maskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,
                 WebkitMaskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,

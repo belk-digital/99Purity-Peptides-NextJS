@@ -465,7 +465,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                 {headerContent}
               </div>
             ) : (
-              <div className="w-full transition-all duration-500 rounded-full bg-black/30 backdrop-blur-xl border border-white/10 overflow-hidden">
+              <div className="w-full transition-all duration-500 rounded-full bg-black/60 backdrop-blur-md border border-white/10 overflow-hidden transform-gpu">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent pointer-events-none rounded-full" />
                 {headerContent}
               </div>
@@ -477,7 +477,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
 
       {/* Render the Mega Menu OUTSIDE the motion.div wrapper so backdrop-filter is NOT broken by the stacking context! */}
       <div 
-        className="fixed inset-x-0 z-[45] transition-transform duration-300 ease-out"
+        className="hidden lg:block fixed inset-x-0 z-[45] transition-transform duration-300 ease-out"
         style={{ 
           position: isScrolled || (announcementClosed && !isScrolled) ? 'fixed' : 'absolute',
           top: announcementClosed ? '53px' : '97px',

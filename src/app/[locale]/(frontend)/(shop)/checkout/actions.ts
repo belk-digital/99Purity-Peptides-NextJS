@@ -367,6 +367,18 @@ export async function createPayloadOrder(
       }
     })
 
+    // Immediately deduct points to prevent infinite reuse on unpaid Zelle orders
+    if (pointsToRedeem > 0 && payloadUserId) {
+      const userDoc = await payload.findByID({ collection: 'users', id: payloadUserId })
+      if (userDoc && typeof userDoc.purityPoints === 'number') {
+        await payload.update({
+          collection: 'users',
+          id: payloadUserId,
+          data: { purityPoints: Math.max(0, userDoc.purityPoints - pointsToRedeem) }
+        })
+      }
+    }
+
     // Update Stripe PaymentIntent with the Order ID (unless it's a free order or Zelle, which has no PaymentIntent)
     if (paymentMethod === 'stripe' && paymentIntentId && paymentIntentId !== 'free_order') {
        await stripe.paymentIntents.update(paymentIntentId, {
