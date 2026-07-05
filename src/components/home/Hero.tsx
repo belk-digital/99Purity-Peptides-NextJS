@@ -103,7 +103,6 @@ export function Hero() {
           playsInline
           disablePictureInPicture
           preload="auto"
-          poster="/hero-image.png"
           className="absolute inset-0 w-full h-full object-cover z-[5] pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
         >
           <source src="/videos/homepage-hero-video.mp4" type="video/mp4" />
