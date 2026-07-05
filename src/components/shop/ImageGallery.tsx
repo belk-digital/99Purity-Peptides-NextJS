@@ -55,11 +55,11 @@ export function ImageGallery({ images }: ImageGalleryProps) {
   if (!images || images.length === 0) return null
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row w-full gap-3 lg:gap-4 relative h-full">
+    <div className="flex flex-col-reverse w-full gap-3 lg:gap-4 relative h-full">
 
-      {/* Thumbnails Sidebar (Left on Desktop, Bottom on Mobile) */}
+      {/* Thumbnails Row (Below Main Image on All Breakpoints) */}
       {images.length > 1 && (
-        <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto scrollbar-none w-full lg:w-[68px] shrink-0 pb-1 lg:pb-0 lg:max-h-[calc(100vh-184px)]">
+        <div className="flex justify-center gap-2.5 overflow-x-auto scrollbar-none w-full shrink-0 pb-1">
           {images.map((img, idx) => {
             const isActive = activeIndex === idx
             return (
@@ -67,10 +67,10 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                 key={idx}
                 onClick={() => scrollTo(idx)}
                 className={cn(
-                  "relative w-14 h-[72px] lg:w-full lg:h-[86px] shrink-0 rounded-xl overflow-hidden transition-all duration-200",
+                  "relative w-12 h-12 lg:w-14 lg:h-14 shrink-0 rounded-full overflow-hidden transition-all duration-200 bg-white",
                   isActive
-                    ? "ring-1 ring-black ring-offset-[3px] ring-offset-[#F2EDE4] opacity-100"
-                    : "opacity-40 hover:opacity-70"
+                    ? "ring-2 ring-black ring-offset-2 ring-offset-[#F2EDE4] opacity-100"
+                    : "opacity-50 hover:opacity-80"
                 )}
                 aria-label={t('viewImage', { number: idx + 1 })}
               >
@@ -79,7 +79,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                   alt={t('thumbnailAlt', { number: idx + 1 })}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 56px, 68px"
+                  sizes="56px"
                 />
               </button>
             )
@@ -89,7 +89,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Main Image */}
       <div
-        className="relative w-full aspect-[4/5] lg:aspect-auto lg:h-[calc(100vh-184px)] lg:min-h-[420px] bg-gray-50 rounded-2xl overflow-hidden cursor-zoom-in group"
+        className="relative w-full max-w-md mx-auto aspect-square bg-gray-50 rounded-2xl overflow-hidden cursor-zoom-in group"
         ref={emblaRef}
       >
         <div className="flex h-full">

@@ -10,6 +10,8 @@ export const BlogPosts: CollectionConfig = {
     { name: 'title', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', admin: { position: 'sidebar' } },
     { name: 'author', type: 'relationship', relationTo: 'users', required: true },
+    { name: 'featuredImage', type: 'upload', relationTo: 'media', label: 'Featured Image' },
+    { name: 'excerpt', type: 'textarea', localized: true, admin: { description: 'Short summary shown on blog listing cards and used as the default SEO/social description.' } },
     { name: 'content', type: 'richText', editor: lexicalEditor(), localized: true },
     { name: 'publishedAt', type: 'date' },
     {

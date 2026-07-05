@@ -21,6 +21,7 @@ export function Hero() {
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCardClosed, setIsCardClosed] = useState(false)
+  const didDragRef = React.useRef(false)
 
   React.useEffect(() => {
     const video = videoRef.current
@@ -255,17 +256,26 @@ export function Hero() {
                     initial={{ opacity: 0, x: 20, scale: 0.95 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -20, scale: 0.95 }}
-                    transition={{ 
-                      x: { type: "spring", stiffness: 300, damping: 30 },
-                      opacity: { duration: 0.4 },
-                      scale: { duration: 0.4 }
+                    transition={{
+                      x: { type: "spring", stiffness: 120, damping: 26 },
+                      opacity: { duration: 0.8, ease: "easeInOut" },
+                      scale: { duration: 0.8, ease: "easeInOut" }
                     }}
                     className="absolute inset-0 flex flex-col items-start justify-center pb-8 cursor-pointer active:cursor-grabbing"
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.6}
                     whileTap={{ cursor: "grabbing" }}
-                    onTap={() => router.push(`/product/${HERO_PRODUCTS[currentSlide].slug}`)}
+                    onTap={() => {
+                      if (didDragRef.current) {
+                        didDragRef.current = false
+                        return
+                      }
+                      router.push(`/products/${HERO_PRODUCTS[currentSlide].slug}`)
+                    }}
+                    onDragStart={() => {
+                      didDragRef.current = true
+                    }}
                     onDragEnd={(e, { offset, velocity }) => {
                       const swipePower = offset.x + velocity.x * 0.2;
                       if (swipePower < -40) {
@@ -309,7 +319,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
                         className="absolute inset-0 text-white text-2xl font-bold font-heading"
                       >
                         {HERO_PRODUCTS[currentSlide].price}

@@ -352,9 +352,14 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                 <User size={18} strokeWidth={1.5} />
               </Link>
             ) : (
-              <Link href="/login" className={`hidden sm:flex transition-colors items-center justify-center ${textColor} ${textHoverColor} px-2 text-[8px] xl:text-[9px] min-[1650px]:text-[10px] font-heading font-bold uppercase tracking-tight min-[1650px]:tracking-widest whitespace-nowrap`}>
-                Login
-              </Link>
+              <>
+                <Link href="/login" className={`sm:hidden p-1.5 transition-colors flex items-center justify-center ${textColor} ${textHoverColor}`} title="Login">
+                  <User size={18} strokeWidth={1.5} />
+                </Link>
+                <Link href="/login" className={`hidden sm:flex transition-colors items-center justify-center ${textColor} ${textHoverColor} px-2 text-[8px] xl:text-[9px] min-[1650px]:text-[10px] font-heading font-bold uppercase tracking-tight min-[1650px]:tracking-widest whitespace-nowrap`}>
+                  Login
+                </Link>
+              </>
             )
           ) : null}
         </div>

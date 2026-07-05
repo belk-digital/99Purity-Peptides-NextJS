@@ -6,6 +6,8 @@ import { ArrowRight } from 'lucide-react';
 
 interface FluidButtonProps {
   href?: string;
+  target?: string;
+  rel?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
@@ -14,7 +16,7 @@ interface FluidButtonProps {
   variant?: "dark" | "cyan" | "white";
 }
 
-export function FluidButton({ href, onClick, type = "button", disabled = false, text, className = "", variant = "dark" }: FluidButtonProps) {
+export function FluidButton({ href, target, rel, onClick, type = "button", disabled = false, text, className = "", variant = "dark" }: FluidButtonProps) {
   const filterId = React.useId().replace(/:/g, ""); // Ensure valid ID string
   const isCyan = variant === "cyan";
   const isWhite = variant === "white";
@@ -86,7 +88,7 @@ export function FluidButton({ href, onClick, type = "button", disabled = false, 
 
   if (href) {
     return (
-      <Link href={href} onClick={onClick} className={wrapperClasses}>
+      <Link href={href} target={target} rel={rel} onClick={onClick} className={wrapperClasses}>
         {innerContent}
       </Link>
     );
