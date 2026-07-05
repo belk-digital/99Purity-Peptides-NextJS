@@ -600,15 +600,14 @@ export function ProductClient({ product }: ProductClientProps) {
               </h2>
             </div>
             {product.coaFile && (
-              <a
+              <FluidButton
                 href={product.coaFile}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="self-start sm:self-auto inline-flex items-center gap-2.5 border border-white/[0.12] text-white/40 hover:text-white hover:border-white/30 rounded-full px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] transition-all"
-              >
-                <Download size={11} />
-                {t('downloadCertificate')}
-              </a>
+                text={t('downloadCertificate')}
+                variant="white"
+                className="self-start sm:self-auto"
+              />
             )}
           </div>
 
