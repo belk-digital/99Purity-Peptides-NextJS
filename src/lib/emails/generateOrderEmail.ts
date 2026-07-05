@@ -152,7 +152,8 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
                   <p style="margin: 0; color: #6B21A8; font-size: 16px; font-weight: 700;">orders@99puritypeptides.com</p>
                 </div>
                 
-                <p style="margin: 0; color: #7E22CE; font-size: 12px;">Please make sure to include your order number <strong>#${orderNumber}</strong> in the Zelle memo.</p>
+                <p style="margin: 0 0 8px 0; color: #7E22CE; font-size: 12px;">Please make sure to include your order number <strong>#${orderNumber}</strong> in the Zelle memo.</p>
+                <p style="margin: 0; color: #9333EA; font-size: 11px; font-style: italic;">Note: Please ignore this payment instruction if you have already completed your payment on the website.</p>
               </div>
             </td>
           </tr>

@@ -109,11 +109,11 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
   }
 
   if (operation === 'update') {
-    // If the order is refunded or cancelled, we must reverse any associated affiliate conversions
-    const wasRefunded = doc.status === 'refunded' && previousDoc?.status !== 'refunded'
-    const wasCancelled = doc.status === 'cancelled' && previousDoc?.status !== 'cancelled'
+    const isNowVoid = doc.status === 'refunded' || doc.status === 'cancelled'
+    const wasVoidBefore = previousDoc?.status === 'refunded' || previousDoc?.status === 'cancelled'
 
-    if (wasRefunded || wasCancelled) {
+    // Reverse affiliate conversions if transitioning to a void state (refunded/cancelled)
+    if (isNowVoid && !wasVoidBefore) {
       const conversions = await req.payload.find({
         collection: 'affiliate-conversions',
         where: { order: { equals: doc.id } },
@@ -128,10 +128,30 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
             data: {
               status: 'reversed',
               reversedAt: new Date().toISOString(),
-              reversedReason: wasRefunded ? 'order_refunded' : 'order_cancelled',
+              reversedReason: doc.status === 'refunded' ? 'order_refunded' : 'order_cancelled',
             },
             overrideAccess: true,
           })
+        }
+      }
+
+      // Refund the used Purity Points back to the user
+      if (doc.redeemedPoints && doc.redeemedPoints > 0 && doc.owner) {
+        try {
+          const userId = typeof doc.owner === 'object' ? doc.owner.id : doc.owner
+          const user = await req.payload.findByID({ collection: 'users', id: userId, overrideAccess: true })
+          
+          if (user && typeof user.purityPoints === 'number') {
+            await req.payload.update({
+              collection: 'users',
+              id: userId,
+              data: { purityPoints: user.purityPoints + doc.redeemedPoints },
+              overrideAccess: true,
+            })
+            req.payload.logger.info(`Refunded ${doc.redeemedPoints} purity points to user ${userId} for voided order ${doc.id}`)
+          }
+        } catch (err) {
+          req.payload.logger.error({ err }, `Failed to refund purity points for order ${doc.id}`)
         }
       }
     }

@@ -84,22 +84,9 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       }
     }
 
-    // 4. Deduct User Points and Clear Cart
+    // 4. Clear User Cart
     if (order.owner) {
       const userId = typeof order.owner === 'object' ? order.owner.id : order.owner
-      const user = await payload.findByID({ collection: 'users', id: userId })
-      
-      let currentPoints = user.purityPoints || 0
-      // Deduct redeemed
-      if (order.redeemedPoints && order.redeemedPoints > 0) {
-          currentPoints = Math.max(0, currentPoints - order.redeemedPoints)
-      }
-
-      await payload.update({
-          collection: 'users',
-          id: userId,
-          data: { purityPoints: currentPoints }
-      })
 
       // Clear user's Payload cart instantly
       const carts = await payload.find({ collection: 'carts', where: { user: { equals: userId } } });
@@ -131,7 +118,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
             const userDoc = typeof order.owner === 'object' ? order.owner : await payload.findByID({ collection: 'users', id: order.owner });
             customerEmail = userDoc.email;
         }
-        if (customerEmail) {
+        if (customerEmail && order.paymentMethod !== 'zelle') {
             const { generateOrderInvoiceHtml } = await import('@/lib/emails/generateOrderEmail');
             const invoiceHtml = await generateOrderInvoiceHtml(order, payload);
 
