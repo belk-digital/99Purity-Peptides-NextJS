@@ -12,7 +12,7 @@ export interface AccountOverviewProps {
   stats: {
     ordersPlaced: number;
     wishlistCount: number;
-    maxxPoints: number;
+    purityPoints: number;
     memberSince: string;
   };
   recentOrders: {
@@ -106,16 +106,16 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
           </div>
           <div className="relative z-10 flex justify-between items-start">
             <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white flex items-center gap-1">
-              {t('maxxPoints')} <Hexagon size={10} className="text-white ml-0.5 hidden sm:block" />
+              {t('purityPoints')} <Hexagon size={10} className="text-white ml-0.5 hidden sm:block" />
             </span>
             <Star size={32} strokeWidth={1.5} className="text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] sm:w-[42px] sm:h-[42px]" />
           </div>
           <div className="relative z-10 flex flex-col mt-2 sm:mt-4">
             <div className="flex flex-col sm:flex-row sm:items-baseline gap-0 sm:gap-2">
-              <span className={`text-2xl sm:text-4xl text-white font-bold tracking-tighter font-heading`}>{Number(stats.maxxPoints.toFixed(2))}</span>
-              <span className="text-[10px] sm:text-xs text-gray-300 font-medium font-heading">(${stats.maxxPoints.toFixed(2)})</span>
+              <span className={`text-2xl sm:text-4xl text-white font-bold tracking-tighter font-heading`}>{Number(stats.purityPoints.toFixed(2))}</span>
+              <span className="text-[10px] sm:text-xs text-gray-300 font-medium font-heading">(${stats.purityPoints.toFixed(2)})</span>
             </div>
-            <p className="text-[8px] sm:text-[9px] text-gray-300 mt-1 sm:mt-2 leading-tight hidden sm:block">{t('maxxPointsDescription')}</p>
+            <p className="text-[8px] sm:text-[9px] text-gray-300 mt-1 sm:mt-2 leading-tight hidden sm:block">{t('purityPointsDescription')}</p>
           </div>
         </motion.div>
 

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useCartStore } from '@/lib/cart/store'
-import { verifyCoupon, getUserDefaultAddress, getUserMaxxPoints, getUserAddresses } from '../actions'
+import { verifyCoupon, getUserDefaultAddress, getUserPurityPoints, getUserAddresses } from '../actions'
 import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
 import { loadStripe } from '@stripe/stripe-js'
@@ -94,7 +94,7 @@ export function CheckoutClient() {
         console.error('Failed to load user addresses:', err)
       }
 
-      const points = await getUserMaxxPoints()
+      const points = await getUserPurityPoints()
       setAvailablePoints(points)
     }
     
@@ -461,7 +461,7 @@ export function CheckoutClient() {
                             <Sparkles size={14} />
                           </div>
                           <div className="flex flex-col">
-                            <span className={`text-sm font-bold ${isRedeemingPoints ? 'text-amber-700' : 'text-ink'}`}>{t('maxxPoints')}</span>
+                            <span className={`text-sm font-bold ${isRedeemingPoints ? 'text-amber-700' : 'text-ink'}`}>{t('purityPoints')}</span>
                             <span className="text-xs font-medium text-ink/50">{t('youHavePoints', { points: Number(availablePoints.toFixed(2)) })}</span>
                           </div>
                         </div>
@@ -802,7 +802,7 @@ export function CheckoutClient() {
                         <Sparkles size={18} />
                       </div>
                       <div className="flex flex-col">
-                        <span className={`text-sm font-bold ${isRedeemingPoints ? 'text-amber-700' : 'text-ink'}`}>{t('maxxPoints')}</span>
+                        <span className={`text-sm font-bold ${isRedeemingPoints ? 'text-amber-700' : 'text-ink'}`}>{t('purityPoints')}</span>
                         <span className="text-xs font-medium text-ink/50">{t('youHavePointsWithValue', { points: Number(availablePoints.toFixed(2)), value: availablePoints.toFixed(2) })}</span>
                       </div>
                     </div>

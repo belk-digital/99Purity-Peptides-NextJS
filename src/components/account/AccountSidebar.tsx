@@ -21,11 +21,11 @@ const NAV_ITEMS = [
 
 export function AccountSidebar({ 
   userName = 'User', 
-  maxxPoints = 0,
+  purityPoints = 0,
   affiliateStatus = 'none' 
 }: { 
   userName?: string
-  maxxPoints?: number
+  purityPoints?: number
   affiliateStatus?: 'none' | 'pending' | 'approved' | 'rejected' | 'suspended'
 }) {
   const t = useTranslations('account.sidebar')
@@ -138,6 +138,10 @@ export function AccountSidebar({
       {/* AI Assistant & Quick Links */}
       <div className="flex flex-col gap-3 mt-2">
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <div className="flex justify-between items-center bg-green-500/10 text-green-700 py-3 px-4 rounded-xl mb-4">
+              <span className="text-sm font-medium">Purity Points</span>
+              <span className="font-bold text-lg">{purityPoints}</span>
+            </div>
           <div className="flex items-center gap-2 mb-3">
             <Bot size={16} className="text-[#2b646c]" />
             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-black font-heading">{t('aiAssistant')}</span>

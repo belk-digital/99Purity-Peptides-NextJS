@@ -41,6 +41,9 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
           paymentStatus: 'captured',
         }
       })
+      // Update in-memory object so subsequent emails don't show unpaid instructions
+      order.status = 'paid';
+      order.paymentStatus = 'captured';
     }
 
     // 2. Decrement Inventory
@@ -86,7 +89,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       const userId = typeof order.owner === 'object' ? order.owner.id : order.owner
       const user = await payload.findByID({ collection: 'users', id: userId })
       
-      let currentPoints = user.maxxPoints || 0
+      let currentPoints = user.purityPoints || 0
       // Deduct redeemed
       if (order.redeemedPoints && order.redeemedPoints > 0) {
           currentPoints = Math.max(0, currentPoints - order.redeemedPoints)
@@ -95,7 +98,7 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
       await payload.update({
           collection: 'users',
           id: userId,
-          data: { maxxPoints: currentPoints }
+          data: { purityPoints: currentPoints }
       })
 
       // Clear user's Payload cart instantly

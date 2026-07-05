@@ -305,7 +305,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
               </div>
               {!!order.redeemedPoints && order.redeemedPoints > 0 && (
                 <div className="flex justify-between text-green-500 border-b border-gray-100 pb-4 mt-1">
-                  <span>{t('maxxPoints')}</span>
+                  <span>{t('purityPoints')}</span>
                   <span>-${order.redeemedPoints.toFixed(2)}</span>
                 </div>
               )}

@@ -409,12 +409,12 @@ export async function processCheckout(formData: FormData) {
     const paymentMethod = formData.get('paymentMethod') as string
     const redeemPoints = formData.get('redeemPoints') === 'true'
 
-    // Fetch user maxx points securely
-    let userMaxxPoints = 0
-    if (user) {
-      const payloadUser = await payload.findByID({ collection: 'users', id: user.id as any })
-      if (payloadUser && typeof payloadUser.maxxPoints === 'number') {
-        userMaxxPoints = payloadUser.maxxPoints
+    // Fetch user purity points securely
+    let userPurityPoints = 0
+    if (user?.id) {
+      const payloadUser = await payload.findByID({ collection: 'users', id: user.id, depth: 0 })
+      if (payloadUser && typeof payloadUser.purityPoints === 'number') {
+        userPurityPoints = payloadUser.purityPoints
       }
     }
 
@@ -556,8 +556,8 @@ export async function processCheckout(formData: FormData) {
     const totalBeforePoints = Math.max(0, subtotal - discountTotal) + shippingTotal + taxTotal + feeTotal
 
     let pointsToRedeem = 0
-    if (redeemPoints && userMaxxPoints > 0) {
-      pointsToRedeem = Math.min(userMaxxPoints, totalBeforePoints)
+    if (redeemPoints && userPurityPoints > 0) {
+      pointsToRedeem = Math.min(userPurityPoints, totalBeforePoints)
     }
 
     const total = totalBeforePoints - pointsToRedeem
@@ -611,7 +611,7 @@ export async function processCheckout(formData: FormData) {
       await payload.update({
         collection: 'users',
         id: user.id,
-        data: { maxxPoints: userMaxxPoints - pointsToRedeem },
+        data: { purityPoints: userPurityPoints - pointsToRedeem },
         overrideAccess: true,
       })
     }
@@ -843,19 +843,23 @@ export async function getUserDefaultAddress() {
   }
 }
 
-export async function getUserMaxxPoints() {
+export async function getUserPurityPoints() {
   try {
-    const user = await getPayloadUser()
-    if (!user) return 0
+    const { getServerSession } = await import('next-auth')
+    const { authOptions } = await import('@/lib/auth/authOptions')
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) return 0
 
     const payload = await getPayload({ config: configPromise })
     const payloadUser = await payload.findByID({
       collection: 'users',
-      id: user.id as any,
+      id: session.user.id,
+      depth: 0,
     })
 
-    return typeof payloadUser?.maxxPoints === 'number' ? payloadUser.maxxPoints : 0
-  } catch (err) {
+    return typeof payloadUser?.purityPoints === 'number' ? payloadUser.purityPoints : 0
+  } catch (error) {
+    console.error('Error fetching purity points:', error)
     return 0
   }
 }

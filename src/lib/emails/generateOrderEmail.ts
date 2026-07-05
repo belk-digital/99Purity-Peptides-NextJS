@@ -134,6 +134,30 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
           </tr>
           ` : ''}
 
+          ${order.paymentMethod === 'zelle' && order.paymentStatus === 'unpaid' ? `
+          <!-- Zelle Payment Instructions -->
+          <tr>
+            <td style="padding: 0 40px; padding-bottom: 20px;">
+              <div style="background-color: #F3E8FF; border: 1px solid #E9D5FF; padding: 30px 20px; border-radius: 12px; text-align: center;">
+                <div style="display: inline-block; width: 48px; height: 48px; background-color: #E9D5FF; border-radius: 50%; color: #7E22CE; font-weight: bold; font-size: 24px; line-height: 48px; margin-bottom: 16px;">Z</div>
+                <h3 style="margin: 0 0 8px 0; color: #6B21A8; font-size: 18px; font-weight: 700;">Complete Your Payment via Zelle</h3>
+                <p style="margin: 0 0 20px 0; color: #7E22CE; font-size: 14px; line-height: 1.5;">To finalize your order, please send exactly <strong>${formatMoney(total)}</strong> to our Zelle account.</p>
+                
+                <div style="background-color: #ffffff; border: 1px solid #E9D5FF; border-radius: 12px; padding: 8px; display: inline-block; margin-bottom: 20px;">
+                  <img src="https://res.cloudinary.com/denskvdyt/image/upload/v1783110064/zelle-qr_h2xhvt.jpg" alt="Zelle QR Code" style="width: 150px; height: 150px; display: block;" />
+                </div>
+                
+                <div style="background-color: #ffffff; border-radius: 8px; padding: 12px 24px; display: inline-block; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                  <p style="margin: 0 0 4px 0; color: #A855F7; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Send To</p>
+                  <p style="margin: 0; color: #6B21A8; font-size: 16px; font-weight: 700;">orders@99puritypeptides.com</p>
+                </div>
+                
+                <p style="margin: 0; color: #7E22CE; font-size: 12px;">Please make sure to include your order number <strong>#${orderNumber}</strong> in the Zelle memo.</p>
+              </div>
+            </td>
+          </tr>
+          ` : ''}
+
           ${order.trackingLink ? `
           <!-- Tracking Link -->
           <tr>
@@ -152,11 +176,15 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
             <td style="padding: 30px 40px;">
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td width="50%">
+                  <td width="33%">
                     <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Order Number</p>
                     <p style="margin: 4px 0 0 0; font-size: 16px; color: #111827; font-weight: 500;">${orderNumber}</p>
                   </td>
-                  <td width="50%" align="right">
+                  <td width="33%" align="center">
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Payment Status</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: ${order.paymentStatus === 'unpaid' ? '#B91C1C' : '#15803D'}; font-weight: 700;">${order.paymentStatus === 'unpaid' ? 'UNPAID' : 'PAID'}</p>
+                  </td>
+                  <td width="33%" align="right">
                     <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Date</p>
                     <p style="margin: 4px 0 0 0; font-size: 16px; color: #111827; font-weight: 500;">${orderDate}</p>
                   </td>
@@ -229,6 +257,7 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
           <!-- View Order Button -->
           <tr>
             <td style="padding: 0 40px 30px 40px; text-align: center; background-color: #f9fafb;">
+              <p style="margin: 0 0 16px 0; font-size: 14px; color: #4B5563;">To check your payment and order status at any time, please visit our site:</p>
               <a href="${serverUrl}/account/orders/${order.id}" style="display: inline-block; padding: 12px 24px; background-color: #000000; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 6px;">View Order Status</a>
             </td>
           </tr>

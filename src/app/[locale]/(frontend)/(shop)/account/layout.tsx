@@ -15,7 +15,7 @@ export default async function AccountLayout({ children }: { children: React.Reac
   const t = await getTranslations('account.layout')
   const user = await getPayloadUser()
   const userName = user?.firstName || user?.email?.split('@')[0] || 'User'
-  const maxxPoints = user?.maxxPoints || 0
+  const purityPoints = user?.purityPoints || 0
 
   let affiliateStatus: 'none' | 'pending' | 'approved' | 'rejected' | 'suspended' = 'none'
   if (user) {
@@ -35,12 +35,12 @@ export default async function AccountLayout({ children }: { children: React.Reac
     <div className="bg-[#F8F9FA] min-h-screen selection:bg-black/10 flex flex-col lg:flex-row">
       {/* Static Sidebar for Desktop */}
       <div className="hidden lg:block w-[280px] shrink-0 z-40 bg-white lg:rounded-r-3xl border-r border-gray-100 shadow-sm">
-        <AccountSidebar userName={userName} maxxPoints={maxxPoints} affiliateStatus={affiliateStatus} />
+        <AccountSidebar userName={userName} purityPoints={purityPoints} affiliateStatus={affiliateStatus} />
       </div>
       
       {/* Mobile Sidebar */}
       <MobileSidebar>
-        <AccountSidebar userName={userName} maxxPoints={maxxPoints} affiliateStatus={affiliateStatus} />
+        <AccountSidebar userName={userName} purityPoints={purityPoints} affiliateStatus={affiliateStatus} />
       </MobileSidebar>
 
       {/* Main Content */}
