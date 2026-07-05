@@ -91,6 +91,19 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
     }
   }
 
+  // Trigger finalizeOrder if it became paid via admin panel (e.g. Zelle orders)
+  if (becamePaid && !doc.isFinalized) {
+    try {
+      const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
+      // Running it asynchronously so it doesn't block the UI response
+      finalizeOrder(doc.id).catch(err => {
+        req.payload.logger.error({ err }, `Failed to finalize Order ${doc.id} in background`)
+      })
+    } catch (err) {
+      req.payload.logger.error({ err }, `Failed to import finalizeOrder for Order ${doc.id}`)
+    }
+  }
+
   if (operation === 'update') {
     // If the order is refunded or cancelled, we must reverse any associated affiliate conversions
     const wasRefunded = doc.status === 'refunded' && previousDoc?.status !== 'refunded'

@@ -26,8 +26,8 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
     }
 
     // Double-check to prevent duplicate finalization
-    if (order.paymentStatus === 'captured' && order.fulfillmentStatus !== 'unfulfilled') {
-      console.warn(`finalizeOrder: Order ${orderId} already captured and processed. Skipping.`)
+    if (order.isFinalized) {
+      console.warn(`finalizeOrder: Order ${orderId} already finalized. Skipping.`)
       return true
     }
 
@@ -144,7 +144,12 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
         console.error('Failed to send confirmation email', err)
     }
 
-
+    // 7. Mark as Finalized
+    await payload.update({
+      collection: 'orders',
+      id: idToUse,
+      data: { isFinalized: true }
+    })
 
     return true
 
