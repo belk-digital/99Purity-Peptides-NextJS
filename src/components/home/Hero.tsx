@@ -21,6 +21,7 @@ export function Hero() {
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCardClosed, setIsCardClosed] = useState(false)
+  const didDragRef = React.useRef(false)
 
   React.useEffect(() => {
     const video = videoRef.current
@@ -102,6 +103,7 @@ export function Hero() {
           playsInline
           disablePictureInPicture
           preload="auto"
+          poster="/hero-image.png"
           className="absolute inset-0 w-full h-full object-cover z-[5] pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
         >
           <source src="/videos/homepage-hero-video.mp4" type="video/mp4" />
@@ -265,7 +267,16 @@ export function Hero() {
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.6}
                     whileTap={{ cursor: "grabbing" }}
-                    onTap={() => router.push(`/products/${HERO_PRODUCTS[currentSlide].slug}`)}
+                    onTap={() => {
+                      if (didDragRef.current) {
+                        didDragRef.current = false
+                        return
+                      }
+                      router.push(`/products/${HERO_PRODUCTS[currentSlide].slug}`)
+                    }}
+                    onDragStart={() => {
+                      didDragRef.current = true
+                    }}
                     onDragEnd={(e, { offset, velocity }) => {
                       const swipePower = offset.x + velocity.x * 0.2;
                       if (swipePower < -40) {

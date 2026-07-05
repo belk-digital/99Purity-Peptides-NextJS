@@ -208,7 +208,7 @@ export default async function ProductPage({
     dimensions: rawProduct.dimensions,
     badges: rawProduct.status === 'active' ? [] : ['DRAFT'],
     description: rawProduct.description || '',
-    shortDescription: rawProduct.seoDescription || rawProduct.description?.substring(0, 100) || '',
+    shortDescription: rawProduct.description || rawProduct.seoDescription || '',
     averageRating: rawProduct.averageRating || 5.0,
     reviewCount: rawProduct.reviewCount || 0,
 

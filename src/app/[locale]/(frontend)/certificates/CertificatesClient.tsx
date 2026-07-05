@@ -208,7 +208,7 @@ export function CertificatesClient({ coas }: { coas: COA[] }) {
             <FadeUp>
               <div className="relative w-full aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden">
                 <Image
-                  src="/hero-image.png"
+                  src="/hplc-machine-lab.png"
                   alt="HPLC Testing Machine"
                   fill
                   className="object-cover"
