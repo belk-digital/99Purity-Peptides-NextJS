@@ -19,6 +19,7 @@ import * as migration_20260704_004500_add_order_payment_method from './20260704_
 import * as migration_20260704_060000_add_product_best_seller from './20260704_060000_add_product_best_seller';
 import * as migration_20260704_070000_add_product_coa_fields from './20260704_070000_add_product_coa_fields';
 import * as migration_20260705_120000_add_coupon_is_active_and_verify_backfill from './20260705_120000_add_coupon_is_active_and_verify_backfill';
+import * as migration_20260706_120000_add_order_applied_fees_percentage from './20260706_120000_add_order_applied_fees_percentage';
 
 export const migrations = [
   {
@@ -125,5 +126,10 @@ export const migrations = [
     up: migration_20260705_120000_add_coupon_is_active_and_verify_backfill.up,
     down: migration_20260705_120000_add_coupon_is_active_and_verify_backfill.down,
     name: '20260705_120000_add_coupon_is_active_and_verify_backfill',
+  },
+  {
+    up: migration_20260706_120000_add_order_applied_fees_percentage.up,
+    down: migration_20260706_120000_add_order_applied_fees_percentage.down,
+    name: '20260706_120000_add_order_applied_fees_percentage',
   },
 ];

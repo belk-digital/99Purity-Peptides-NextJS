@@ -45,6 +45,7 @@ export default async function WishlistPage() {
           image: imageUrl,
           descriptor: product.categories?.[0]?.title || 'PEPTIDE',
           price: `$${(item.priceSnapshot || 0).toFixed(2)}`,
+          hasVariants: Array.isArray(product.variants) && product.variants.length > 1,
         })
       }
     }

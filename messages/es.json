@@ -141,7 +141,7 @@
     "couponCopiedDescription": "Usa el código {code} al finalizar la compra.",
     "announcements": {
       "summerSale": "OFERTA DE VERANO: 15% DE DESCUENTO EN TODOS LOS PÉPTIDOS",
-      "freeShipping": "ENVÍO EXPRESS GRATIS EN PEDIDOS SUPERIORES A $200",
+      "freeShipping": "ENVÍO EXPRESS GRATIS EN PEDIDOS SUPERIORES A $300",
       "newBlends": "NUEVAS MEZCLAS DE PÉPTIDOS DISPONIBLES"
     },
     "megaMenu": {
@@ -1052,6 +1052,7 @@
       "removeItemAria": "Eliminar artículo",
       "remove": "Eliminar",
       "total": "Total",
+      "subtotal": "Subtotal",
       "continueExploring": "Seguir Explorando",
       "orderSummary": "Resumen del Pedido",
       "discount": "Descuento",
@@ -1180,6 +1181,7 @@
     "receipt": "Recibo",
     "confirmationEmailSent": "Se ha enviado un correo de confirmación a:",
     "shippingAddress": "Dirección de Envío",
+    "billingAddress": "Dirección de Facturación",
     "deliveryAndPayment": "Entrega y Pago",
     "estDelivery": "Entrega Estimada",
     "estimatedDeliveryExpress": "1-3 Días Hábiles",

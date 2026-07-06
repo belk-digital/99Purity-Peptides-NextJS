@@ -25,8 +25,8 @@ const ANNOUNCEMENTS = [
   },
   {
     key: "freeShipping",
-    couponCode: "FREESHIP",
-    expiresAt: new Date(Date.now() + 172800000).toISOString() // 48 hours
+    couponCode: null,
+    expiresAt: null
   },
   {
     key: "newBlends",

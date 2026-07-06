@@ -141,7 +141,7 @@
     "couponCopiedDescription": "Use code {code} at checkout.",
     "announcements": {
       "summerSale": "SUMMER SALE: 15% OFF ALL PEPTIDES",
-      "freeShipping": "FREE EXPRESS SHIPPING ON ORDERS OVER $200",
+      "freeShipping": "FREE EXPRESS SHIPPING ON ORDERS OVER $300",
       "newBlends": "NEW PEPTIDE BLENDS JUST DROPPED"
     },
     "megaMenu": {
@@ -1052,6 +1052,7 @@
       "removeItemAria": "Remove item",
       "remove": "Remove",
       "total": "Total",
+      "subtotal": "Subtotal",
       "continueExploring": "Continue Exploring",
       "orderSummary": "Order Summary",
       "discount": "Discount",
@@ -1180,6 +1181,7 @@
     "receipt": "Receipt",
     "confirmationEmailSent": "A confirmation email has been sent to:",
     "shippingAddress": "Shipping Address",
+    "billingAddress": "Billing Address",
     "deliveryAndPayment": "Delivery & Payment",
     "estDelivery": "Est. Delivery",
     "estimatedDeliveryExpress": "1-3 Business Days",

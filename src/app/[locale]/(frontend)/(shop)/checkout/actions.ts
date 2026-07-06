@@ -186,6 +186,13 @@ export async function createPayloadOrder(
 ) {
   const payload = await getPayload({ config: configPromise })
 
+  // Re-check required fields server-side — client-side `required` attributes only guard the
+  // browser form UI and can be bypassed (disabled JS, direct action call), so phone (needed
+  // for delivery updates/carrier issues) must be enforced here too, not just in the UI.
+  if (!formData?.email || !formData?.firstName || !formData?.address || !formData?.city || !formData?.state || !formData?.zip || !formData?.phone) {
+    return { error: 'Please fill out all required delivery details, including phone number.' }
+  }
+
   let subtotal = 0;
   let pricesChanged = false;
   const { revalidateCartPrices } = await import('@/app/[locale]/(frontend)/actions/cart')
@@ -265,7 +272,11 @@ export async function createPayloadOrder(
       appliedFees.push({
         feeId: fee.id,
         feeName: fee.name,
-        amount: Math.round(amount * 100) // cents for Payload array
+        amount: Math.round(amount * 100), // cents for Payload array
+        feeType: fee.type,
+        // Snapshot the rate actually charged so it stays correct on this order even if
+        // the processing-fees config is changed later.
+        percentage: fee.type === 'percentage' ? fee.amount : null,
       })
     }
   })
@@ -377,6 +388,10 @@ export async function createPayloadOrder(
       return {
         product: isNaN(parsedId) ? item.productId : parsedId,
         variant: item.variantSku || 'DEFAULT',
+        // Human-readable label (e.g. "10mg Single") the cart already carries — without this
+        // the admin only ever sees the raw SKU and has to cross-reference the product's
+        // variant list by hand to know what was actually ordered.
+        variantTitle: item.variantTitle || null,
         price: item.priceSnapshot,
         quantity: item.quantity,
         productSnapshot: productData || null

@@ -77,7 +77,7 @@ export function ProductCard({ product }: ProductCardProps) {
     const priceVal = typeof priceRaw === 'string' ? parseFloat(priceRaw.replace(/[^0-9.]/g, '')) : Number(priceRaw)
 
     cartStore.addItem(
-      { id: product.id || product.slug, name: product.name, imageUrl: product.image },
+      { id: product.id || product.slug, name: product.name, imageUrl: product.image, slug: product.slug },
       'Default',
       1,
       priceVal || 0

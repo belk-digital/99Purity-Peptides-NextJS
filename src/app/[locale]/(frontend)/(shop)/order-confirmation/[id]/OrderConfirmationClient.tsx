@@ -42,6 +42,7 @@ type OrderData = {
   subtotal: number
   shipping: number
   processingFee: number
+  processingFeePercentage?: number | null
   total: number
   discountTotal?: number
   redeemedPoints?: number
@@ -172,7 +173,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">{t('billingAddress', { fallback: 'Billing Address' })}</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-ink/40 mb-4 border-b border-ink/5 pb-2">{t('billingAddress')}</h3>
                   <div className="text-sm text-ink/80 flex flex-col gap-1">
                     <p className="font-bold text-ink">{order.customerName}</p>
                     <p>{order.billingAddress.line1}</p>
@@ -251,7 +252,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
                         <td className="py-2 text-ink font-medium">{order.shipping === 0 ? t('free') : `$${order.shipping.toFixed(2)}`}</td>
                       </tr>
                       <tr>
-                        <td className={`py-2 text-ink/60 ${!order.redeemedPoints ? 'pb-3 sm:pb-4' : ''}`}>{t('processingFee')}</td>
+                        <td className={`py-2 text-ink/60 ${!order.redeemedPoints ? 'pb-3 sm:pb-4' : ''}`}>{t('processingFee')}{order.processingFeePercentage ? ` (${order.processingFeePercentage}%)` : ''}</td>
                         <td className={`py-2 text-ink font-medium ${!order.redeemedPoints ? 'pb-3 sm:pb-4' : ''}`}>${order.processingFee.toFixed(2)}</td>
                       </tr>
                       {!!order.redeemedPoints && order.redeemedPoints > 0 && (

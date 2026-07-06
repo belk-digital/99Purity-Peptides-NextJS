@@ -6,6 +6,7 @@ export type MinimalProduct = {
   id: string
   name: string
   imageUrl: string | null
+  slug?: string | null
 }
 
 export type CartLine = {

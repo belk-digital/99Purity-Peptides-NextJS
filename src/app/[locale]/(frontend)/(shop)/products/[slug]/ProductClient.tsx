@@ -300,7 +300,7 @@ export function ProductClient({ product }: ProductClientProps) {
     if (!selectedVariant?.inStock) return
 
     cartStore.addItem(
-      { id: product.id, name: product.name, imageUrl: selectedVariant.image || product.images[0] },
+      { id: product.id, name: product.name, imageUrl: selectedVariant.image || product.images[0], slug: product.slug },
       selectedVariant.sku || selectedVariant.title,
       quantity,
       parseFloat((selectedVariant.salePrice || selectedVariant.price).replace(/[^0-9.]/g, '')),
@@ -553,7 +553,7 @@ export function ProductClient({ product }: ProductClientProps) {
                     <button
                       key={bundle.id || idx}
                       onClick={() => {
-                        cartStore.addItem({ id: product.id, name: product.name, imageUrl: product.images[0] }, bundleVariantSku, 1, salePriceNum || priceNum, bundleVariantTitle)
+                        cartStore.addItem({ id: product.id, name: product.name, imageUrl: product.images[0], slug: product.slug }, bundleVariantSku, 1, salePriceNum || priceNum, bundleVariantTitle)
                         setJustAdded(true)
                         toast.success(t('addedBundleToCart'), { action: { label: t('view'), onClick: cartStore.openCart } })
                         setTimeout(() => setJustAdded(false), 1500)

@@ -26,17 +26,12 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
   const router = useRouter()
   const addItem = useCartStore(state => state.addItem)
   const openCart = useCartStore(state => state.openCart)
-  const [feePercentage, setFeePercentage] = React.useState<number | null>(null)
-
-  React.useEffect(() => {
-    fetch('/api/processing-fees')
-      .then(r => r.json())
-      .then(d => {
-        const active = d.docs?.find((f: any) => f.isActive && f.type === 'percentage')
-        if (active) setFeePercentage(active.amount)
-      })
-      .catch(console.error)
-  }, [])
+  // Use the percentage snapshot stored on the order itself, not the live processing-fees
+  // config — the config may have changed since this order was placed, and this order's
+  // receipt must always reflect the rate actually charged at the time.
+  const feePercentage: number | null = Array.isArray(order.appliedFees)
+    ? order.appliedFees.find((f: any) => f.feeType === 'percentage' && typeof f.percentage === 'number')?.percentage ?? null
+    : null
 
   const STATUS_LABELS: Record<OrderStatus, string> = {
     Placed: t('statusPlaced'),
@@ -54,7 +49,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
         const imageUrl = product.images?.[0]?.image?.url || product.images?.[0]?.url || '/temp-products/product-image.png'
         const price = typeof item.price === 'number' ? item.price : (product.basePrice || product.price || 0)
         addItem(
-          { id: product.id, name: title, imageUrl },
+          { id: product.id, name: title, imageUrl, slug: product.slug },
           item.variant || null, // variantSku
           item.quantity || 1,
           price

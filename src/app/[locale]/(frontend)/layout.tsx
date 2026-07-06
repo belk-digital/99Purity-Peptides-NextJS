@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-cream text-ink font-sans antialiased">
+    <div className="min-h-screen bg-cream text-ink font-sans antialiased print:bg-white print:min-h-0">
       <AgeGate />
       <React.Suspense fallback={null}>
         <GlobalNavigationSpinner />

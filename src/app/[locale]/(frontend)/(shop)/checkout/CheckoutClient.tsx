@@ -260,7 +260,7 @@ export function CheckoutClient() {
   }
 
   const handleZeroTotalCheckout = async () => {
-    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip) {
+    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
       toast.error(t('fillRequiredFieldsOrder'))
       return
     }
@@ -300,7 +300,7 @@ export function CheckoutClient() {
   // then the customer sends payment manually using the details shown. A human confirms
   // the transfer and updates the order's paymentStatus in the admin panel afterward.
   const handleZellePlaceOrder = async () => {
-    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip) {
+    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
       toast.error(t('fillRequiredFieldsOrder'))
       return
     }
@@ -591,7 +591,20 @@ export function CheckoutClient() {
                           name="addressSelection" 
                           value={addr.id} 
                           checked={selectedAddressId === String(addr.id)}
-                          onChange={() => setSelectedAddressId(String(addr.id))}
+                          onChange={() => {
+                            setSelectedAddressId(String(addr.id))
+                            setFormData(prev => ({
+                              ...prev,
+                              firstName: addr.firstName || prev.firstName,
+                              lastName: addr.lastName || prev.lastName,
+                              address: addr.line1,
+                              apartment: addr.line2 || '',
+                              city: addr.city,
+                              state: addr.state,
+                              zip: addr.postalCode,
+                              phone: addr.phone || ''
+                            }))
+                          }}
                           className="mt-0.5 w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0 shrink-0" 
                         />
                         <div className="flex flex-col flex-1">
@@ -643,9 +656,12 @@ export function CheckoutClient() {
                       <Input name="state" value={formData.state} onChange={handleInputChange} placeholder={t('state')} className="col-span-3 sm:col-span-2 h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
                       <Input name="zip" value={formData.zip} onChange={handleInputChange} placeholder={t('zipCode')} className="col-span-6 sm:col-span-2 h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
                     </div>
-                    <Input name="phone" value={formData.phone} onChange={handleInputChange} placeholder={t('phoneForDelivery')} type="tel" className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
                   </div>
                 )}
+
+                {/* Phone is always shown and required, even when a saved address is selected —
+                    older addresses saved before this field existed may not have one on file. */}
+                <Input name="phone" value={formData.phone} onChange={handleInputChange} placeholder={t('phoneForDelivery')} type="tel" className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required />
               </section>
 
               {/* Shipping Method */}
@@ -863,7 +879,7 @@ export function CheckoutClient() {
                   <span className="text-ink font-bold">{finalShipping === 0 ? t('free') : `$${finalShipping.toFixed(2)}`}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm font-medium text-ink/70">
-                  <span>{t('processingFee')}</span>
+                  <span>{t('processingFee')}{activeFeePercentage ? ` (${activeFeePercentage}%)` : ''}</span>
                   <span className="text-ink font-bold">${processingFeeAmount.toFixed(2)}</span>
                 </div>
               </div>

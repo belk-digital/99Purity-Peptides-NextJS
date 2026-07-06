@@ -1,11 +1,15 @@
 'use client'
 
-import { ShoppingCart, Heart } from 'lucide-react'
-import { useRef } from 'react'
+import { ShoppingCart, Heart, Loader2 } from 'lucide-react'
+import React, { useRef, useState } from 'react'
 import { useScroll, useTransform, motion, useSpring } from 'framer-motion'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
+import { useSession } from 'next-auth/react'
+import { useWishlistStore } from '@/lib/wishlist/store'
+import { useCartStore } from '@/lib/cart/store'
+import { toast } from 'sonner'
 import { FluidButton } from '@/components/ui/fluid-button'
 
 const FALLBACK_PRODUCTS = [
@@ -46,6 +50,172 @@ const FALLBACK_PRODUCTS = [
     slug: "ghk-cu",
   }
 ]
+
+function BestSellerCard({
+  product,
+  rotationClass,
+  y,
+  isFallback,
+  getImageUrl,
+  getCategory,
+  getDescription,
+  getPrice,
+  t,
+}: {
+  product: any
+  rotationClass: string
+  y: any
+  isFallback: boolean
+  getImageUrl: (prod: any) => string
+  getCategory: (prod: any) => string | undefined
+  getDescription: (prod: any) => string | undefined
+  getPrice: (prod: any) => string | number
+  t: ReturnType<typeof useTranslations>
+}) {
+  const addWishlistItem = useWishlistStore(state => state.addItem)
+  const removeWishlistItem = useWishlistStore(state => state.removeItem)
+  const isWishlistedGlobal = useWishlistStore(state => product.id ? state.hasItem(product.id) : false)
+  const { status } = useSession()
+  const isSignedIn = status === 'authenticated'
+  const cartStore = useCartStore()
+
+  const [inWishlist, setInWishlist] = useState(isWishlistedGlobal)
+  const [isPending, setIsPending] = useState(false)
+
+  const handleWishlistClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (!isSignedIn) {
+      toast.error('Sign in required', { description: 'Please log in to add items to your wishlist.' })
+      return
+    }
+
+    if (!product.id) {
+      toast.error('Product ID missing', { description: 'Unable to add this product to wishlist.' })
+      return
+    }
+
+    setIsPending(true)
+    try {
+      if (inWishlist) {
+        await removeWishlistItem(product.id)
+        setInWishlist(false)
+        toast('Removed from wishlist', { description: `${product.name} has been removed.` })
+      } else {
+        await addWishlistItem({
+          id: product.id,
+          name: product.name,
+          slug: product.slug,
+          image: getImageUrl(product),
+          priceRange: String(getPrice(product) ?? ''),
+        })
+        setInWishlist(true)
+        toast.success('Added to wishlist', { description: `${product.name} is now in your wishlist.` })
+      }
+    } catch (error: any) {
+      toast.error('Failed to update wishlist', { description: error.message || 'An unexpected error occurred.' })
+    } finally {
+      setIsPending(false)
+    }
+  }
+
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const priceRaw = getPrice(product)
+    const priceVal = typeof priceRaw === 'string' ? parseFloat(priceRaw.replace(/[^0-9.]/g, '')) : Number(priceRaw)
+
+    cartStore.addItem(
+      { id: product.id || product.slug, name: product.name, imageUrl: getImageUrl(product), slug: product.slug },
+      'Default',
+      1,
+      priceVal || 0
+    )
+    toast.success('Added to cart', { action: { label: 'VIEW', onClick: cartStore.openCart } })
+    cartStore.openCart()
+  }
+
+  return (
+    <motion.div
+      style={{ y }}
+      className="w-full max-w-[380px] will-change-transform"
+    >
+      {/* CSS Transition wrapped element MUST be separate from motion.div */}
+      <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl ${rotationClass}`}>
+        <Link href={`/products/${product.slug}`} className="absolute inset-0 z-20" aria-label={product.name} />
+
+        {/* Top Text Content & Wishlist */}
+        <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative">
+          <div className="absolute top-3 sm:top-5 right-3 sm:right-5 z-30">
+            <button
+              disabled={isPending}
+              onClick={handleWishlistClick}
+              className={`transition-all duration-300 ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
+            >
+              {isPending ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <Heart className="w-4 h-4 sm:w-5 sm:h-5" fill={inWishlist ? 'currentColor' : 'none'} />}
+            </button>
+          </div>
+          <div className="pr-6 sm:pr-8">
+            <h3 className="text-sm sm:text-2xl font-semibold text-ink tracking-tight line-clamp-1">
+              {product.name}
+            </h3>
+            <p className="text-primary text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 sm:mt-1">
+              {getCategory(product) || t('fallbackCategory')}
+            </p>
+          </div>
+          <p className="text-ink/60 text-[9px] sm:text-[13px] leading-tight sm:leading-relaxed line-clamp-2">
+            {isFallback && product.key ? t(`products.${product.key}`) : (getDescription(product) || t('fallbackDescription'))}
+          </p>
+        </div>
+
+        {/* Inner Image Container */}
+        <div className="relative w-full aspect-[4/5] rounded-[14px] sm:rounded-[24px] overflow-hidden bg-ink/5">
+          <Image
+            src={getImageUrl(product)}
+            alt={`${product.name} Best Seller`}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+
+          {/* Gradient Overlay for Text Readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+
+          {/* Price */}
+          <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-10 pointer-events-none">
+            <div className="flex flex-col">
+              <span className="text-white/80 text-[8px] sm:text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5">
+                {t('fromLabel')}
+              </span>
+              <div className="flex items-center flex-wrap gap-1.5 sm:gap-2">
+                {product.originalPrice && (
+                  <span className="text-[10px] sm:text-sm font-medium text-white/60 line-through">
+                    ${product.originalPrice}
+                  </span>
+                )}
+                <span className="text-white text-base sm:text-xl lg:text-2xl font-light tracking-tighter">
+                  {(() => {
+                    const price = getPrice(product)
+                    return typeof price === 'string' && price.includes('$') ? price.replace('From ', '') : `$${price}`
+                  })()}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Button */}
+          <button
+            onClick={handleAddToCart}
+            className="absolute bottom-2 right-2 sm:bottom-5 sm:right-5 w-8 h-8 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center transition-all duration-300 shadow-xl group-hover:scale-110 z-30 hover:bg-ink hover:text-white pointer-events-auto"
+          >
+            <ShoppingCart className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-current transition-colors" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
 
 export function BestSellerSection({ products = [] }: { products?: any[] }) {
   const t = useTranslations('home.bestSeller')
@@ -112,78 +282,20 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
             const isEvenColumn = idx % 2 === 0;
             // Also apply a very slight rotation to alternate cards to give the "slant way" funky look
             const rotationClass = isEvenColumn ? '-rotate-1' : 'rotate-1';
-            
+
             return (
-              <motion.div 
+              <BestSellerCard
                 key={idx}
-                style={{ y: isEvenColumn ? y1 : y2 }}
-                className="w-full max-w-[380px] will-change-transform"
-              >
-                {/* CSS Transition wrapped element MUST be separate from motion.div */}
-                <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl ${rotationClass}`}>
-                  <Link href={`/products/${product.slug}`} className="absolute inset-0 z-20" aria-label={product.name} />
-                  
-                  {/* Top Text Content & Wishlist */}
-                  <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative">
-                    <div className="absolute top-3 sm:top-5 right-3 sm:right-5 z-30">
-                      <button className="text-ink/30 hover:text-red-500 hover:scale-110 transition-all duration-300">
-                        <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </button>
-                    </div>
-                    <div className="pr-6 sm:pr-8">
-                      <h3 className="text-sm sm:text-2xl font-semibold text-ink tracking-tight line-clamp-1">
-                        {product.name}
-                      </h3>
-                      <p className="text-primary text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 sm:mt-1">
-                        {getCategory(product) || t('fallbackCategory')}
-                      </p>
-                    </div>
-                    <p className="text-ink/60 text-[9px] sm:text-[13px] leading-tight sm:leading-relaxed line-clamp-2">
-                      {isFallback && product.key ? t(`products.${product.key}`) : (getDescription(product) || t('fallbackDescription'))}
-                    </p>
-                  </div>
-
-                  {/* Inner Image Container */}
-                  <div className="relative w-full aspect-[4/5] rounded-[14px] sm:rounded-[24px] overflow-hidden bg-ink/5">
-                    <Image 
-                      src={getImageUrl(product)}
-                      alt={`${product.name} Best Seller`}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    
-                    {/* Gradient Overlay for Text Readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
-
-                    {/* Price */}
-                    <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 z-10 pointer-events-none">
-                      <div className="flex flex-col">
-                        <span className="text-white/80 text-[8px] sm:text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5">
-                          {t('fromLabel')}
-                        </span>
-                        <div className="flex items-center flex-wrap gap-1.5 sm:gap-2">
-                          {product.originalPrice && (
-                            <span className="text-[10px] sm:text-sm font-medium text-white/60 line-through">
-                              ${product.originalPrice}
-                            </span>
-                          )}
-                          <span className="text-white text-base sm:text-xl lg:text-2xl font-light tracking-tighter">
-                            {(() => {
-                              const price = getPrice(product)
-                              return typeof price === 'string' && price.includes('$') ? price.replace('From ', '') : `$${price}`
-                            })()}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Action Button */}
-                    <div className="absolute bottom-2 right-2 sm:bottom-5 sm:right-5 w-8 h-8 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center transition-all duration-300 shadow-xl group-hover:scale-110 z-10 hover:bg-ink hover:text-white">
-                      <ShoppingCart className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-current transition-colors" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                product={product}
+                rotationClass={rotationClass}
+                y={isEvenColumn ? y1 : y2}
+                isFallback={isFallback}
+                getImageUrl={getImageUrl}
+                getCategory={getCategory}
+                getDescription={getDescription}
+                getPrice={getPrice}
+                t={t}
+              />
             )
           })}
         </div>

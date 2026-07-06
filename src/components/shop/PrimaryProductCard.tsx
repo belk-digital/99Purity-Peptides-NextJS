@@ -39,7 +39,7 @@ function SlideToAddButton({ product }: { product: Product }) {
 
   const handleAdd = () => {
     cartStore.addItem(
-      { id: product.id || product.slug, name: product.name, imageUrl: product.image },
+      { id: product.id || product.slug, name: product.name, imageUrl: product.image, slug: product.slug },
       'Default',
       1,
       parseFloat(product.priceRange.replace(/[^0-9.]/g, '')) || 0

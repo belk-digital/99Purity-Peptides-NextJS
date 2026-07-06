@@ -3,14 +3,21 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useState, useRef } from 'react'
 import { useLenis } from 'lenis/react'
+import { useCartStore } from '@/lib/cart/store'
 
 export function CustomScrollbar() {
   const { scrollYProgress } = useScroll()
   const trackRef = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
-  
+  const isCartOpen = useCartStore((state) => state.isOpen)
+
   // Use Lenis to integrate perfectly with the site's global smooth scrolling
   const lenis = useLenis()
+
+  // The track sits at z-[9999] so it stays above page content while scrolling — but that
+  // also puts it above the cart drawer (z-101) and its backdrop (z-100), so it must hide
+  // whenever the drawer is open instead of rendering through it.
+  if (isCartOpen) return null
 
   // Handle clicking on the track to jump to a specific point
   const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -65,7 +72,7 @@ export function CustomScrollbar() {
   }
 
   return (
-    <div className="fixed top-0 bottom-0 right-0 py-12 w-8 pointer-events-none z-[9999] hidden sm:flex justify-end">
+    <div className="fixed top-0 bottom-0 right-0 py-12 w-8 pointer-events-none z-[9999] hidden sm:flex justify-end print:hidden">
       
       {/* Interactive Track Area */}
       <div 

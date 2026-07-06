@@ -11,8 +11,9 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { QuantityStepper } from '@/components/shop/QuantityStepper'
 import { useCartStore } from '@/lib/cart/store'
-import { PrimaryProductCard } from '@/components/shop/PrimaryProductCard'
+import { ProductCard } from '@/components/shared/ProductCard'
 import { StaggerChildren, staggerItemVariants } from '@/components/motion/StaggerChildren'
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
 import { Space_Grotesk } from 'next/font/google'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
@@ -26,6 +27,7 @@ export function CartClient() {
   // Dynamic Data States
   const [shippingCost, setShippingCost] = useState<number | null>(null)
   const [taxAmount, setTaxAmount] = useState<number>(0)
+  const [feePercentage, setFeePercentage] = useState<number | null>(null)
   const [isLoadingData, setIsLoadingData] = useState(true)
 
   // Coupon States
@@ -62,11 +64,13 @@ export function CartClient() {
         const feesData = await feesRes.json()
         
         let calculatedTax = 0
+        let percentageFee: number | null = null
         if (feesData?.docs?.length > 0) {
           feesData.docs.forEach((fee: any) => {
             if (fee.isActive && !fee.isOptional) {
               if (fee.type === 'percentage') {
                 calculatedTax += subtotal * (fee.amount / 100)
+                percentageFee = fee.amount
               } else if (fee.type === 'fixed_amount') {
                 calculatedTax += (fee.amount / 100) // Assuming amount is in cents
               }
@@ -76,6 +80,7 @@ export function CartClient() {
 
         setShippingCost(estimatedShipping)
         setTaxAmount(calculatedTax)
+        setFeePercentage(percentageFee)
       } catch (err) {
         console.error("Error fetching dynamic cart data", err)
         setShippingCost(15) // Fallback
@@ -288,7 +293,10 @@ export function CartClient() {
   }
 
   // Final Total Calculations
-  const finalShipping = (isFreeShipping || subtotal === 0) ? 0 : (shippingCost || 0)
+  // Mirrors the FREE_SHIPPING_THRESHOLD rule enforced server-side in checkout/actions.ts —
+  // without this, the cart's estimate disagreed with what checkout actually charges.
+  const qualifiesForFreeShipping = isFreeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  const finalShipping = (qualifiesForFreeShipping || subtotal === 0) ? 0 : (shippingCost || 0)
   const finalTotal = Math.max(0, subtotal - discountAmount + finalShipping + taxAmount)
 
   if (items.length === 0) {
@@ -334,7 +342,7 @@ export function CartClient() {
             {items.map((item) => (
               <div key={item.lineId} className="flex flex-row gap-4 sm:gap-8 py-6 sm:py-8 border-b border-slate-100 group">
                 {/* Product Image Thumbnail */}
-                <Link href={`/products/${item.productId}`} className="relative w-24 sm:w-32 md:w-36 aspect-[4/5] bg-[#F5F5F7] shrink-0 rounded-[1.25rem] sm:rounded-[1.5rem] overflow-hidden">
+                <Link href={`/products/${item.product?.slug || item.productId}`} className="relative w-24 sm:w-32 md:w-36 aspect-[4/5] bg-[#F5F5F7] shrink-0 rounded-[1.25rem] sm:rounded-[1.5rem] overflow-hidden">
                   <Image 
                     src={item.product?.imageUrl || '/placeholder.png'} 
                     alt={item.product?.name || 'Product'} 
@@ -347,7 +355,7 @@ export function CartClient() {
                 <div className="flex flex-col flex-1 justify-between py-1 sm:py-0">
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-4">
                     <div className="flex flex-col gap-1 sm:gap-1.5 pr-4 sm:pr-0">
-                      <Link href={`/products/${item.productId}`} className={`text-base sm:text-xl md:text-2xl font-bold text-ink hover:text-[#008B8B] transition-colors leading-tight ${spaceGrotesk.className}`}>
+                      <Link href={`/products/${item.product?.slug || item.productId}`} className={`text-base sm:text-xl md:text-2xl font-bold text-ink hover:text-[#008B8B] transition-colors leading-tight ${spaceGrotesk.className}`}>
                         {item.product?.name}
                       </Link>
                       {(item.variantTitle || item.variantSku) && !['DEFAULT', 'DEFAULT TITLE'].includes((item.variantTitle || item.variantSku || '').toUpperCase()) && (
@@ -439,7 +447,9 @@ export function CartClient() {
                 </span>
               </div>
               <div className="flex justify-between items-center text-ink/80">
-                <span className="font-light">{t('processingFee')}</span>
+                <span className="font-light">
+                  {t('processingFee')}{feePercentage ? ` (${feePercentage}%)` : ''}
+                </span>
                 <span className="font-medium">
                   {isLoadingData ? <Loader2 size={16} className="animate-spin" /> : `$${taxAmount.toFixed(2)}`}
                 </span>
@@ -538,8 +548,7 @@ export function CartClient() {
           <StaggerChildren staggerDelay={0.05} className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {relatedProducts.map((p) => (
               <motion.div variants={staggerItemVariants} key={p.id}>
-                {/* @ts-ignore */}
-                <PrimaryProductCard product={p} aspectRatio="4/5" />
+                <ProductCard product={p} />
               </motion.div>
             ))}
           </StaggerChildren>

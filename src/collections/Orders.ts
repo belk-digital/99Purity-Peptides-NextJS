@@ -61,6 +61,11 @@ export const Orders: CollectionConfig = {
     {
       name: 'items',
       type: 'array',
+      admin: {
+        components: {
+          RowLabel: '@/components/admin/OrderItemRowLabel#OrderItemRowLabel'
+        }
+      },
       fields: [
         { 
           name: 'product', 
@@ -68,8 +73,8 @@ export const Orders: CollectionConfig = {
           relationTo: 'products', 
           required: false,
         },
-        { name: 'variant', type: 'text', admin: { description: 'The variant or bundle purchased' } },
-        { name: 'variantTitle', type: 'text', admin: { description: 'The display title of the variant' } },
+        { name: 'variantTitle', type: 'text', admin: { description: 'The display title of the variant, e.g. "10mg Single" or "10mg 10 Kit (Best Value)"' } },
+        { name: 'variant', type: 'text', admin: { description: 'The variant SKU or bundle code purchased' } },
         { name: 'price', type: 'number', admin: { description: 'Price paid per unit at the time of order' } },
         { name: 'quantity', type: 'number', required: true },
         {
@@ -189,7 +194,21 @@ export const Orders: CollectionConfig = {
       fields: [
         { name: 'feeId', type: 'relationship', relationTo: 'processing-fees' },
         { name: 'feeName', type: 'text' },
-        { name: 'amount', type: 'number' },
+        { name: 'amount', type: 'number', admin: { description: 'Amount charged in cents' } },
+        {
+          name: 'feeType',
+          type: 'select',
+          options: [
+            { label: 'Percentage', value: 'percentage' },
+            { label: 'Fixed Amount', value: 'fixed_amount' },
+          ],
+          admin: { description: 'Snapshot of the fee type at the time the order was placed' },
+        },
+        {
+          name: 'percentage',
+          type: 'number',
+          admin: { description: 'Snapshot of the percentage rate charged at order time (only set when feeType is percentage). This must never be recalculated from the live processing-fees config, so historical orders keep showing the rate actually charged even after the config changes.' },
+        },
       ],
     },
     { name: 'shippingMethod', type: 'text', admin: { position: 'sidebar' } },

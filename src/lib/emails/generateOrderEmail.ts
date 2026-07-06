@@ -104,21 +104,14 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
     </tr>
   ` : '';
 
-  // Fetch active percentage fee to display dynamic label in email
+  // Use the percentage snapshot stored on the order's appliedFees, never the live
+  // processing-fees config — the config may have changed since this order was placed, and
+  // this email must always reflect the rate actually charged at the time.
   let feeLabel = 'Processing Fees'
-  if (payload) {
-    try {
-      const activeFees = await payload.find({
-        collection: 'processing-fees',
-        where: { isActive: { equals: true } },
-        depth: 0,
-      })
-      const activePercentageFee = activeFees.docs.find((f: any) => f.type === 'percentage')
-      if (activePercentageFee) feeLabel = `Processing Fees (${activePercentageFee.amount}%)`
-    } catch (err) {
-      console.error('Failed to fetch processing fee label for email', err)
-    }
-  }
+  const appliedPercentageFee = Array.isArray(order.appliedFees)
+    ? order.appliedFees.find((f: any) => f.feeType === 'percentage' && typeof f.percentage === 'number')
+    : null
+  if (appliedPercentageFee) feeLabel = `Processing Fees (${appliedPercentageFee.percentage}%)`
 
   const safeTrackingLink = typeof order.trackingLink === 'string' && /^https?:\/\//i.test(order.trackingLink)
     ? escapeHtml(order.trackingLink)

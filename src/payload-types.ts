@@ -649,13 +649,13 @@ export interface Order {
     | {
         product?: (number | null) | Product;
         /**
-         * The variant or bundle purchased
-         */
-        variant?: string | null;
-        /**
-         * The display title of the variant
+         * The display title of the variant, e.g. "10mg Single" or "10mg 10 Kit (Best Value)"
          */
         variantTitle?: string | null;
+        /**
+         * The variant SKU or bundle code purchased
+         */
+        variant?: string | null;
         /**
          * Price paid per unit at the time of order
          */
@@ -726,7 +726,18 @@ export interface Order {
     | {
         feeId?: (number | null) | ProcessingFee;
         feeName?: string | null;
+        /**
+         * Amount charged in cents
+         */
         amount?: number | null;
+        /**
+         * Snapshot of the fee type at the time the order was placed
+         */
+        feeType?: ('percentage' | 'fixed_amount') | null;
+        /**
+         * Snapshot of the percentage rate charged at order time (only set when feeType is percentage). This must never be recalculated from the live processing-fees config, so historical orders keep showing the rate actually charged even after the config changes.
+         */
+        percentage?: number | null;
         id?: string | null;
       }[]
     | null;
@@ -1748,8 +1759,8 @@ export interface OrdersSelect<T extends boolean = true> {
     | T
     | {
         product?: T;
-        variant?: T;
         variantTitle?: T;
+        variant?: T;
         price?: T;
         quantity?: T;
         productSnapshot?: T;
@@ -1799,6 +1810,8 @@ export interface OrdersSelect<T extends boolean = true> {
         feeId?: T;
         feeName?: T;
         amount?: T;
+        feeType?: T;
+        percentage?: T;
         id?: T;
       };
   shippingMethod?: T;

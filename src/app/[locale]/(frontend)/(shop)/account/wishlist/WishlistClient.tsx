@@ -8,9 +8,10 @@ import { X, ShoppingBag, Heart } from 'lucide-react'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import { useCartStore } from '@/lib/cart/store'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export interface WishlistItem {
   id: string;
@@ -19,6 +20,7 @@ export interface WishlistItem {
   image: string;
   descriptor: string;
   price: string;
+  hasVariants?: boolean;
 }
 
 export interface AccountWishlistProps {
@@ -33,6 +35,7 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
   const t = useTranslations('account.wishlist')
   const { removeItem, setItems } = useWishlistStore()
   const cartStore = useCartStore()
+  const router = useRouter()
 
   // Sync the global wishlist store (used for heart-icon state elsewhere) with the
   // real Payload data this page just fetched server-side. Intentionally runs once on mount.
@@ -40,21 +43,53 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
     setItems(serverItems.map(({ id, name, slug, image }) => ({ id, name, slug, image })))
   }, [])
 
-  const displayItems = serverItems
+  const [displayItems, setDisplayItems] = useState(serverItems)
+  
+  useEffect(() => {
+    setDisplayItems(serverItems)
+  }, [serverItems])
 
   const addToCart = (item: WishlistItem) => {
+    if (item.hasVariants) {
+      toast.info(t('selectVariantRequired', { name: item.name }) || `Please select a variant for ${item.name}`)
+      router.push(`/products/${item.slug}`)
+      return
+    }
+
     cartStore.addItem(
-      { id: item.id, name: item.name, imageUrl: item.image },
+      { id: item.id, name: item.name, imageUrl: item.image, slug: item.slug },
       'Default',
       1,
       parsePrice(item.price)
     )
-    toast.success(t('addToCart'), { action: { label: t('addToCart'), onClick: cartStore.openCart } })
+    toast.success(t('addToCart'), { action: { label: t('view'), onClick: cartStore.openCart } })
   }
 
   const moveAllToCart = () => {
-    displayItems.forEach((item) => addToCart(item))
-    cartStore.openCart()
+    let itemsNeedingVariants = 0
+    let itemsAdded = 0
+    
+    displayItems.forEach((item) => {
+      if (item.hasVariants) {
+        itemsNeedingVariants++
+      } else {
+        cartStore.addItem(
+          { id: item.id, name: item.name, imageUrl: item.image, slug: item.slug },
+          'Default',
+          1,
+          parsePrice(item.price)
+        )
+        itemsAdded++
+      }
+    })
+
+    if (itemsAdded > 0) {
+      cartStore.openCart()
+    }
+    
+    if (itemsNeedingVariants > 0) {
+      toast.info(t('someItemsNeedVariants', { count: itemsNeedingVariants }) || `${itemsNeedingVariants} item(s) require you to choose a variant first.`)
+    }
   }
 
   return (
@@ -122,9 +157,16 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
 
                   {/* Remove Button Overlay */}
                   <button 
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault()
-                      removeItem(product.id)
+                      const currentItems = displayItems
+                      setDisplayItems(prev => prev.filter(i => i.id !== product.id))
+                      try {
+                        await removeItem(product.id)
+                      } catch (err) {
+                        setDisplayItems(currentItems)
+                        toast.error('Failed to remove item')
+                      }
                     }}
                     className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-md text-gray-400 hover:text-red-500 hover:bg-white flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                   >

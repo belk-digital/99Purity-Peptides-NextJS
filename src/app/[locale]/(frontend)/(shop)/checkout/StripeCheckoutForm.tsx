@@ -34,7 +34,7 @@ export function StripeCheckoutForm({
     }
 
     // Validate required form data
-    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip) {
+    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
       toast.error(t('fillRequiredFields'))
       return
     }
