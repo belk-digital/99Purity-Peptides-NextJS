@@ -435,7 +435,7 @@
       },
       "submitButton": "Submit for Verification",
       "successTitle": "Documents Received",
-      "successText": "Thank you for your service! Your documents have been securely routed for review. We will email your exclusive 30% discount code within 24 hours.",
+      "successText": "Thank you for your service! Your documents have been securely routed for review. We will email your exclusive 30% discount code shortly.",
       "submitAnother": "Submit Another"
     },
     "newsletter": {

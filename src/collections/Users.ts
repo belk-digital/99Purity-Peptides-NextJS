@@ -14,6 +14,15 @@ export const Users: CollectionConfig = {
   },
   access: accessUsers,
   fields: [
+    {
+      name: 'orderHistory',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/components/admin/UserOrderHistory#UserOrderHistory',
+        },
+      },
+    },
     // default fields added by Payload: email, password
     {
       name: 'firstName',

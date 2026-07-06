@@ -496,6 +496,7 @@ export async function getShopProducts(params: {
         discountPercentage: (displaySalePrice && displayPrice > 0)
           ? Math.round(((displayPrice - displaySalePrice) / displayPrice) * 100)
           : undefined,
+        hasVariants: !!(doc.hasVariants && (doc.variants?.length || 0) > 1),
         category: categoryName
       }
     })

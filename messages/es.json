@@ -435,7 +435,7 @@
       },
       "submitButton": "Enviar para Verificación",
       "successTitle": "Documentos Recibidos",
-      "successText": "¡Gracias por tu servicio! Tus documentos han sido enviados de forma segura para su revisión. Te enviaremos por correo electrónico tu código de descuento exclusivo del 30% en un plazo de 24 horas.",
+      "successText": "¡Gracias por tu servicio! Tus documentos han sido enviados de forma segura para su revisión. Te enviaremos en breve por correo electrónico tu código de descuento exclusivo del 30%.",
       "submitAnother": "Enviar Otro"
     },
     "newsletter": {

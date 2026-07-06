@@ -1,5 +1,7 @@
 import { RestoreTrashButton as RestoreTrashButton_ddf671c958abbb78f68eec0a82b4cdee } from '@/components/admin/RestoreTrashButton'
+import { UserOrderHistory as UserOrderHistory_a2930b9ff8679a3b7f676ae5944c70d9 } from '@/components/admin/UserOrderHistory'
 import { VariantSelect as VariantSelect_615793318af77512bd83b3be27cfa339 } from '@/components/admin/VariantSelect'
+import { OrderItemRowLabel as OrderItemRowLabel_bbe6fdb2b445a5342fb5e1b23ebd8aa5 } from '@/components/admin/OrderItemRowLabel'
 import { default as default_2268e15cf932e44cda3df092f02d84c5 } from '@/components/admin/NullField'
 import { default as default_e4b9ef8452c8e2c60b692073ae965cbd } from '@/components/admin/TimeAgoCell'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -37,7 +39,9 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 /** @type import('payload').ImportMap */
 export const importMap = {
   "@/components/admin/RestoreTrashButton#RestoreTrashButton": RestoreTrashButton_ddf671c958abbb78f68eec0a82b4cdee,
+  "@/components/admin/UserOrderHistory#UserOrderHistory": UserOrderHistory_a2930b9ff8679a3b7f676ae5944c70d9,
   "@/components/admin/VariantSelect#VariantSelect": VariantSelect_615793318af77512bd83b3be27cfa339,
+  "@/components/admin/OrderItemRowLabel#OrderItemRowLabel": OrderItemRowLabel_bbe6fdb2b445a5342fb5e1b23ebd8aa5,
   "@/components/admin/NullField#default": default_2268e15cf932e44cda3df092f02d84c5,
   "@/components/admin/TimeAgoCell#default": default_e4b9ef8452c8e2c60b692073ae965cbd,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react'
 import Image from 'next/image'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { Heart, ShoppingCart, ChevronRight, Check, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSession } from 'next-auth/react'
@@ -22,6 +22,9 @@ export interface Product {
   originalPrice?: string
   discountPercentage?: number
   category: string
+  // True when the product has more than one variant, so quick-add cards must send the
+  // shopper to the PDP to pick one instead of silently adding a "Default" line.
+  hasVariants?: boolean
 }
 
 export interface PrimaryProductCardProps {
@@ -33,11 +36,19 @@ export interface PrimaryProductCardProps {
 
 function SlideToAddButton({ product }: { product: Product }) {
   const t = useTranslations('shop.primaryProductCard')
+  const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
   const [isAdded, setIsAdded] = useState(false)
   const cartStore = useCartStore()
 
   const handleAdd = () => {
+    // Multi-variant products can't be added as a single "Default" line — send the shopper
+    // to the PDP to pick a variant first, same as the rest of the shop.
+    if (product.hasVariants) {
+      router.push(`/products/${product.slug}`)
+      return
+    }
+
     cartStore.addItem(
       { id: product.id || product.slug, name: product.name, imageUrl: product.image, slug: product.slug },
       'Default',

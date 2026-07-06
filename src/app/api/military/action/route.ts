@@ -29,33 +29,41 @@ export async function GET(req: Request) {
       return new NextResponse('Invalid or expired token', { status: 400 });
     }
 
-    const { name, email } = decoded;
+    const { name, requestId } = decoded;
+    // Normalize defensively — tokens signed before this fix may still carry a non-lowercased email.
+    const email = ((decoded.email as string) || '').trim().toLowerCase();
     const payload = await getPayload({ config: configPromise });
 
+    if (!requestId) {
+      return new NextResponse('This approval link is from before the request-tracking system was added and can no longer be processed automatically. Please handle it manually in the admin panel.', { status: 400 });
+    }
+
+    const requestDoc = await payload.findByID({
+      collection: 'military-discount-requests',
+      id: requestId,
+      overrideAccess: true,
+    }).catch(() => null)
+
+    if (!requestDoc) {
+      return new NextResponse('This request no longer exists.', { status: 404 });
+    }
+
+    // Each request can only be approved or rejected once — this is what stops double-clicking
+    // (or a stale duplicate email) from generating a second coupon for the same request. It does
+    // NOT stop the same person from being approved again in the future via a separate request;
+    // that's the intended behavior — verified military members can request a fresh one-time code
+    // more than once, just no more than once per day (enforced at submission).
+    if (requestDoc.status !== 'pending') {
+      return new NextResponse(`
+        <div style="font-family: sans-serif; padding: 40px; text-align: center;">
+          <h2 style="color: #f59e0b;">Already Processed</h2>
+          <p>This request was already marked <strong>${requestDoc.status}</strong>${requestDoc.couponCode ? ` (coupon: <strong>${requestDoc.couponCode}</strong>)` : ''}.</p>
+          <p>You may now close this window.</p>
+        </div>
+      `, { headers: { 'Content-Type': 'text/html' } });
+    }
+
     if (action === 'approve') {
-      // Prevent double-clicking from generating multiple coupons
-      const existingCoupons = await payload.find({
-        collection: 'coupons',
-        where: {
-          and: [
-            { code: { like: 'MIL-' } },
-            { 'lockedEmails.email': { equals: email } }
-          ]
-        },
-        depth: 0,
-      });
-
-      if (existingCoupons.totalDocs > 0) {
-        return new NextResponse(`
-          <div style="font-family: sans-serif; padding: 40px; text-align: center;">
-            <h2 style="color: #f59e0b;">Already Processed</h2>
-            <p>This verification request has already been approved.</p>
-            <p>A military discount coupon (<strong>${existingCoupons.docs[0].code}</strong>) was previously generated for ${email}.</p>
-            <p>You may now close this window.</p>
-          </div>
-        `, { headers: { 'Content-Type': 'text/html' } });
-      }
-
       const couponCode = `MIL-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
       await payload.create({
@@ -64,15 +72,24 @@ export async function GET(req: Request) {
           code: couponCode,
           type: 'percentage',
           value: 30, // 30% discount
-          lockedEmails: [{ email: email }],
+          usageLimit: 1, // One-time use — a repeat request generates its own separate coupon
+          lockedEmails: [{ email }],
           appliesTo: 'all',
           applicableProductTypes: 'all',
           freeShipping: false,
           stackable: false,
           excludeSaleItems: false,
           autoApply: false,
-        }
+        },
+        overrideAccess: true,
       });
+
+      await payload.update({
+        collection: 'military-discount-requests',
+        id: requestId,
+        data: { status: 'approved', couponCode, reviewedAt: new Date().toISOString() },
+        overrideAccess: true,
+      })
 
       // Send Approval Email
       const emailHtml = generateMilitaryApprovalEmail(name, couponCode);
@@ -92,26 +109,12 @@ export async function GET(req: Request) {
       `, { headers: { 'Content-Type': 'text/html' } });
 
     } else if (action === 'reject') {
-      // If the admin is changing their mind after an approval, we need to revoke/delete the coupon
-      const existingCoupons = await payload.find({
-        collection: 'coupons',
-        where: {
-          and: [
-            { code: { like: 'MIL-' } },
-            { 'lockedEmails.email': { equals: email } }
-          ]
-        },
-        depth: 0,
-      });
-
-      if (existingCoupons.totalDocs > 0) {
-        for (const doc of existingCoupons.docs) {
-          await payload.delete({
-            collection: 'coupons',
-            id: doc.id,
-          });
-        }
-      }
+      await payload.update({
+        collection: 'military-discount-requests',
+        id: requestId,
+        data: { status: 'rejected', reviewedAt: new Date().toISOString() },
+        overrideAccess: true,
+      })
 
       // Send Rejection Email
       const emailHtml = generateMilitaryRejectionEmail(name);
@@ -126,7 +129,6 @@ export async function GET(req: Request) {
         <div style="font-family: sans-serif; padding: 40px; text-align: center;">
           <h2 style="color: #ef4444;">Verification Denied</h2>
           <p>A rejection email has been sent to ${email}.</p>
-          ${existingCoupons.totalDocs > 0 ? `<p style="color: #f59e0b; font-weight: bold;">Note: The previously generated discount coupon was successfully revoked and deleted.</p>` : ''}
           <p>You may now close this window.</p>
         </div>
       `, { headers: { 'Content-Type': 'text/html' } });

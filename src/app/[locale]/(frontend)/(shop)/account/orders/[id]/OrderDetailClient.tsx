@@ -111,32 +111,32 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
         <div className="flex flex-col gap-8 flex-1 w-full">
           
           {/* Tracking Timeline */}
-          <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm">
+          <div className="bg-white border border-gray-100 p-4 sm:p-8 rounded-3xl shadow-sm overflow-hidden">
             <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black mb-8 border-b border-gray-100 pb-4">{t('trackingStatus')}</h2>
-            <div className="relative flex justify-between px-4 sm:px-8">
+            <div className="relative flex justify-between px-1 sm:px-4">
               {/* Connecting Line (Background) */}
-              <div className="absolute top-4 left-8 right-8 h-[2px] bg-gray-100 -z-10 rounded-full" />
-              
+              <div className="absolute top-3 sm:top-4 left-4 right-4 h-[2px] bg-gray-100 -z-10 rounded-full" />
+
               {/* Connecting Line (Progress) */}
-              <div 
-                className="absolute top-4 left-8 h-[2px] bg-black -z-10 transition-all duration-1000 ease-out rounded-full" 
-                style={{ width: `calc(${(Math.max(currentStepIndex, 0) / (STATUS_STEPS.length - 1)) * 100}% - 4rem)` }} 
+              <div
+                className="absolute top-3 sm:top-4 left-4 h-[2px] bg-black -z-10 transition-all duration-1000 ease-out rounded-full"
+                style={{ width: `calc(${(Math.max(currentStepIndex, 0) / (STATUS_STEPS.length - 1)) * 100}% - 2rem)` }}
               />
 
               {STATUS_STEPS.map((step, index) => {
                 const isCompleted = index <= currentStepIndex
                 const isCurrent = index === currentStepIndex
-                
+
                 return (
-                  <div key={step} className="flex flex-col items-center gap-3 bg-white px-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 shadow-sm ${
+                  <div key={step} className="flex flex-col items-center gap-2 sm:gap-3 bg-white px-0.5 sm:px-2">
+                    <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-500 shadow-sm ${
                       isCompleted ? 'bg-black text-white border-none' : 'bg-white border-2 border-gray-100 text-gray-300'
                     }`}>
                       {isCompleted && (
-                        <div className="w-2 h-2 bg-white rounded-full" />
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full" />
                       )}
                     </div>
-                    <span className={`text-[10px] font-bold uppercase tracking-[0.1em] ${
+                    <span className={`text-[7px] sm:text-[10px] font-bold uppercase tracking-[0.05em] sm:tracking-[0.1em] text-center whitespace-nowrap ${
                       isCurrent ? 'text-black' : isCompleted ? 'text-gray-500' : 'text-gray-300'
                     }`}>
                       {STATUS_LABELS[step]}
@@ -182,9 +182,9 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
           )}
 
           {/* Items List */}
-          <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm">
+          <div className="bg-white border border-gray-100 p-4 sm:p-8 rounded-3xl shadow-sm">
             <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-black mb-6 border-b border-gray-100 pb-4">{t('itemsOrdered')}</h2>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 sm:gap-6">
               {order.items?.map((item: any) => {
                 // Prioritize the live populated product relation to get the actual image media objects
                 const product = item.product || item.productSnapshot || {}
@@ -208,28 +208,31 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
                 }
                 
                 return (
-                  <div key={item.id || Math.random()} className="flex items-center gap-6 group">
-                    <Link href={`/products/${product.slug || ''}`} className="relative w-20 h-20 bg-gray-50 shrink-0 border border-gray-100 rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
-                      <Image src={imageUrl} alt={title} fill className="object-contain p-2" sizes="80px" />
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-[10px] font-bold z-10 border-2 border-white shadow-sm">
+                  <div key={item.id || Math.random()} className="flex items-center gap-3 sm:gap-6 group">
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0">
+                      <Link href={`/products/${product.slug || ''}`} className="relative block w-full h-full bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
+                        <Image src={imageUrl} alt={title} fill className="object-cover" sizes="80px" />
+                      </Link>
+                      {/* Kept outside the image's overflow-hidden container so it isn't clipped */}
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-[10px] font-bold z-10 border-2 border-white shadow-sm pointer-events-none">
                         {item.quantity}
                       </div>
-                    </Link>
-                    
-                    <div className="flex flex-col flex-1">
+                    </div>
+
+                    <div className="flex flex-col flex-1 min-w-0">
                       <Link href={`/products/${product.slug || ''}`}>
-                        <span className={`text-lg text-black font-bold tracking-tight hover:text-purple-600 transition-colors ${spaceGrotesk.className}`}>
+                        <span className={`text-sm sm:text-lg text-black font-bold tracking-tight hover:text-purple-600 transition-colors line-clamp-2 ${spaceGrotesk.className}`}>
                           {title}
                         </span>
                       </Link>
                       {displayVariant && !['DEFAULT', 'DEFAULT TITLE'].includes(displayVariant.toUpperCase()) && (
-                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mt-1">
+                        <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-gray-400 mt-1">
                           {displayVariant}
                         </span>
                       )}
                     </div>
-                    
-                    <span className={`text-xl font-bold text-black tracking-tighter ${spaceGrotesk.className}`}>
+
+                    <span className={`text-base sm:text-xl font-bold text-black tracking-tighter shrink-0 whitespace-nowrap ${spaceGrotesk.className}`}>
                       ${(price * item.quantity).toFixed(2)}
                     </span>
                   </div>

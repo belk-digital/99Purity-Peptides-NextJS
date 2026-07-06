@@ -4,7 +4,7 @@ import { ShoppingCart, Heart, Loader2 } from 'lucide-react'
 import React, { useRef, useState } from 'react'
 import { useScroll, useTransform, motion, useSpring } from 'framer-motion'
 import Image from 'next/image'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { useSession } from 'next-auth/react'
 import { useWishlistStore } from '@/lib/wishlist/store'
@@ -78,6 +78,7 @@ function BestSellerCard({
   const { status } = useSession()
   const isSignedIn = status === 'authenticated'
   const cartStore = useCartStore()
+  const router = useRouter()
 
   const [inWishlist, setInWishlist] = useState(isWishlistedGlobal)
   const [isPending, setIsPending] = useState(false)
@@ -123,6 +124,13 @@ function BestSellerCard({
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
+
+    // Multi-variant products can't be added as a single "Default" line — send the shopper
+    // to the PDP to pick a variant first, same as the rest of the shop.
+    if (product.hasVariants) {
+      router.push(`/products/${product.slug}`)
+      return
+    }
 
     const priceRaw = getPrice(product)
     const priceVal = typeof priceRaw === 'string' ? parseFloat(priceRaw.replace(/[^0-9.]/g, '')) : Number(priceRaw)

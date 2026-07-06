@@ -56,9 +56,17 @@ export function StripeCheckoutForm({
     }
 
     // 2. Confirm Stripe Payment
+    // Some cards require an off-site 3D Secure/bank authentication step even with
+    // `redirect: 'if_required'` — when that happens the browser navigates away and back,
+    // remounting this page fresh and skipping everything below. Pointing return_url at the
+    // order confirmation page (which was already created above) means that redirect still
+    // lands somewhere sensible instead of stranding the customer back on checkout.
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       redirect: 'if_required',
+      confirmParams: {
+        return_url: `${window.location.origin}/order-confirmation/${orderRes.orderId}`,
+      },
     })
 
     if (error) {

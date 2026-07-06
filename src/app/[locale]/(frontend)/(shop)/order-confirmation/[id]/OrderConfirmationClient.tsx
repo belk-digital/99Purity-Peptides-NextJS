@@ -9,6 +9,7 @@ import { Container } from '@/components/ui/container'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { buttonVariants } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
+import { useCartStore } from '@/lib/cart/store'
 
 type OrderItem = {
   id: string
@@ -55,6 +56,15 @@ const ZELLE_RECIPIENT_EMAIL = 'orders@99puritypeptides.com'
 export function OrderConfirmationClient({ order }: { order: OrderData }) {
   const t = useTranslations('orderConfirmation')
   const isZelle = order.paymentMethod === 'zelle'
+
+  // Clearing the cart here (rather than relying solely on the checkout page's in-memory
+  // success handler) is what actually guarantees it happens: Stripe's confirmPayment can
+  // redirect the browser away for 3D Secure/bank authentication and back again, which
+  // remounts the checkout page fresh and skips that handler entirely. Reaching this page
+  // at all means the order was placed, so clearing on mount is safe and reliable.
+  React.useEffect(() => {
+    useCartStore.getState().clear()
+  }, [])
 
   const PAYMENT_METHOD_LABELS: Record<OrderData['paymentMethod'], string> = {
     stripe: t('paymentMethodCard'),

@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Heart, ShoppingCart, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSession } from 'next-auth/react'
@@ -16,6 +17,7 @@ export interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const router = useRouter()
   const addItem = useWishlistStore(state => state.addItem)
   const removeItem = useWishlistStore(state => state.removeItem)
   const isWishlistedGlobal = useWishlistStore(state => product.id ? state.hasItem(product.id) : false)
@@ -72,7 +74,14 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
-    
+
+    // Multi-variant products can't be added as a single "Default" line — send the shopper
+    // to the PDP to pick a variant first, same as the rest of the shop.
+    if (product.hasVariants) {
+      router.push(`/products/${product.slug}`)
+      return
+    }
+
     const priceRaw = product.priceRange || (product as any).price || 0
     const priceVal = typeof priceRaw === 'string' ? parseFloat(priceRaw.replace(/[^0-9.]/g, '')) : Number(priceRaw)
 

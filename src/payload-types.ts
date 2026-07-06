@@ -92,6 +92,7 @@ export interface Config {
     'affiliate-payouts': AffiliatePayout;
     'payout-requests': PayoutRequest;
     'processing-fees': ProcessingFee;
+    'military-discount-requests': MilitaryDiscountRequest;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -124,6 +125,7 @@ export interface Config {
     'affiliate-payouts': AffiliatePayoutsSelect<false> | AffiliatePayoutsSelect<true>;
     'payout-requests': PayoutRequestsSelect<false> | PayoutRequestsSelect<true>;
     'processing-fees': ProcessingFeesSelect<false> | ProcessingFeesSelect<true>;
+    'military-discount-requests': MilitaryDiscountRequestsSelect<false> | MilitaryDiscountRequestsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -1250,6 +1252,26 @@ export interface PayoutRequest {
   createdAt: string;
 }
 /**
+ * ID photos are never stored here — they are emailed to support for manual review and are not retained.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "military-discount-requests".
+ */
+export interface MilitaryDiscountRequest {
+  id: number;
+  fullName: string;
+  email: string;
+  branch: string;
+  status: 'pending' | 'approved' | 'rejected';
+  /**
+   * The one-time, email-locked coupon generated when this request was approved.
+   */
+  couponCode?: string | null;
+  reviewedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -1372,6 +1394,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'processing-fees';
         value: number | ProcessingFee;
+      } | null)
+    | ({
+        relationTo: 'military-discount-requests';
+        value: number | MilitaryDiscountRequest;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -2135,6 +2161,20 @@ export interface ProcessingFeesSelect<T extends boolean = true> {
   type?: T;
   isActive?: T;
   isOptional?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "military-discount-requests_select".
+ */
+export interface MilitaryDiscountRequestsSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  branch?: T;
+  status?: T;
+  couponCode?: T;
+  reviewedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

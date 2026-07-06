@@ -228,8 +228,8 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
               {spending.year}
             </span>
           </div>
-          <div className="bg-white rounded-2xl border border-gray-100 p-6 flex flex-row items-center gap-8 shadow-sm min-h-[320px]">
-            <div className="relative w-48 h-48 shrink-0 ml-4">
+          <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col sm:flex-row items-center gap-6 sm:gap-8 shadow-sm min-h-[320px]">
+            <div className="relative w-40 h-40 sm:w-48 sm:h-48 shrink-0 sm:ml-4">
               <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
                 <circle cx="50" cy="50" r="35" fill="transparent" stroke="#f0f8f9" strokeWidth="25" />
                 {spending.categories.map((cat, i) => {
@@ -257,15 +257,15 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
               </div>
             </div>
 
-            <div className="flex-1 flex flex-col gap-3 justify-center text-[11px]">
+            <div className="w-full sm:flex-1 flex flex-col gap-3 justify-center text-[11px] min-w-0">
               {spending.categories.length > 0 ? spending.categories.map((item, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 w-[90px]">
-                    <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: item.color }} />
-                    <span className="text-gray-600">{item.label}</span>
+                <div key={i} className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <div className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ backgroundColor: item.color }} />
+                    <span className="text-gray-600 truncate">{item.label}</span>
                   </div>
-                  <span className="font-medium text-black w-[40px] text-right">${item.value.toFixed(2)}</span>
-                  <span className="text-gray-400 w-[30px] text-right">{item.pct}%</span>
+                  <span className="font-medium text-black shrink-0 text-right">${item.value.toFixed(2)}</span>
+                  <span className="text-gray-400 shrink-0 text-right w-9">{item.pct}%</span>
                 </div>
               )) : (
                 <p className="text-gray-400 text-center">{t('noPurchasesYet')}</p>
