@@ -34,8 +34,9 @@ export default async function LocaleLayout({
 
   return (
     <AuthSessionProvider>
-      <html lang={locale} className="min-h-screen" suppressHydrationWarning>
+      <html lang={locale} translate="no" className="min-h-screen notranslate" suppressHydrationWarning>
         <head>
+          <meta name="google" content="notranslate" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
