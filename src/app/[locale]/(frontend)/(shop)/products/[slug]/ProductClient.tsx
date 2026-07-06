@@ -34,6 +34,7 @@ import { FluidButton } from '@/components/ui/fluid-button'
 interface ProductData {
   id: string
   name: string
+  slug: string
   subtitle: string
   category: string
   categories?: string[]

@@ -200,6 +200,7 @@ export default async function ProductPage({
   const productData = {
     id: String(rawProduct.id),
     name: rawProduct.name,
+    slug: rawProduct.slug || slug,
     subtitle: rawProduct.seoDescription || '',
     category: mappedCategories[0] || 'Product',
     categories: mappedCategories,
