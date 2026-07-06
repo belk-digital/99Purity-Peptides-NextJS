@@ -10,6 +10,10 @@ export function CustomScrollbar() {
   const trackRef = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
   const isCartOpen = useCartStore((state) => state.isOpen)
+  // Hooks must run unconditionally on every render — hoisted above the early return below,
+  // since it used to live inline in the JSX and only fired when isCartOpen was false,
+  // causing "Rendered fewer hooks than expected" once the cart drawer opened.
+  const trackerTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
 
   // Use Lenis to integrate perfectly with the site's global smooth scrolling
   const lenis = useLenis()
@@ -86,8 +90,8 @@ export function CustomScrollbar() {
         {/* Glowing Tracker Node */}
         <motion.div 
           className="absolute right-[11px] pointer-events-auto flex items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{ 
-            top: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]),
+          style={{
+            top: trackerTop,
             translateY: "-50%"
           }}
           onPointerDown={handlePointerDown}
