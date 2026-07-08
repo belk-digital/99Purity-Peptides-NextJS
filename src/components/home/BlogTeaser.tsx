@@ -50,6 +50,7 @@ export function BlogTeaser() {
           alt={post.title}
           fill
           className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+          unoptimized
         />
         <div className="absolute inset-0 bg-[#008B8B]/5 group-hover:bg-transparent transition-colors duration-500 mix-blend-multiply" />
       </div>

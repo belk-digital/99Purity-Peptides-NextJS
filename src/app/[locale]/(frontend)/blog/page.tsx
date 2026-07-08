@@ -187,11 +187,12 @@ export default function BlogIndexPage() {
           </div>
           <Link href={`/${latestPost?.slug}`} className="group flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch w-full bg-white p-4 sm:p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-ink/5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
             <div className="relative w-full lg:w-[55%] aspect-[4/3] lg:aspect-auto rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden border border-ink/5 shrink-0">
-              <Image 
-                src={latestPost?.imageSrc || MOCK_IMAGES[0]} 
-                alt={latestPost?.title || "Featured post"} 
-                fill 
-                className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-[1.03]" 
+              <Image
+                src={latestPost?.imageSrc || MOCK_IMAGES[0]}
+                alt={latestPost?.title || "Featured post"}
+                fill
+                className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-[1.03]"
+                unoptimized
               />
             </div>
             

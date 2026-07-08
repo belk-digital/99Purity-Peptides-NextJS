@@ -69,12 +69,13 @@ export function BlogBentoGrid({ posts }: { posts: Post[] }) {
     return (
       <motion.div layout custom={customIndex} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white border border-ink/5 w-full shadow-md hover:shadow-xl transition-shadow duration-500 h-full">
         <Link href={`/${post.slug}`} className="block w-full h-full relative">
-          <Image 
-            src={post.imageSrc} 
-            alt={post.title} 
+          <Image
+            src={post.imageSrc}
+            alt={post.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105"
+            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="absolute top-4 left-4">

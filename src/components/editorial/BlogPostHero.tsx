@@ -41,6 +41,7 @@ export function BlogPostHero({ post }: BlogPostHeroProps) {
             fill
             className="object-cover opacity-50 mix-blend-luminosity"
             priority
+            unoptimized
           />
         </motion.div>
 

@@ -24,11 +24,12 @@ export function BlogPostCard({
   return (
     <Link href={`/${slug}`} className="group flex flex-col bg-white rounded-[2rem] p-4 md:p-5 h-full border border-ink/5 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-[1.5rem] mb-6 border border-ink/5 shrink-0">
-        <Image 
-          src={imageSrc} 
-          alt={title} 
-          fill 
-          className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-105" 
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-105"
+          unoptimized
         />
       </div>
       <div className="flex flex-col flex-grow px-1 md:px-2 pb-2 relative z-10">
