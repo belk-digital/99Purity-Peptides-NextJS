@@ -112,19 +112,18 @@ export default async function Homepage() {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "99 Purity Peptides",
-              "url": "https://the-99 Purity Peptides-lab.vercel.app",
-              "description": "US-based research peptide supplier providing ≥99% HPLC-pure compounds with third-party COA verification.",
-              "sameAs": ["https://instagram.com/the99 Purity Peptideslab"]
+              "url": "https://99puritypeptides.com",
+              "description": "US-based research peptide supplier providing ≥99% HPLC-pure compounds with third-party COA verification."
             },
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "url": "https://the-99 Purity Peptides-lab.vercel.app",
+              "url": "https://99puritypeptides.com",
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": {
                   "@type": "EntryPoint",
-                  "urlTemplate": "https://the-99 Purity Peptides-lab.vercel.app/shop?q={search_term_string}"
+                  "urlTemplate": "https://99puritypeptides.com/shop?q={search_term_string}"
                 },
                 "query-input": "required name=search_term_string"
               }

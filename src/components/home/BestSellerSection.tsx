@@ -128,7 +128,7 @@ function BestSellerCard({
     // Multi-variant products can't be added as a single "Default" line — send the shopper
     // to the PDP to pick a variant first, same as the rest of the shop.
     if (product.hasVariants) {
-      router.push(`/products/${product.slug}`)
+      router.push(`/product/${product.slug}`)
       return
     }
 
@@ -152,7 +152,7 @@ function BestSellerCard({
     >
       {/* CSS Transition wrapped element MUST be separate from motion.div */}
       <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl ${rotationClass}`}>
-        <Link href={`/products/${product.slug}`} className="absolute inset-0 z-20" aria-label={product.name} />
+        <Link href={`/product/${product.slug}`} className="absolute inset-0 z-20" aria-label={product.name} />
 
         {/* Top Text Content & Wishlist */}
         <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative">

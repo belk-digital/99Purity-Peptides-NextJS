@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
-import { submitContactForm } from '@/app/[locale]/(frontend)/contact/actions'
+import { submitContactForm } from '@/app/[locale]/(frontend)/contact-us/actions'
 
 export function ContactForm() {
   const t = useTranslations('content.contactForm')

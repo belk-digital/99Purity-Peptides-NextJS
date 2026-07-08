@@ -48,6 +48,42 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    // WordPress served category archives at /product-category/<slug>. This site has no
+    // equivalent archive route — categories are a query-string filter on /shop, matched by
+    // category *name* (not slug), so each destination below hardcodes the current Payload
+    // category name, URL-encoded. If a category is renamed in Payload, its entry here must
+    // be updated to match or the redirect will silently stop filtering.
+    return [
+      { source: '/product-category/uncategorized', destination: '/shop?category=Uncategorized', permanent: true },
+      { source: '/:locale/product-category/uncategorized', destination: '/:locale/shop?category=Uncategorized', permanent: true },
+      { source: '/product-category/sleep-cycle-investigation-research-peptides', destination: '/shop?category=Sleep%20Cycle%20Investigation%20%E2%80%93%20Research%20Peptides', permanent: true },
+      { source: '/:locale/product-category/sleep-cycle-investigation-research-peptides', destination: '/:locale/shop?category=Sleep%20Cycle%20Investigation%20%E2%80%93%20Research%20Peptides', permanent: true },
+      { source: '/product-category/recovery-research-peptides', destination: '/shop?category=Recovery%20Research%20Peptides', permanent: true },
+      { source: '/:locale/product-category/recovery-research-peptides', destination: '/:locale/shop?category=Recovery%20Research%20Peptides', permanent: true },
+      { source: '/product-category/receptor-agonist-research-peptides-compounds', destination: '/shop?category=Receptor%20Agonist%20Research%20Peptides%20%2F%20Compounds', permanent: true },
+      { source: '/:locale/product-category/receptor-agonist-research-peptides-compounds', destination: '/:locale/shop?category=Receptor%20Agonist%20Research%20Peptides%20%2F%20Compounds', permanent: true },
+      { source: '/product-category/pigmentation-research-peptides', destination: '/shop?category=Pigmentation%20Research%20Peptides', permanent: true },
+      { source: '/:locale/product-category/pigmentation-research-peptides', destination: '/:locale/shop?category=Pigmentation%20Research%20Peptides', permanent: true },
+      { source: '/product-category/metabolic-research-peptides', destination: '/shop?category=Metabolic%20Research%20Peptides', permanent: true },
+      { source: '/:locale/product-category/metabolic-research-peptides', destination: '/:locale/shop?category=Metabolic%20Research%20Peptides', permanent: true },
+      { source: '/product-category/growth-factor-research-peptides', destination: '/shop?category=Growth%20Factor%20Research%20Peptides', permanent: true },
+      { source: '/:locale/product-category/growth-factor-research-peptides', destination: '/:locale/shop?category=Growth%20Factor%20Research%20Peptides', permanent: true },
+      { source: '/product-category/essentials', destination: '/shop?category=Essentials', permanent: true },
+      { source: '/:locale/product-category/essentials', destination: '/:locale/shop?category=Essentials', permanent: true },
+      // NOTE: this category's Payload `name` field literally contains "&amp;" instead of "&"
+      // (a data bug, not intentional encoding). The destination below matches that value as
+      // stored today. If the name is fixed in Payload, update this redirect to match.
+      { source: '/product-category/cognitive-function-studies-research-peptides-compounds', destination: '/shop?category=Cognitive%20Function%20Studies%20%E2%80%93%20Research%20Peptides%20%26amp%3B%20Compounds', permanent: true },
+      { source: '/:locale/product-category/cognitive-function-studies-research-peptides-compounds', destination: '/:locale/shop?category=Cognitive%20Function%20Studies%20%E2%80%93%20Research%20Peptides%20%26amp%3B%20Compounds', permanent: true },
+      { source: '/product-category/cellular-health-research', destination: '/shop?category=Cellular%20Health%20Research', permanent: true },
+      { source: '/:locale/product-category/cellular-health-research', destination: '/:locale/shop?category=Cellular%20Health%20Research', permanent: true },
+      { source: '/product-category/bioregulators', destination: '/shop?category=Bioregulators', permanent: true },
+      { source: '/:locale/product-category/bioregulators', destination: '/:locale/shop?category=Bioregulators', permanent: true },
+      { source: '/product-category/aminos', destination: '/shop?category=Aminos', permanent: true },
+      { source: '/:locale/product-category/aminos', destination: '/:locale/shop?category=Aminos', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {

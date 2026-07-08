@@ -348,7 +348,7 @@ export function CheckoutClient() {
         <div className="text-center">
           <h1 className="text-display-sm font-heading text-ink mb-4">{t('emptyTitle')}</h1>
           <p className="text-body-md text-ink-muted mb-8">{t('emptyText')}</p>
-          <Link href="/products">
+          <Link href="/shop">
             <Button variant="dark" className="rounded-full h-14 px-8 tracking-widest text-sm uppercase !text-white">
               {t('shopNow')}
             </Button>

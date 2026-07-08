@@ -159,7 +159,7 @@ export function AuthSplitLayout({ children, mode }: AuthSplitLayoutProps) {
             <span>© 2026 99 Purity Peptides</span>
             <div className="flex gap-6">
               <Link href="/privacy-policy" className="hover:text-ink transition-colors font-medium">Privacy Policy</Link>
-              <Link href="/contact" className="hover:text-ink transition-colors font-medium">Support</Link>
+              <Link href="/contact-us" className="hover:text-ink transition-colors font-medium">Support</Link>
             </div>
           </div>
         </div>

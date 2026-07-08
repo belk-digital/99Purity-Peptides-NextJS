@@ -271,7 +271,7 @@ export function Hero() {
                         didDragRef.current = false
                         return
                       }
-                      router.push(`/products/${HERO_PRODUCTS[currentSlide].slug}`)
+                      router.push(`/product/${HERO_PRODUCTS[currentSlide].slug}`)
                     }}
                     onDragStart={() => {
                       didDragRef.current = true
@@ -346,7 +346,7 @@ export function Hero() {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                router.push(`/products/${HERO_PRODUCTS[currentSlide].slug}`);
+                router.push(`/product/${HERO_PRODUCTS[currentSlide].slug}`);
               }}
               className="absolute bottom-[11px] right-[11px] w-12 h-12 bg-primary hover:bg-white text-white hover:text-primary flex items-center justify-center rounded-full transition-colors duration-500 z-40 group shadow-[0_10px_30px_rgba(28,228,201,0.3)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)]"
             >

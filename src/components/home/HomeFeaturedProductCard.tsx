@@ -26,7 +26,7 @@ export function HomeFeaturedProductCard({ product, id, index = 0 }: HomeFeatured
       className="group relative flex flex-col items-center w-full bg-transparent cursor-pointer"
     >
       {/* Absolute Link overlay so entire card is clickable */}
-      <Link href={`/products/${product.slug}`} className="absolute inset-0 z-0">
+      <Link href={`/product/${product.slug}`} className="absolute inset-0 z-0">
         <span className="sr-only">{t('viewSrOnly', { name: product.name })}</span>
       </Link>
 

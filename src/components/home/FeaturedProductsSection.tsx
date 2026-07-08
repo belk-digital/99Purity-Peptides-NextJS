@@ -39,7 +39,7 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
         {/* Grid */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Featured Card (Left) */}
-          <Link href={`/products/${featuredProduct.slug}`} className="bg-ink/[0.03] backdrop-blur-md border border-ink/5 rounded-2xl p-8 w-full lg:w-1/2 flex flex-col justify-between relative overflow-hidden shadow-2xl group hover:bg-ink/[0.05] transition-colors">
+          <Link href={`/product/${featuredProduct.slug}`} className="bg-ink/[0.03] backdrop-blur-md border border-ink/5 rounded-2xl p-8 w-full lg:w-1/2 flex flex-col justify-between relative overflow-hidden shadow-2xl group hover:bg-ink/[0.05] transition-colors">
             <div className="flex justify-between items-center text-[10px] font-bold text-slate-500 tracking-widest uppercase z-10">
               <span>{featuredProduct.sku || 'NXP-FEATURED'}</span>
               <span className="flex items-center text-ink"><span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span> {t('inStock')}</span>
@@ -79,7 +79,7 @@ export function FeaturedProductsSection({ products = [] }: { products?: any[] })
           {/* List (Right) */}
           <div className="w-full lg:w-1/2 flex flex-col gap-6">
             {listProducts.map((product, idx) => (
-              <Link href={`/products/${product.slug}`} key={idx} className="bg-ink/[0.03] backdrop-blur-md border border-ink/5 rounded-2xl p-6 flex items-center shadow-2xl relative overflow-hidden group hover:bg-ink/[0.05] transition-colors">
+              <Link href={`/product/${product.slug}`} key={idx} className="bg-ink/[0.03] backdrop-blur-md border border-ink/5 rounded-2xl p-6 flex items-center shadow-2xl relative overflow-hidden group hover:bg-ink/[0.05] transition-colors">
                 <div className="w-32 h-32 bg-ink/5 border border-ink/5 rounded-xl overflow-hidden shrink-0 flex items-center justify-center relative">
                   <Image src={getImageUrl(product)} alt={product.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>

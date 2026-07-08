@@ -45,7 +45,7 @@ function SlideToAddButton({ product }: { product: Product }) {
     // Multi-variant products can't be added as a single "Default" line — send the shopper
     // to the PDP to pick a variant first, same as the rest of the shop.
     if (product.hasVariants) {
-      router.push(`/products/${product.slug}`)
+      router.push(`/product/${product.slug}`)
       return
     }
 
@@ -303,7 +303,7 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
       </div>
 
       {/* Absolute Link overlay so entire card is clickable */}
-      <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10">
+      <Link href={`/product/${product.slug}`} className="absolute inset-0 z-10">
         <span className="sr-only">{t('viewProduct', { name: product.name })}</span>
       </Link>
     </div>

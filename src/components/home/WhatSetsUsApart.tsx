@@ -327,8 +327,8 @@ export function WhatSetsUsApart() {
                 </p>
 
                 <div className="mt-12 pt-8 border-t border-white/60 relative z-10 flex items-center justify-between">
-                  <Link 
-                    href="/about" 
+                  <Link
+                    href="/about-us"
                     onMouseEnter={() => setIsHoveringClickable(true)}
                     onMouseLeave={() => setIsHoveringClickable(false)}
                     className="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors uppercase tracking-[0.2em] text-xs font-bold group"

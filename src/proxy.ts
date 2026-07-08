@@ -19,7 +19,7 @@ function stripLocalePrefix(pathname: string) {
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
 
-  if (path.startsWith('/admin') || path.startsWith('/api') || path.startsWith('/ref')) {
+  if (path.startsWith('/admin') || path.startsWith('/api') || path.startsWith('/ref/')) {
     return NextResponse.next()
   }
 

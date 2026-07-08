@@ -320,7 +320,7 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
 
             <div className="h-px bg-gray-100 w-[90%] mx-auto" />
             
-            <Link href="/contact" className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors group">
+            <Link href="/contact-us" className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors group">
               <div className="flex items-center gap-4 text-black">
                 <Headphones size={24} className="text-black" />
                 <div className="flex flex-col ml-2">

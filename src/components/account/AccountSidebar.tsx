@@ -164,7 +164,7 @@ export function AccountSidebar({
             <Truck size={14} className="text-gray-500" />
             <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-black whitespace-nowrap font-heading">{t('trackOrder')}</span>
           </Link>
-          <Link href="/contact" className="flex-1 flex items-center justify-center gap-2 bg-white rounded-xl py-3 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+          <Link href="/contact-us" className="flex-1 flex items-center justify-center gap-2 bg-white rounded-xl py-3 border border-gray-100 shadow-sm hover:shadow-md transition-all">
             <LifeBuoy size={14} className="text-gray-500" />
             <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-black whitespace-nowrap font-heading">{t('helpCenter')}</span>
           </Link>

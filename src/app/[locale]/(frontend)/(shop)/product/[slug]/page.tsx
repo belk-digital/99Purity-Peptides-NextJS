@@ -41,7 +41,7 @@ export async function generateMetadata({
   if (product.images && product.images.length > 0 && typeof product.images[0].image === 'object' && product.images[0].image?.url) {
     imageUrl = product.images[0].image.url
     if (imageUrl.startsWith('/')) {
-      imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}${imageUrl}`
+      imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'}${imageUrl}`
     }
   }
 
@@ -61,10 +61,10 @@ export async function generateMetadata({
       images: imageUrl ? [imageUrl] : undefined,
     },
     alternates: {
-      canonical: locale === 'en' ? `/products/${slug}` : `/${locale}/products/${slug}`,
+      canonical: locale === 'en' ? `/product/${slug}` : `/${locale}/product/${slug}`,
       languages: {
-        en: `/products/${slug}`,
-        es: `/es/products/${slug}`,
+        en: `/product/${slug}`,
+        es: `/es/product/${slug}`,
       },
     },
   }
@@ -379,8 +379,8 @@ export default async function ProductPage({
 
   productData.suggestedBlogs = mappedBlogs
 
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://the-looksmaxxing-lab.vercel.app'
-  const productUrl = `${baseUrl}/products/${slug}`
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+  const productUrl = `${baseUrl}/product/${slug}`
   
   const productSchema = {
     '@context': 'https://schema.org/',
@@ -391,7 +391,7 @@ export default async function ProductPage({
     sku: productData.sku || productData.id,
     brand: {
       '@type': 'Brand',
-      name: 'The Looksmaxxing Lab'
+      name: '99 Purity Peptides'
     },
     offers: {
       '@type': 'Offer',

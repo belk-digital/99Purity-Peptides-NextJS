@@ -52,7 +52,7 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
   const addToCart = (item: WishlistItem) => {
     if (item.hasVariants) {
       toast.info(t('selectVariantRequired', { name: item.name }) || `Please select a variant for ${item.name}`)
-      router.push(`/products/${item.slug}`)
+      router.push(`/product/${item.slug}`)
       return
     }
 
@@ -139,7 +139,7 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
                 
                 {/* Image Area */}
                 <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-50 rounded-2xl mb-6">
-                  <Link href={`/products/${product.slug}`}>
+                  <Link href={`/product/${product.slug}`}>
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -176,7 +176,7 @@ export function WishlistClient({ items: serverItems }: AccountWishlistProps) {
 
                 {/* Info Area */}
                 <div className="flex flex-col flex-1">
-                  <Link href={`/products/${product.slug}`}>
+                  <Link href={`/product/${product.slug}`}>
                     <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2 block font-heading">
                       {/* @ts-ignore */}
                       {product.descriptor || t('productFallback')}

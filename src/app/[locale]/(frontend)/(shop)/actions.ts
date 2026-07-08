@@ -79,7 +79,7 @@ export async function addToCart(productId: string | number, quantity: number = 1
       })
     }
 
-    revalidatePath('/products')
+    revalidatePath('/shop')
     revalidatePath('/cart')
     return { success: true, message: 'Added to cart' }
   } catch (error: any) {
@@ -143,7 +143,7 @@ export async function addToWishlist(productId: string | number, providedVariantS
       // Check for duplicate using normalized numeric IDs
       const alreadyExists = items.some((i) => i.product === numericProductId)
       if (alreadyExists) {
-        revalidatePath('/products')
+        revalidatePath('/shop')
         revalidatePath('/wishlist')
         return { success: false, error: 'Product is already in your wishlist' }
       }
@@ -164,7 +164,7 @@ export async function addToWishlist(productId: string | number, providedVariantS
       })
     }
 
-    revalidatePath('/products')
+    revalidatePath('/shop')
     revalidatePath('/wishlist')
     return { success: true, message: 'Added to wishlist' }
   } catch (error: any) {

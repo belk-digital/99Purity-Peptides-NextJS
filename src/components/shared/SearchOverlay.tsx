@@ -180,7 +180,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     {results.map((product) => (
                       <Link
                         key={product.id}
-                        href={`/products/${product.slug}`}
+                        href={`/product/${product.slug}`}
                         onClick={onClose}
                         className="group flex items-center p-4 rounded-2xl bg-white border border-black/5 hover:border-black/20 hover:shadow-md transition-all"
                       >

@@ -137,7 +137,7 @@ export function CertificatesClient({ coas }: { coas: COA[] }) {
                                   <span>{t('pdfLabel')}</span>
                                 </a>
                               ) : (
-                                <Link href="/contact" className="text-xs text-gray-500 hover:text-black underline underline-offset-4 transition-colors">
+                                <Link href="/contact-us" className="text-xs text-gray-500 hover:text-black underline underline-offset-4 transition-colors">
                                   {t('availableOnRequest')}
                                 </Link>
                               )}
@@ -187,7 +187,7 @@ export function CertificatesClient({ coas }: { coas: COA[] }) {
                             <span>{t('downloadCoa')}</span>
                           </a>
                         ) : (
-                          <Link href="/contact" className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-200 text-[11px] font-bold uppercase tracking-widest text-black hover:bg-gray-50 transition-colors font-heading">
+                          <Link href="/contact-us" className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-200 text-[11px] font-bold uppercase tracking-widest text-black hover:bg-gray-50 transition-colors font-heading">
                             {t('requestCoa')}
                           </Link>
                         )}

@@ -522,6 +522,10 @@ export interface Cart {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Records when the abandoned cart email was sent to prevent spamming.
+   */
+  abandonedEmailSentAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1706,6 +1710,7 @@ export interface CartsSelect<T extends boolean = true> {
         priceSnapshot?: T;
         id?: T;
       };
+  abandonedEmailSentAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

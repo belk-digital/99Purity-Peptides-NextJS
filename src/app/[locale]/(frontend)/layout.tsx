@@ -10,7 +10,7 @@ import { AgeGate } from '@/components/shared/AgeGate'
 import { HomePreloaderWrapper } from '@/components/home/HomePreloaderWrapper'
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'),
   title: '99 Purity Peptides',
   description: 'Premium Peptides for Peak Performance',
 }

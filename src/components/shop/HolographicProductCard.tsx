@@ -61,7 +61,7 @@ export function HolographicProductCard({ product }: { product: StandardProduct }
         variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
       />
 
-      <Link href={`/products/${product.slug}`} className="flex flex-col flex-1 relative z-10">
+      <Link href={`/product/${product.slug}`} className="flex flex-col flex-1 relative z-10">
         
         {/* Image Area */}
         <div className="relative w-full aspect-[4/5] overflow-hidden flex items-center justify-center p-8">

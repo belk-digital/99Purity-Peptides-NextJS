@@ -68,7 +68,7 @@ export function CompactProductCard({ product }: { product: StandardProduct }) {
       }}
       className="group relative flex flex-col w-full h-full cursor-pointer"
     >
-      <Link href={`/products/${product.slug}`} className="flex flex-col flex-1">
+      <Link href={`/product/${product.slug}`} className="flex flex-col flex-1">
         
         {/* Image Area */}
         <div className="relative w-full aspect-[4/5] overflow-hidden bg-white mb-6">

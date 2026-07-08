@@ -203,7 +203,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
 
   const pathname = usePathname()
   const isBlogPost = BLOG_POSTS.some(post => pathname === `/${post.slug}`)
-  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about' || pathname === '/faq' || pathname === '/contact' || pathname === '/affiliates' || pathname === '/blog' || isBlogPost
+  const isTransparentHeader = pathname === '/' || pathname === '/en' || pathname === '/shop' || pathname === '/about-us' || pathname === '/faq' || pathname === '/contact-us' || pathname === '/affiliates' || pathname === '/blog' || isBlogPost
 
   useEffect(() => {
     setMounted(true)
@@ -297,7 +297,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
               <Link href="/peptide-calculator" className={getNavLinkClass('/peptide-calculator')}>
                 {t('navCalculator')}
               </Link>
-              <Link href="/about" className={getNavLinkClass('/about')}>
+              <Link href="/about-us" className={getNavLinkClass('/about-us')}>
                 {t('navAbout')}
               </Link>
               <Link href="/blog" className={getNavLinkClass('/blog')}>
@@ -306,7 +306,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
               <Link href="/faq" className={getNavLinkClass('/faq')}>
                 {t('navFaq')}
               </Link>
-              <Link href="/contact" className={getNavLinkClass('/contact')}>
+              <Link href="/contact-us" className={getNavLinkClass('/contact-us')}>
                 {t('navContact')}
               </Link>
               <Link href="/affiliates" className={getNavLinkClass('/affiliates')}>
@@ -578,7 +578,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                           <div className="w-full grid grid-cols-3 gap-3 xl:gap-5 px-0 lg:px-4 xl:px-8">
                             {cat.products.slice(0, 3).map((prod: any, pIndex: number) => (
                               <Link 
-                                href={`/products/${prod.slug}`}
+                                href={`/product/${prod.slug}`}
                                 key={prod.id || pIndex} 
                                 onClick={() => setIsMegaMenuOpen(false)}
                                 className={`group flex flex-col justify-between w-full bg-white rounded-[16px] xl:rounded-[24px] p-2.5 xl:p-3 shadow-[0_10px_30px_rgba(0,0,0,0.1)] border border-ink/5 relative transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${pIndex === 1 ? 'translate-y-4 xl:translate-y-8' : ''}`}

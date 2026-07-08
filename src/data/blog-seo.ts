@@ -1,6 +1,46 @@
 export const BLOG_SEO: Record<string, { title: string | null, description: string | null, schemas: any[] }> = {
-  "collagen-peptides-vs-whey": {
-    "title": "Collagen Peptides Benefits: Science-Backed Guide (2025)",
+  "reconstituted-peptide-stability-storage": {
+    "title": "Reconstituted Peptide Stability: Storage & Research Guide 2026",
+    "description": "Complete guide to reconstituted peptide stability, degradation mechanisms, and optimal storage protocols for laboratory research integrity.",
+    "schemas": []
+  },
+  "bpc-157-tb-500-stack-research": {
+    "title": "BPC-157 TB-500 Stack: Synergistic Research & Mechanisms",
+    "description": "Explore BPC-157 TB-500 stack synergy in preclinical models. Analysis of tissue repair mechanisms, angiogenesis pathways, and emerging research.",
+    "schemas": []
+  },
+  "tesamorelin-visceral-fat-research": {
+    "title": "Tesamorelin Visceral Fat Research: Clinical Data 2025",
+    "description": "Phase III trials show tesamorelin reduces visceral fat by 69% in 26 weeks. Learn how this GHRH analog targets VAT to CJC-1295.",
+    "schemas": []
+  },
+  "retatrutide-cancer-research-preclinical-studies": {
+    "title": "Retatrutide Cancer Research: Preclinical Studies 2026",
+    "description": "New preclinical studies show retatrutide's effects on pancreatic, lung, and breast cancer cells. Learn what research reveals about the triple-receptor",
+    "schemas": []
+  },
+  "research-peptide-storage-best-practices": {
+    "title": "Storing Research Peptides in Laboratories | 99PurityPeptides",
+    "description": "Complete laboratory guide for storing research peptides. Temperature requirements, and preventing degradation for reproducible results.",
+    "schemas": []
+  },
+  "what-are-research-peptides-complete-laboratory-guide-2026": {
+    "title": "What Are Research Peptides? Complete Laboratory Guide (2026)",
+    "description": "What are research peptides? Learn how synthetic research peptides are produced, tested for purity, and classified for laboratory use.",
+    "schemas": []
+  },
+  "top-peptides-for-metabolic-studies": {
+    "title": "Top Peptides for Metabolic Research in 2026",
+    "description": "Explore peptides for metabolic research in 2026, including BPC-157, TB-500, MOTS-C, and AOD-9604.",
+    "schemas": []
+  },
+  "everything-lab-researchers-need-to-know-about-bpc-157": {
+    "title": "Everything Researchers Should Know About BPC-157",
+    "description": "Explore BPC-157 research, laboratory studies, mechanism of action, and regulatory status. A scientific overview for research professionals.",
+    "schemas": []
+  },
+  "collagen-peptides-benefits": {
+    "title": "Collagen Peptides Benefits: Science-Backed Guide (2026)",
     "description": "Discover the top science-backed collagen peptides benefits for skin, joints, bone, and muscle. Research-grade hydrolyzed collagen available at 99 Purity Peptides.",
     "schemas": [
       {
@@ -155,8 +195,8 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
     ]
   },
   "collagen-peptides-vs-peptide-therapy-skin": {
-    "title": "Collagen Peptides vs Peptide Therapy for Skin (2026)  — 53 chars",
-    "description": "Collagen peptides vs peptide therapy for skin: compare GHK-Cu and hydrolyzed collagen, what research shows, and where each fits. RUO research peptides.  — 150 chars",
+    "title": "Collagen Peptides vs Peptide Therapy for Skin (2026)",
+    "description": "Collagen peptides vs peptide therapy for skin: compare GHK-Cu and hydrolyzed collagen, what research shows, and where each fits. RUO research peptides.",
     "schemas": []
   },
   "klow-peptide-blend-research-guide-2026": {

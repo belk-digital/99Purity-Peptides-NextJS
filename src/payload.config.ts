@@ -191,7 +191,7 @@ export default buildConfig({
       generateTitle: ({ doc }: any) => (doc?.title ? `${doc.title} | 99 Purity Peptides` : '99 Purity Peptides'),
       generateDescription: ({ doc }: any) => doc?.excerpt || doc?.seoDescription || '',
       generateURL: ({ doc }: any) => {
-        const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+        const base = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
         return `${base}/${doc?.slug || ''}`
       },
     }),

@@ -38,16 +38,32 @@ export async function generateMetadata({
 
   const title = seoData?.title ? seoData.title : `${post.title} | 99 Purity Peptides`
   const description = seoData?.description ? seoData.description : post.excerpt
+  const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+  const imageUrl = post.imageSrc ? `${baseUrl}${post.imageSrc}` : undefined
 
   return {
     title: title,
     description: description,
     alternates: {
-      canonical: locale === 'en' ? `/${slug}` : `/${locale}/${slug}`,
+      canonical: path,
       languages: {
         en: `/${slug}`,
         es: `/es/${slug}`,
       },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: path,
+      images: imageUrl ? [{ url: imageUrl }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: imageUrl ? [imageUrl] : undefined,
     },
   }
 }
@@ -68,7 +84,7 @@ export default async function BlogPostPage({
   // Get 3 related posts (just the first 3 that aren't the current one)
   const relatedPosts = localePosts.filter((p) => p.slug !== slug).slice(0, 3)
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://99purity.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
 
   const jsonLd = {
     '@context': 'https://schema.org',

@@ -4,15 +4,15 @@ import configPromise from '@payload-config'
 import { BLOG_POSTS } from '@/data/blog-posts'
 import { routing } from '@/i18n/routing'
 
-const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99purity.com'
+const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
 
 const STATIC_PATHS = [
   '',
-  '/about',
+  '/about-us',
   '/shop',
   '/blog',
   '/faq',
-  '/contact',
+  '/contact-us',
   '/peptide-calculator',
   '/certificates',
   '/affiliates',
@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
 
     for (const product of products) {
-      const path = `/products/${product.slug}`
+      const path = `/product/${product.slug}`
       entries.push(entry(path, product.updatedAt ? new Date(product.updatedAt) : undefined))
       for (const locale of routing.locales) {
         if (locale === routing.defaultLocale) continue

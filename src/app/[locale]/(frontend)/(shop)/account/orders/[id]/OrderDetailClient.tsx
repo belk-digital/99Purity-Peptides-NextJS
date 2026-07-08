@@ -210,7 +210,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
                 return (
                   <div key={item.id || Math.random()} className="flex items-center gap-3 sm:gap-6 group">
                     <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0">
-                      <Link href={`/products/${product.slug || ''}`} className="relative block w-full h-full bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
+                      <Link href={`/product/${product.slug || ''}`} className="relative block w-full h-full bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
                         <Image src={imageUrl} alt={title} fill className="object-cover" sizes="80px" />
                       </Link>
                       {/* Kept outside the image's overflow-hidden container so it isn't clipped */}
@@ -220,7 +220,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
                     </div>
 
                     <div className="flex flex-col flex-1 min-w-0">
-                      <Link href={`/products/${product.slug || ''}`}>
+                      <Link href={`/product/${product.slug || ''}`}>
                         <span className={`text-sm sm:text-lg text-black font-bold tracking-tight hover:text-purple-600 transition-colors line-clamp-2 ${spaceGrotesk.className}`}>
                           {title}
                         </span>

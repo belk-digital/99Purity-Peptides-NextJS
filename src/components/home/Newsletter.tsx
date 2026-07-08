@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { Container } from '@/components/ui/container'
@@ -8,6 +10,42 @@ import Image from 'next/image'
 
 export function Newsletter() {
   const t = useTranslations('home.newsletter')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setStatus('loading')
+    setMessage('')
+    
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email') as string
+    
+    try {
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+      
+      const data = await res.json()
+      
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to subscribe')
+      }
+      
+      setStatus('success')
+      setMessage('Successfully subscribed!')
+      // Reset form
+      const form = e.target as HTMLFormElement
+      form.reset()
+    } catch (err: any) {
+      console.error(err)
+      setStatus('error')
+      setMessage(err.message || 'Something went wrong. Please try again.')
+    }
+  }
+
   return (
     <section className="relative z-10 w-full py-32 overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 z-0 bg-black">
@@ -42,27 +80,32 @@ export function Newsletter() {
         
         <FadeUp delay={0.3} className="w-full">
           <form 
-            action={async () => {
-              'use server'
-              // Server action stub for newsletter subscription
-              console.log('Newsletter subscription stub')
-            }}
-            className="flex flex-col md:flex-row gap-3 max-w-md mx-auto mt-12 w-full"
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-3 max-w-md mx-auto mt-12 w-full"
           >
-            <Input
-              type="email"
-              name="email"
-              placeholder={t('emailPlaceholder')}
-              required
-              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary min-w-0"
-            />
-            <div className="shrink-0 flex justify-center w-full md:w-auto">
-              <FluidButton
-                type="submit"
-                text={t('subscribeButton')}
-                variant="cyan"
+            <div className="flex flex-col md:flex-row gap-3 w-full">
+              <Input
+                type="email"
+                name="email"
+                placeholder={t('emailPlaceholder')}
+                required
+                disabled={status === 'loading' || status === 'success'}
+                className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary min-w-0 disabled:opacity-50"
               />
+              <div className="shrink-0 flex justify-center w-full md:w-auto">
+                <FluidButton
+                  type="submit"
+                  text={status === 'loading' ? 'Subscribing...' : t('subscribeButton')}
+                  variant="cyan"
+                />
+              </div>
             </div>
+            
+            {message && (
+              <p className={`text-sm mt-2 ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                {message}
+              </p>
+            )}
           </form>
         </FadeUp>
 

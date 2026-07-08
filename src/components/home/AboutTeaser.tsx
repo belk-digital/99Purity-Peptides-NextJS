@@ -80,7 +80,7 @@ export function AboutTeaser() {
           </p>
           <div className="pointer-events-auto mt-10">
             <Button variant="outline" asChild className="border-slate-300 text-ink hover:bg-[#008B8B] hover:text-white hover:border-[#008B8B] rounded-[1.5rem] px-8 py-6 backdrop-blur-md transition-all duration-300 uppercase tracking-widest text-[10px] font-bold shadow-sm transform-gpu">
-              <Link href="/about">{t('readAboutUs')} →</Link>
+              <Link href="/about-us">{t('readAboutUs')} →</Link>
             </Button>
           </div>
         </motion.div>

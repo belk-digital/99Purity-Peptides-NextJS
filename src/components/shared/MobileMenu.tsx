@@ -31,12 +31,12 @@ const MAIN_LINKS = [
   { key: 'shopFormulations', href: '/shop' },
   { key: 'peptideCalculator', href: '/peptide-calculator' },
   { key: 'blog', href: '/blog' },
-  { key: 'ourLaboratory', href: '/about' },
+  { key: 'ourLaboratory', href: '/about-us' },
 ]
 
 const SUPPORT_LINKS = [
   { key: 'faq', href: '/faq', icon: HelpCircle },
-  { key: 'contactSupport', href: '/contact', icon: Mail },
+  { key: 'contactSupport', href: '/contact-us', icon: Mail },
   { key: 'affiliateProgram', href: '/affiliates', icon: Users },
 ]
 
