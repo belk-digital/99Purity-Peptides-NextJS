@@ -466,21 +466,21 @@ export const BLOG_SCHEMAS: Record<string, any[]> = {
       "description": "A research-focused analysis of how Retatrutide's triple agonist mechanism — GLP-1, GIP, and Glucagon — interacts with dietary carbohydrate intake and glucose availability.",
       "author": {
         "@type": "Organization",
-        "name": "Purity Peptides"
+        "name": "99 Purity Peptides"
       },
       "publisher": {
         "@type": "Organization",
-        "name": "Purity Peptides",
+        "name": "99 Purity Peptides",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://yourdomain.com/logo.png"
+          "url": "https://99puritypeptides.com/logo.png"
         }
       },
       "datePublished": "2025-01-01",
       "dateModified": "2025-07-01",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://yourdomain.com/blog/retatrutide-and-carbs"
+        "@id": "https://99puritypeptides.com/blog/retatrutide-and-carbs"
       },
       "keywords": "retatrutide, carbohydrate metabolism, triple agonist, GLP-1, GIP, glucagon receptor, glucose regulation"
     },
@@ -519,12 +519,12 @@ export const BLOG_SCHEMAS: Record<string, any[]> = {
       "@type": "WebPage",
       "name": "Retatrutide and Carbs: Does This Triple Agonist Need Glucose?",
       "description": "Research analysis of Retatrutide's interaction with carbohydrate metabolism through its triple agonist GLP-1, GIP, and Glucagon receptor mechanism.",
-      "url": "https://yourdomain.com/blog/retatrutide-and-carbs",
+      "url": "https://99puritypeptides.com/blog/retatrutide-and-carbs",
       "inLanguage": "en-US",
       "isPartOf": {
         "@type": "WebSite",
-        "name": "Purity Peptides",
-        "url": "https://yourdomain.com"
+        "name": "99 Purity Peptides",
+        "url": "https://99puritypeptides.com"
       }
     },
     {
@@ -535,19 +535,19 @@ export const BLOG_SCHEMAS: Record<string, any[]> = {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://yourdomain.com"
+          "item": "https://99puritypeptides.com"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Research Blog",
-          "item": "https://yourdomain.com/blog"
+          "item": "https://99puritypeptides.com/blog"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Retatrutide and Carbs",
-          "item": "https://yourdomain.com/blog/retatrutide-and-carbs"
+          "item": "https://99puritypeptides.com/blog/retatrutide-and-carbs"
         }
       ]
     }

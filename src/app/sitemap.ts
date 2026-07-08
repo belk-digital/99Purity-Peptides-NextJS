@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import * as Sentry from '@sentry/nextjs'
 import { BLOG_POSTS } from '@/data/blog-posts'
 import { routing } from '@/i18n/routing'
 
@@ -69,6 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } catch (error) {
     console.error('sitemap: failed to fetch products', error)
+    Sentry.captureException(error, { tags: { route: 'sitemap.xml' } })
   }
 
   for (const post of BLOG_POSTS) {

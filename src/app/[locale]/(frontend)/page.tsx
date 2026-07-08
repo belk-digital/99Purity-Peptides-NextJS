@@ -13,9 +13,41 @@ import { MerchandiseSection } from '@/components/home/MerchandiseSection'
 import { MilitaryDiscountSection } from '@/components/home/MilitaryDiscountSection'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: '99 Purity Peptides | Research-Grade Peptides, COA-Verified',
-  description: 'US-synthesized research peptides — BPC-157, TB-500, GHK-Cu, Semaglutide. Every batch verified at ≥99% HPLC purity with a full COA. Shop with confidence. 2-day shipping available.',
+const title = 'High-Purity Research Peptides for Laboratory Use | 99PurityPeptides'
+const description = 'Premium research-grade peptides with verified purity for laboratory studies. HPLC/MS certified, RUO-only reagents for universities and R&D labs.'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const path = locale === 'en' ? '/' : `/${locale}`
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: path,
+      languages: {
+        en: '/',
+        es: '/es',
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: path,
+      images: ['/99 Images/99pp-Logo.png'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/99 Images/99pp-Logo.png'],
+    },
+  }
 }
 
 import { getShopProducts } from '@/app/[locale]/(frontend)/(shop)/actions'

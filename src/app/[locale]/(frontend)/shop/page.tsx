@@ -5,9 +5,41 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { getShopProducts } from '../(shop)/actions'
 
-export const metadata: Metadata = {
-  title: 'Shop All Compounds | 99 Purity Peptides',
-  description: 'Browse our complete catalog of research-grade peptides and compounds. Filter by purity, category, and availability.',
+const title = 'Shop All Compounds | 99 Purity Peptides'
+const description = 'Browse our complete catalog of research-grade peptides and compounds. Filter by purity, category, and availability.'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const path = locale === 'en' ? '/shop' : `/${locale}/shop`
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: path,
+      languages: {
+        en: '/shop',
+        es: '/es/shop',
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: path,
+      images: ['/99 Images/99pp-Logo.png'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/99 Images/99pp-Logo.png'],
+    },
+  }
 }
 
 export const dynamic = 'force-dynamic'
@@ -53,11 +85,38 @@ export default async function ShopPage() {
     )
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+
   return (
-    <ShopClient 
-      initialProducts={initialProductsRes.success ? (initialProductsRes.products as any) : []} 
-      totalPages={initialProductsRes.success ? initialProductsRes.totalPages : 0} 
-      categories={categories} 
-    />
+    <>
+      <ShopClient
+        initialProducts={initialProductsRes.success ? (initialProductsRes.products as any) : []}
+        totalPages={initialProductsRes.success ? initialProductsRes.totalPages : 0}
+        categories={categories}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+                { '@type': 'ListItem', position: 2, name: 'Shop', item: `${siteUrl}/shop` },
+              ],
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'CollectionPage',
+              name: title,
+              description,
+              url: `${siteUrl}/shop`,
+            },
+          ]),
+        }}
+      />
+    </>
   )
 }
