@@ -59,7 +59,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Thumbnails Row (Below Main Image on All Breakpoints) */}
       {images.length > 1 && (
-        <div className="flex justify-center gap-2.5 overflow-x-auto scrollbar-none w-full shrink-0 pb-1">
+        <div className="flex justify-center gap-2.5 overflow-x-auto scrollbar-none w-full shrink-0 p-2">
           {images.map((img, idx) => {
             const isActive = activeIndex === idx
             return (
@@ -89,7 +89,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Main Image */}
       <div
-        className="relative w-full max-w-md mx-auto aspect-square bg-gray-50 rounded-2xl overflow-hidden cursor-zoom-in group"
+        className="relative w-full max-w-md mx-auto aspect-[3/4] bg-gray-50 rounded-2xl overflow-hidden cursor-zoom-in group"
         ref={emblaRef}
       >
         <div className="flex h-full">
