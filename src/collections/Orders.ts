@@ -225,6 +225,7 @@ export const Orders: CollectionConfig = {
       options: [
         { label: 'Card (Stripe)', value: 'stripe' },
         { label: 'Zelle', value: 'zelle' },
+        { label: 'American Express', value: 'amex' },
       ],
       admin: {
         position: 'sidebar',

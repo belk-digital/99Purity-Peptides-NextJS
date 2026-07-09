@@ -181,7 +181,7 @@ export async function createPayloadOrder(
   formData: any,
   paymentIntentId: string,
   userId?: string,
-  paymentMethod: 'stripe' | 'zelle' = 'stripe',
+  paymentMethod: 'stripe' | 'zelle' | 'amex' = 'stripe',
   isNewAddress = false
 ) {
   const payload = await getPayload({ config: configPromise })
@@ -462,8 +462,8 @@ export async function createPayloadOrder(
           affiliateId: (await cookies()).get('affiliate_ref')?.value,
           clickId: (await cookies()).get('affiliate_click_id')?.value,
        })
-    } else if (paymentMethod === 'zelle') {
-       // Send initial order invoice immediately for Zelle orders
+    } else if (paymentMethod === 'zelle' || paymentMethod === 'amex') {
+       // Send initial order invoice immediately for Zelle/AMEX manual orders
        try {
            const customerEmail = order.guestEmail;
            if (customerEmail) {
@@ -479,7 +479,7 @@ export async function createPayloadOrder(
                })
            }
        } catch (err) {
-           console.error('Failed to send initial Zelle confirmation email', err)
+           console.error(`Failed to send initial ${paymentMethod} confirmation email`, err)
        }
     }
 

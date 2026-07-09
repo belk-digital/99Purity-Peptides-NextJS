@@ -1123,6 +1123,8 @@
       "initializingCheckout": "Inicializando pago seguro...",
       "payWithZelle": "Pagar con Zelle",
       "zelleCheckoutNote": "Recibirás las instrucciones de pago por Zelle en la siguiente página después de realizar tu pedido.",
+      "payWithAmex": "Pagar con American Express",
+      "amexCheckoutNote": "Realiza tu pedido ahora. Recibirás un enlace para completar el pago en tu correo electrónico.",
       "placeOrder": "Realizar Pedido"
     },
     "checkoutSummary": {
@@ -1173,8 +1175,10 @@
     "paymentSuccessful": "Pago Exitoso",
     "orderPlaced": "Pedido Realizado",
     "thankYouZelle": "Gracias, {name}. Por favor completa tu pago por Zelle a continuación.",
+    "thankYouAmex": "¡Gracias por tu pedido, {name}! Uno de los miembros de nuestro equipo se comunicará contigo en breve a través de SMS con un enlace de factura seguro para finalizar tu pago con American Express.",
     "thankYouConfirmed": "Gracias, {name}. Tu pedido está confirmado.",
     "completeZellePayment": "Completa Tu Pago por Zelle",
+    "completeAmexPayment": "Completa Tu Pago con American Express",
     "sendViaZelle": "Envía <bold>{amount}</bold> por Zelle usando el código QR a continuación o envía a:",
     "sendTo": "Enviar A",
     "includeOrderNumber": "Incluye tu número de pedido <bold>#{orderId}</bold> en el memo de Zelle. Tu pedido se confirmará una vez que se verifique el pago.",

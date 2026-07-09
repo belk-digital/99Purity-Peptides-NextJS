@@ -166,7 +166,7 @@ export function CartDrawer() {
                           <div className="relative w-20 h-20 bg-cream rounded-xl shrink-0 overflow-hidden">
                             <Image src={item.product?.imageUrl || '/placeholder.png'} alt={item.product?.name || 'Product'} fill className="object-cover hover:scale-105 transition-transform duration-500" />
                           </div>
-                          <div className="flex flex-col flex-1 justify-between py-0.5">
+                          <div className="flex flex-col flex-1 justify-between py-0.5 min-w-0">
                             <div className="flex justify-between items-start gap-2">
                               <div className="flex flex-col">
                                 <Link href={`/product/${item.product?.slug || item.productId}`} onClick={closeCart} className="text-sm font-bold font-heading text-ink hover:text-primary transition-colors line-clamp-1 leading-tight">
@@ -188,6 +188,7 @@ export function CartDrawer() {
                               <QuantityStepper 
                                 value={item.quantity} 
                                 onChange={(val) => updateQuantity(item.lineId, val)} 
+                                size="responsive"
                               />
                               <span className="text-sm font-extrabold text-ink">
                                 ${(item.priceSnapshot * item.quantity).toFixed(2)}

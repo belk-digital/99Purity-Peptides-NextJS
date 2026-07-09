@@ -223,15 +223,12 @@ export function ProductClient({ product }: ProductClientProps) {
   const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
   const currentStock = selectedVariant?.inStock ? 50 : 0 // Fake stock level for testing
 
-  const allOtherVariantImages = product.variants
-    .filter(v => v.id !== selectedVariant?.id)
-    .map(v => v.image)
-    .filter((img): img is string => Boolean(img))
-
-  const galleryImages = Array.from(new Set([
-    ...(selectedVariant?.image ? [selectedVariant.image] : []),
-    ...product.images.filter(img => !allOtherVariantImages.includes(img)),
-  ]))
+  // If the variant has a specific image, show ONLY that image. Otherwise fallback to product images.
+  const galleryImages = selectedVariant?.image 
+    ? [selectedVariant.image] 
+    : product.images.length > 0 
+      ? product.images 
+      : []
 
   const [justAdded, setJustAdded] = useState(false)
   const cartStore = useCartStore()

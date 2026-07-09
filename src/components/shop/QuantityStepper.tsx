@@ -12,6 +12,7 @@ interface QuantityStepperProps {
   max?: number
   className?: string
   theme?: 'light' | 'dark'
+  size?: 'sm' | 'md' | 'responsive'
 }
 
 export function QuantityStepper({ 
@@ -20,7 +21,8 @@ export function QuantityStepper({
   min = 1, 
   max = 99,
   className,
-  theme = 'light'
+  theme = 'light',
+  size = 'md'
 }: QuantityStepperProps) {
   const t = useTranslations('shop.quantityStepper')
 
@@ -34,28 +36,44 @@ export function QuantityStepper({
     if (value < max) onChange(value + 1)
   }
 
+  const isSm = size === 'sm'
+  const isResponsive = size === 'responsive'
+
   return (
-    <div className={cn("inline-flex items-center justify-between border border-ink/10 rounded-full bg-white h-12 px-1 w-[120px] shadow-sm transition-all hover:border-ink/20", className)}>
+    <div className={cn(
+      "inline-flex items-center justify-between border border-ink/10 rounded-full bg-white shadow-sm transition-all hover:border-ink/20 px-1", 
+      isResponsive ? "h-8 md:h-12 w-[84px] md:w-[120px]" : isSm ? "h-8 w-[84px]" : "h-12 w-[120px]",
+      className
+    )}>
       <button 
         onClick={handleDecrement}
         disabled={value <= min}
-        className="w-10 h-10 flex items-center justify-center text-ink/60 hover:text-ink hover:bg-ink/5 rounded-full transition-colors disabled:opacity-30 flex-shrink-0"
+        className={cn(
+          "flex items-center justify-center text-ink/60 hover:text-ink hover:bg-ink/5 rounded-full transition-colors disabled:opacity-30 flex-shrink-0",
+          isResponsive ? "w-6 h-6 md:w-10 md:h-10" : isSm ? "w-6 h-6" : "w-10 h-10"
+        )}
         aria-label={t('decreaseQuantity')}
       >
-        <Minus size={16} strokeWidth={2} />
+        <Minus className={cn(isResponsive ? "w-3 h-3 md:w-4 md:h-4" : isSm ? "w-3 h-3" : "w-4 h-4")} strokeWidth={2} />
       </button>
       
-      <div className="flex-1 flex items-center justify-center font-bold text-base select-none text-ink">
+      <div className={cn(
+        "flex-1 flex items-center justify-center font-bold select-none text-ink",
+        isResponsive ? "text-xs md:text-base" : isSm ? "text-xs" : "text-base"
+      )}>
         {value}
       </div>
       
       <button 
         onClick={handleIncrement}
         disabled={value >= max}
-        className="w-10 h-10 flex items-center justify-center text-ink/60 hover:text-ink hover:bg-ink/5 rounded-full transition-colors disabled:opacity-30 flex-shrink-0"
+        className={cn(
+          "flex items-center justify-center text-ink/60 hover:text-ink hover:bg-ink/5 rounded-full transition-colors disabled:opacity-30 flex-shrink-0",
+          isResponsive ? "w-6 h-6 md:w-10 md:h-10" : isSm ? "w-6 h-6" : "w-10 h-10"
+        )}
         aria-label={t('increaseQuantity')}
       >
-        <Plus size={16} strokeWidth={2} />
+        <Plus className={cn(isResponsive ? "w-3 h-3 md:w-4 md:h-4" : isSm ? "w-3 h-3" : "w-4 h-4")} strokeWidth={2} />
       </button>
     </div>
   )

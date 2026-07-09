@@ -183,6 +183,19 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
           </tr>
           ` : ''}
 
+          ${order.paymentMethod === 'amex' && order.paymentStatus === 'unpaid' ? `
+          <!-- AMEX Payment Instructions -->
+          <tr>
+            <td style="padding: 0 40px; padding-bottom: 20px;">
+              <div style="background-color: #EFF6FF; border: 1px solid #DBEAFE; padding: 30px 20px; border-radius: 12px; text-align: center;">
+                <div style="display: inline-block; width: 48px; height: 48px; background-color: #DBEAFE; border-radius: 50%; color: #1D4ED8; font-weight: bold; font-size: 24px; line-height: 48px; margin-bottom: 16px;">A</div>
+                <h3 style="margin: 0 0 8px 0; color: #1E40AF; font-size: 18px; font-weight: 700;">Complete Your American Express Payment</h3>
+                <p style="margin: 0 0 20px 0; color: #1D4ED8; font-size: 14px; line-height: 1.5;">One of our team members will reach out to you shortly via <strong>SMS</strong> with a secure invoice link to finalize your American Express payment.</p>
+              </div>
+            </td>
+          </tr>
+          ` : ''}
+
           ${safeTrackingLink ? `
           <!-- Tracking Link -->
           <tr>

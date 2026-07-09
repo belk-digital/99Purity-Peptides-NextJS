@@ -759,7 +759,7 @@ export interface Order {
   /**
    * Zelle orders require manual payment confirmation before fulfillment.
    */
-  paymentMethod?: ('stripe' | 'zelle') | null;
+  paymentMethod?: ('stripe' | 'zelle' | 'amex') | null;
   couponCode?: string | null;
   customerNote?: string | null;
   /**

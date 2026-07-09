@@ -1123,6 +1123,8 @@
       "initializingCheckout": "Initializing secure checkout...",
       "payWithZelle": "Pay with Zelle",
       "zelleCheckoutNote": "You'll receive Zelle payment instructions on the next page after placing your order.",
+      "payWithAmex": "Pay with American Express",
+      "amexCheckoutNote": "Place your order now. You will receive a link to complete the payment on your email.",
       "placeOrder": "Place Order"
     },
     "checkoutSummary": {
@@ -1173,8 +1175,10 @@
     "paymentSuccessful": "Payment Successful",
     "orderPlaced": "Order Placed",
     "thankYouZelle": "Thank you, {name}. Please complete your Zelle payment below.",
+    "thankYouAmex": "Thank you for your order, {name}! One of our team members will reach out to you shortly via SMS with a secure invoice link to finalize your American Express payment.",
     "thankYouConfirmed": "Thank you, {name}. Your order is confirmed.",
     "completeZellePayment": "Complete Your Zelle Payment",
+    "completeAmexPayment": "Complete Your American Express Payment",
     "sendViaZelle": "Send <bold>{amount}</bold> via Zelle using the QR code below or send to:",
     "sendTo": "Send To",
     "includeOrderNumber": "Include your order number <bold>#{orderId}</bold> in the Zelle memo. Your order will be confirmed once payment is verified.",

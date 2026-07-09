@@ -89,7 +89,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Main Image */}
       <div
-        className="relative w-full max-w-md mx-auto aspect-[3/4] bg-gray-50 rounded-2xl overflow-hidden cursor-zoom-in group"
+        className="relative w-full max-w-[340px] mx-auto aspect-[3/4] bg-gray-50 rounded-2xl overflow-hidden cursor-zoom-in group"
         ref={emblaRef}
       >
         <div className="flex h-full">

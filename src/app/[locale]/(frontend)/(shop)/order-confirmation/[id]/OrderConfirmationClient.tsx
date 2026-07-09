@@ -48,7 +48,7 @@ type OrderData = {
   discountTotal?: number
   redeemedPoints?: number
   couponCode?: string
-  paymentMethod: 'stripe' | 'zelle'
+  paymentMethod: 'stripe' | 'zelle' | 'amex'
 }
 
 const ZELLE_RECIPIENT_EMAIL = 'orders@99puritypeptides.com'
@@ -56,6 +56,7 @@ const ZELLE_RECIPIENT_EMAIL = 'orders@99puritypeptides.com'
 export function OrderConfirmationClient({ order }: { order: OrderData }) {
   const t = useTranslations('orderConfirmation')
   const isZelle = order.paymentMethod === 'zelle'
+  const isAmex = order.paymentMethod === 'amex'
 
   // Clearing the cart here (rather than relying solely on the checkout page's in-memory
   // success handler) is what actually guarantees it happens: Stripe's confirmPayment can
@@ -69,6 +70,7 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
   const PAYMENT_METHOD_LABELS: Record<OrderData['paymentMethod'], string> = {
     stripe: t('paymentMethodCard'),
     zelle: t('paymentMethodZelle'),
+    amex: 'American Express',
   }
 
   return (
@@ -101,11 +103,13 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
           
           <FadeUp delay={0.1}>
             <h1 className="text-3xl md:text-4xl font-display font-bold text-ink mb-3">
-              {isZelle ? t('orderPlaced') : t('paymentSuccessful')}
+              {isZelle || isAmex ? t('orderPlaced') : t('paymentSuccessful')}
             </h1>
             <p className="text-ink/60 text-sm md:text-base">
               {isZelle
                 ? t('thankYouZelle', { name: order.customerName })
+                : isAmex
+                ? t('thankYouAmex', { name: order.customerName })
                 : t('thankYouConfirmed', { name: order.customerName })}
             </p>
           </FadeUp>
@@ -144,6 +148,23 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
                   bold: (chunks) => <span className="font-bold">{chunks}</span>,
                 })}
               </p>
+            </div>
+          </FadeUp>
+        )}
+
+        {/* AMEX Payment Card - only shown for pending AMEX orders */}
+        {isAmex && (
+          <FadeUp delay={0.15} className="w-full max-w-lg mb-8 md:mb-10 print:hidden">
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-xl font-display">
+                A
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-blue-800 mb-2">{t('completeAmexPayment')}</h2>
+                <p className="text-sm text-blue-700/80">
+                  One of our team members will reach out to you shortly via <strong>SMS</strong> with a secure invoice link to finalize your American Express payment.
+                </p>
+              </div>
             </div>
           </FadeUp>
         )}

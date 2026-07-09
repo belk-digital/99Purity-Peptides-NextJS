@@ -48,6 +48,7 @@ export function CheckoutClient() {
 
   // Form State
   const [isProcessing, setIsProcessing] = useState(false)
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'zelle' | 'amex'>('zelle')
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -336,6 +337,43 @@ export function CheckoutClient() {
     }
   }
 
+  const handleAmexPlaceOrder = async () => {
+    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
+      toast.error(t('fillRequiredFieldsOrder'))
+      return
+    }
+
+    setIsProcessing(true)
+
+    try {
+      const { createPayloadOrder } = await import('./actions')
+      const orderRes = await createPayloadOrder(
+        items, shippingMethod, appliedCoupon?.code, isRedeemingPoints,
+        { ...formData, email: user?.email || formData.email },
+        'amex_pending',
+        user?.id as string,
+        'amex',
+        selectedAddressId === 'new'
+      )
+
+      if (orderRes.error || !orderRes.orderId) {
+        toast.error(orderRes.error || t('freeOrderInitFailed'))
+        if ((orderRes as any).priceChanged && (orderRes as any).updatedItems) {
+          useCartStore.getState().setItems((orderRes as any).updatedItems)
+        }
+        setIsProcessing(false)
+        return
+      }
+
+      toast.success(t('orderSuccessRedirecting'))
+      useCartStore.getState().clear()
+      window.location.href = `/order-confirmation/${orderRes.orderId}`
+    } catch (e: any) {
+      toast.error(t('unexpectedError'))
+      setIsProcessing(false)
+    }
+  }
+
   useEffect(() => {
     if (storedCouponCode && !isVerifyingCoupon) {
       handleApplyCoupon(undefined, storedCouponCode)
@@ -395,15 +433,15 @@ export function CheckoutClient() {
                 <div className="p-4 border-t border-ink/5 flex flex-col gap-6 bg-[#fafafa]/50">
                   
                   {/* Items */}
-                  <div className="flex flex-col gap-4 max-h-[40vh] overflow-y-auto custom-scrollbar pr-2" data-lenis-prevent="true">
+                  <div className="flex flex-col gap-4 max-h-[40vh] overflow-y-auto custom-scrollbar pr-2 pt-2" data-lenis-prevent="true">
                     {items.map((item) => (
                       <div key={item.lineId} className="flex gap-4 group">
                         <div className="relative w-16 h-16 shrink-0">
                           <div className="w-full h-full bg-cream rounded-xl overflow-hidden border border-ink/5 relative">
                             <Image src={item.product?.imageUrl || '/placeholder.png'} alt={item.product?.name || 'Product'} fill className="object-cover" />
                           </div>
-                          <div className="absolute -top-2 -right-2 w-5 h-5 bg-ink text-cream rounded-full flex items-center justify-center text-[10px] font-bold z-10">
-                            {item.quantity}
+                          <div className="absolute -top-2 -right-2 w-auto min-w-[20px] h-5 px-1 bg-ink text-cream rounded-full flex items-center justify-center text-[10px] font-bold z-10">
+                            x{item.quantity}
                           </div>
                         </div>
                         <div className="flex flex-col flex-1 justify-center py-1">
@@ -652,9 +690,15 @@ export function CheckoutClient() {
                     <Input name="address" value={formData.address} onChange={handleInputChange} placeholder={t('address')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
                     <Input name="apartment" value={formData.apartment} onChange={handleInputChange} placeholder={t('apartmentOptional')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" />
                     <div className="grid grid-cols-6 gap-4">
-                      <Input name="city" value={formData.city} onChange={handleInputChange} placeholder={t('city')} className="col-span-3 sm:col-span-2 h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
-                      <Input name="state" value={formData.state} onChange={handleInputChange} placeholder={t('state')} className="col-span-3 sm:col-span-2 h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
-                      <Input name="zip" value={formData.zip} onChange={handleInputChange} placeholder={t('zipCode')} className="col-span-6 sm:col-span-2 h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                      <div className="col-span-3 sm:col-span-2">
+                        <Input name="city" value={formData.city} onChange={handleInputChange} placeholder={t('city')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                      </div>
+                      <div className="col-span-3 sm:col-span-2">
+                        <Input name="state" value={formData.state} onChange={handleInputChange} placeholder={t('state')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                      </div>
+                      <div className="col-span-6 sm:col-span-2">
+                        <Input name="zip" value={formData.zip} onChange={handleInputChange} placeholder={t('zipCode')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -728,14 +772,52 @@ export function CheckoutClient() {
                     />
                   </Elements>
                 ) : (
-                  <div className="w-full p-6 sm:p-8 bg-white border border-ink/10 rounded-3xl shadow-sm flex flex-col items-center gap-6 text-center">
-                    <div className="flex flex-col items-center gap-2">
-                      <span className="text-sm font-bold uppercase tracking-widest text-ink font-heading">{t('payWithZelle')}</span>
-                      <p className="text-xs text-ink/50 max-w-xs">{t('zelleCheckoutNote')}</p>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
+                      <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
+                        selectedPaymentMethod === 'zelle' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
+                      }`}>
+                        <div className="flex items-center gap-4">
+                          <input 
+                            type="radio" 
+                            name="paymentMethod" 
+                            value="zelle" 
+                            className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0" 
+                            checked={selectedPaymentMethod === 'zelle'} 
+                            onChange={() => setSelectedPaymentMethod('zelle')} 
+                          />
+                          <div className="flex flex-col">
+                            <span className="text-sm font-bold text-ink">Zelle</span>
+                            <span className="text-xs text-ink/60 mt-0.5">{t('zelleCheckoutNote')}</span>
+                          </div>
+                        </div>
+                      </label>
+
+                      <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
+                        selectedPaymentMethod === 'amex' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
+                      }`}>
+                        <div className="flex items-center gap-4">
+                          <input 
+                            type="radio" 
+                            name="paymentMethod" 
+                            value="amex" 
+                            className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0" 
+                            checked={selectedPaymentMethod === 'amex'} 
+                            onChange={() => setSelectedPaymentMethod('amex')} 
+                          />
+                          <div className="flex flex-col">
+                            <span className="text-sm font-bold text-ink">American Express</span>
+                            <span className="text-xs text-ink/60 mt-0.5">{t('amexCheckoutNote')}</span>
+                          </div>
+                        </div>
+                      </label>
                     </div>
-                    <Button onClick={handleZellePlaceOrder} disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
-                      {isProcessing ? <Loader2 className="animate-spin" /> : t('placeOrder')}
-                    </Button>
+
+                    <div className="w-full p-6 sm:p-8 bg-white border border-ink/10 rounded-3xl shadow-sm flex flex-col items-center gap-6 text-center mt-2">
+                      <Button onClick={selectedPaymentMethod === 'zelle' ? handleZellePlaceOrder : handleAmexPlaceOrder} disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
+                        {isProcessing ? <Loader2 className="animate-spin" /> : t('placeOrder')}
+                      </Button>
+                    </div>
                   </div>
                 )}
               </section>
@@ -759,8 +841,8 @@ export function CheckoutClient() {
                       <div className="w-full h-full bg-cream border border-ink/5 rounded-2xl overflow-hidden relative">
                         <Image src={item.product?.imageUrl || '/placeholder.png'} alt={item.product?.name || 'Product'} fill className="object-cover" />
                       </div>
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-ink text-cream rounded-full flex items-center justify-center text-[11px] font-bold z-10 shadow-sm border-2 border-white">
-                        {item.quantity}
+                      <div className="absolute -top-2 -right-2 w-auto min-w-[24px] h-6 px-1 bg-ink text-cream rounded-full flex items-center justify-center text-[11px] font-bold z-10 shadow-sm border-2 border-white">
+                        x{item.quantity}
                       </div>
                     </div>
                     <div className="flex flex-col flex-1 justify-center py-1">
