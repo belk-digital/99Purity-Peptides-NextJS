@@ -194,13 +194,19 @@ async function calculateCartTotals(cartItems: any[], payload: any, coupon?: any)
         eligible = false;
       }
 
-      // Check applicableProductTypes
+      // Check applicableProductTypes (Singles vs Kits)
       if (coupon.applicableProductTypes && coupon.applicableProductTypes !== 'all') {
-        const isBulkBundle = typeof item.variantSku === 'string' && item.variantSku.includes(' - ');
-        if (coupon.applicableProductTypes === 'normal_only' && isBulkBundle) {
-          eligible = false;
-        } else if (coupon.applicableProductTypes === 'bulk_only' && !isBulkBundle) {
-          eligible = false;
+        const matchedVariant = Array.isArray(product.variants) 
+          ? product.variants.find((v: any) => v.sku === item.variantSku)
+          : null;
+        
+        // A variant is a Kit if 'isKit' is true, or falls back to legacy " - " bundle check
+        const isKitBundle = (matchedVariant && matchedVariant.isKit) || (typeof item.variantSku === 'string' && item.variantSku.includes(' - '));
+
+        if (coupon.applicableProductTypes === 'normal_only' && isKitBundle) {
+          eligible = false; // Coupon is for Singles Only
+        } else if (coupon.applicableProductTypes === 'bulk_only' && !isKitBundle) {
+          eligible = false; // Coupon is for Kits Only
         }
       }
       if (eligible && coupon.appliesTo === 'specific_products') {

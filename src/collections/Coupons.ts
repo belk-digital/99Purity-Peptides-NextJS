@@ -163,12 +163,12 @@ export const Coupons: CollectionConfig = {
       required: true,
       defaultValue: 'all',
       options: [
-        { label: 'All Product Types (Normal + Bulk)', value: 'all' },
-        { label: 'Normal Variants Only (Exclude Bulk Bundles)', value: 'normal_only' },
-        { label: 'Bulk Bundles Only', value: 'bulk_only' }
+        { label: 'All Products', value: 'all' },
+        { label: 'Singles Only (Exclude Kits)', value: 'normal_only' },
+        { label: 'Kits / Bundles Only', value: 'bulk_only' }
       ],
       admin: {
-        description: 'Restrict coupon usage to standard variants or bulk bundles.',
+        description: 'Restrict coupon usage to single items or kits. Make sure your kit variants have "isKit" checked.',
       }
     },
     {

@@ -397,6 +397,10 @@ export interface Product {
     | {
         sku: string;
         /**
+         * Check this if this variant is a multi-item kit (used for coupon filtering).
+         */
+        isKit?: boolean | null;
+        /**
          * Optional specific images for this variant (e.g., 5mg vial vs 10mg kit)
          */
         images?:
@@ -615,7 +619,7 @@ export interface Coupon {
    */
   value?: number | null;
   /**
-   * Restrict coupon usage to standard variants or bulk bundles.
+   * Restrict coupon usage to single items or kits. Make sure your kit variants have "isKit" checked.
    */
   applicableProductTypes: 'all' | 'normal_only' | 'bulk_only';
   appliesTo: 'all' | 'specific_products' | 'specific_categories';
@@ -1647,6 +1651,7 @@ export interface ProductsSelect<T extends boolean = true> {
     | T
     | {
         sku?: T;
+        isKit?: T;
         images?:
           | T
           | {

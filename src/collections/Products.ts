@@ -122,6 +122,15 @@ export const Products: CollectionConfig = {
           required: true,
         },
         {
+          name: 'isKit',
+          type: 'checkbox',
+          label: 'Is this a Kit / Bundle?',
+          defaultValue: false,
+          admin: {
+            description: 'Check this if this variant is a multi-item kit (used for coupon filtering).',
+          }
+        },
+        {
           name: 'images',
           type: 'array',
           label: 'Variant Images',
