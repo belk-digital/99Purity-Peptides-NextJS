@@ -3,10 +3,6 @@
     {
       "path": "/api/cron/process-commissions",
       "schedule": "0 6 * * *"
-    },
-    {
-      "path": "/api/cron/affiliates/approve",
-      "schedule": "0 7 * * *"
     }
   ]
 }

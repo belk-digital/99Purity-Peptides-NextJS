@@ -2,10 +2,9 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { getLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { CertificatesClient, type COA } from './CertificatesClient'
 
-const title = 'Certificate of 99% Purity Peptides | Lab-Tested COA Reports'
-const description = 'View certified lab reports for 99% purity peptides. Transparent COA documents ensuring quality, accuracy, and trusted research-grade standards.'
 const slug = 'certificates'
 
 export async function generateMetadata({
@@ -14,6 +13,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('legal.certificates')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
 
   return {
@@ -42,6 +44,9 @@ export async function generateMetadata({
 
 export default async function CertificatesPage() {
   const locale = await getLocale()
+  const t = await getTranslations('legal.certificates')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const payload = await getPayload({ config: configPromise })
 
   const { docs } = await payload.find({

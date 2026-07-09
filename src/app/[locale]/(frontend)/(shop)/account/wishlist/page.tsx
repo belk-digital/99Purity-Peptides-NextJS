@@ -1,12 +1,18 @@
 import React from 'react'
+import { Metadata } from 'next'
 import { WishlistClient, WishlistItem } from './WishlistClient'
 import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'My Wishlist | 99 Purity Peptides',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('account.wishlist')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function WishlistPage() {

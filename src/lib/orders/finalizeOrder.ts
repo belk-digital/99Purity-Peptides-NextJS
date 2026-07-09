@@ -82,8 +82,8 @@ export async function finalizeOrder(orderId: string | number, paymentIntentMetad
     }
 
     // 3. Affiliate Attribution
-    const affiliateId = paymentIntentMetadata?.affiliateId;
-    const clickId = paymentIntentMetadata?.clickId; 
+    const affiliateId = paymentIntentMetadata?.affiliateId || (order as any).affiliateId;
+    const clickId = paymentIntentMetadata?.clickId || (order as any).clickId; 
     
     if (affiliateId || order.couponCode) {
       attributeOrder(

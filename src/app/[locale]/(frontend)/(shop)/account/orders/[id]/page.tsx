@@ -1,12 +1,18 @@
 import React from 'react'
+import { Metadata } from 'next'
 import { OrderDetailClient } from './OrderDetailClient'
 import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound, redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'Order Details | 99 Purity Peptides',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('account.orderDetail')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export const dynamic = 'force-dynamic';

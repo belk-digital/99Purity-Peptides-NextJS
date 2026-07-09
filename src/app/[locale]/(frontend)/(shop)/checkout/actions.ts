@@ -399,6 +399,10 @@ export async function createPayloadOrder(
     })
 
     // Create pending Order in Payload
+    const cookieStore = await cookies()
+    const affiliateRef = cookieStore.get('affiliate_ref')?.value
+    const clickCookie = cookieStore.get('affiliate_click_id')?.value
+
     const order = await payload.create({
       collection: 'orders',
       data: {
@@ -431,6 +435,8 @@ export async function createPayloadOrder(
         total: confirmedTotal,
         shippingMethod: shippingMethodName,
         couponCode: couponCode || '',
+        affiliateId: affiliateRef || null,
+        clickId: clickCookie || null,
       }
     }).catch(async (err) => {
       // Order creation itself failed — release everything we already reserved above.
@@ -524,8 +530,8 @@ export async function createPayloadOrder(
     }
 
     // Set a cookie to authorize the order confirmation page
-    const cookieStore = await cookies()
-    cookieStore.set(`order_auth_${order.id}`, 'true', {
+    const authCookieStore = await cookies()
+    authCookieStore.set(`order_auth_${order.id}`, 'true', {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

@@ -14,9 +14,6 @@ const LOCALIZED_PRIVATE_PATHS = [
   '/register',
   '/forgot-password',
   '/reset-password',
-  // Internal dev/design-review pages — not customer-facing content.
-  '/test-design',
-  '/test-motion',
 ]
 
 // Paths outside the [locale] segment — no locale-prefixed variant exists.

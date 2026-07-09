@@ -1,8 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-const title = 'Medical Disclaimer | 99 Purity Peptides'
-const description = 'All content and products from 99 Purity Peptides are for research use only. Not for human or veterinary use, diagnosis or treatment.'
 const breadcrumbName = 'Medical Disclaimer'
 const slug = 'medical-disclaimer'
 
@@ -12,6 +11,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('legal.medicalDisclaimer')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
 
   return {
@@ -46,6 +48,9 @@ export default async function MedicalDisclaimerLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations('legal.medicalDisclaimer')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
   const url = `${baseUrl}${path}`

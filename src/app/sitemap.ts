@@ -27,20 +27,29 @@ const STATIC_PATHS: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/medical-disclaimer', priority: 0.3, changeFrequency: 'yearly' },
 ]
 
+// `path` here is always the base, unprefixed path (e.g. '/shop') — the locale prefix is
+// applied on top of it, both for the entry's own URL and for each of its alternates. Calling
+// this with an already-prefixed path (e.g. '/es/shop') would double up the prefix on the
+// non-default-locale alternates (e.g. '/es/es/shop').
+function localizedUrl(locale: string, path: string) {
+  return locale === routing.defaultLocale ? `${baseUrl}${path}` : `${baseUrl}/${locale}${path}`
+}
+
 function withLocales(path: string) {
   const languages: Record<string, string> = {}
   for (const locale of routing.locales) {
-    languages[locale] = locale === routing.defaultLocale ? `${baseUrl}${path}` : `${baseUrl}/${locale}${path}`
+    languages[locale] = localizedUrl(locale, path)
   }
   return languages
 }
 
 function entry(
   path: string,
+  locale: string,
   opts?: { lastModified?: Date; priority?: number; changeFrequency?: MetadataRoute.Sitemap[number]['changeFrequency'] },
 ) {
   return {
-    url: `${baseUrl}${path}`,
+    url: localizedUrl(locale, path),
     lastModified: opts?.lastModified || new Date(),
     alternates: { languages: withLocales(path) },
     ...(opts?.priority !== undefined ? { priority: opts.priority } : {}),
@@ -52,10 +61,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = []
 
   for (const { path, priority, changeFrequency } of STATIC_PATHS) {
-    entries.push(entry(path, { priority, changeFrequency }))
     for (const locale of routing.locales) {
-      if (locale === routing.defaultLocale) continue
-      entries.push(entry(`/${locale}${path}`, { priority, changeFrequency }))
+      entries.push(entry(path, locale, { priority, changeFrequency }))
     }
   }
 
@@ -71,10 +78,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const product of products) {
       const path = `/product/${product.slug}`
       const lastModified = product.updatedAt ? new Date(product.updatedAt) : undefined
-      entries.push(entry(path, { lastModified, priority: 0.8, changeFrequency: 'weekly' }))
       for (const locale of routing.locales) {
-        if (locale === routing.defaultLocale) continue
-        entries.push(entry(`/${locale}${path}`, { lastModified, priority: 0.8, changeFrequency: 'weekly' }))
+        entries.push(entry(path, locale, { lastModified, priority: 0.8, changeFrequency: 'weekly' }))
       }
     }
   } catch (error) {
@@ -84,10 +89,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const post of BLOG_POSTS) {
     const path = `/${post.slug}`
-    entries.push(entry(path, { priority: 0.6, changeFrequency: 'monthly' }))
     for (const locale of routing.locales) {
-      if (locale === routing.defaultLocale) continue
-      entries.push(entry(`/${locale}${path}`, { priority: 0.6, changeFrequency: 'monthly' }))
+      entries.push(entry(path, locale, { priority: 0.6, changeFrequency: 'monthly' }))
     }
   }
 

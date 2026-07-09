@@ -233,6 +233,8 @@ export const Orders: CollectionConfig = {
       },
     },
     { name: 'couponCode', type: 'text', admin: { position: 'sidebar' } },
+    { name: 'affiliateId', type: 'text', admin: { position: 'sidebar', description: 'Affiliate ID if referred' } },
+    { name: 'clickId', type: 'text', admin: { position: 'sidebar', description: 'Affiliate click ID if referred' } },
     { name: 'customerNote', type: 'textarea' },
     { name: 'guestEmail', type: 'text', admin: { position: 'sidebar', description: 'For orders without a registered user account' } },
     { name: 'createdAt', type: 'date', admin: { position: 'sidebar', disabled: true } },

@@ -160,7 +160,7 @@ export function AccountSidebar({
         </div>
 
         <div className="flex flex-col gap-3 w-full">
-          <Link href="/track" className="flex-1 flex items-center justify-center gap-2 bg-white rounded-xl py-3 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+          <Link href="/account/orders" className="flex-1 flex items-center justify-center gap-2 bg-white rounded-xl py-3 border border-gray-100 shadow-sm hover:shadow-md transition-all">
             <Truck size={14} className="text-gray-500" />
             <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-black whitespace-nowrap font-heading">{t('trackOrder')}</span>
           </Link>

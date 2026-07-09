@@ -1,8 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-const title = 'Research Peptides Blog | Scientific Insights & Laboratory Protocols'
-const description = 'Explore premium peptide research articles, laboratory protocols, reconstitution guides, and scientific breakthroughs from the U.S. authority in 99%+ pure research peptides.'
 const breadcrumbName = 'Blog'
 const slug = 'blog'
 
@@ -12,6 +11,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('blog')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
 
   return {
@@ -46,6 +48,9 @@ export default async function BlogLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations('blog')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
   const url = `${baseUrl}${path}`

@@ -115,7 +115,14 @@ export const UserOrderHistory: React.FC = () => {
                     </span>
                   </td>
                   <td style={{ padding: '10px 14px' }}>
-                    {typeof order.total === 'number' ? `$${order.total.toFixed(2)}` : '—'}
+                    {typeof order.total === 'number' ? (
+                      (() => {
+                        const orderNum = parseInt(order.orderNumber || '0', 10);
+                        const isMigrated = orderNum > 0 && orderNum < 7000;
+                        const displayTotal = isMigrated ? order.total / 100 : order.total;
+                        return `$${displayTotal.toFixed(2)}`;
+                      })()
+                    ) : '—'}
                   </td>
                   <td style={{ padding: '10px 14px' }}>
                     {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '—'}

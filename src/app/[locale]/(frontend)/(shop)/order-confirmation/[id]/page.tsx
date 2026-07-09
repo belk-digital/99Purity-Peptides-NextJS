@@ -1,12 +1,17 @@
 import React from 'react'
+import { Metadata } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { OrderConfirmationClient } from './OrderConfirmationClient'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'Order Confirmed | 99 Purity Peptides',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('orderConfirmation')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function OrderConfirmationPage({ params }: { params: Promise<{ id: string }> }) {

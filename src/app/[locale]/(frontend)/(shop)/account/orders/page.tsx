@@ -1,13 +1,18 @@
 import React from 'react'
+import { Metadata } from 'next'
 import { OrdersClient, OrderItem } from './OrdersClient'
 import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { redirect } from 'next/navigation'
-import { getLocale } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'Order History | 99 Purity Peptides',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('account.orders')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export const dynamic = 'force-dynamic';
@@ -36,7 +41,10 @@ export default async function OrdersPage() {
     id: order.orderNumber || String(order.id),
     date: new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     status: order.status,
-    total: order.total || 0,
+    total: (() => {
+      const isMigrated = order.orderNumber && parseInt(order.orderNumber) < 7000;
+      return isMigrated ? (order.total || 0) / 100 : (order.total || 0);
+    })(),
     itemCount: order.items?.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) || 0
   }))
 

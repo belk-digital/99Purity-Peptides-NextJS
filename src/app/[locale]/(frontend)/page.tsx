@@ -12,9 +12,7 @@ import { BestSellerSection } from '@/components/home/BestSellerSection'
 import { MerchandiseSection } from '@/components/home/MerchandiseSection'
 import { MilitaryDiscountSection } from '@/components/home/MilitaryDiscountSection'
 import { Metadata } from 'next'
-
-const title = 'High-Purity Research Peptides for Laboratory Use | 99PurityPeptides'
-const description = 'Premium research-grade peptides with verified purity for laboratory studies. HPLC/MS certified, RUO-only reagents for universities and R&D labs.'
+import { getTranslations } from 'next-intl/server'
 
 export async function generateMetadata({
   params,
@@ -22,6 +20,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('home')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? '/' : `/${locale}`
 
   return {
@@ -53,6 +54,9 @@ export async function generateMetadata({
 import { getShopProducts } from '@/app/[locale]/(frontend)/(shop)/actions'
 
 export default async function Homepage() {
+  const t = await getTranslations('home')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   let products: any[] = []
   try {
     const bestSellers = await getShopProducts({ limit: 8, sort: 'newest', bestSellersOnly: true })

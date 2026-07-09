@@ -2,6 +2,7 @@ import { escapeHtml } from './escapeHtml'
 
 export function generateVerifyEmailEmail(firstName: string | null | undefined, verifyUrl: string): string {
   const name = escapeHtml(firstName || 'there')
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +17,8 @@ export function generateVerifyEmailEmail(firstName: string | null | undefined, v
       <td align="center">
         <table width="100%" max-width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
           <tr>
-            <td style="padding: 40px 40px 20px 40px; text-align: center;">
-              <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #000000; letter-spacing: -1px;">99 Purity Peptides</h1>
+            <td style="padding: 40px 40px 20px 40px; text-align: center; background-color: #000000;">
+              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto; filter: brightness(0) invert(1);" />
             </td>
           </tr>
           <tr>

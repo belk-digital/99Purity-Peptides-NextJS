@@ -1,10 +1,16 @@
 import React from 'react'
+import { Metadata } from 'next'
 import { SettingsClient } from './SettingsClient'
 import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'Account Settings | 99 Purity Peptides',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('account.settings')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function SettingsPage() {

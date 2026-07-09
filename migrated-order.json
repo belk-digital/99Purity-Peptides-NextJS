@@ -1,0 +1,335 @@
+{
+  "id": 65,
+  "orderNumber": "5976",
+  "owner": {
+    "id": 125,
+    "firstName": "Caroline",
+    "lastName": "McQueeney",
+    "googleId": null,
+    "authProvider": "credentials",
+    "pendingEmail": null,
+    "pendingEmailCodeHash": null,
+    "pendingEmailCodeExpiresAt": null,
+    "phone": "8433679402",
+    "role": "customer",
+    "emailVerified": true,
+    "acceptsMarketing": false,
+    "orderSmsUpdates": false,
+    "preferredLocale": "en",
+    "dateOfBirth": null,
+    "stripeCustomerId": null,
+    "defaultShippingAddress": {
+      "id": 170,
+      "user": 125,
+      "label": "Default Shipping",
+      "firstName": "Caroline",
+      "lastName": "McQueeney",
+      "company": "",
+      "line1": "722 Deerhaven Ct",
+      "line2": "",
+      "city": "Huger",
+      "state": "SC",
+      "postalCode": "29450",
+      "country": "US",
+      "phone": "8433679402",
+      "isDefaultShipping": true,
+      "isDefaultBilling": false,
+      "updatedAt": "2026-07-03T21:11:09.606Z",
+      "createdAt": "2026-07-03T21:11:09.606Z"
+    },
+    "defaultBillingAddress": {
+      "id": 169,
+      "user": 125,
+      "label": "Default Billing",
+      "firstName": "Caroline",
+      "lastName": "McQueeney",
+      "company": "",
+      "line1": "722 Deerhaven Ct",
+      "line2": "",
+      "city": "Huger",
+      "state": "SC",
+      "postalCode": "29450",
+      "country": "US",
+      "phone": "8433679402",
+      "isDefaultShipping": false,
+      "isDefaultBilling": true,
+      "updatedAt": "2026-07-03T21:11:07.946Z",
+      "createdAt": "2026-07-03T21:11:07.946Z"
+    },
+    "lastLoginAt": null,
+    "metadata": {
+      "woocommerce_id": 118
+    },
+    "purityPoints": 0,
+    "updatedAt": "2026-07-03T21:27:08.297Z",
+    "createdAt": "2026-07-03T21:11:06.527Z",
+    "email": "carolinemcqueeney333@gmail.com",
+    "sessions": [],
+    "collection": "users"
+  },
+  "customerFirstName": "Caroline",
+  "customerLastName": "McQueeney",
+  "customerPhone": "8433679402",
+  "items": [
+    {
+      "id": "6a483724084ca4113803e28b",
+      "product": {
+        "id": 358,
+        "name": "BAC Water (Bacteriostatic Water)",
+        "description": "Sterile water containing 0.9% benzyl alcohol as a preservative, designed for multi-use vial reconstitution of research compounds. Allows repeated withdrawal from vials and short-term storage of reconstituted materials when handled according to good laboratory practice.\n\nFor research use only - not for human or veterinary use, diagnosis, or treatment.",
+        "images": [
+          {
+            "id": "6a494f63a07c39d4a904a7d0",
+            "image": {
+              "id": 144,
+              "alt": "Product photo of a clear glass vial with a black cap and silver collar, standing on a round white marble pedestal against a softly lit gray backdrop. The white label reads \"99 Purity Peptides\" beside a teal hexagon molecule icon, then \"BAC WATER\" in bold black text, \"30ML\" in teal below it, \"Research Use Only\" in black caps, and a teal banner reading \"Purity ≥ 99%\" at the bottom.",
+              "caption": null,
+              "prefix": "Product Images",
+              "updatedAt": "2026-07-04T18:23:38.768Z",
+              "createdAt": "2026-07-04T18:23:37.986Z",
+              "url": "https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Product Images/BAC Water (Bacteriostatic Water).webp",
+              "thumbnailURL": "/api/media/file/BAC%20Water%20(Bacteriostatic%20Water)-400x400.webp",
+              "filename": "BAC Water (Bacteriostatic Water).webp",
+              "mimeType": "image/webp",
+              "filesize": 50382,
+              "width": 1086,
+              "height": 1448,
+              "focalX": 50,
+              "focalY": 50,
+              "sizes": {
+                "thumbnail": {
+                  "url": "https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Product Images/BAC Water (Bacteriostatic Water)-400x400.webp",
+                  "width": 400,
+                  "height": 400,
+                  "mimeType": "image/webp",
+                  "filesize": 10918,
+                  "filename": "BAC Water (Bacteriostatic Water)-400x400.webp"
+                }
+              }
+            }
+          }
+        ],
+        "seoTitle": "BAC Water 30ML | Bacteriostatic Water for Research",
+        "seoDescription": "Buy laboratory-grade BAC Water 30ML. Sterile diluent with 0.9% benzyl alcohol for peptide reconstitution research. Laboratory use only.",
+        "slug": "bac-water-bacteriostatic-water",
+        "sku": null,
+        "price": 50,
+        "salePrice": 30,
+        "stock": 10000,
+        "weight": null,
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "height": null
+        },
+        "categories": [
+          {
+            "id": 29,
+            "name": "Essentials",
+            "description": "The Essentials category features foundational research products commonly used across a wide range of laboratory and analytical applications. At 99 Purity Peptides, these essential materials are manufactured to high purity standards and are intended exclusively for scientific research, testing, and experimental use. All products in this category are strictly not for human or veterinary consumption and are supplied solely for controlled research purposes.\r\n\r\nFor research use only – not for human or veterinary use, diagnosis, or treatment.",
+            "seoTitle": null,
+            "seoDescription": null,
+            "slug": "essentials",
+            "parent": null,
+            "isVisible": true,
+            "sortOrder": null,
+            "updatedAt": "2026-07-02T11:32:58.703Z",
+            "createdAt": "2026-07-02T11:32:58.703Z"
+          }
+        ],
+        "hasVariants": false,
+        "variants": [],
+        "bulkBundles": [],
+        "averageRating": 0,
+        "reviewCount": 0,
+        "productDetailsTitle": "Product Details",
+        "productDetailsDescription": "BAC Water (Bacteriostatic Water) is a sterile, non-pyrogenic water solution containing 0.9% benzyl alcohol, studied and utilized in laboratory environments as a multi-dose diluent for reconstitution procedures. In controlled research settings, bacteriostatic water is commonly referenced for peptide and compound reconstitution workflows, sample preparation protocols, and analytical laboratory applications requiring sterile aqueous solutions. The inclusion of benzyl alcohol serves as a bacteriostatic preservative to inhibit microbial growth within multi-use laboratory contexts.\r\n\nPreclinical and analytical laboratory practices frequently incorporate bacteriostatic water for compound dissolution, volumetric preparation accuracy, and controlled solution stability research. Scientific investigations and laboratory standards continue to emphasize sterile handling procedures and compatibility assessment when used alongside research-grade peptides and small-molecule compounds.\r\n\nThis laboratory-grade bacteriostatic water is supplied in a 30ML sterile vial and manufactured under strict quality-controlled standards. Each batch undergoes verification to confirm sterility, composition accuracy, and preservative concentration consistency. BAC Water (Bacteriostatic Water) is intended strictly for laboratory research and analytical purposes only and is not for human consumption.",
+        "researchFocusTitle": "Research Focus & Mechanism Overview",
+        "researchFocusDescription": "Sterile diluent for laboratory reconstitution procedures\r\n\n \tStudied for peptide and compound dissolution workflows\r\n\n \tContains 0.9% benzyl alcohol as bacteriostatic preservative\r\n\n \tEvaluated in multi-dose laboratory preparation models\r\n\n \tUsed in controlled analytical and volumetric research settings",
+        "qualityPurityTitle": "Quality & Purity Standards",
+        "qualityPurityDescription": "Laboratory-grade sterile water solution\r\n\n \tVerified benzyl alcohol concentration (0.9%)\r\n\n \tSterility and non-pyrogenic testing performed\r\n\n \tBatch-specific quality control procedures\r\n\n \tSecure, laboratory-compliant packaging",
+        "complianceNoticeTitle": "Compliance Notice",
+        "complianceNoticeDescription": "This product is intended for laboratory research use only. It is not approved for human consumption, therapeutic application, or diagnostic purposes.",
+        "coaFile": null,
+        "coaBatchNumber": null,
+        "coaPurity": null,
+        "coaAnalyzedDate": null,
+        "faqs": [
+          {
+            "id": "6a465291940ef50960b53d87",
+            "question": "What is BAC Water used for in research?",
+            "answer": "BAC Water is used as a sterile diluent for reconstituting research peptides and compounds in laboratory settings."
+          },
+          {
+            "id": "6a465291940ef50960b53d88",
+            "question": "What does bacteriostatic mean?",
+            "answer": "Bacteriostatic refers to the inclusion of a preservative (0.9% benzyl alcohol) that inhibits bacterial growth in multi-dose laboratory applications."
+          },
+          {
+            "id": "6a465291940ef50960b53d89",
+            "question": "What volume is available for this product?",
+            "answer": "This BAC Water product is supplied in a 30ML sterile vial."
+          },
+          {
+            "id": "6a465291940ef50960b53d8a",
+            "question": "Is BAC Water sterile?",
+            "answer": "Yes, each batch undergoes sterility verification and quality control testing to meet laboratory-grade standards."
+          },
+          {
+            "id": "6a465291940ef50960b53d8b",
+            "question": "Is BAC Water intended for human use?",
+            "answer": "No. BAC Water offered here is strictly intended for laboratory research purposes only and is not approved for human consumption."
+          }
+        ],
+        "status": "active",
+        "isVisible": true,
+        "isBestSeller": false,
+        "updatedAt": "2026-07-04T18:23:50.303Z",
+        "createdAt": "2026-07-02T11:59:13.499Z"
+      },
+      "variantTitle": null,
+      "variant": "BAC Water (Bacteriostatic Water)",
+      "price": 2700,
+      "quantity": 1,
+      "productSnapshot": {
+        "id": 358,
+        "sku": null,
+        "faqs": [
+          {
+            "id": "6a465291940ef50960b53d87",
+            "answer": "BAC Water is used as a sterile diluent for reconstituting research peptides and compounds in laboratory settings.",
+            "question": "What is BAC Water used for in research?"
+          },
+          {
+            "id": "6a465291940ef50960b53d88",
+            "answer": "Bacteriostatic refers to the inclusion of a preservative (0.9% benzyl alcohol) that inhibits bacterial growth in multi-dose laboratory applications.",
+            "question": "What does bacteriostatic mean?"
+          },
+          {
+            "id": "6a465291940ef50960b53d89",
+            "answer": "This BAC Water product is supplied in a 30ML sterile vial.",
+            "question": "What volume is available for this product?"
+          },
+          {
+            "id": "6a465291940ef50960b53d8a",
+            "answer": "Yes, each batch undergoes sterility verification and quality control testing to meet laboratory-grade standards.",
+            "question": "Is BAC Water sterile?"
+          },
+          {
+            "id": "6a465291940ef50960b53d8b",
+            "answer": "No. BAC Water offered here is strictly intended for laboratory research purposes only and is not approved for human consumption.",
+            "question": "Is BAC Water intended for human use?"
+          }
+        ],
+        "name": "BAC Water (Bacteriostatic Water)",
+        "slug": "bac-water-bacteriostatic-water",
+        "price": 50,
+        "stock": 10000,
+        "images": [],
+        "status": "active",
+        "weight": null,
+        "coaFile": null,
+        "seoTitle": "BAC Water 30ML | Bacteriostatic Water for Research",
+        "variants": [],
+        "createdAt": "2026-07-02T11:59:13.499Z",
+        "isVisible": true,
+        "salePrice": 30,
+        "updatedAt": "2026-07-02T11:59:13.499Z",
+        "categories": [
+          29
+        ],
+        "dimensions": {
+          "width": null,
+          "height": null,
+          "length": null
+        },
+        "bulkBundles": [],
+        "description": "Sterile water containing 0.9% benzyl alcohol as a preservative, designed for multi-use vial reconstitution of research compounds. Allows repeated withdrawal from vials and short-term storage of reconstituted materials when handled according to good laboratory practice.\n\nFor research use only - not for human or veterinary use, diagnosis, or treatment.",
+        "hasVariants": false,
+        "reviewCount": 0,
+        "averageRating": 0,
+        "seoDescription": "Buy laboratory-grade BAC Water 30ML. Sterile diluent with 0.9% benzyl alcohol for peptide reconstitution research. Laboratory use only.",
+        "qualityPurityTitle": "Quality & Purity Standards",
+        "researchFocusTitle": "Research Focus & Mechanism Overview",
+        "productDetailsTitle": "Product Details",
+        "complianceNoticeTitle": "Compliance Notice",
+        "qualityPurityDescription": "Laboratory-grade sterile water solution\r\n\n \tVerified benzyl alcohol concentration (0.9%)\r\n\n \tSterility and non-pyrogenic testing performed\r\n\n \tBatch-specific quality control procedures\r\n\n \tSecure, laboratory-compliant packaging",
+        "researchFocusDescription": "Sterile diluent for laboratory reconstitution procedures\r\n\n \tStudied for peptide and compound dissolution workflows\r\n\n \tContains 0.9% benzyl alcohol as bacteriostatic preservative\r\n\n \tEvaluated in multi-dose laboratory preparation models\r\n\n \tUsed in controlled analytical and volumetric research settings",
+        "productDetailsDescription": "BAC Water (Bacteriostatic Water) is a sterile, non-pyrogenic water solution containing 0.9% benzyl alcohol, studied and utilized in laboratory environments as a multi-dose diluent for reconstitution procedures. In controlled research settings, bacteriostatic water is commonly referenced for peptide and compound reconstitution workflows, sample preparation protocols, and analytical laboratory applications requiring sterile aqueous solutions. The inclusion of benzyl alcohol serves as a bacteriostatic preservative to inhibit microbial growth within multi-use laboratory contexts.\r\n\nPreclinical and analytical laboratory practices frequently incorporate bacteriostatic water for compound dissolution, volumetric preparation accuracy, and controlled solution stability research. Scientific investigations and laboratory standards continue to emphasize sterile handling procedures and compatibility assessment when used alongside research-grade peptides and small-molecule compounds.\r\n\nThis laboratory-grade bacteriostatic water is supplied in a 30ML sterile vial and manufactured under strict quality-controlled standards. Each batch undergoes verification to confirm sterility, composition accuracy, and preservative concentration consistency. BAC Water (Bacteriostatic Water) is intended strictly for laboratory research and analytical purposes only and is not for human consumption.",
+        "complianceNoticeDescription": "This product is intended for laboratory research use only. It is not approved for human consumption, therapeutic application, or diagnostic purposes."
+      }
+    }
+  ],
+  "shippingAddress": {
+    "line1": "722 Deerhaven Ct",
+    "line2": "",
+    "city": "Huger",
+    "state": "SC",
+    "postalCode": "29450",
+    "country": "US"
+  },
+  "billingAddress": {
+    "line1": "722 Deerhaven Ct",
+    "line2": "",
+    "city": "Huger",
+    "state": "SC",
+    "postalCode": "29450",
+    "country": "US"
+  },
+  "status": "pending",
+  "paymentStatus": "captured",
+  "fulfillmentStatus": "unfulfilled",
+  "refunds": [],
+  "subtotal": 4880,
+  "discountTotal": 300,
+  "redeemedPoints": 0,
+  "shippingTotal": 2000,
+  "taxTotal": 0,
+  "feeTotal": 180,
+  "total": 4880,
+  "appliedFees": [
+    {
+      "id": "6a484b004462b206b4d71236",
+      "feeId": null,
+      "feeName": "Processing Fee(6%)",
+      "amount": 180,
+      "feeType": null,
+      "percentage": null
+    }
+  ],
+  "shippingMethod": "Standard Shipping (2–7 days)",
+  "trackingLink": null,
+  "sendTrackingEmail": null,
+  "paymentMethod": "stripe",
+  "couponCode": "99purity",
+  "affiliateId": null,
+  "clickId": null,
+  "customerNote": null,
+  "guestEmail": null,
+  "createdAt": "2026-06-19T16:18:10.000Z",
+  "updatedAt": "2026-07-03T23:51:28.500Z",
+  "isFinalized": false,
+  "notes": [
+    {
+      "id": "6a483944633a0e3cd05322ef",
+      "type": "internal",
+      "note": "Payment Method: Apple Pay\n",
+      "date": "2026-07-03T22:35:47.520Z",
+      "isEmailed": false
+    },
+    {
+      "id": "6a4849daa9e47530bc8e0429",
+      "type": "internal",
+      "note": "[WC Note - WooCommerce]: Order has been exported to Shipstation",
+      "date": "2026-06-19T19:38:40.000Z",
+      "isEmailed": false
+    },
+    {
+      "id": "6a4849daa9e47530bc8e042a",
+      "type": "internal",
+      "note": "[WC Note - WooCommerce]: Payment to be made upon delivery. Order status changed from Pending payment to Processing.",
+      "date": "2026-06-19T16:18:10.000Z",
+      "isEmailed": false
+    }
+  ]
+}

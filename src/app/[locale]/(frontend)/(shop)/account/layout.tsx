@@ -7,8 +7,12 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'My Account | 99 Purity Peptides',
+export async function generateMetadata() {
+  const t = await getTranslations('account.layout')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function AccountLayout({ children }: { children: React.ReactNode }) {

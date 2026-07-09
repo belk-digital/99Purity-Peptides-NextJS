@@ -1,4 +1,5 @@
 import React from 'react'
+import { Metadata } from 'next'
 import { AccountOverviewClient } from './AccountOverviewClient'
 import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
@@ -7,8 +8,12 @@ import { redirect } from 'next/navigation'
 import type { Order, Address } from '@/payload-types'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'Account Overview | 99 Purity Peptides',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('account.overview')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function AccountOverviewPage() {
@@ -121,7 +126,10 @@ export default async function AccountOverviewPage() {
     orderNumber: order.orderNumber || String(order.id),
     date: order.createdAt ? new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Unknown Date',
     status: order.status,
-    total: order.total || 0
+    total: (() => {
+      const isMigrated = order.orderNumber && parseInt(order.orderNumber) < 7000;
+      return isMigrated ? (order.total || 0) / 100 : (order.total || 0);
+    })()
   }))
 
   const defaultAddress = defaultAddressDoc ? {

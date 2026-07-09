@@ -318,13 +318,13 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
       <Container size="page" className="pb-12" id="products-grid">
         {/* Modern Minimal Filter Bar */}
         <div className={`flex flex-col gap-3 sm:gap-4 mb-8 sm:mb-10 py-4 sticky z-40 transition-all duration-300 ${isScrollingDown ? 'top-4 sm:top-6 opacity-100 translate-y-0' : 'top-[130px] sm:top-[140px] md:top-[150px] opacity-100 translate-y-0'}`}>
-          <div className="flex items-center justify-between gap-4 w-full bg-white/95 backdrop-blur-2xl rounded-full px-2 py-2 border border-ink/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-            <div className="flex items-center gap-2 pl-2">
+          <div className="flex items-center justify-between gap-1 sm:gap-4 w-full bg-white/95 backdrop-blur-2xl rounded-full px-1 sm:px-2 py-1.5 sm:py-2 border border-ink/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+            <div className="flex items-center gap-1 sm:gap-2 pl-1 sm:pl-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="rounded-full px-4 sm:px-6 gap-2 text-ink hover:bg-ink/5 transition-colors font-semibold uppercase tracking-widest text-[10px] sm:text-xs">
-                    <Filter size={14} />
-                    {t('filters')} {activeChips.length > 0 && <span className="bg-primary text-white w-4 h-4 flex items-center justify-center rounded-full text-[9px]">{activeChips.length}</span>}
+                  <Button variant="ghost" className="rounded-full px-3 sm:px-6 gap-1.5 sm:gap-2 text-ink hover:bg-ink/5 transition-colors font-semibold uppercase tracking-widest text-[9px] sm:text-[10px] md:text-xs shrink-0">
+                    <Filter size={14} className="shrink-0" />
+                    <span className="shrink-0">{t('filters')}</span> {activeChips.length > 0 && <span className="bg-primary text-white w-4 h-4 flex items-center justify-center rounded-full text-[9px] shrink-0">{activeChips.length}</span>}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent 
@@ -332,15 +332,29 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
                   sideOffset={16} 
                   className="w-[95vw] sm:w-[90vw] md:max-w-[800px] p-0 rounded-[2rem] border border-ink/10 ring-0 shadow-2xl bg-white/90 overflow-hidden backdrop-blur-3xl"
                 >
-                  <div className="relative z-10 max-h-[75vh] p-6 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar">
+                  <div data-lenis-prevent className="relative z-10 max-h-[calc(100vh-220px)] p-6 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar">
                      <FilterSidebar categories={categories} />
                   </div>
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {activeChips.length > 0 && (
+                <>
+                  <div className="w-px h-6 bg-ink/10 mx-0.5 sm:mx-1 shrink-0"></div>
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => router.push(pathname, { scroll: false })}
+                    className="rounded-full w-8 h-8 sm:w-9 sm:h-9 p-0 text-ink/50 hover:text-red-500 hover:bg-red-50 transition-colors flex items-center justify-center shrink-0"
+                    title={t('clearAllFilters')}
+                  >
+                    <X size={16} />
+                  </Button>
+                </>
+              )}
               
-              <div className="hidden md:block w-px h-6 bg-ink/10 mx-2"></div>
+              <div className="hidden md:block w-px h-6 bg-ink/10 mx-2 shrink-0"></div>
               
-              <span className="text-[10px] sm:text-xs text-ink/50 font-semibold uppercase tracking-widest hidden md:inline-block">
+              <span className="text-[10px] sm:text-xs text-ink/50 font-semibold uppercase tracking-widest hidden md:inline-block shrink-0">
                 {t('resultsCount', { count: products.length })}
               </span>
             </div>
@@ -353,7 +367,7 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
                 router.push(`${pathname}?${params.toString()}`, { scroll: false })
               }}
             >
-              <SelectTrigger className="w-auto min-w-[140px] bg-transparent border-0 focus:ring-0 shadow-none hover:bg-ink/5 rounded-full px-4 h-10 text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-ink gap-2 transition-all">
+              <SelectTrigger className="w-auto min-w-0 sm:min-w-[140px] bg-transparent border-0 focus:ring-0 shadow-none hover:bg-ink/5 rounded-full px-2 sm:px-4 h-9 sm:h-10 text-[9px] sm:text-[10px] md:text-xs font-semibold uppercase tracking-widest text-ink gap-1 sm:gap-2 transition-all shrink">
                 <SelectValue placeholder={t('sortByPlaceholder')} />
               </SelectTrigger>
               <SelectContent align="end" className="bg-white/95 backdrop-blur-3xl border-ink/10 rounded-[1.5rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] p-2 min-w-[180px] sm:min-w-[200px] w-[90vw] max-w-[280px] sm:w-auto sm:max-w-none">
@@ -365,21 +379,7 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
             </Select>
           </div>
 
-          {/* Active Chips Row */}
-          {activeChips.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-2 px-4 w-full">
-              {activeChips.map(chip => (
-                <button
-                  key={chip.key}
-                  onClick={() => removeFilter(chip.key.startsWith('category') ? 'category' : chip.key, chip.value)}
-                  className="flex items-center space-x-2 px-3 py-1.5 bg-ink/[0.03] hover:bg-ink/[0.06] border border-ink/5 rounded-full transition-all group text-[9px] sm:text-[10px] font-bold uppercase tracking-widest"
-                >
-                  <span className="text-ink">{chip.label}</span>
-                  <X size={12} className="text-ink/40 group-hover:text-ink" />
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Active Chips Row removed as requested */}
         </div>
 
         {/* Results Area */}

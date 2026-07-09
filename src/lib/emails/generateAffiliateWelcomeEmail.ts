@@ -23,8 +23,9 @@ export async function generateAffiliateWelcomeEmail(affiliate: any, user: any): 
           
           <!-- Header -->
           <tr>
-            <td style="background-color: #0A0A0A; padding: 40px; text-align: center;">
-              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #FAF7F2; letter-spacing: -0.02em;">Welcome to the Partner Program</h1>
+            <td style="padding: 40px 40px 30px 40px; text-align: center; background-color: #000000; border-bottom: 1px solid #111111;">
+              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto; filter: brightness(0) invert(1);" />
+              <p style="margin: 16px 0 0 0; font-size: 16px; color: #d1d5db;">Welcome to the Partner Program</p>
             </td>
           </tr>
 

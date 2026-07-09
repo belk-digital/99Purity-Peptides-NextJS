@@ -2,10 +2,15 @@ import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { SettingsClient } from './SettingsClient'
 
-export const metadata = {
-  title: 'Settings | Affiliate Dashboard',
+export async function generateMetadata() {
+  const t = await getTranslations('affiliate.dashboardSettings')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function AffiliateSettingsPage() {

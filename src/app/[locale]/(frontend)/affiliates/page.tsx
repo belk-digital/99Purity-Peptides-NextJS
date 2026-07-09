@@ -2,10 +2,9 @@ import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { AffiliatesLandingClient, UserAffiliateStatus } from './AffiliatesLandingClient'
 
-const title = 'Affiliate Program | Earn 15% Commission | 99 Purity Peptides'
-const description = 'Earn 15% commission promoting 99 Purity Peptides research peptides, plus a 15% discount for your audience. Real-time tracking and monthly payouts.'
 const slug = 'affiliates'
 
 export async function generateMetadata({
@@ -14,6 +13,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('affiliate.landing')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
 
   return {
@@ -46,6 +48,9 @@ export default async function AffiliatesLandingPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations('affiliate.landing')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
   const url = `${baseUrl}${path}`

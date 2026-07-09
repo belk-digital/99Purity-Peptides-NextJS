@@ -20,7 +20,9 @@
       "tooManyAttempts": "Too many attempts. Please wait a few minutes and try again.",
       "resendVerification": "Resend verification email",
       "resending": "Sending…",
-      "verificationResent": "A new verification email is on its way — check your inbox."
+      "verificationResent": "A new verification email is on its way — check your inbox.",
+      "metaTitle": "Sign In | 99 Purity Peptides",
+      "metaDescription": "Sign in to your 99 Purity Peptides account to manage orders, track shipments, and access your research peptide purchase history."
     },
     "register": {
       "title": "Sign up for 99 Purity Peptides",
@@ -33,7 +35,9 @@
       "password": "Password",
       "submit": "Create Account",
       "emailInUse": "An account with this email already exists",
-      "genericError": "Something went wrong. Please try again."
+      "genericError": "Something went wrong. Please try again.",
+      "metaTitle": "Create an Account | 99 Purity Peptides",
+      "metaDescription": "Create a free 99 Purity Peptides account to place orders, save your details, and track research peptide shipments."
     },
     "forgotPassword": {
       "title": "Reset your password",
@@ -41,7 +45,9 @@
       "email": "Email",
       "submit": "Send Reset Link",
       "success": "If an account exists for that email, a reset link has been sent.",
-      "backToLogin": "Back to sign in"
+      "backToLogin": "Back to sign in",
+      "metaTitle": "Forgot Password | 99 Purity Peptides",
+      "metaDescription": "Reset your 99 Purity Peptides account password by requesting a secure reset link sent to your email."
     },
     "resetPassword": {
       "title": "Choose a new password",
@@ -52,7 +58,9 @@
       "success": "Your password has been reset. You can now sign in.",
       "mismatch": "Passwords do not match",
       "invalidToken": "This reset link is invalid or has expired",
-      "backToLogin": "Back to sign in"
+      "backToLogin": "Back to sign in",
+      "metaTitle": "Reset Password | 99 Purity Peptides",
+      "metaDescription": "Choose a new password to regain access to your 99 Purity Peptides account."
     }
   },
   "ageGate": {
@@ -182,6 +190,8 @@
     "designedBy": "Designed & Developed by"
   },
   "home": {
+    "metaTitle": "High-Purity Research Peptides for Laboratory Use | 99PurityPeptides",
+    "metaDescription": "Premium research-grade peptides with verified purity for laboratory studies. HPLC/MS certified, RUO-only reagents for universities and R&D labs.",
     "hero": {
       "viewPeptidesShort": "View Peptides",
       "viewPeptidesLong": "View Research Peptides",
@@ -827,11 +837,15 @@
       "statusPlaced": "Placed",
       "statusProcessing": "Processing",
       "statusShipped": "Shipped",
-      "statusDelivered": "Delivered"
+      "statusDelivered": "Delivered",
+      "metaTitle": "Account Overview | 99 Purity Peptides",
+      "metaDescription": "View your recent orders, wishlist, purity points, and account details in one place."
     },
     "addresses": {
       "title": "Saved Addresses",
       "subtitle": "Manage where your lab equipment and peptides are shipped.",
+      "metaTitle": "Saved Addresses | 99 Purity Peptides",
+      "metaDescription": "Manage the shipping addresses saved to your 99 Purity Peptides account.",
       "addNewAddress": "Add New Address",
       "editAddressTitle": "Edit Address",
       "addAddressTitle": "Add a New Address",
@@ -866,11 +880,15 @@
       "errorUnexpected": "An unexpected error occurred"
     },
     "layout": {
-      "title": "My Account"
+      "title": "My Account",
+      "metaTitle": "My Account | 99 Purity Peptides",
+      "metaDescription": "Manage your 99 Purity Peptides account, orders, addresses, and preferences."
     },
     "orders": {
       "title": "Order History",
       "subtitle": "Track, manage, and return your recent purchases.",
+      "metaTitle": "Order History | 99 Purity Peptides",
+      "metaDescription": "Track, manage, and review your recent 99 Purity Peptides orders.",
       "filterStatus": "Filter Status",
       "filterAll": "All Orders",
       "filterProcessing": "Processing",
@@ -918,7 +936,9 @@
       "total": "Total",
       "paymentSuccessful": "Payment Successful",
       "paymentRefunded": "Refunded",
-      "paymentProcessing": "Payment Processing"
+      "paymentProcessing": "Payment Processing",
+      "metaTitle": "Order Details | 99 Purity Peptides",
+      "metaDescription": "View the details, items, and shipping status of your 99 Purity Peptides order."
     },
     "settings": {
       "toastUpdateFailed": "Failed to update profile",
@@ -953,7 +973,9 @@
       "orderSmsUpdates": "Order SMS Updates",
       "orderSmsUpdatesDescription": "Get real-time text messages about your order shipments and deliveries.",
       "errorUnauthorized": "Unauthorized",
-      "errorUnexpected": "An unexpected error occurred"
+      "errorUnexpected": "An unexpected error occurred",
+      "metaTitle": "Account Settings | 99 Purity Peptides",
+      "metaDescription": "Manage your personal information, security preferences, and notification settings."
     },
     "wishlist": {
       "title": "My Wishlist",
@@ -963,7 +985,9 @@
       "addToCart": "Add to Cart",
       "emptyTitle": "Your wishlist is empty",
       "emptyDescription": "Save items you want to buy later by clicking the heart icon on any product page.",
-      "startBrowsing": "Start Browsing"
+      "startBrowsing": "Start Browsing",
+      "metaTitle": "My Wishlist | 99 Purity Peptides",
+      "metaDescription": "View and manage the research peptides you've saved to your wishlist."
     },
     "sidebar": {
       "welcomeBack": "Welcome Back",
@@ -1018,7 +1042,13 @@
       "verify": "Verify"
     }
   },
+  "cartPage": {
+    "metaTitle": "Your Cart | 99 Purity Peptides",
+    "metaDescription": "Review the research peptides in your cart before proceeding to secure checkout."
+  },
   "checkout": {
+    "metaTitle": "Secure Checkout | 99 Purity Peptides",
+    "metaDescription": "Complete your secure checkout for research peptides at 99 Purity Peptides.",
     "cartDrawer": {
       "title": "CART",
       "closeCartAria": "Close cart",
@@ -1172,6 +1202,8 @@
     }
   },
   "orderConfirmation": {
+    "metaTitle": "Order Confirmed | 99 Purity Peptides",
+    "metaDescription": "Your 99 Purity Peptides order has been placed. View your order confirmation and payment details.",
     "paymentSuccessful": "Payment Successful",
     "orderPlaced": "Order Placed",
     "thankYouZelle": "Thank you, {name}. Please complete your Zelle payment below.",
@@ -1213,6 +1245,8 @@
   },
   "legal": {
     "privacyPolicy": {
+      "metaTitle": "Privacy Policy | 99 Purity Peptides",
+      "metaDescription": "Learn how 99 Purity Peptides collects, uses and protects personal data while supporting research-use product compliance and safe order processing.",
       "eyebrow": "Legal Information",
       "titleLine1": "99 Purity Peptides'",
       "titleLine2": "Privacy Policy",
@@ -1273,6 +1307,8 @@
       "contactLabel": "Contact"
     },
     "refundPolicy": {
+      "metaTitle": "Refund Policy | 99 Purity Peptides",
+      "metaDescription": "Read 99 Purity Peptides' Refund Policy for research-use products, eligibility, process, damaged orders and return guidelines.",
       "eyebrow": "Legal Information",
       "titleLine1": "99 Purity Peptides'",
       "titleLine2": "Refund Policy",
@@ -1321,6 +1357,8 @@
       "closingText2": "Key Takeaway: Always check your order, follow handling guidelines and contact us promptly for any issues. Our goal is to maintain safety, quality and transparency for all research-use products."
     },
     "shippingPolicy": {
+      "metaTitle": "Shipping Policy | 99 Purity Peptides",
+      "metaDescription": "Learn about 99 Purity Peptides' shipping, delivery times, packaging, international restrictions and safe handling of research-use products.",
       "eyebrow": "Legal Information",
       "titleLine1": "99 Purity Peptides'",
       "titleLine2": "Shipping Policy",
@@ -1372,6 +1410,8 @@
       "closingText": "Our team is ready to assist you and ensure your order reaches you safely and promptly."
     },
     "medicalDisclaimer": {
+      "metaTitle": "Medical Disclaimer | 99 Purity Peptides",
+      "metaDescription": "All content and products from 99 Purity Peptides are for research use only. Not for human or veterinary use, diagnosis or treatment.",
       "eyebrow": "Legal Information",
       "titleLine1": "99 Purity Peptides'",
       "titleLine2": "Medical Disclaimer",
@@ -1397,6 +1437,8 @@
       "closingText": "By accessing this website or purchasing our products, you agree to comply with this Medical Disclaimer and acknowledge that 99 Purity Peptides is not responsible for any misuse or unauthorized application of our research materials."
     },
     "termsAndConditions": {
+      "metaTitle": "Terms & Conditions | 99 Purity Peptides",
+      "metaDescription": "Read 99 Purity Peptides' Terms & Conditions for research-use products, account responsibilities, ordering, liability and legal compliance.",
       "eyebrow": "Legal Information",
       "titleLine1": "99 Purity Peptides'",
       "titleLine2": "Terms and Conditions",
@@ -1458,6 +1500,8 @@
       "contactLabel": "Contact"
     },
     "certificates": {
+      "metaTitle": "Certificate of 99% Purity Peptides | Lab-Tested COA Reports",
+      "metaDescription": "View certified lab reports for 99% purity peptides. Transparent COA documents ensuring quality, accuracy, and trusted research-grade standards.",
       "eyebrow": "Verification",
       "title": "Certificates of Analysis",
       "description": "Transparency is not optional. We verify every batch through independent, third-party US laboratories using high-performance liquid chromatography (HPLC) and mass spectrometry (MS).",
@@ -1494,6 +1538,8 @@
   },
   "affiliate": {
     "landing": {
+      "metaTitle": "Affiliate Program | Earn 15% Commission | 99 Purity Peptides",
+      "metaDescription": "Earn 15% commission promoting 99 Purity Peptides research peptides, plus a 15% discount for your audience. Real-time tracking and monthly payouts.",
       "heroJoinButtonLong": "Join the Affiliate Program Now",
       "heroJoinButtonShort": "Join the Program",
       "heroTitle": "Affiliates",
@@ -1771,6 +1817,8 @@
       "dashboard": "Affiliate Dashboard"
     },
     "dashboard": {
+      "metaTitle": "Affiliate Dashboard | 99 Purity Peptides",
+      "metaDescription": "Track your referral clicks, conversions, and commissions in your 99 Purity Peptides affiliate dashboard.",
       "overviewEyebrow": "Affiliate Dashboard",
       "tierSuffix": "Tier",
       "totalClicks": "Total Clicks",
@@ -1794,11 +1842,15 @@
     },
     "dashboardLayout": {
       "title": "Affiliate Dashboard",
-      "defaultPartnerName": "Partner"
+      "defaultPartnerName": "Partner",
+      "metaTitle": "Affiliate Dashboard | 99 Purity Peptides",
+      "metaDescription": "Track your referral clicks, conversions, and commissions in your 99 Purity Peptides affiliate dashboard."
     },
     "conversions": {
       "title": "Conversions",
       "subtitle": "Track all orders generated from your referral links and coupon codes.",
+      "metaTitle": "Conversions | Affiliate Dashboard",
+      "metaDescription": "View all orders generated from your referral links and coupon codes.",
       "emptyTitle": "No Conversions Yet",
       "emptyDesc": "Share your links to start earning commissions!",
       "orderIdLabel": "Order ID",
@@ -1813,6 +1865,8 @@
     "links": {
       "title": "Links & Creatives",
       "subtitle": "Share your personalized links and codes to start earning commissions.",
+      "metaTitle": "Links & Creatives | Affiliate Dashboard",
+      "metaDescription": "Access your personalized referral links and coupon codes to start earning commissions.",
       "referralLinkTitle": "Your Standard Referral Link",
       "referralLinkDesc": "Share this link. Anyone who clicks it will be tracked as your referral.",
       "copied": "Copied!",
@@ -1835,6 +1889,8 @@
       "errorCodeTakenStore": "This coupon code is already in use by the store."
     },
     "payouts": {
+      "metaTitle": "Payouts | Affiliate Dashboard",
+      "metaDescription": "View your available balance and request payouts for your affiliate commissions.",
       "availableBalanceTitle": "Available Balance",
       "availableBalanceDesc": "Funds cleared and ready to withdraw.",
       "dayHoldTitle": "{days}-Day Hold",
@@ -1868,6 +1924,8 @@
     "dashboardSettings": {
       "title": "Settings",
       "subtitle": "Configure your payout preferences and account details.",
+      "metaTitle": "Settings | Affiliate Dashboard",
+      "metaDescription": "Configure your affiliate payout preferences and account details.",
       "payoutMethodTitle": "Payout Method",
       "payoutMethodDesc": "Configure how you want to receive your commissions.",
       "preferredCurrencyLabel": "Preferred Currency",
@@ -2397,6 +2455,8 @@
     }
   },
   "blog": {
+    "metaTitle": "Research Peptides Blog | Scientific Insights & Laboratory Protocols",
+    "metaDescription": "Explore premium peptide research articles, laboratory protocols, reconstitution guides, and scientific breakthroughs from the U.S. authority in 99%+ pure research peptides.",
     "hero": {
       "title": "The U.S. Authority in Advanced Peptide Research & Scientific Insights",
       "description": "Explore peer-reviewed peptide research, advanced laboratory protocols, reconstitution guides, and analytical testing standards curated for American scientific professionals. Trusted educational resources for 99%+ pure research compounds—strictly for in-vitro laboratory use only.",

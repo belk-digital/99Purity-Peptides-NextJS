@@ -2,10 +2,15 @@ import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { ConversionsClient } from './ConversionsClient'
 
-export const metadata = {
-  title: 'Conversions | Affiliate Dashboard',
+export async function generateMetadata() {
+  const t = await getTranslations('affiliate.conversions')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function AffiliateConversionsPage() {

@@ -6,8 +6,12 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { getTranslations } from 'next-intl/server'
 
-export const metadata = {
-  title: 'Affiliate Dashboard | 99 Purity Peptides',
+export async function generateMetadata() {
+  const t = await getTranslations('affiliate.dashboard')
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
 }
 
 export default async function AffiliateDashboardOverview() {

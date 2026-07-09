@@ -766,6 +766,14 @@ export interface Order {
    */
   paymentMethod?: ('stripe' | 'zelle' | 'amex') | null;
   couponCode?: string | null;
+  /**
+   * Affiliate ID if referred
+   */
+  affiliateId?: string | null;
+  /**
+   * Affiliate click ID if referred
+   */
+  clickId?: string | null;
   customerNote?: string | null;
   /**
    * For orders without a registered user account
@@ -1860,6 +1868,8 @@ export interface OrdersSelect<T extends boolean = true> {
   sendTrackingEmail?: T;
   paymentMethod?: T;
   couponCode?: T;
+  affiliateId?: T;
+  clickId?: T;
   customerNote?: T;
   guestEmail?: T;
   createdAt?: T;

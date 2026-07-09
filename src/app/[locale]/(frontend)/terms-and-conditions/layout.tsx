@@ -1,8 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-const title = 'Terms & Conditions | 99 Purity Peptides'
-const description = 'Read 99 Purity Peptides’ Terms & Conditions for research-use products, account responsibilities, ordering, liability and legal compliance.'
 const breadcrumbName = 'Terms & Conditions'
 const slug = 'terms-and-conditions'
 
@@ -12,6 +11,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('legal.termsAndConditions')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
 
   return {
@@ -46,6 +48,9 @@ export default async function TermsAndConditionsLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations('legal.termsAndConditions')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
   const url = `${baseUrl}${path}`

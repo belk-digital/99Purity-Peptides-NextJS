@@ -1,4 +1,5 @@
 export function generateMilitaryRejectionEmail(name: string): string {
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +16,9 @@ export function generateMilitaryRejectionEmail(name: string): string {
           
           <!-- Header -->
           <tr>
-            <td style="padding: 40px 40px 30px 40px; text-align: center; border-bottom: 1px solid #f3f4f6;">
-              <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #000000; letter-spacing: -1px;">99 Purity Peptides</h1>
-              <p style="margin: 12px 0 0 0; font-size: 16px; color: #6b7280;">Verification Update</p>
+            <td style="padding: 40px 40px 30px 40px; text-align: center; background-color: #000000; border-bottom: 1px solid #111111;">
+              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto; filter: brightness(0) invert(1);" />
+              <p style="margin: 16px 0 0 0; font-size: 16px; color: #d1d5db;">Verification Update</p>
             </td>
           </tr>
 

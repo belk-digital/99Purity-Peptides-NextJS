@@ -18,8 +18,8 @@ export async function generateWelcomeEmail(user: any): Promise<string> {
           
           <!-- Header -->
           <tr>
-            <td style="background-color: #0A0A0A; padding: 40px; text-align: center;">
-              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #FAF7F2; letter-spacing: -0.02em;">99 Purity Peptides</h1>
+            <td style="background-color: #000000; padding: 40px; text-align: center;">
+              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto; filter: brightness(0) invert(1);" />
             </td>
           </tr>
 

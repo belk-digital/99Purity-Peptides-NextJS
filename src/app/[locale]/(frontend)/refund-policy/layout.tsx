@@ -1,8 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
-
-const title = 'Refund Policy | 99 Purity Peptides'
-const description = 'Read 99 Purity Peptides’ Refund Policy for research-use products, eligibility, process, damaged orders and return guidelines.'
+import { getTranslations } from 'next-intl/server'
 
 export async function generateMetadata({
   params,
@@ -10,6 +8,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('legal.refundPolicy')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? '/refund-policy' : `/${locale}/refund-policy`
 
   return {
@@ -44,6 +45,9 @@ export default async function RefundPolicyLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const t = await getTranslations('legal.refundPolicy')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
   const path = locale === 'en' ? '/refund-policy' : `/${locale}/refund-policy`
   const url = `${baseUrl}${path}`
