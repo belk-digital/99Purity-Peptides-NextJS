@@ -1,10 +1,43 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { getLocale } from 'next-intl/server'
+import type { Metadata } from 'next'
 import { CertificatesClient, type COA } from './CertificatesClient'
 
-export const metadata = {
-  title: 'Certificates of Analysis | 99 Purity Peptides',
+const title = 'Certificate of 99% Purity Peptides | Lab-Tested COA Reports'
+const description = 'View certified lab reports for 99% purity peptides. Transparent COA documents ensuring quality, accuracy, and trusted research-grade standards.'
+const slug = 'certificates'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: path,
+      languages: {
+        en: `/${slug}`,
+        es: `/es/${slug}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: path,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  }
 }
 
 export default async function CertificatesPage() {
@@ -45,5 +78,51 @@ export default async function CertificatesPage() {
       coaUrl: doc.coaFile.url,
     }))
 
-  return <CertificatesClient coas={coas} />
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+  const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+  const url = `${baseUrl}${path}`
+
+  const pageSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: title,
+        description,
+        inLanguage: locale,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+          { '@type': 'ListItem', position: 2, name: 'Certificates' },
+        ],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}/#website`,
+        url: baseUrl,
+        name: '99 Purity Peptides',
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${baseUrl}/#organization`,
+        name: '99 Purity Peptides',
+        url: baseUrl,
+      },
+    ],
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <CertificatesClient coas={coas} />
+    </>
+  )
 }

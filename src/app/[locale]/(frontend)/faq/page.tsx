@@ -4,18 +4,56 @@ import { getTranslations } from 'next-intl/server'
 import { FaqClient } from '@/components/faq/FaqClient'
 import { faqData } from '@/data/faqs'
 
-export async function generateMetadata(): Promise<Metadata> {
+const slug = 'faq'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
   const t = await getTranslations('content.faqPage')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
+  const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+
   return {
-    title: t('metaTitle'),
-    description: t('metaDescription'),
+    title,
+    description,
+    alternates: {
+      canonical: path,
+      languages: {
+        en: `/${slug}`,
+        es: `/es/${slug}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: path,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
   }
 }
 
-export default function FaqPage() {
+export default async function FaqPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const t = await getTranslations('content.faqPage')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
+
   // Generate structured data for SEO
   // Combine all FAQs from all categories for the JSON-LD
-  const allFaqs = faqData.flatMap(category => 
+  const allFaqs = faqData.flatMap(category =>
     category.items.map(item => ({
       "@type": "Question",
       "name": item.question,
@@ -27,11 +65,53 @@ export default function FaqPage() {
     }))
   );
 
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+  const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+  const url = `${baseUrl}${path}`
+
+  const pageSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: title,
+        description,
+        inLanguage: locale,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+          { '@type': 'ListItem', position: 2, name: 'FAQ' },
+        ],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}/#website`,
+        url: baseUrl,
+        name: '99 Purity Peptides',
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${baseUrl}/#organization`,
+        name: '99 Purity Peptides',
+        url: baseUrl,
+      },
+    ],
+  }
+
   return (
     <>
       <FaqClient />
-      
+
       {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

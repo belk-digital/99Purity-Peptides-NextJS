@@ -1921,8 +1921,8 @@
       "submit": "Submit Request"
     },
     "faqPage": {
-      "metaTitle": "Frequently Asked Questions | 99 Purity Peptides",
-      "metaDescription": "Comprehensive answers regarding research peptides, analytical standards, ordering processes, and laboratory handling from 99 Purity Peptides."
+      "metaTitle": "Research Peptide FAQ | Legality, COA & Purity Explained",
+      "metaDescription": "Find answers about research peptides, certificate of analysis (COA), purity testing, and research use only classification."
     },
     "aboutHero": {
       "viewPeptidesShort": "View Peptides",
@@ -2056,7 +2056,7 @@
   "calculator": {
     "page": {
       "metaTitle": "Peptide Calculator: Dosage & Reconstitution Tool | Purity Peptides",
-      "metaDescription": "Use our free peptide calculator to get your exact dosage in seconds. Enter vial size, BAC water volume, and desired mcg - and see exactly how many units to draw. Also includes BMI, Unit Converter, and Creatinine Clearance tools.",
+      "metaDescription": "Use our free peptide calculator to get your exact dosage in seconds. Enter vial size, BAC water volume, and desired mcg - and see exactly how many units to draw.",
       "faq": {
         "q1Question": "How much bacteriostatic water do I add to a 5mg peptide vial?",
         "q1Answer": "The standard ratio for a 5mg peptide vial is 2mL of bacteriostatic water. This creates a concentration of 2.5mg/mL, where every 0.1mL (10 units on a U-100 insulin syringe) delivers exactly 250mcg.",

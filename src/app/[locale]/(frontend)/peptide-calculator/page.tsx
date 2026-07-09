@@ -2,22 +2,53 @@ import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import PeptideCalculatorPage from './PeptideCalculatorClient'
 
-export async function generateMetadata(): Promise<Metadata> {
+const slug = 'peptide-calculator'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
   const t = await getTranslations('calculator.page')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
+  const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+
   return {
-    title: t('metaTitle'),
-    description: t('metaDescription'),
+    title,
+    description,
     alternates: {
-      canonical: 'https://the-99 Purity Peptides-lab.vercel.app/peptide-calculator',
+      canonical: path,
       languages: {
-        'en-US': 'https://the-99 Purity Peptides-lab.vercel.app/peptide-calculator',
+        en: `/${slug}`,
+        es: `/es/${slug}`,
       },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: path,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
     },
   }
 }
 
-export default async function Page() {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
   const t = await getTranslations('calculator.page')
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+  const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+  const url = `${baseUrl}${path}`
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -54,7 +85,7 @@ export default async function Page() {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": t('webApp.name'),
-    "url": "https://the-99 Purity Peptides-lab.vercel.app/peptide-calculator",
+    "url": url,
     "description": t('webApp.description'),
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Web Browser",
@@ -77,19 +108,49 @@ export default async function Page() {
         "@type": "ListItem",
         "position": 1,
         "name": t('breadcrumb.home'),
-        "item": "https://the-99 Purity Peptides-lab.vercel.app"
+        "item": baseUrl
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": t('breadcrumb.calculator'),
-        "item": "https://the-99 Purity Peptides-lab.vercel.app/peptide-calculator"
+        "item": url
       }
     ]
   }
 
+  const pageSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: t('metaTitle'),
+        description: t('metaDescription'),
+        inLanguage: locale,
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}/#website`,
+        url: baseUrl,
+        name: '99 Purity Peptides',
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${baseUrl}/#organization`,
+        name: '99 Purity Peptides',
+        url: baseUrl,
+      },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

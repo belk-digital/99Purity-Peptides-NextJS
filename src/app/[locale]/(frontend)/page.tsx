@@ -96,6 +96,22 @@ export default async function Homepage() {
           __html: JSON.stringify([
             {
               "@context": "https://schema.org",
+              "@type": "WebPage",
+              "@id": "https://99puritypeptides.com/#webpage",
+              "url": "https://99puritypeptides.com/",
+              "name": title,
+              "description": description
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "@id": "https://99puritypeptides.com/#breadcrumb",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://99puritypeptides.com/" }
+              ]
+            },
+            {
+              "@context": "https://schema.org",
               "@type": "FAQPage",
               "mainEntity": [
                 {

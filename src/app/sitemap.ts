@@ -7,21 +7,24 @@ import { routing } from '@/i18n/routing'
 
 const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
 
-const STATIC_PATHS = [
-  '',
-  '/about-us',
-  '/shop',
-  '/blog',
-  '/faq',
-  '/contact-us',
-  '/peptide-calculator',
-  '/certificates',
-  '/affiliates',
-  '/privacy-policy',
-  '/terms-and-conditions',
-  '/refund-policy',
-  '/shipping-policy',
-  '/medical-disclaimer',
+// Grouped by crawl priority rather than alphabetically, so the sitemap's own ordering
+// reflects which pages matter most (highest first) — homepage/shop first, then core
+// conversion-adjacent pages, then supporting/legal pages.
+const STATIC_PATHS: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }[] = [
+  { path: '', priority: 1.0, changeFrequency: 'daily' },
+  { path: '/shop', priority: 0.9, changeFrequency: 'daily' },
+  { path: '/blog', priority: 0.8, changeFrequency: 'daily' },
+  { path: '/peptide-calculator', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/certificates', priority: 0.6, changeFrequency: 'weekly' },
+  { path: '/about-us', priority: 0.6, changeFrequency: 'monthly' },
+  { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
+  { path: '/affiliates', priority: 0.5, changeFrequency: 'monthly' },
+  { path: '/contact-us', priority: 0.5, changeFrequency: 'yearly' },
+  { path: '/privacy-policy', priority: 0.3, changeFrequency: 'yearly' },
+  { path: '/terms-and-conditions', priority: 0.3, changeFrequency: 'yearly' },
+  { path: '/refund-policy', priority: 0.3, changeFrequency: 'yearly' },
+  { path: '/shipping-policy', priority: 0.3, changeFrequency: 'yearly' },
+  { path: '/medical-disclaimer', priority: 0.3, changeFrequency: 'yearly' },
 ]
 
 function withLocales(path: string) {
@@ -32,22 +35,27 @@ function withLocales(path: string) {
   return languages
 }
 
-function entry(path: string, lastModified?: Date) {
+function entry(
+  path: string,
+  opts?: { lastModified?: Date; priority?: number; changeFrequency?: MetadataRoute.Sitemap[number]['changeFrequency'] },
+) {
   return {
     url: `${baseUrl}${path}`,
-    lastModified: lastModified || new Date(),
+    lastModified: opts?.lastModified || new Date(),
     alternates: { languages: withLocales(path) },
+    ...(opts?.priority !== undefined ? { priority: opts.priority } : {}),
+    ...(opts?.changeFrequency ? { changeFrequency: opts.changeFrequency } : {}),
   }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = []
 
-  for (const path of STATIC_PATHS) {
-    entries.push(entry(path))
+  for (const { path, priority, changeFrequency } of STATIC_PATHS) {
+    entries.push(entry(path, { priority, changeFrequency }))
     for (const locale of routing.locales) {
       if (locale === routing.defaultLocale) continue
-      entries.push(entry(`/${locale}${path}`))
+      entries.push(entry(`/${locale}${path}`, { priority, changeFrequency }))
     }
   }
 
@@ -62,10 +70,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     for (const product of products) {
       const path = `/product/${product.slug}`
-      entries.push(entry(path, product.updatedAt ? new Date(product.updatedAt) : undefined))
+      const lastModified = product.updatedAt ? new Date(product.updatedAt) : undefined
+      entries.push(entry(path, { lastModified, priority: 0.8, changeFrequency: 'weekly' }))
       for (const locale of routing.locales) {
         if (locale === routing.defaultLocale) continue
-        entries.push(entry(`/${locale}${path}`, product.updatedAt ? new Date(product.updatedAt) : undefined))
+        entries.push(entry(`/${locale}${path}`, { lastModified, priority: 0.8, changeFrequency: 'weekly' }))
       }
     }
   } catch (error) {
@@ -75,10 +84,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const post of BLOG_POSTS) {
     const path = `/${post.slug}`
-    entries.push(entry(path))
+    entries.push(entry(path, { priority: 0.6, changeFrequency: 'monthly' }))
     for (const locale of routing.locales) {
       if (locale === routing.defaultLocale) continue
-      entries.push(entry(`/${locale}${path}`))
+      entries.push(entry(`/${locale}${path}`, { priority: 0.6, changeFrequency: 'monthly' }))
     }
   }
 

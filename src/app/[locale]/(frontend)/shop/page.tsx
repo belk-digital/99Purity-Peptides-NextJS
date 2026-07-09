@@ -5,8 +5,8 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { getShopProducts } from '../(shop)/actions'
 
-const title = 'Shop All Compounds | 99 Purity Peptides'
-const description = 'Browse our complete catalog of research-grade peptides and compounds. Filter by purity, category, and availability.'
+const title = 'Shop High-Quality Synthetic Research Peptides | 99PurityPeptides'
+const description = 'Shop high-quality synthetic research peptides at 99PurityPeptides. Wide selection of lab-grade peptides crafted for research and analytical studies.'
 
 export async function generateMetadata({
   params,
@@ -98,23 +98,45 @@ export default async function ShopPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            {
-              '@context': 'https://schema.org',
-              '@type': 'BreadcrumbList',
-              itemListElement: [
-                { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-                { '@type': 'ListItem', position: 2, name: 'Shop', item: `${siteUrl}/shop` },
-              ],
-            },
-            {
-              '@context': 'https://schema.org',
-              '@type': 'CollectionPage',
-              name: title,
-              description,
-              url: `${siteUrl}/shop`,
-            },
-          ]),
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': [
+              {
+                '@type': 'WebPage',
+                '@id': `${siteUrl}/shop#webpage`,
+                url: `${siteUrl}/shop`,
+                name: title,
+                description,
+              },
+              {
+                '@type': 'CollectionPage',
+                '@id': `${siteUrl}/shop#collectionpage`,
+                url: `${siteUrl}/shop`,
+                name: title,
+                description,
+              },
+              {
+                '@type': 'BreadcrumbList',
+                '@id': `${siteUrl}/shop#breadcrumb`,
+                itemListElement: [
+                  { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+                  { '@type': 'ListItem', position: 2, name: 'Shop', item: `${siteUrl}/shop` },
+                ],
+              },
+              {
+                '@type': 'WebSite',
+                '@id': `${siteUrl}/#website`,
+                url: siteUrl,
+                name: '99 Purity Peptides',
+              },
+              {
+                '@type': 'Organization',
+                '@id': `${siteUrl}/#organization`,
+                name: '99 Purity Peptides',
+                url: siteUrl,
+              },
+            ],
+          }),
         }}
       />
     </>

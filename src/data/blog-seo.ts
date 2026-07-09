@@ -213,23 +213,14 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
         "dateModified": "2026-06-11",
         "image": {
           "@type": "ImageObject",
-          "url": "https://99puritypeptides.com/wp-content/uploads/2026/06/klow-peptide-blend-vial-50mg.webp",
+          "url": "https://99puritypeptides.com/99%20Blog%20Images/klow-peptide-blend-research-guide-2026-hero.png",
           "width": 1080,
           "height": 675
         },
         "author": {
-          "@type": "Person",
-          "name": "[Author Name]",
-          "jobTitle": "Senior Research Editor",
-          "description": "MSc Biochemistry — Senior Research Editor specializing in research-grade peptide blends and preclinical literature.",
-          "alumniOf": {
-            "@type": "CollegeOrUniversity",
-            "name": "[University Placeholder]"
-          },
-          "sameAs": [
-            "https://www.linkedin.com/in/[linkedin-placeholder]",
-            "https://orcid.org/[orcid-placeholder]"
-          ]
+          "@type": "Organization",
+          "name": "99 Purity Peptides",
+          "url": "https://99puritypeptides.com/"
         },
         "publisher": {
           "@type": "Organization",
@@ -237,7 +228,7 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
           "url": "https://99puritypeptides.com/",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://99puritypeptides.com/wp-content/uploads/2026/05/Logo.png"
+            "url": "https://99puritypeptides.com/99%20Images/99pp-Logo.png"
           }
         },
         "isRelatedTo": {
@@ -370,7 +361,7 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
         "@type": "Organization",
         "name": "99 Purity Peptides",
         "url": "https://99puritypeptides.com/",
-        "logo": "https://99puritypeptides.com/wp-content/uploads/2026/05/Logo.png",
+        "logo": "https://99puritypeptides.com/99%20Images/99pp-Logo.png",
         "contactPoint": {
           "@type": "ContactPoint",
           "telephone": "+1-843-743-9007",
@@ -382,12 +373,7 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
         "areaServed": {
           "@type": "Country",
           "name": "United States"
-        },
-        "sameAs": [
-          "https://www.facebook.com/[placeholder]",
-          "https://www.instagram.com/[placeholder]",
-          "https://www.youtube.com/@[placeholder]"
-        ]
+        }
       },
       {
         "@context": "https://schema.org",
@@ -527,21 +513,21 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
         "description": "A research-focused analysis of how Retatrutide's triple agonist mechanism — GLP-1, GIP, and Glucagon — interacts with dietary carbohydrate intake and glucose availability.",
         "author": {
           "@type": "Organization",
-          "name": "Purity Peptides"
+          "name": "99 Purity Peptides"
         },
         "publisher": {
           "@type": "Organization",
-          "name": "Purity Peptides",
+          "name": "99 Purity Peptides",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://yourdomain.com/logo.png"
+            "url": "https://99puritypeptides.com/logo.png"
           }
         },
         "datePublished": "2025-01-01",
         "dateModified": "2025-07-01",
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://yourdomain.com/blog/retatrutide-and-carbs"
+          "@id": "https://99puritypeptides.com/blog/retatrutide-and-carbs"
         },
         "keywords": "retatrutide, carbohydrate metabolism, triple agonist, GLP-1, GIP, glucagon receptor, glucose regulation"
       },
@@ -580,12 +566,12 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
         "@type": "WebPage",
         "name": "Retatrutide and Carbs: Does This Triple Agonist Need Glucose?",
         "description": "Research analysis of Retatrutide's interaction with carbohydrate metabolism through its triple agonist GLP-1, GIP, and Glucagon receptor mechanism.",
-        "url": "https://yourdomain.com/blog/retatrutide-and-carbs",
+        "url": "https://99puritypeptides.com/blog/retatrutide-and-carbs",
         "inLanguage": "en-US",
         "isPartOf": {
           "@type": "WebSite",
-          "name": "Purity Peptides",
-          "url": "https://yourdomain.com"
+          "name": "99 Purity Peptides",
+          "url": "https://99puritypeptides.com"
         }
       },
       {
@@ -596,27 +582,32 @@ export const BLOG_SEO: Record<string, { title: string | null, description: strin
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://yourdomain.com"
+            "item": "https://99puritypeptides.com"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Research Blog",
-            "item": "https://yourdomain.com/blog"
+            "item": "https://99puritypeptides.com/blog"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "Retatrutide and Carbs",
-            "item": "https://yourdomain.com/blog/retatrutide-and-carbs"
+            "item": "https://99puritypeptides.com/blog/retatrutide-and-carbs"
           }
         ]
       }
     ]
   },
-  "fda-targets-glp-1-and-peptide-compounding-advertising-and-research-use-only-labeling": {
+  "retatrutide-weight-loss-research-guide-2026": {
     "title": "Retatrutide for Weight Loss: 2026 Research Reference",
     "description": "Retatrutide weight loss research, explained: Phase 3 TRIUMPH-1 data, triple-agonist mechanism, side effects, FDA status. A neutral 2026 reference.",
+    "schemas": []
+  },
+  "peptide-reconstitution-calculator": {
+    "title": "Peptide Calculator: Dosage & Reconstitution Tool | 99 Purity Peptides",
+    "description": "Calculate your exact peptide dosage in seconds. Enter vial size, BAC water volume & desired dose to get precise syringe units instantly. Free peptide reconstitution calculator.",
     "schemas": []
   },
   "retatrutide-peptide-research-guide": {

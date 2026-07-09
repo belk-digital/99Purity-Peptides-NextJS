@@ -18,6 +18,29 @@ function getBlogPosts(locale: string) {
   return locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
 }
 
+const MONTHS: Record<string, string> = {
+  january: '01', february: '02', march: '03', april: '04', may: '05', june: '06',
+  july: '07', august: '08', september: '09', october: '10', november: '11', december: '12',
+  enero: '01', febrero: '02', marzo: '03', abril: '04', mayo: '05', junio: '06',
+  julio: '07', agosto: '08', septiembre: '09', octubre: '10', noviembre: '11', diciembre: '12',
+}
+
+// post.date is a human-readable string in either English ("May 21, 2026") or Spanish
+// ("21 de mayo de 2026"); schema.org/Google Rich Results require ISO 8601 for datePublished.
+function toIsoDate(dateStr: string): string {
+  const en = dateStr.match(/^([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})$/)
+  if (en) {
+    const month = MONTHS[en[1].toLowerCase()]
+    if (month) return `${en[3]}-${month}-${en[2].padStart(2, '0')}`
+  }
+  const es = dateStr.match(/^(\d{1,2})\s+de\s+([A-Za-zñÑ]+)\s+de\s+(\d{4})$/i)
+  if (es) {
+    const month = MONTHS[es[2].toLowerCase()]
+    if (month) return `${es[3]}-${month}-${es[1].padStart(2, '0')}`
+  }
+  return dateStr
+}
+
 export async function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({
     slug: post.slug,
@@ -85,31 +108,63 @@ export default async function BlogPostPage({
   const relatedPosts = localePosts.filter((p) => p.slug !== slug).slice(0, 3)
 
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+  const postUrl = `${baseUrl}/${slug}`
+  const isoDate = toIsoDate(post.date)
+  // post.imageSrc contains literal spaces (e.g. "/99 Blog Images/..."); encodeURI so the
+  // resulting absolute URL is valid per the JSON-LD/schema.org URL requirement.
+  const encodedImage = encodeURI(`${baseUrl}${post.imageSrc}`)
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    image: `${baseUrl}${post.imageSrc}`,
-    datePublished: post.date,
-    author: {
-      '@type': 'Organization',
-      name: '99 Purity Peptides',
-      url: baseUrl
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: '99 Purity Peptides',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${baseUrl}/logo.png`
-      }
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${baseUrl}/${slug}`
-    }
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${postUrl}#article`,
+        headline: post.title,
+        description: post.excerpt,
+        image: encodedImage,
+        datePublished: isoDate,
+        dateModified: isoDate,
+        author: {
+          '@type': 'Organization',
+          name: '99 Purity Peptides',
+          url: baseUrl
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: '99 Purity Peptides',
+          logo: {
+            '@type': 'ImageObject',
+            url: `${baseUrl}/logo.png`
+          }
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': postUrl
+        }
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${postUrl}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+          { '@type': 'ListItem', position: 2, name: 'Research Blog', item: `${baseUrl}/blog` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: postUrl },
+        ]
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}/#website`,
+        url: baseUrl,
+        name: '99 Purity Peptides',
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${baseUrl}/#organization`,
+        name: '99 Purity Peptides',
+        url: baseUrl,
+      },
+    ]
   }
 
   const customSchemas = BLOG_SEO[slug]?.schemas || []
