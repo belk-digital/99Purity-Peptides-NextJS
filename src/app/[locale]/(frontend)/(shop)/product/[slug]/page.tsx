@@ -126,15 +126,24 @@ export default async function ProductPage({
   // Map variants
   let mappedVariants = []
   if (rawProduct.hasVariants && rawProduct.variants?.length) {
-    mappedVariants = rawProduct.variants.map((v: any, index: number) => ({
-      id: v.sku || `v-${index}`,
-      sku: v.sku || '',
-      title: v.options?.map((o: any) => o.value).join(' ') || `Variant ${index + 1}`,
-      price: `$${Number(v.price || 0).toFixed(2)}`,
-      salePrice: v.salePrice ? `$${Number(v.salePrice).toFixed(2)}` : undefined,
-      inStock: (v.stock || 0) > 0,
-      image: typeof v.image === 'object' && v.image?.url ? v.image.url : undefined,
-    }))
+    mappedVariants = rawProduct.variants.map((v: any, index: number) => {
+      const mappedImages = v.images?.map((img: any) => {
+        if (typeof img.image === 'object' && img.image?.url) {
+          return img.image.url
+        }
+        return ''
+      }).filter(Boolean) || []
+
+      return {
+        id: v.sku || `v-${index}`,
+        sku: v.sku || '',
+        title: v.options?.map((o: any) => o.value).join(' ') || `Variant ${index + 1}`,
+        price: `$${Number(v.price || 0).toFixed(2)}`,
+        salePrice: v.salePrice ? `$${Number(v.salePrice).toFixed(2)}` : undefined,
+        inStock: (v.stock || 0) > 0,
+        images: mappedImages,
+      }
+    })
   } else {
     mappedVariants = [
       {

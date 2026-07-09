@@ -223,12 +223,12 @@ export function ProductClient({ product }: ProductClientProps) {
   const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
   const currentStock = selectedVariant?.inStock ? 50 : 0 // Fake stock level for testing
 
-  // If the variant has a specific image, show ONLY that image. Otherwise fallback to product images.
-  const galleryImages = selectedVariant?.image 
-    ? [selectedVariant.image] 
-    : product.images.length > 0 
-      ? product.images 
-      : []
+  // Combine variant-specific images (first) with common product images (second). Remove duplicates.
+  const allImages = [
+    ...(selectedVariant?.images || []),
+    ...(product.images || [])
+  ]
+  const galleryImages = Array.from(new Set(allImages)).filter(Boolean)
 
   const [justAdded, setJustAdded] = useState(false)
   const cartStore = useCartStore()
@@ -301,7 +301,7 @@ export function ProductClient({ product }: ProductClientProps) {
     if (!selectedVariant?.inStock) return
 
     cartStore.addItem(
-      { id: product.id, name: product.name, imageUrl: selectedVariant.image || product.images[0], slug: product.slug },
+      { id: product.id, name: product.name, imageUrl: selectedVariant.images?.[0] || product.images[0], slug: product.slug },
       selectedVariant.sku || selectedVariant.title,
       quantity,
       parseFloat((selectedVariant.salePrice || selectedVariant.price).replace(/[^0-9.]/g, '')),
@@ -326,7 +326,7 @@ export function ProductClient({ product }: ProductClientProps) {
 
         {/* Left: Sticky Image Panel */}
         <div className="w-full lg:w-1/2 lg:h-screen lg:sticky lg:top-0 flex items-start justify-center bg-gray-50 relative lg:overflow-hidden">
-          <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[64%] pt-[100px] sm:pt-[120px] lg:pt-[160px] pb-6 sm:pb-10 lg:pb-6">
+          <div className="w-full px-4 sm:px-6 lg:px-0 lg:w-[85%] lg:h-full lg:flex lg:flex-col pt-[100px] sm:pt-[120px] lg:pt-[160px] pb-6 sm:pb-10 lg:pb-6">
             <ImageGallery key={selectedVariant?.id} images={galleryImages} />
           </div>
         </div>
@@ -389,7 +389,7 @@ export function ProductClient({ product }: ProductClientProps) {
           <div className="h-px bg-black/[0.06] mb-8" />
 
           {/* Short Description */}
-          <p className="text-black/50 leading-[1.75] text-[14px] lg:text-[15px] max-w-[400px] mb-8">
+          <p className="text-black/50 leading-[1.75] text-[14px] lg:text-[15px] w-full mb-8">
             {product.shortDescription || product.description?.substring(0, 200) + '...'}
           </p>
 

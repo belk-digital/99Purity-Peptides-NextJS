@@ -11,7 +11,7 @@ export interface Variant {
   price: string
   salePrice?: string
   inStock: boolean
-  image?: string
+  images?: string[]
 }
 
 interface VariantSelectorProps {

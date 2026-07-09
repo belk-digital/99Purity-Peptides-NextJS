@@ -397,9 +397,14 @@ export interface Product {
     | {
         sku: string;
         /**
-         * Optional specific image for this variant (e.g., 5mg vial vs 10mg kit)
+         * Optional specific images for this variant (e.g., 5mg vial vs 10mg kit)
          */
-        image?: (number | null) | Media;
+        images?:
+          | {
+              image: number | Media;
+              id?: string | null;
+            }[]
+          | null;
         price: number;
         salePrice?: number | null;
         stock: number;
@@ -1634,7 +1639,12 @@ export interface ProductsSelect<T extends boolean = true> {
     | T
     | {
         sku?: T;
-        image?: T;
+        images?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
         price?: T;
         salePrice?: T;
         stock?: T;

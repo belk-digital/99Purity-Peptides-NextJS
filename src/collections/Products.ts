@@ -122,12 +122,20 @@ export const Products: CollectionConfig = {
           required: true,
         },
         {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
+          name: 'images',
+          type: 'array',
+          label: 'Variant Images',
           admin: {
-            description: 'Optional specific image for this variant (e.g., 5mg vial vs 10mg kit)',
-          }
+            description: 'Optional specific images for this variant (e.g., 5mg vial vs 10mg kit)',
+          },
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            }
+          ]
         },
         {
           name: 'price',
