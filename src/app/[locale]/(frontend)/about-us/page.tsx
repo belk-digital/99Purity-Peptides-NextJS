@@ -10,8 +10,6 @@ import { SharedFaqSection } from '@/components/shared/SharedFaqSection'
 
 const ABOUT_FAQ_KEYS = ['trustworthySupplier', 'analyticalQuality', 'laboratoryResearchOnly', 'documentationProvided']
 
-const title = 'About 99 Purity Peptides | Trusted Peptide Company USA'
-const description = 'Learn about 99 Purity Peptides, a trusted peptide supplier that USA researchers rely on for high-purity synthetic research peptides.'
 const slug = 'about-us'
 
 export async function generateMetadata({
@@ -20,6 +18,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const t = await getTranslations('content.aboutPage')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
   const path = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
 
   return {
@@ -53,6 +54,8 @@ export default async function AboutPage({
 }) {
   const { locale } = await params
   const t = await getTranslations('content.aboutPage')
+  const title = t('metaTitle')
+  const description = t('metaDescription')
 
   const aboutFaqs = ABOUT_FAQ_KEYS.map((key) => ({
     question: t(`faqs.${key}.question`),
@@ -78,8 +81,8 @@ export default async function AboutPage({
         '@type': 'BreadcrumbList',
         '@id': `${url}#breadcrumb`,
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-          { '@type': 'ListItem', position: 2, name: 'About Us' },
+          { '@type': 'ListItem', position: 1, name: locale === 'es' ? 'Inicio' : 'Home', item: locale === 'en' ? baseUrl : `${baseUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: locale === 'es' ? 'Sobre Nosotros' : 'About Us' },
         ],
       },
     ],

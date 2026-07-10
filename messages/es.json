@@ -1,5 +1,6 @@
 {
   "common": {
+    "siteTagline": "Péptidos Premium para el Máximo Rendimiento",
     "languageSwitcher": {
       "en": "English",
       "es": "Español"
@@ -1943,6 +1944,8 @@
   },
   "content": {
     "aboutPage": {
+      "metaTitle": "Sobre 99 Purity Peptides | Empresa de Péptidos de Confianza en EE. UU.",
+      "metaDescription": "Conoce 99 Purity Peptides, un proveedor de péptidos de confianza en el que investigadores de EE. UU. confían para obtener péptidos de investigación sintéticos de alta pureza.",
       "faqTitle": "Preguntas",
       "faqDescription": "Preguntas frecuentes sobre péptidos de investigación, pedidos y estándares de laboratorio",
       "faqs": {
@@ -2478,5 +2481,11 @@
     "loadMore": "Cargar Más Publicaciones",
     "shareArticle": "Compartir artículo",
     "linkCopied": "¡Enlace copiado al portapapeles!"
+  },
+  "notFound": {
+    "title": "¡Vaya! Parece que esta página se evaporó durante nuestro último experimento. No te preocupes, ningún investigador resultó herido en la creación de este error 404. ¡Regresemos al laboratorio!",
+    "returnHome": "Volver al inicio",
+    "browseShop": "Ver tienda",
+    "search": "O busca lo que necesitas"
   }
 }

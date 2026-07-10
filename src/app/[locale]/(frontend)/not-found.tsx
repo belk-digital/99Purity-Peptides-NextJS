@@ -6,16 +6,11 @@ import { Link } from '@/i18n/navigation'
 import { FlaskConical, Search, Beaker, Home, ArrowRight } from 'lucide-react'
 import { FluidButton } from '@/components/ui/fluid-button'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 import { SearchOverlay } from '@/components/shared/SearchOverlay'
 import { useReducedMotion } from '@/components/motion/useReducedMotion'
 
-const LAB_NOTES = [
-  'Sample failed HPLC purity testing at 0% — batch discarded.',
-  'Certificate of Analysis not found for this URL.',
-  'This link was denatured before it reached you.',
-  'Contamination detected. Page pulled from the shelf.',
-  "Reconstitution error — couldn't dissolve this page.",
-]
+
 
 function VialIllustration() {
   const reduced = useReducedMotion()
@@ -99,17 +94,9 @@ function MagneticHeadline({ children }: { children: React.ReactNode }) {
 }
 
 export default function NotFound() {
-  const [noteIndex, setNoteIndex] = useState(0)
   const [searchOpen, setSearchOpen] = useState(false)
   const reduced = useReducedMotion()
-
-  useEffect(() => {
-    if (reduced) return
-    const id = setInterval(() => {
-      setNoteIndex((i) => (i + 1) % LAB_NOTES.length)
-    }, 3200)
-    return () => clearInterval(id)
-  }, [reduced])
+  const t = useTranslations('notFound')
 
   return (
     <main className="relative min-h-screen bg-cream flex flex-col items-center text-center px-6 pt-24 pb-12 overflow-x-hidden overflow-y-auto">
@@ -133,34 +120,8 @@ export default function NotFound() {
           </motion.h1>
         </MagneticHeadline>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-2xl sm:text-4xl md:text-5xl text-ink mt-2 mb-4 sm:mb-6 tracking-tight"
-        >
-          This batch failed QC.
-        </motion.h2>
-
-        {/* Rotating lab-note copy */}
-        <div className="h-12 sm:h-8 flex items-center justify-center mb-8 sm:mb-10 px-4">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={noteIndex}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="text-body-md sm:text-body-lg text-ink/60 font-mono max-w-md"
-            >
-              {LAB_NOTES[noteIndex]}
-            </motion.p>
-          </AnimatePresence>
-        </div>
-
-        <p className="text-body-sm sm:text-body-md text-ink/50 max-w-[440px] mx-auto mb-10 sm:mb-12">
-          The page you're looking for doesn't exist, moved, or is being reconstituted
-          elsewhere. Research use only — 404 use only, too.
+        <p className="text-body-sm sm:text-body-md text-ink/50 max-w-[440px] mx-auto mt-8 mb-10 sm:mb-12">
+          {t('title')}
         </p>
 
         {/* CTAs */}
@@ -171,7 +132,7 @@ export default function NotFound() {
             text={
               <span className="flex items-center gap-2">
                 <Home size={16} strokeWidth={2} />
-                Return Home
+                {t('returnHome')}
               </span>
             }
             className="w-full sm:w-auto"
@@ -184,7 +145,7 @@ export default function NotFound() {
             >
               <span className="flex items-center gap-2">
                 <FlaskConical size={16} strokeWidth={2} />
-                Browse Shop
+                {t('browseShop')}
               </span>
             </Button>
           </Link>
@@ -196,15 +157,11 @@ export default function NotFound() {
         >
           <Search size={14} strokeWidth={2} />
           <span className="border-b border-transparent group-hover:border-primary/40 pb-0.5 transition-colors">
-            Or search for what you need
+            {t('search')}
           </span>
           <ArrowRight size={14} strokeWidth={2} className="transition-transform duration-300 group-hover:translate-x-1" />
         </button>
 
-        <div className="mt-14 sm:mt-16 flex items-center gap-2 text-ink/30">
-          <Beaker size={14} strokeWidth={1.5} />
-          <span className="text-body-xs font-mono uppercase tracking-widest">Error Code: RUO-404</span>
-        </div>
       </div>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

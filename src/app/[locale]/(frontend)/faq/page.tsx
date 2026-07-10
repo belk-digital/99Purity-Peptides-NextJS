@@ -2,9 +2,14 @@ import React from 'react'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { FaqClient } from '@/components/faq/FaqClient'
-import { faqData } from '@/data/faqs'
+import { faqData as faqDataEn } from '@/data/faqs'
+import { faqData as faqDataEs } from '@/data/faqs.es'
 
 const slug = 'faq'
+
+function getFaqData(locale: string) {
+  return locale === 'es' ? faqDataEs : faqDataEn
+}
 
 export async function generateMetadata({
   params,
@@ -53,7 +58,7 @@ export default async function FaqPage({
 
   // Generate structured data for SEO
   // Combine all FAQs from all categories for the JSON-LD
-  const allFaqs = faqData.flatMap(category =>
+  const allFaqs = getFaqData(locale).flatMap(category =>
     category.items.map(item => ({
       "@type": "Question",
       "name": item.question,
@@ -84,8 +89,8 @@ export default async function FaqPage({
         '@type': 'BreadcrumbList',
         '@id': `${url}#breadcrumb`,
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-          { '@type': 'ListItem', position: 2, name: 'FAQ' },
+          { '@type': 'ListItem', position: 1, name: locale === 'es' ? 'Inicio' : 'Home', item: locale === 'en' ? baseUrl : `${baseUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: locale === 'es' ? 'Preguntas Frecuentes' : 'FAQ' },
         ],
       },
       {

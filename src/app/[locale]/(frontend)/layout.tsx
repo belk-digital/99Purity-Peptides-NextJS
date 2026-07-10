@@ -1,4 +1,5 @@
 import React from 'react'
+import { getTranslations } from 'next-intl/server'
 import { LayoutClientWrapper } from '@/components/shared/LayoutClientWrapper'
 import { Header } from '@/components/shared/Header'
 import { Footer } from '@/components/shared/Footer'
@@ -9,10 +10,14 @@ import { CustomScrollbar } from '@/components/shared/CustomScrollbar'
 import { AgeGate } from '@/components/shared/AgeGate'
 import { HomePreloaderWrapper } from '@/components/home/HomePreloaderWrapper'
 
-export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'),
-  title: '99 Purity Peptides',
-  description: 'Premium Peptides for Peak Performance',
+// Fallback metadata for any page under this layout that doesn't supply its own generateMetadata.
+export async function generateMetadata() {
+  const t = await getTranslations('common')
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'),
+    title: '99 Purity Peptides',
+    description: t('siteTagline'),
+  }
 }
 
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {

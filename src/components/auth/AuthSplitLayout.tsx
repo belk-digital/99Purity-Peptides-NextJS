@@ -137,20 +137,20 @@ export function AuthSplitLayout({ children, mode }: AuthSplitLayoutProps) {
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
               Return to Home
             </Link>
-            
-            <div className="text-xs font-medium text-ink/60 text-center sm:text-right">
-              {mode === 'login' ? (
-                <>Don't have an account? <Link href="/register" className="text-ink font-bold hover:underline underline-offset-4">Sign Up</Link></>
-              ) : (
-                <>Already have an account? <Link href="/login" className="text-ink font-bold hover:underline underline-offset-4">Sign In</Link></>
-              )}
-            </div>
           </div>
 
           {/* Form Area */}
           <div className="flex-grow flex flex-col items-center justify-center w-full my-8 sm:my-12 lg:my-0">
             <div className="w-full max-w-[400px]">
               {children}
+              
+              <div className="text-sm font-medium text-ink/60 text-center mt-6">
+                {mode === 'login' ? (
+                  <>Don't have an account? <Link href="/register" className="text-ink font-bold hover:underline underline-offset-4">Sign Up</Link></>
+                ) : (
+                  <>Already have an account? <Link href="/login" className="text-ink font-bold hover:underline underline-offset-4">Sign In</Link></>
+                )}
+              </div>
             </div>
           </div>
 

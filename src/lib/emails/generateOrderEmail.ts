@@ -17,6 +17,17 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
   const total = order.total || 0;
   
   const customerName = escapeHtml(`${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || 'Customer');
+  
+  let customerEmail = order.guestEmail || '';
+  if (!customerEmail && order.owner && payload) {
+    try {
+      const userDoc = typeof order.owner === 'object' ? order.owner : await payload.findByID({ collection: 'users', id: order.owner, depth: 0 });
+      if (userDoc?.email) customerEmail = userDoc.email;
+    } catch (e) {
+      console.error('Failed to fetch user email for invoice', e);
+    }
+  }
+
   const rawShipAddr = order.shippingAddress || {};
   const rawHasBilling = order.billingAddress && order.billingAddress.line1;
   const rawBillAddr = rawHasBilling ? order.billingAddress : rawShipAddr;
@@ -228,7 +239,7 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
               <div style="background-color: #fdfbf7; border-radius: 12px; border: 1px solid #e2ddd3; padding: 24px; margin-bottom: 32px;">
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td width="50%" valign="top">
+                  <td width="50%" valign="top" style="padding-bottom: 24px;">
                     <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 700; color: #8A8A8A; text-transform: uppercase; letter-spacing: 0.1em;">Shipping Address</p>
                     <p style="margin: 0; font-size: 14px; color: #2A2A2A; line-height: 1.5;">
                       ${customerName}<br>
@@ -237,13 +248,23 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
                       ${shipAddr.country || ''}
                     </p>
                   </td>
-                  <td width="50%" valign="top">
+                  <td width="50%" valign="top" style="padding-bottom: 24px;">
                     <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 700; color: #8A8A8A; text-transform: uppercase; letter-spacing: 0.1em;">Billing Address</p>
                     <p style="margin: 0; font-size: 14px; color: #2A2A2A; line-height: 1.5;">
                       ${customerName}<br>
                       ${billAddr.line1 || ''} ${billAddr.line2 ? `<br>${billAddr.line2}` : ''}<br>
                       ${billAddr.city || ''}, ${billAddr.state || ''} ${billAddr.postalCode || ''}<br>
                       ${billAddr.country || ''}
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="padding-top: 24px; border-top: 1px solid #e2ddd3;">
+                    <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 700; color: #8A8A8A; text-transform: uppercase; letter-spacing: 0.1em;">Contact Information</p>
+                    <p style="margin: 0; font-size: 14px; color: #2A2A2A; line-height: 1.5;">
+                      ${customerEmail ? `Email: ${escapeHtml(customerEmail)}<br>` : ''}
+                      ${order.customerPhone ? `Phone: ${escapeHtml(order.customerPhone)}` : ''}
+                      ${!customerEmail && !order.customerPhone ? 'No contact information provided' : ''}
                     </p>
                   </td>
                 </tr>

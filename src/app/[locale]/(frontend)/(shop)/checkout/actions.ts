@@ -123,7 +123,7 @@ export async function createPaymentIntent(
   activeFees.forEach((fee: any) => {
     if (!fee.isOptional) {
       if (fee.type === 'percentage') {
-        feeTotal += subtotalAfterDiscount * (fee.amount / 100)
+        feeTotal += Math.round(subtotalAfterDiscount * (fee.amount / 100) * 100) / 100
       } else if (fee.type === 'fixed_amount') {
         feeTotal += fee.amount
       }
@@ -261,7 +261,7 @@ export async function createPayloadOrder(
   activeFees.forEach((fee: any) => {
     if (!fee.isOptional) {
       const amount = fee.type === 'percentage'
-        ? subtotalAfterDiscount * (fee.amount / 100)
+        ? Math.round(subtotalAfterDiscount * (fee.amount / 100) * 100) / 100
         : fee.amount
 
       feeTotal += amount

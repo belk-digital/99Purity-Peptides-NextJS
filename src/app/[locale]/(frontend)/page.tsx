@@ -83,10 +83,10 @@ export default async function Homepage() {
         <BestSellerSection products={products} />
         <DifferenceSection />
         <TrustBadges />
-        <MilitaryDiscountSection />
+        <CategoriesSection />
         {/* <MerchandiseSection /> */}
         <WhatSetsUsApart />
-        <CategoriesSection />
+        <MilitaryDiscountSection />
         <ParallaxImageSection />
         <WhyChooseUs />
         <BlogSection />

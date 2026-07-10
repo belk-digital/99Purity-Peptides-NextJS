@@ -10,12 +10,22 @@ import { TableOfContents } from '@/components/editorial/TableOfContents'
 import { BlogPostHero } from '@/components/editorial/BlogPostHero'
 import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
 import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
-import { BLOG_SEO } from '@/data/blog-seo'
+import { BLOG_SEO as BLOG_SEO_EN } from '@/data/blog-seo'
+import { BLOG_SEO_ES } from '@/data/blog-seo.es'
 
 const BLOG_POSTS = BLOG_POSTS_EN
 
 function getBlogPosts(locale: string) {
   return locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
+}
+
+function getBlogSeo(locale: string) {
+  return locale === 'es' ? BLOG_SEO_ES : BLOG_SEO_EN
+}
+
+const BREADCRUMB_LABELS: Record<string, { home: string; blog: string }> = {
+  en: { home: 'Home', blog: 'Research Blog' },
+  es: { home: 'Inicio', blog: 'Blog de Investigación' },
 }
 
 const MONTHS: Record<string, string> = {
@@ -55,9 +65,11 @@ export async function generateMetadata({
   const { slug, locale } = await params
   const post = getBlogPosts(locale).find((p) => p.slug === slug)
 
-  if (!post) return { title: 'Post Not Found | 99 Purity Peptides' }
+  if (!post) {
+    return { title: locale === 'es' ? 'Publicación No Encontrada | 99 Purity Peptides' : 'Post Not Found | 99 Purity Peptides' }
+  }
 
-  const seoData = BLOG_SEO[slug]
+  const seoData = getBlogSeo(locale)[slug]
 
   const title = seoData?.title ? seoData.title : `${post.title} | 99 Purity Peptides`
   const description = seoData?.description ? seoData.description : post.excerpt
@@ -108,7 +120,9 @@ export default async function BlogPostPage({
   const relatedPosts = localePosts.filter((p) => p.slug !== slug).slice(0, 3)
 
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
-  const postUrl = `${baseUrl}/${slug}`
+  const postPath = locale === 'en' ? `/${slug}` : `/${locale}/${slug}`
+  const postUrl = `${baseUrl}${postPath}`
+  const breadcrumbLabels = BREADCRUMB_LABELS[locale] || BREADCRUMB_LABELS.en
   const isoDate = toIsoDate(post.date)
   // post.imageSrc contains literal spaces (e.g. "/99 Blog Images/..."); encodeURI so the
   // resulting absolute URL is valid per the JSON-LD/schema.org URL requirement.
@@ -147,8 +161,8 @@ export default async function BlogPostPage({
         '@type': 'BreadcrumbList',
         '@id': `${postUrl}#breadcrumb`,
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-          { '@type': 'ListItem', position: 2, name: 'Research Blog', item: `${baseUrl}/blog` },
+          { '@type': 'ListItem', position: 1, name: breadcrumbLabels.home, item: locale === 'en' ? baseUrl : `${baseUrl}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: breadcrumbLabels.blog, item: locale === 'en' ? `${baseUrl}/blog` : `${baseUrl}/${locale}/blog` },
           { '@type': 'ListItem', position: 3, name: post.title, item: postUrl },
         ]
       },
@@ -167,7 +181,7 @@ export default async function BlogPostPage({
     ]
   }
 
-  const customSchemas = BLOG_SEO[slug]?.schemas || []
+  const customSchemas = getBlogSeo(locale)[slug]?.schemas || []
 
   return (
     <>

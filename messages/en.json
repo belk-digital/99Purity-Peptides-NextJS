@@ -1,5 +1,6 @@
 {
   "common": {
+    "siteTagline": "Premium Peptides for Peak Performance",
     "languageSwitcher": {
       "en": "English",
       "es": "Español"
@@ -1943,6 +1944,8 @@
   },
   "content": {
     "aboutPage": {
+      "metaTitle": "About 99 Purity Peptides | Trusted Peptide Company USA",
+      "metaDescription": "Learn about 99 Purity Peptides, a trusted peptide supplier that USA researchers rely on for high-purity synthetic research peptides.",
       "faqTitle": "Questions",
       "faqDescription": "Common questions about research peptides, ordering, and lab standards",
       "faqs": {
@@ -2478,5 +2481,11 @@
     "loadMore": "Load More Posts",
     "shareArticle": "Share article",
     "linkCopied": "Link copied to clipboard!"
+  },
+  "notFound": {
+    "title": "Whoops! Looks like this page evaporated during our latest experiment. Don't worry, no researchers were harmed in the making of this 404 error. Let's get you back to the lab!",
+    "returnHome": "Return Home",
+    "browseShop": "Browse Shop",
+    "search": "Or search for what you need"
   }
 }

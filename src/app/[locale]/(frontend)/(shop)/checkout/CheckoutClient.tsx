@@ -47,6 +47,7 @@ export function CheckoutClient() {
   const [selectedAddressId, setSelectedAddressId] = useState<string | 'new'>('new')
 
   // Form State
+  const [attemptedSubmit, setAttemptedSubmit] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'zelle' | 'amex'>('zelle')
   const [formData, setFormData] = useState({
@@ -264,6 +265,7 @@ export function CheckoutClient() {
   }
 
   const handleZeroTotalCheckout = async () => {
+    setAttemptedSubmit(true)
     if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
       toast.error(t('fillRequiredFieldsOrder'))
       return
@@ -304,6 +306,7 @@ export function CheckoutClient() {
   // then the customer sends payment manually using the details shown. A human confirms
   // the transfer and updates the order's paymentStatus in the admin panel afterward.
   const handleZellePlaceOrder = async () => {
+    setAttemptedSubmit(true)
     if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
       toast.error(t('fillRequiredFieldsOrder'))
       return
@@ -341,6 +344,7 @@ export function CheckoutClient() {
   }
 
   const handleAmexPlaceOrder = async () => {
+    setAttemptedSubmit(true)
     if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
       toast.error(t('fillRequiredFieldsOrder'))
       return
@@ -602,7 +606,7 @@ export function CheckoutClient() {
                   onChange={handleInputChange}
                   placeholder={t('emailAddress')}
                   type="email"
-                  className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-1 focus-visible:ring-ink"
+                  className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && !formData.email ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`}
                   required
                 />
                 <div className="flex items-start gap-3 mt-1 px-1">
@@ -687,20 +691,20 @@ export function CheckoutClient() {
                 {(!user || selectedAddressId === 'new') && (
                   <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="grid grid-cols-2 gap-4">
-                      <Input name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder={t('firstName')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
-                      <Input name="lastName" value={formData.lastName} onChange={handleInputChange} placeholder={t('lastName')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                      <Input name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder={t('firstName')} className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && selectedAddressId === 'new' && !formData.firstName ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required={selectedAddressId === 'new'} />
+                      <Input name="lastName" value={formData.lastName} onChange={handleInputChange} placeholder={t('lastName')} className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && selectedAddressId === 'new' && !formData.lastName ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required={selectedAddressId === 'new'} />
                     </div>
-                    <Input name="address" value={formData.address} onChange={handleInputChange} placeholder={t('address')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                    <Input name="address" value={formData.address} onChange={handleInputChange} placeholder={t('address')} className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && selectedAddressId === 'new' && !formData.address ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required={selectedAddressId === 'new'} />
                     <Input name="apartment" value={formData.apartment} onChange={handleInputChange} placeholder={t('apartmentOptional')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" />
                     <div className="grid grid-cols-6 gap-4">
                       <div className="col-span-3 sm:col-span-2">
-                        <Input name="city" value={formData.city} onChange={handleInputChange} placeholder={t('city')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                        <Input name="city" value={formData.city} onChange={handleInputChange} placeholder={t('city')} className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && selectedAddressId === 'new' && !formData.city ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required={selectedAddressId === 'new'} />
                       </div>
                       <div className="col-span-3 sm:col-span-2">
-                        <Input name="state" value={formData.state} onChange={handleInputChange} placeholder={t('state')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                        <Input name="state" value={formData.state} onChange={handleInputChange} placeholder={t('state')} className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && selectedAddressId === 'new' && !formData.state ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required={selectedAddressId === 'new'} />
                       </div>
                       <div className="col-span-6 sm:col-span-2">
-                        <Input name="zip" value={formData.zip} onChange={handleInputChange} placeholder={t('zipCode')} className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required={selectedAddressId === 'new'} />
+                        <Input name="zip" value={formData.zip} onChange={handleInputChange} placeholder={t('zipCode')} className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && selectedAddressId === 'new' && !formData.zip ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required={selectedAddressId === 'new'} />
                       </div>
                     </div>
                   </div>
@@ -708,7 +712,7 @@ export function CheckoutClient() {
 
                 {/* Phone is always shown and required, even when a saved address is selected —
                     older addresses saved before this field existed may not have one on file. */}
-                <Input name="phone" value={formData.phone} onChange={handleInputChange} placeholder={t('phoneForDelivery')} type="tel" className="h-14 rounded-2xl border-slate-100 bg-white shadow-sm focus-visible:ring-ink" required />
+                <Input name="phone" value={formData.phone} onChange={handleInputChange} placeholder={t('phoneForDelivery')} type="tel" className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && !formData.phone ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required />
               </section>
 
               {/* Shipping Method */}
