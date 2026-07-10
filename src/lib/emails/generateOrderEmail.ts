@@ -1,4 +1,5 @@
 import { escapeHtml } from './escapeHtml'
+import { emailLayout } from './emailLayout'
 
 export async function generateOrderInvoiceHtml(order: any, payload?: any, customNote?: string): Promise<string> {
   const orderNumber = order.orderNumber || order.id;
@@ -124,48 +125,26 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
     </tr>
   ` : '';
 
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Invoice #${orderNumber}</title>
-</head>
-<body style="margin: 0; padding: 0; background-color: #f9fafb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f9fafb; padding: 40px 20px;">
-    <tr>
-      <td align="center">
-        <table width="100%" max-width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-          
-          <!-- Header -->
-          <tr>
-            <td style="padding: 40px 40px 30px 40px; text-align: center; background-color: #000000; border-bottom: 1px solid #111111;">
-              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto;" />
-              <p style="margin: 16px 0 0 0; font-size: 16px; color: #d1d5db;">Thank you for your order, ${customerName}!</p>
-            </td>
-          </tr>
-
-          ${customNote ? `
+  return emailLayout({
+    title: \`Order Invoice #\${orderNumber}\`,
+    serverUrl,
+    content: \`
+              <h2 style="margin: 0 0 16px 0; font-size: 24px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">Thank you for your order, \${customerName}!</h2>
+              
+          \${customNote ? \`
           <!-- Custom Admin Note -->
-          <tr>
-            <td style="padding: 0 40px; padding-bottom: 20px;">
-              <div style="background-color: #FFFBEB; border-left: 4px solid #F59E0B; padding: 20px; border-radius: 4px;">
-                <h3 style="margin: 0 0 8px 0; color: #92400E; font-size: 15px; font-weight: 600;">Message regarding your order</h3>
-                <p style="margin: 0; color: #92400E; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(customNote)}</p>
+              <div style="background-color: #fdfbf7; border-left: 4px solid #1e5661; padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
+                <h3 style="margin: 0 0 8px 0; color: #1e5661; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Message regarding your order</h3>
+                <p style="margin: 0; color: #2A2A2A; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">\${escapeHtml(customNote)}</p>
               </div>
-            </td>
-          </tr>
-          ` : ''}
+          \` : ''}
 
-          ${order.paymentMethod === 'zelle' && order.paymentStatus === 'unpaid' ? `
+          \${order.paymentMethod === 'zelle' && order.paymentStatus === 'unpaid' ? \`
           <!-- Zelle Payment Instructions -->
-          <tr>
-            <td style="padding: 0 40px; padding-bottom: 20px;">
-              <div style="background-color: #F3E8FF; border: 1px solid #E9D5FF; padding: 30px 20px; border-radius: 12px; text-align: center;">
+              <div style="background-color: #F3E8FF; border: 1px solid #E9D5FF; padding: 30px 20px; border-radius: 12px; text-align: center; margin-bottom: 32px;">
                 <div style="display: inline-block; width: 48px; height: 48px; background-color: #E9D5FF; border-radius: 50%; color: #7E22CE; font-weight: bold; font-size: 24px; line-height: 48px; margin-bottom: 16px;">Z</div>
                 <h3 style="margin: 0 0 8px 0; color: #6B21A8; font-size: 18px; font-weight: 700;">Complete Your Payment via Zelle</h3>
-                <p style="margin: 0 0 20px 0; color: #7E22CE; font-size: 14px; line-height: 1.5;">To finalize your order, please send exactly <strong>${formatMoney(total)}</strong> to our Zelle account.</p>
+                <p style="margin: 0 0 20px 0; color: #7E22CE; font-size: 14px; line-height: 1.5;">To finalize your order, please send exactly <strong>\${formatMoney(total)}</strong> to our Zelle account.</p>
                 
                 <div style="display: block; margin-bottom: 20px;">
                   <div style="background-color: #ffffff; border: 1px solid #E9D5FF; border-radius: 12px; padding: 8px; display: inline-block;">
@@ -180,143 +159,102 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
                   </div>
                 </div>
                 
-                <p style="margin: 0 0 8px 0; color: #7E22CE; font-size: 12px;">Please make sure to include your order number <strong>#${orderNumber}</strong> in the Zelle memo.</p>
+                <p style="margin: 0 0 8px 0; color: #7E22CE; font-size: 12px;">Please make sure to include your order number <strong>#\${orderNumber}</strong> in the Zelle memo.</p>
                 <p style="margin: 0; color: #9333EA; font-size: 11px; font-style: italic;">Note: Please ignore this payment instruction if you have already completed your payment on the website.</p>
               </div>
-            </td>
-          </tr>
-          ` : ''}
+          \` : ''}
 
-          ${order.paymentMethod === 'amex' && order.paymentStatus === 'unpaid' ? `
+          \${order.paymentMethod === 'amex' && order.paymentStatus === 'unpaid' ? \`
           <!-- AMEX Payment Instructions -->
-          <tr>
-            <td style="padding: 0 40px; padding-bottom: 20px;">
-              <div style="background-color: #EFF6FF; border: 1px solid #DBEAFE; padding: 30px 20px; border-radius: 12px; text-align: center;">
+              <div style="background-color: #EFF6FF; border: 1px solid #DBEAFE; padding: 30px 20px; border-radius: 12px; text-align: center; margin-bottom: 32px;">
                 <div style="display: inline-block; width: 48px; height: 48px; background-color: #DBEAFE; border-radius: 50%; color: #1D4ED8; font-weight: bold; font-size: 24px; line-height: 48px; margin-bottom: 16px;">A</div>
                 <h3 style="margin: 0 0 8px 0; color: #1E40AF; font-size: 18px; font-weight: 700;">Complete Your American Express Payment</h3>
                 <p style="margin: 0 0 20px 0; color: #1D4ED8; font-size: 14px; line-height: 1.5;">One of our team members will reach out to you shortly via <strong>SMS</strong> with a secure invoice link to finalize your American Express payment.</p>
               </div>
-            </td>
-          </tr>
-          ` : ''}
+          \` : ''}
 
-          ${safeTrackingLink ? `
+          \${safeTrackingLink ? \`
           <!-- Tracking Link -->
-          <tr>
-            <td style="padding: 0 40px; padding-bottom: 20px;">
-              <div style="background-color: #ECFDF5; border-left: 4px solid #10B981; padding: 20px; border-radius: 4px;">
+              <div style="background-color: #fdfbf7; border-left: 4px solid #10B981; padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 32px;">
                 <h3 style="margin: 0 0 8px 0; color: #065F46; font-size: 15px; font-weight: 600;">Track Your Order</h3>
                 <p style="margin: 0 0 12px 0; color: #065F46; font-size: 14px; line-height: 1.6;">Your package is on the way! You can track its progress using the link below.</p>
-                <a href="${safeTrackingLink}" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #10B981; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 4px;">Track Package</a>
+                <a href="\${safeTrackingLink}" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #10B981; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 4px;">Track Package</a>
               </div>
-            </td>
-          </tr>
-          ` : ''}
+          \` : ''}
 
           <!-- Order Info -->
-          <tr>
-            <td style="padding: 30px 40px;">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 32px;">
                 <tr>
                   <td width="33%">
-                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Order Number</p>
-                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #111827; font-weight: 500;">${orderNumber}</p>
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8A8A8A; font-weight: 700;">Order Number</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #0A0A0A; font-weight: 500;">\${orderNumber}</p>
                   </td>
                   <td width="33%" align="center">
-                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Payment Status</p>
-                    <p style="margin: 4px 0 0 0; font-size: 16px; color: ${order.paymentStatus === 'unpaid' ? '#B91C1C' : '#15803D'}; font-weight: 700;">${order.paymentStatus === 'unpaid' ? 'UNPAID' : 'PAID'}</p>
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8A8A8A; font-weight: 700;">Payment Status</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: \${order.paymentStatus === 'unpaid' ? '#B91C1C' : '#15803D'}; font-weight: 700;">\${order.paymentStatus === 'unpaid' ? 'UNPAID' : 'PAID'}</p>
                   </td>
                   <td width="33%" align="right">
-                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Date</p>
-                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #111827; font-weight: 500;">${orderDate}</p>
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8A8A8A; font-weight: 700;">Date</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #0A0A0A; font-weight: 500;">\${orderDate}</p>
                   </td>
                 </tr>
               </table>
-            </td>
-          </tr>
 
           <!-- Items -->
-          <tr>
-            <td style="padding: 0 40px 20px 40px;">
-              <p style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #111827;">Order Summary</p>
-              <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                ${itemsHtml}
+              <p style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #0A0A0A; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e2ddd3; padding-bottom: 8px;">Order Summary</p>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
+                \${itemsHtml}
               </table>
-            </td>
-          </tr>
 
           <!-- Totals -->
-          <tr>
-            <td style="padding: 20px 40px;">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 32px;">
                 <tr>
-                  <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Subtotal</td>
-                  <td align="right" style="padding: 8px 0; font-size: 14px; color: #111827;">${formatMoney(subtotal)}</td>
+                  <td style="padding: 8px 0; font-size: 14px; color: #4A4A4A;">Subtotal</td>
+                  <td align="right" style="padding: 8px 0; font-size: 14px; color: #0A0A0A;">\${formatMoney(subtotal)}</td>
                 </tr>
-                ${discountRow}
-                ${pointsRow}
+                \${discountRow}
+                \${pointsRow}
                 <tr>
-                  <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Shipping (${order.shippingMethod || 'Standard'})</td>
-                  <td align="right" style="padding: 8px 0; font-size: 14px; color: #111827;">${shippingTotal === 0 ? 'Free' : formatMoney(shippingTotal)}</td>
+                  <td style="padding: 8px 0; font-size: 14px; color: #4A4A4A;">Shipping (\${order.shippingMethod || 'Standard'})</td>
+                  <td align="right" style="padding: 8px 0; font-size: 14px; color: #0A0A0A;">\${shippingTotal === 0 ? 'Free' : formatMoney(shippingTotal)}</td>
                 </tr>
-                ${feeRow}
+                \${feeRow}
                 <tr>
-                  <td style="padding: 16px 0 0 0; font-size: 16px; font-weight: 700; color: #111827; border-top: 1px solid #e5e7eb;">Total</td>
-                  <td align="right" style="padding: 16px 0 0 0; font-size: 18px; font-weight: 800; color: #111827; border-top: 1px solid #e5e7eb;">${formatMoney(total)}</td>
+                  <td style="padding: 16px 0 0 0; font-size: 16px; font-weight: 700; color: #0A0A0A; border-top: 1px solid #e2ddd3;">Total</td>
+                  <td align="right" style="padding: 16px 0 0 0; font-size: 18px; font-weight: 800; color: #1e5661; border-top: 1px solid #e2ddd3;">\${formatMoney(total)}</td>
                 </tr>
               </table>
-            </td>
-          </tr>
 
           <!-- Shipping Info -->
-          <tr>
-            <td style="padding: 30px 40px; background-color: #f9fafb; border-top: 1px solid #f3f4f6;">
+              <div style="background-color: #fdfbf7; border-radius: 12px; border: 1px solid #e2ddd3; padding: 24px; margin-bottom: 32px;">
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="50%" valign="top">
-                    <p style="margin: 0 0 12px 0; font-size: 14px; font-weight: 700; color: #111827;">Shipping Address</p>
-                    <p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.5;">
-                      ${customerName}<br>
-                      ${shipAddr.line1 || ''} ${shipAddr.line2 ? `<br>${shipAddr.line2}` : ''}<br>
-                      ${shipAddr.city || ''}, ${shipAddr.state || ''} ${shipAddr.postalCode || ''}<br>
-                      ${shipAddr.country || ''}
+                    <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 700; color: #8A8A8A; text-transform: uppercase; letter-spacing: 0.1em;">Shipping Address</p>
+                    <p style="margin: 0; font-size: 14px; color: #2A2A2A; line-height: 1.5;">
+                      \${customerName}<br>
+                      \${shipAddr.line1 || ''} \${shipAddr.line2 ? \`<br>\${shipAddr.line2}\` : ''}<br>
+                      \${shipAddr.city || ''}, \${shipAddr.state || ''} \${shipAddr.postalCode || ''}<br>
+                      \${shipAddr.country || ''}
                     </p>
                   </td>
                   <td width="50%" valign="top">
-                    <p style="margin: 0 0 12px 0; font-size: 14px; font-weight: 700; color: #111827;">Billing Address</p>
-                    <p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.5;">
-                      ${customerName}<br>
-                      ${billAddr.line1 || ''} ${billAddr.line2 ? `<br>${billAddr.line2}` : ''}<br>
-                      ${billAddr.city || ''}, ${billAddr.state || ''} ${billAddr.postalCode || ''}<br>
-                      ${billAddr.country || ''}
+                    <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 700; color: #8A8A8A; text-transform: uppercase; letter-spacing: 0.1em;">Billing Address</p>
+                    <p style="margin: 0; font-size: 14px; color: #2A2A2A; line-height: 1.5;">
+                      \${customerName}<br>
+                      \${billAddr.line1 || ''} \${billAddr.line2 ? \`<br>\${billAddr.line2}\` : ''}<br>
+                      \${billAddr.city || ''}, \${billAddr.state || ''} \${billAddr.postalCode || ''}<br>
+                      \${billAddr.country || ''}
                     </p>
                   </td>
                 </tr>
               </table>
-            </td>
-          </tr>
+              </div>
 
           <!-- View Order Button -->
-          <tr>
-            <td style="padding: 0 40px 30px 40px; text-align: center; background-color: #f9fafb;">
-              <p style="margin: 0 0 16px 0; font-size: 14px; color: #4B5563;">To check your payment and order status at any time, please visit our site:</p>
-              <a href="${serverUrl}/account/orders/${order.id}" style="display: inline-block; padding: 12px 24px; background-color: #000000; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 6px;">View Order Status</a>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 30px 40px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #9ca3af;">If you have any questions about this invoice, simply reply to this email or reach out to our support team.</p>
-              <p style="margin: 12px 0 0 0; font-size: 12px; color: #d1d5db;">&copy; ${new Date().getFullYear()} 99 Purity Peptides. All rights reserved.</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `;
+              <div style="text-align: center;">
+                <a href="${serverUrl}/account/orders/${order.id}" style="display: inline-block; padding: 16px 32px; background-color: #1e5661; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em;">View Order Status</a>
+              </div>
+    `
+  })
 }

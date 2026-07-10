@@ -1,3 +1,5 @@
+import { emailLayout } from './emailLayout'
+
 export function generateAdminAffiliateConversionEmail(order: any, affiliate: any, commissionAmount: number): string {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
   
@@ -8,56 +10,28 @@ export function generateAdminAffiliateConversionEmail(order: any, affiliate: any
   const customerEmail = (typeof order.owner === 'object' && order.owner !== null ? order.owner.email : order.guestEmail) || 'N/A';
   const adminUrl = `${serverUrl}/admin/collections/orders/${order.id}`;
 
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Affiliate Conversion! 🎉</title>
-</head>
-<body style="margin: 0; padding: 0; background-color: #f9fafb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f9fafb; padding: 40px 20px;">
-    <tr>
-      <td align="center">
-        <table width="100%" max-width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-          
-          <!-- Header -->
-          <tr>
-            <td style="padding: 40px 40px 30px 40px; text-align: center; background-color: #000000; border-bottom: 1px solid #111111;">
-              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto; filter: brightness(0) invert(1);" />
-              <p style="margin: 16px 0 0 0; font-size: 16px; color: #d1d5db;">New Affiliate Conversion! 🎉</p>
-            </td>
-          </tr>
-
-          <!-- Content -->
-          <tr>
-            <td style="padding: 40px;">
-              <h2 style="margin: 0 0 16px 0; font-size: 20px; color: #111827;">An order has been placed by a customer using an affiliate link or coupon.</h2>
+  return emailLayout({
+    title: 'New Affiliate Conversion! 🎉',
+    serverUrl,
+    content: `
+              <h2 style="margin: 0 0 16px 0; font-size: 24px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">New Conversion Tracked</h2>
+              <p style="margin: 0 0 24px 0; font-size: 16px; color: #4A4A4A; line-height: 1.6;">An order has been placed by a customer using an affiliate link or coupon.</p>
               
-              <div style="background-color: #f9f9f9; padding: 20px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 24px;">
-                <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #4b5563;">Affiliate:</span> ${affiliateName}</p>
-                <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #4b5563;">Order Number:</span> #${orderNumber}</p>
-                <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #4b5563;">Order Total:</span> ${orderTotal}</p>
-                <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #4b5563;">Commission:</span> ${commissionFormatted}</p>
-                <p style="margin: 0;"><span style="font-weight: bold; color: #4b5563;">Customer:</span> ${customerEmail}</p>
-              </div>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fdfbf7; border-radius: 12px; border: 1px solid #e2ddd3; margin-bottom: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                <tr>
+                  <td style="padding: 24px;">
+                    <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #8A8A8A; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; width: 120px;">Affiliate:</span> <strong style="color: #0A0A0A;">${affiliateName}</strong></p>
+                    <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #8A8A8A; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; width: 120px;">Order Number:</span> <strong style="color: #0A0A0A;">#${orderNumber}</strong></p>
+                    <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #8A8A8A; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; width: 120px;">Order Total:</span> <strong style="color: #0A0A0A;">${orderTotal}</strong></p>
+                    <p style="margin: 0 0 8px 0;"><span style="font-weight: bold; color: #8A8A8A; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; width: 120px;">Commission:</span> <strong style="color: #1e5661; font-size: 16px;">${commissionFormatted}</strong></p>
+                    <p style="margin: 0;"><span style="font-weight: bold; color: #8A8A8A; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; width: 120px;">Customer:</span> <strong style="color: #0A0A0A;">${customerEmail}</strong></p>
+                  </td>
+                </tr>
+              </table>
 
-              <a href="${adminUrl}" style="display: inline-block; padding: 12px 24px; background-color: #000000; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 6px;">View Order in Admin</a>
-            </td>
-          </tr>
-          
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 30px 40px; background-color: #f3f4f6; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="margin: 0; font-size: 12px; color: #9ca3af;">&copy; ${new Date().getFullYear()} 99 Purity Peptides. Internal Notification.</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `;
+              <div style="text-align: center;">
+                <a href="${adminUrl}" style="display: inline-block; padding: 16px 32px; background-color: #1e5661; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">View Order in Admin</a>
+              </div>
+    `
+  })
 }
