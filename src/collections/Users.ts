@@ -20,6 +20,7 @@ export const Users: CollectionConfig = {
       admin: {
         components: {
           Field: '@/components/admin/UserOrderHistory#UserOrderHistory',
+          Cell: '@/components/admin/UserOrderHistoryCell#UserOrderHistoryCell',
         },
       },
     },

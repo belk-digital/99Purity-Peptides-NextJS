@@ -48,11 +48,41 @@ export function CartDrawer() {
   const subtotal = items.reduce((acc, item) => acc + item.priceSnapshot * item.quantity, 0)
 
   const [isReady, setIsReady] = useState(false)
+  const [freeShippingThreshold, setFreeShippingThreshold] = useState<number | null>(null)
+  const previousSubtotal = useRef(subtotal)
   
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 500) // wait for hydration
     return () => clearTimeout(timer)
   }, [])
+
+  useEffect(() => {
+    let active = true
+    fetch('/api/shippingzones')
+      .then(res => res.json())
+      .then(data => {
+        if (active && data?.docs?.length > 0) {
+          const methods = data.docs[0].methods || []
+          const freeMethod = methods.find((m: any) => m.price === 0 && m.minOrderAmount > 0)
+          if (freeMethod) {
+            setFreeShippingThreshold(freeMethod.minOrderAmount)
+          }
+        }
+      })
+      .catch(err => console.error("Error fetching shipping zones for cart drawer", err))
+      
+    return () => { active = false }
+  }, [])
+
+  useEffect(() => {
+    if (isReady && freeShippingThreshold && subtotal >= freeShippingThreshold && previousSubtotal.current < freeShippingThreshold) {
+      toast.success(t('freeShippingUnlockedToast'))
+    }
+    previousSubtotal.current = subtotal
+  }, [subtotal, isReady, t, freeShippingThreshold])
+
+  const progressToFreeShipping = freeShippingThreshold ? Math.min((subtotal / freeShippingThreshold) * 100, 100) : 0
+  const amountToFreeShipping = freeShippingThreshold ? freeShippingThreshold - subtotal : 0
 
   return (
     <AnimatePresence>
@@ -116,7 +146,26 @@ export function CartDrawer() {
             ) : (
               /* Populated Cart */
               <>
-
+                {/* Shipping Progress */}
+                {freeShippingThreshold !== null && (
+                  <div className="px-6 md:px-8 py-2 shrink-0">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-ink/60 mb-2">
+                      {amountToFreeShipping > 0
+                        ? t('freeShippingProgress', { amount: amountToFreeShipping.toFixed(2) })
+                        : t('freeShippingUnlocked')}
+                    </p>
+                    <div className="w-full h-1.5 bg-ink/5 rounded-full overflow-hidden shadow-inner">
+                      <motion.div 
+                        className="h-full bg-primary rounded-full shadow-[0_0_10px_rgba(0,255,255,0.6)] relative"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progressToFreeShipping}%` }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                      >
+                        <div className="absolute inset-0 bg-white/30 w-full h-full animate-[shimmer_2s_infinite]" style={{ backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)', transform: 'skewX(-20deg)' }} />
+                      </motion.div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Items List */}
                 <div 

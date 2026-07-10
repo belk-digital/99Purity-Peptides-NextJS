@@ -141,7 +141,7 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
           <!-- Header -->
           <tr>
             <td style="padding: 40px 40px 30px 40px; text-align: center; background-color: #000000; border-bottom: 1px solid #111111;">
-              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto; filter: brightness(0) invert(1);" />
+              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto;" />
               <p style="margin: 16px 0 0 0; font-size: 16px; color: #d1d5db;">Thank you for your order, ${customerName}!</p>
             </td>
           </tr>
@@ -167,13 +167,17 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
                 <h3 style="margin: 0 0 8px 0; color: #6B21A8; font-size: 18px; font-weight: 700;">Complete Your Payment via Zelle</h3>
                 <p style="margin: 0 0 20px 0; color: #7E22CE; font-size: 14px; line-height: 1.5;">To finalize your order, please send exactly <strong>${formatMoney(total)}</strong> to our Zelle account.</p>
                 
-                <div style="background-color: #ffffff; border: 1px solid #E9D5FF; border-radius: 12px; padding: 8px; display: inline-block; margin-bottom: 20px;">
-                  <img src="https://res.cloudinary.com/denskvdyt/image/upload/v1783110064/zelle-qr_h2xhvt.jpg" alt="Zelle QR Code" style="width: 150px; height: 150px; display: block;" />
+                <div style="display: block; margin-bottom: 20px;">
+                  <div style="background-color: #ffffff; border: 1px solid #E9D5FF; border-radius: 12px; padding: 8px; display: inline-block;">
+                    <img src="https://res.cloudinary.com/denskvdyt/image/upload/v1783110064/zelle-qr_h2xhvt.jpg" alt="Zelle QR Code" style="width: 150px; height: 150px; display: block;" />
+                  </div>
                 </div>
                 
-                <div style="background-color: #ffffff; border-radius: 8px; padding: 12px 24px; display: inline-block; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                  <p style="margin: 0 0 4px 0; color: #A855F7; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Send To</p>
-                  <p style="margin: 0; color: #6B21A8; font-size: 16px; font-weight: 700;">orders@99puritypeptides.com</p>
+                <div style="display: block; margin-bottom: 16px;">
+                  <div style="background-color: #ffffff; border-radius: 8px; padding: 12px 24px; display: inline-block; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                    <p style="margin: 0 0 4px 0; color: #A855F7; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Send To</p>
+                    <p style="margin: 0; color: #6B21A8; font-size: 16px; font-weight: 700;">orders@99puritypeptides.com</p>
+                  </div>
                 </div>
                 
                 <p style="margin: 0 0 8px 0; color: #7E22CE; font-size: 12px;">Please make sure to include your order number <strong>#${orderNumber}</strong> in the Zelle memo.</p>

@@ -158,8 +158,16 @@ export function CheckoutClient() {
   useEffect(() => {
     if (visibleShippingMethods.length > 0) {
       const isCurrentValid = visibleShippingMethods.some(m => m.method === shippingMethod)
+      
+      const isCurrentExpress = shippingMethod.toLowerCase().includes('express')
+      const cheapestMethod = [...visibleShippingMethods].sort((a, b) => a.price - b.price)[0]
+      const currentMethodObj = visibleShippingMethods.find(m => m.method === shippingMethod)
+
       if (!isCurrentValid) {
-        setShippingMethod(visibleShippingMethods[0].method)
+        setShippingMethod(cheapestMethod.method)
+      } else if (!isCurrentExpress && currentMethodObj && cheapestMethod.price < currentMethodObj.price) {
+        // Auto-select the cheaper method (like Free Shipping) if it becomes available and they aren't on Express
+        setShippingMethod(cheapestMethod.method)
       }
     }
   }, [subtotal, availableShippingMethods, shippingMethod])

@@ -115,7 +115,7 @@ export function AccountOverviewClient({ stats, recentOrders, defaultAddress, aff
               <span className={`text-2xl sm:text-4xl text-white font-bold tracking-tighter font-heading`}>{Number(stats.purityPoints.toFixed(2))}</span>
               <span className="text-[10px] sm:text-xs text-gray-300 font-medium font-heading">(${stats.purityPoints.toFixed(2)})</span>
             </div>
-            <p className="text-[8px] sm:text-[9px] text-gray-300 mt-1 sm:mt-2 leading-tight hidden sm:block">{t('purityPointsDescription')}</p>
+            <p className="text-[10px] sm:text-xs text-gray-300 mt-1 sm:mt-2 leading-tight hidden sm:block">{t('purityPointsDescription')}</p>
           </div>
         </motion.div>
 
