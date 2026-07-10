@@ -34,10 +34,10 @@ export async function generateAffiliateWelcomeEmail(affiliate: any, user: any): 
               
               <p style="margin: 0 0 24px 0; font-size: 16px; color: #4A4A4A; line-height: 1.6;">Share your link or your code with your audience. When they use it, they get ${commissionRate}% off their order, and you get ${commissionRate}% commission!</p>
               
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 32px;">
-                <tr>
-  </table>
-</body>
-</html>
-  `;
+              <!-- CTA Button -->
+              <div style="text-align: center;">
+                <a href="${serverUrl}/account/partner" style="display: inline-block; padding: 16px 32px; background-color: #1e5661; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em;">View Your Dashboard</a>
+              </div>
+    `
+  });
 }
