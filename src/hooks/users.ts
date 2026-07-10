@@ -51,6 +51,33 @@ export const afterCreateUserTodo: CollectionAfterChangeHook = async ({ doc, oper
       } catch (err) {
         req.payload.logger.error({ err }, `Failed to set up welcome emails for ${doc.email}`)
       }
+
+      // Subscribe to marketing emails if accepted
+      if (doc.acceptsMarketing && process.env.RESEND_API_KEY) {
+        try {
+          const { Resend } = await import('resend')
+          const resend = new Resend(process.env.RESEND_API_KEY)
+          
+          const payloadObj: any = {
+            email: doc.email.toLowerCase(),
+            unsubscribed: false,
+          }
+          if (doc.firstName) payloadObj.firstName = doc.firstName
+          if (doc.lastName) payloadObj.lastName = doc.lastName
+          if (process.env.RESEND_AUDIENCE_ID) {
+            payloadObj.audienceId = process.env.RESEND_AUDIENCE_ID
+          }
+          
+          const { error } = await resend.contacts.create(payloadObj)
+          if (error) {
+            req.payload.logger.error({ err: error }, `Resend API Error for ${doc.email}`)
+          } else {
+            req.payload.logger.info(`Added new user ${doc.email} to Resend marketing audience.`)
+          }
+        } catch (err) {
+          req.payload.logger.error({ err }, `Failed to add new user ${doc.email} to Resend audience.`)
+        }
+      }
     }
 
     // Retroactive Order Binding

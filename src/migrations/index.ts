@@ -22,6 +22,9 @@ import * as migration_20260705_120000_add_coupon_is_active_and_verify_backfill f
 import * as migration_20260706_120000_add_order_applied_fees_percentage from './20260706_120000_add_order_applied_fees_percentage';
 import * as migration_20260706_150000_add_military_discount_requests from './20260706_150000_add_military_discount_requests';
 import * as migration_20260710_120000_convert_cents_to_dollars from './20260710_120000_convert_cents_to_dollars';
+import * as migration_20260710_130000_fix_legacy_order_item_prices from './20260710_130000_fix_legacy_order_item_prices';
+import * as migration_20260710_140000_fix_legacy_order_discount_and_tax from './20260710_140000_fix_legacy_order_discount_and_tax';
+import * as migration_20260710_150000_fix_legacy_order_subtotal from './20260710_150000_fix_legacy_order_subtotal';
 
 export const migrations = [
   {
@@ -143,5 +146,20 @@ export const migrations = [
     up: migration_20260710_120000_convert_cents_to_dollars.up,
     down: migration_20260710_120000_convert_cents_to_dollars.down,
     name: '20260710_120000_convert_cents_to_dollars',
+  },
+  {
+    up: migration_20260710_130000_fix_legacy_order_item_prices.up,
+    down: migration_20260710_130000_fix_legacy_order_item_prices.down,
+    name: '20260710_130000_fix_legacy_order_item_prices',
+  },
+  {
+    up: migration_20260710_140000_fix_legacy_order_discount_and_tax.up,
+    down: migration_20260710_140000_fix_legacy_order_discount_and_tax.down,
+    name: '20260710_140000_fix_legacy_order_discount_and_tax',
+  },
+  {
+    up: migration_20260710_150000_fix_legacy_order_subtotal.up,
+    down: migration_20260710_150000_fix_legacy_order_subtotal.down,
+    name: '20260710_150000_fix_legacy_order_subtotal',
   },
 ];

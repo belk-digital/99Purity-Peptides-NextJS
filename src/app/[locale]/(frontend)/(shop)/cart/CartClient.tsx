@@ -13,7 +13,7 @@ import { QuantityStepper } from '@/components/shop/QuantityStepper'
 import { useCartStore } from '@/lib/cart/store'
 import { ProductCard } from '@/components/shared/ProductCard'
 import { StaggerChildren, staggerItemVariants } from '@/components/motion/StaggerChildren'
-import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
+
 import { Space_Grotesk } from 'next/font/google'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
@@ -55,7 +55,7 @@ export function CartClient() {
           // Grab the first available shipping method price from the first zone
           const firstZone = shippingData.docs[0]
           if (firstZone.methods?.length > 0) {
-            estimatedShipping = firstZone.methods[0].price / 100 // Convert cents to dollars
+            estimatedShipping = firstZone.methods[0].price // Use dollar value directly
           }
         }
         
@@ -292,10 +292,9 @@ export function CartClient() {
     }
   }
 
-  // Final Total Calculations
-  // Mirrors the FREE_SHIPPING_THRESHOLD rule enforced server-side in checkout/actions.ts —
-  // without this, the cart's estimate disagreed with what checkout actually charges.
-  const qualifiesForFreeShipping = isFreeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  // Mirrors the rule enforced server-side in checkout/actions.ts —
+  // Express shipping is never free.
+  const qualifiesForFreeShipping = isFreeShipping || false
   const finalShipping = (qualifiesForFreeShipping || subtotal === 0) ? 0 : (shippingCost || 0)
   const finalTotal = Math.max(0, subtotal - discountAmount + finalShipping + taxAmount)
 

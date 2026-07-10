@@ -14,7 +14,7 @@ import { ShoppingBag } from 'lucide-react'
 import { useLenis } from 'lenis/react'
 import { FluidButton } from '@/components/ui/fluid-button'
 import { toast } from 'sonner'
-import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
+
 
 export function CartDrawer() {
   const t = useTranslations('checkout.cartDrawer')
@@ -46,24 +46,13 @@ export function CartDrawer() {
   }, [closeCart])
 
   const subtotal = items.reduce((acc, item) => acc + item.priceSnapshot * item.quantity, 0)
-  const progressToFreeShipping = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100)
-  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - subtotal
 
-  // Fire the free-shipping toast once per crossing, not on every render while above the threshold.
-  const previousSubtotal = useRef(subtotal)
   const [isReady, setIsReady] = useState(false)
   
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 500) // wait for hydration
     return () => clearTimeout(timer)
   }, [])
-
-  useEffect(() => {
-    if (isReady && subtotal >= FREE_SHIPPING_THRESHOLD && previousSubtotal.current < FREE_SHIPPING_THRESHOLD) {
-      toast.success(t('freeShippingUnlockedToast'))
-    }
-    previousSubtotal.current = subtotal
-  }, [subtotal, isReady, t])
 
   return (
     <AnimatePresence>
@@ -127,24 +116,7 @@ export function CartDrawer() {
             ) : (
               /* Populated Cart */
               <>
-                {/* Shipping Progress */}
-                <div className="px-6 md:px-8 py-2 shrink-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-ink/60 mb-2">
-                    {amountToFreeShipping > 0
-                      ? t('freeShippingProgress', { amount: amountToFreeShipping.toFixed(2) })
-                      : t('freeShippingUnlocked')}
-                  </p>
-                  <div className="w-full h-1.5 bg-ink/5 rounded-full overflow-hidden shadow-inner">
-                    <motion.div 
-                      className="h-full bg-primary rounded-full shadow-[0_0_10px_rgba(0,255,255,0.6)] relative"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progressToFreeShipping}%` }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                    >
-                      <div className="absolute inset-0 bg-white/30 w-full h-full animate-[shimmer_2s_infinite]" style={{ backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)', transform: 'skewX(-20deg)' }} />
-                    </motion.div>
-                  </div>
-                </div>
+
 
                 {/* Items List */}
                 <div 

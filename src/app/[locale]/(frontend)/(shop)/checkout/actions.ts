@@ -5,7 +5,7 @@ import configPromise from '@payload-config'
 import Stripe from 'stripe'
 import { verifyCoupon, getUserPurityPoints } from '../actions'
 import { cookies } from 'next/headers'
-import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
+
 import { reserveStock, releaseStock, reserveCouponUsage, releaseCouponUsage, reservePoints, releasePoints } from '@/lib/orders/reserve'
 import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 import { escapeHtml } from '@/lib/emails/escapeHtml'
@@ -114,9 +114,7 @@ export async function createPaymentIntent(
 
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
   const isExpressShipping = shippingMethodName.toLowerCase().includes('express')
-  // Subtotal is checked before coupon discount, per the $300 free-standard-shipping threshold.
-  // Express is never discounted (matches how a coupon's freeShipping flag already behaves).
-  const qualifiesForFreeShipping = freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  const qualifiesForFreeShipping = freeShipping || false
   const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
 
   // Calculate dynamic processing fees
@@ -252,9 +250,7 @@ export async function createPayloadOrder(
 
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
   const isExpressShipping = shippingMethodName.toLowerCase().includes('express')
-  // Subtotal is checked before coupon discount, per the $300 free-standard-shipping threshold.
-  // Express is never discounted (matches how a coupon's freeShipping flag already behaves).
-  const qualifiesForFreeShipping = freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  const qualifiesForFreeShipping = freeShipping || false
   const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
 
   // Calculate dynamic processing fees

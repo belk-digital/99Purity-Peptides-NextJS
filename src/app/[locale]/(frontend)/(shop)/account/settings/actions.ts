@@ -62,6 +62,37 @@ export async function updatePreferencesAction(input: {
       data: input as any,
       overrideAccess: true,
     })
+
+    if (input.acceptsMarketing !== undefined && process.env.RESEND_API_KEY) {
+      try {
+        const { Resend } = await import('resend')
+        const resend = new Resend(process.env.RESEND_API_KEY)
+        
+        if (input.acceptsMarketing) {
+          const payloadObj: any = {
+            email: user.email,
+            unsubscribed: false,
+          }
+          if (user.firstName) payloadObj.firstName = user.firstName
+          if (user.lastName) payloadObj.lastName = user.lastName
+          if (process.env.RESEND_AUDIENCE_ID) {
+            payloadObj.audienceId = process.env.RESEND_AUDIENCE_ID
+          }
+          await resend.contacts.create(payloadObj)
+        } else {
+          const payloadObj: any = {
+            email: user.email,
+          }
+          if (process.env.RESEND_AUDIENCE_ID) {
+            payloadObj.audienceId = process.env.RESEND_AUDIENCE_ID
+          }
+          await resend.contacts.remove(payloadObj)
+        }
+      } catch (err) {
+        console.error('Failed to sync Resend preference:', err)
+      }
+    }
+
     revalidatePath('/account/settings')
     return { success: true }
   } catch (error: any) {
@@ -158,7 +189,7 @@ export async function requestEmailChangeAction(newEmail: string) {
     overrideAccess: true,
   })
   if (existing.docs.length > 0) {
-    return { success: false, error: t('emailPreparationError') }
+    return { success: false, error: t('emailInUse') }
   }
 
   const code = Math.floor(100000 + Math.random() * 900000).toString()

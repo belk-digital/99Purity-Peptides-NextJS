@@ -87,7 +87,7 @@ function LoginForm() {
         type="button"
         variant="outline"
         size="lg"
-        className="w-full rounded-xl flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-ink border-slate-200 shadow-sm"
+        className="w-full rounded-xl flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-ink border-slate-200 shadow-sm normal-case tracking-normal"
         onClick={handleGoogle}
         isLoading={isGoogleLoading}
       >

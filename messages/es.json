@@ -36,6 +36,8 @@
       "submit": "Crear Cuenta",
       "emailInUse": "Ya existe una cuenta con este correo electrónico",
       "genericError": "Algo salió mal. Por favor, inténtalo de nuevo.",
+      "successMessage": "¡Cuenta creada con éxito! Por favor, revisa tu correo para verificar tu cuenta.",
+      "backToLogin": "Volver al inicio de sesión",
       "metaTitle": "Crear una Cuenta | 99 Purity Peptides",
       "metaDescription": "Crea una cuenta gratuita en 99 Purity Peptides para realizar pedidos, guardar tus datos y rastrear envíos de péptidos de investigación."
     },
@@ -149,7 +151,7 @@
     "couponCopiedDescription": "Usa el código {code} al finalizar la compra.",
     "announcements": {
       "summerSale": "OFERTA DE VERANO: 15% DE DESCUENTO EN TODOS LOS PÉPTIDOS",
-      "freeShipping": "ENVÍO EXPRESS GRATIS EN PEDIDOS SUPERIORES A $300",
+      "freeShipping": "ENVÍO ASEGURADO GRATIS EN PEDIDOS SUPERIORES A $300",
       "newBlends": "NUEVAS MEZCLAS DE PÉPTIDOS DISPONIBLES"
     },
     "megaMenu": {
@@ -1028,6 +1030,7 @@
       "confirmNewPassword": "Confirmar Nueva Contraseña",
       "cancel": "Cancelar",
       "verificationCodeSent": "Código de verificación enviado",
+      "emailInUse": "Ya existe una cuenta con este correo electrónico",
       "emailPreparationError": "Ocurrió un error al preparar el correo electrónico",
       "emailUpdateSuccess": "Correo electrónico actualizado correctamente",
       "verificationFailed": "La verificación falló. Por favor, inténtalo de nuevo.",

@@ -112,29 +112,24 @@ export default function NotFound() {
   }, [reduced])
 
   return (
-    <main className="relative min-h-screen bg-cream flex flex-col items-center justify-center text-center px-6 py-24 sm:py-32 overflow-hidden">
+    <main className="relative min-h-screen bg-cream flex flex-col items-center text-center px-6 pt-24 pb-12 overflow-x-hidden overflow-y-auto">
       {/* Decorative background blobs, matching the site's ambient-glow pattern */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] sm:w-[800px] sm:h-[800px] bg-primary/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] bg-gold/5 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
 
-      <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col items-center">
-        <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6 sm:mb-8"
-        >
-          <VialIllustration />
-        </motion.div>
-
+      <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col items-center my-auto py-12">
         <MagneticHeadline>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading text-[88px] sm:text-[130px] md:text-[170px] leading-none text-transparent bg-clip-text bg-gradient-to-b from-ink to-ink/60 select-none tracking-tighter"
+            className="font-heading text-[88px] sm:text-[130px] md:text-[170px] leading-none text-transparent bg-clip-text bg-gradient-to-b from-ink to-ink/60 select-none tracking-tighter flex items-center justify-center gap-1 sm:gap-4 mb-2"
           >
-            404
+            <span>4</span>
+            <div className="-mt-1 sm:-mt-6 -mx-4 sm:mx-0 scale-[0.65] sm:scale-100 origin-center">
+              <VialIllustration />
+            </div>
+            <span>4</span>
           </motion.h1>
         </MagneticHeadline>
 

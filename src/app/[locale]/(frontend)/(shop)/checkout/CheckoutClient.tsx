@@ -17,7 +17,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { StripeCheckoutForm } from './StripeCheckoutForm'
 import { createPaymentIntent, getShippingMethods } from './actions'
-import { FREE_SHIPPING_THRESHOLD } from '@/lib/shipping/constants'
+
 
 // Card payments are temporarily disabled in favor of Zelle. Flip this back to re-enable Stripe —
 // the rest of the Stripe integration below is left intact, just not rendered/called while off.
@@ -145,9 +145,6 @@ export function CheckoutClient() {
   }, [])
 
   useEffect(() => {
-    if (isReady && subtotal >= FREE_SHIPPING_THRESHOLD && previousSubtotal.current < FREE_SHIPPING_THRESHOLD) {
-      toast.success(t('freeShippingUnlockedToast'))
-    }
     previousSubtotal.current = subtotal
   }, [subtotal, isReady, t])
 
@@ -170,9 +167,7 @@ export function CheckoutClient() {
   const selectedMethodObj = visibleShippingMethods.find(m => m.method === shippingMethod) || visibleShippingMethods[0]
   const shippingCost = selectedMethodObj?.price || 0
   const isExpressShipping = shippingMethod.toLowerCase().includes('express')
-  // Subtotal is checked before coupon discount, per the $300 free-standard-shipping threshold.
-  // Express is never discounted (matches how a coupon's freeShipping flag already behaves).
-  const qualifiesForFreeShipping = appliedCoupon?.freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD
+  const qualifiesForFreeShipping = appliedCoupon?.freeShipping || false
   const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
   const discountAmount = appliedCoupon ? appliedCoupon.discount : 0
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
@@ -733,7 +728,7 @@ export function CheckoutClient() {
                       <span className="text-sm font-bold text-ink">
                         {(() => {
                           const isExpress = method.method.toLowerCase().includes('express')
-                          const isFreeShipping = (appliedCoupon?.freeShipping || subtotal >= FREE_SHIPPING_THRESHOLD) && !isExpress
+                          const isFreeShipping = qualifiesForFreeShipping && !isExpress
                           if (isFreeShipping || method.price === 0) return t('free')
                           return `$${method.price.toFixed(2)}`
                         })()}

@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, ArrowRight, Bot, Truck, LifeBuoy, Send } from 'lucide-react'
+import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, ArrowRight, ArrowLeft, Bot, Truck, LifeBuoy, Send } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -37,8 +37,12 @@ export function AccountSidebar({
       
       {/* Logo & Section Title */}
       <div className="flex flex-col gap-1 px-4 lg:px-0">
-        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2 mb-6">
-          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-10 sm:h-12 w-auto object-contain filter invert opacity-80" style={{ filter: 'brightness(0) saturate(100%) invert(29%) sepia(18%) saturate(1637%) hue-rotate(143deg) brightness(97%) contrast(93%)' }} />
+        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2 mb-2">
+          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-10 sm:h-12 w-auto object-contain opacity-90" style={{ filter: 'invert(1) hue-rotate(180deg)' }} />
+        </Link>
+        <Link href="/shop" className="text-xs font-heading font-semibold text-[#1e5661]/80 hover:text-[#2b646c] flex items-center gap-1.5 mb-6 uppercase tracking-wider transition-colors ml-1">
+          <ArrowLeft size={14} />
+          Back to Store
         </Link>
       </div>
 

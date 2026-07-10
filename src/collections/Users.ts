@@ -103,7 +103,7 @@ export const Users: CollectionConfig = {
     {
       name: 'acceptsMarketing',
       type: 'checkbox',
-      defaultValue: false,
+      defaultValue: true,
     },
     {
       name: 'orderSmsUpdates',

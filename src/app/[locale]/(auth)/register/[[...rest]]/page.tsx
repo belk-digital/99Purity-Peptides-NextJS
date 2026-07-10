@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import Link from 'next/link'
+import { MailCheck } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -20,6 +22,7 @@ export default function RegisterPage() {
   const t = useTranslations('auth.register')
   const router = useRouter()
   const [serverError, setServerError] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
 
   const {
@@ -37,20 +40,7 @@ export default function RegisterPage() {
       return
     }
 
-    const signInResult = await signIn('credentials', {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-      callbackUrl: '/account',
-    })
-
-    if (!signInResult || signInResult.error) {
-      setServerError(t('genericError'))
-      return
-    }
-
-    router.push('/account')
-    router.refresh()
+    setIsSuccess(true)
   }
 
   const handleGoogle = () => {
@@ -61,18 +51,39 @@ export default function RegisterPage() {
   return (
     <AuthSplitLayout mode="register">
       <div className="w-full flex flex-col gap-6">
-        <div>
-          <h1 className={`text-2xl font-bold tracking-tight text-ink mb-2 ${spaceGrotesk.className}`}>
-            {t('title')}
-          </h1>
-          <p className="text-sm text-ink/60">{t('subtitle')}</p>
-        </div>
+        {isSuccess ? (
+          <div className="flex flex-col items-center justify-center text-center space-y-6 py-8">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#1e5661]/10 text-[#1e5661] dark:bg-[#1e5661]/20 dark:text-[#84d0d9]">
+              <MailCheck size={32} strokeWidth={1.5} />
+            </div>
+            <div className="space-y-2">
+              <h1 className={`text-2xl font-bold tracking-tight text-ink ${spaceGrotesk.className}`}>
+                Check your email
+              </h1>
+              <p className="text-sm text-ink/60 max-w-[280px] mx-auto">
+                {t('successMessage')}
+              </p>
+            </div>
+            <Link href="/login" className="w-full">
+              <Button variant="dark" size="lg" className="w-full rounded-full">
+                {t('backToLogin')}
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <>
+            <div>
+              <h1 className={`text-2xl font-bold tracking-tight text-ink mb-2 ${spaceGrotesk.className}`}>
+                {t('title')}
+              </h1>
+              <p className="text-sm text-ink/60">{t('subtitle')}</p>
+            </div>
 
         <Button
           type="button"
           variant="outline"
           size="lg"
-          className="w-full rounded-xl flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-ink border-slate-200 shadow-sm"
+          className="w-full rounded-xl flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-ink border-slate-200 shadow-sm normal-case tracking-normal"
           onClick={handleGoogle}
           isLoading={isGoogleLoading}
         >
@@ -129,6 +140,8 @@ export default function RegisterPage() {
             {t('submit')}
           </Button>
         </form>
+          </>
+        )}
       </div>
     </AuthSplitLayout>
   )

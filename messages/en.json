@@ -36,6 +36,8 @@
       "submit": "Create Account",
       "emailInUse": "An account with this email already exists",
       "genericError": "Something went wrong. Please try again.",
+      "successMessage": "Account created! Please check your email to verify your account.",
+      "backToLogin": "Back to login",
       "metaTitle": "Create an Account | 99 Purity Peptides",
       "metaDescription": "Create a free 99 Purity Peptides account to place orders, save your details, and track research peptide shipments."
     },
@@ -149,7 +151,7 @@
     "couponCopiedDescription": "Use code {code} at checkout.",
     "announcements": {
       "summerSale": "SUMMER SALE: 15% OFF ALL PEPTIDES",
-      "freeShipping": "FREE EXPRESS SHIPPING ON ORDERS OVER $300",
+      "freeShipping": "FREE SECURED SHIPPING ON ORDERS OVER $300",
       "newBlends": "NEW PEPTIDE BLENDS JUST DROPPED"
     },
     "megaMenu": {
@@ -1028,6 +1030,7 @@
       "confirmNewPassword": "Confirm New Password",
       "cancel": "Cancel",
       "verificationCodeSent": "Verification code sent",
+      "emailInUse": "An account with this email already exists",
       "emailPreparationError": "An error occurred while preparing email",
       "emailUpdateSuccess": "Email updated successfully",
       "verificationFailed": "Verification failed. Please try again.",
