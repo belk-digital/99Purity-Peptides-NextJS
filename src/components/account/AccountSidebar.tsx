@@ -36,12 +36,12 @@ export function AccountSidebar({
     <aside className="w-full h-full flex flex-col gap-6 p-6 lg:py-10 lg:px-6">
       
       {/* Logo & Section Title */}
-      <div className="flex flex-col gap-2 -mt-6 -mx-6 lg:-mt-10 lg:-mx-6 px-6 py-8 bg-[#001111] shadow-md relative overflow-hidden">
+      <div className="flex flex-col gap-2 -mt-6 -mx-6 lg:-mt-10 lg:-mx-6 px-6 py-8 bg-[#001111] shadow-md relative overflow-hidden lg:rounded-tr-3xl">
         {/* Subtle decorative glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
         
-        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2 mb-4 relative z-10">
-          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-14 sm:h-16 w-auto object-contain" />
+        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2 mb-4 relative z-10 pr-10 lg:pr-0">
+          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-10 sm:h-16 w-auto max-w-[160px] sm:max-w-none object-contain" />
         </Link>
         <Link href="/shop" className="text-xs font-heading font-semibold text-white/70 hover:text-white flex items-center gap-1.5 uppercase tracking-wider transition-colors ml-1 relative z-10">
           <ArrowLeft size={14} />

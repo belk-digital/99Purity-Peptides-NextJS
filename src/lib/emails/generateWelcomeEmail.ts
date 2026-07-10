@@ -26,7 +26,7 @@ export async function generateWelcomeEmail(user: any): Promise<string> {
           <!-- Hero Image -->
           <tr>
             <td style="padding: 0; background-color: #000000;">
-              <img src="${serverUrl}/99%20Images/vial-ice-closeup.webp" alt="Welcome to 99 Purity Peptides" style="width: 100%; height: auto; display: block; border-bottom: 4px solid #1e5661;" />
+              <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Logo/vial-ice-closeup.webp" alt="Welcome to 99 Purity Peptides" style="width: 100%; height: auto; display: block; border-bottom: 4px solid #1e5661;" />
             </td>
           </tr>
 

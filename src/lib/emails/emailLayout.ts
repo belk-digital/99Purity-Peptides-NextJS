@@ -26,7 +26,7 @@ export function emailLayout({
           <!-- Header -->
           <tr>
             <td style="background-color: #000000; padding: 40px; text-align: center;">
-              <img src="${serverUrl}/99%20Images/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto;" />
+              <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Logo/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto;" />
             </td>
           </tr>
           
