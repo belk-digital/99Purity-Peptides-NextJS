@@ -101,23 +101,6 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
   const pointsRow = redeemedPoints > 0 ? `
     <tr>
       <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Purity Points Redeemed</td>
-      <td align="right" style="padding: 8px 0; font-size: 14px; color: #16a34a;">-${formatMoney(redeemedPoints)}</td>
-    </tr>
-  ` : '';
-
-  // Use the percentage snapshot stored on the order's appliedFees, never the live
-  // processing-fees config — the config may have changed since this order was placed, and
-  // this email must always reflect the rate actually charged at the time.
-  let feeLabel = 'Processing Fees'
-  const appliedPercentageFee = Array.isArray(order.appliedFees)
-    ? order.appliedFees.find((f: any) => f.feeType === 'percentage' && typeof f.percentage === 'number')
-    : null
-  if (appliedPercentageFee) feeLabel = `Processing Fees (${appliedPercentageFee.percentage}%)`
-
-  const safeTrackingLink = typeof order.trackingLink === 'string' && /^https?:\/\//i.test(order.trackingLink)
-    ? escapeHtml(order.trackingLink)
-    : ''
-
 import { emailLayout } from './emailLayout'
 
 export async function generateOrderInvoiceHtml(order: any, payload?: any, customNote?: string): Promise<string> {
