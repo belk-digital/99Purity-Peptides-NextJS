@@ -101,108 +101,6 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
   const pointsRow = redeemedPoints > 0 ? `
     <tr>
       <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Purity Points Redeemed</td>
-import { emailLayout } from './emailLayout'
-
-export async function generateOrderInvoiceHtml(order: any, payload?: any, customNote?: string): Promise<string> {
-  const orderNumber = order.orderNumber || order.id;
-  const orderDate = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
-  
-  const formatMoney = (amount: number) => `$${(amount).toFixed(2)}`;
-  
-  const subtotal = order.subtotal || 0;
-  const discountTotal = order.discountTotal || 0;
-  const redeemedPoints = order.redeemedPoints || 0;
-  const shippingTotal = order.shippingTotal || 0;
-  const taxTotal = order.taxTotal || 0;
-  const feeTotal = order.feeTotal || 0;
-  const total = order.total || 0;
-  
-  const customerName = escapeHtml(`${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || 'Customer');
-  const rawShipAddr = order.shippingAddress || {};
-  const rawHasBilling = order.billingAddress && order.billingAddress.line1;
-  const rawBillAddr = rawHasBilling ? order.billingAddress : rawShipAddr;
-  const escapeAddr = (a: any) => ({
-    line1: escapeHtml(a.line1),
-    line2: escapeHtml(a.line2),
-    city: escapeHtml(a.city),
-    state: escapeHtml(a.state),
-    postalCode: escapeHtml(a.postalCode),
-    country: escapeHtml(a.country),
-  })
-  const shipAddr = escapeAddr(rawShipAddr);
-  const billAddr = escapeAddr(rawBillAddr);
-
-  let itemsHtml = '';
-  if (order.items && Array.isArray(order.items)) {
-    const itemPromises = order.items.map(async (item: any) => {
-      const product = item.productSnapshot || {};
-      const name = product.name || 'Product';
-      const variantText = item.variantTitle || item.variant;
-      const variant = variantText && variantText !== 'DEFAULT' ? ` - ${variantText}` : '';
-      
-      let imageUrl = '';
-      if (product.images && product.images.length > 0) {
-        const imgRef = product.images[0].image;
-        if (typeof imgRef === 'object' && imgRef?.url) {
-          imageUrl = imgRef.url.startsWith('http') ? imgRef.url : `${serverUrl}${imgRef.url.startsWith('/') ? '' : '/'}${imgRef.url}`;
-        } else if ((typeof imgRef === 'string' || typeof imgRef === 'number') && payload) {
-          try {
-            const mediaDoc = await payload.findByID({ collection: 'media', id: imgRef, depth: 0 });
-            if (mediaDoc && mediaDoc.url) {
-              imageUrl = mediaDoc.url.startsWith('http') ? mediaDoc.url : `${serverUrl}${mediaDoc.url.startsWith('/') ? '' : '/'}${mediaDoc.url}`;
-            }
-          } catch (e) {
-             console.error('Failed to fetch media for email image', e)
-          }
-        }
-      }
-      
-      // Fix spaces in URL for email clients (e.g. "Product Images" folder)
-      if (imageUrl) {
-         imageUrl = encodeURI(imageUrl);
-      }
-
-      const imgHtml = imageUrl 
-        ? `<img src="${imageUrl}" alt="${name}" style="width: 60px; height: 90px; object-fit: contain; border-radius: 6px;" />` 
-        : `<div style="width: 60px; height: 90px; background-color: #f3f4f6; border-radius: 6px; display: inline-block;"></div>`;
-
-      return `
-        <tr>
-          <td style="padding: 16px 0; border-bottom: 1px solid #e5e7eb;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td width="75" valign="middle">
-                  ${imgHtml}
-                </td>
-                <td valign="middle">
-                  <p style="margin: 0; font-size: 14px; font-weight: 600; color: #111827;">${name}${variant}</p>
-                  <p style="margin: 4px 0 0 0; font-size: 13px; color: #6b7280;">Qty: ${item.quantity}</p>
-                </td>
-                <td valign="middle" align="right">
-                  <p style="margin: 0; font-size: 14px; font-weight: 600; color: #111827;">${formatMoney(item.price)}</p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      `;
-    });
-    
-    const itemsHtmlArray = await Promise.all(itemPromises);
-    itemsHtml = itemsHtmlArray.join('');
-  }
-
-  const discountRow = discountTotal > 0 ? `
-    <tr>
-      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Discount ${order.couponCode ? `(${order.couponCode})` : ''}</td>
-      <td align="right" style="padding: 8px 0; font-size: 14px; color: #16a34a;">-${formatMoney(discountTotal)}</td>
-    </tr>
-  ` : '';
-
-  const pointsRow = redeemedPoints > 0 ? `
-    <tr>
-      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Purity Points Redeemed</td>
       <td align="right" style="padding: 8px 0; font-size: 14px; color: #16a34a;">-${formatMoney(redeemedPoints)}</td>
     </tr>
   ` : '';
@@ -226,7 +124,6 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
       <td align="right" style="padding: 8px 0; font-size: 14px; color: #111827;">${formatMoney(feeTotal)}</td>
     </tr>
   ` : '';
-
   return emailLayout({
     title: `Order Invoice #${orderNumber}`,
     serverUrl,
