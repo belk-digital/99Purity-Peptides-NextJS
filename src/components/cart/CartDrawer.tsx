@@ -182,7 +182,7 @@ export function CartDrawer() {
                   <div className="flex justify-between items-center mb-6">
                     <span className="text-[10px] font-bold text-ink/50 uppercase tracking-[0.2em]">{t('shipping')}</span>
                     <span className="text-sm text-ink font-bold">
-                      {amountToFreeShipping > 0 ? t('calculatedAtCheckout') : <span className="text-primary uppercase tracking-widest text-[10px]">{t('free2Day')}</span>}
+                      {t('calculatedAtCheckout')}
                     </span>
                   </div>
                   <div className="w-full flex justify-center mb-4">
