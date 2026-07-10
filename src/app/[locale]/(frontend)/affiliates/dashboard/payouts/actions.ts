@@ -29,11 +29,11 @@ export async function requestPayout() {
     const affiliate = affiliates[0]
 
     // Check if they meet minimum threshold
-    const threshold = affiliate.minimumPayoutThreshold || 5000 // default $50
+    const threshold = affiliate.minimumPayoutThreshold || 50 // default $50
     const available = affiliate.totalCommissionApproved || 0
 
     if (available < threshold) {
-      return { success: false, error: `You have not reached the minimum payout threshold of $${(threshold / 100).toFixed(2)}.` }
+      return { success: false, error: `You have not reached the minimum payout threshold of $${threshold.toFixed(2)}.` }
     }
 
     // Check if there is already a pending request

@@ -102,7 +102,7 @@ export default function CouponSection({ subtotal }: CouponSectionProps) {
             </svg>
             <span>✅ {message}</span>
             {discount > 0 && (
-              <span className="ml-2 font-semibold">{t('savesAmount', { amount: (discount / 100).toFixed(2) })}</span>
+              <span className="ml-2 font-semibold">{t('savesAmount', { amount: discount.toFixed(2) })}</span>
             )}
             {freeShipping && (
               <span className="ml-2 font-semibold">{t('plusFreeShipping')}</span>

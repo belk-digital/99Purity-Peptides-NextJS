@@ -574,7 +574,7 @@ export interface Coupon {
   freeShipping?: boolean | null;
   type: 'percentage' | 'fixed_amount' | 'free_shipping' | 'buy_one_get_one' | 'store_credit';
   /**
-   * Minimum order amount (in cents) required to apply this coupon.
+   * Minimum order amount (in dollars) required to apply this coupon.
    */
   minSpend?: number | null;
   /**
@@ -607,7 +607,7 @@ export interface Coupon {
       }[]
     | null;
   /**
-   * Total store credit value in cents.
+   * Total store credit value in dollars.
    */
   storeCreditAmount?: number | null;
   /**
@@ -615,7 +615,7 @@ export interface Coupon {
    */
   remainingBalance?: number | null;
   /**
-   * Percentage (0-100), fixed amount in cents, or ignored for free shipping.
+   * Percentage (0-100), fixed amount in dollars, or ignored for free shipping.
    */
   value?: number | null;
   /**
@@ -730,7 +730,7 @@ export interface Order {
   shippingTotal?: number | null;
   taxTotal: number;
   /**
-   * Total of all applied processing fees in cents
+   * Total of all applied processing fees in dollars
    */
   feeTotal: number;
   total: number;
@@ -742,7 +742,7 @@ export interface Order {
         feeId?: (number | null) | ProcessingFee;
         feeName?: string | null;
         /**
-         * Amount charged in cents
+         * Amount charged in dollars
          */
         amount?: number | null;
         /**
@@ -816,7 +816,7 @@ export interface ProcessingFee {
    */
   name: string;
   /**
-   * Amount in cents (e.g., 250 = $2.50) OR percentage (e.g., 3 = 3%) depending on type
+   * Amount in dollars (e.g., 2.50) OR percentage (e.g., 3 = 3%) depending on type
    */
   amount: number;
   type: 'fixed_amount' | 'percentage';
@@ -1054,7 +1054,7 @@ export interface Affiliate {
   coupon?: (number | null) | Coupon;
   cookieDurationDays?: number | null;
   /**
-   * Leave blank to use Global Default. Percentage of eligible order value or fixed amount in cents.
+   * Leave blank to use Global Default. Percentage of eligible order value or fixed amount in dollars.
    */
   commissionRate?: number | null;
   /**
@@ -1078,31 +1078,31 @@ export interface Affiliate {
   uniqueClicks?: number | null;
   totalConversions?: number | null;
   /**
-   * In cents
+   * In dollars
    */
   totalRevenue?: number | null;
   /**
-   * In cents
+   * In dollars
    */
   totalCommissionEarned?: number | null;
   /**
-   * In cents
+   * In dollars
    */
   totalCommissionPending?: number | null;
   /**
-   * In cents
+   * In dollars
    */
   totalCommissionApproved?: number | null;
   /**
-   * In cents (pending/approved payout requests)
+   * In dollars (pending/approved payout requests)
    */
   totalCommissionRequested?: number | null;
   /**
-   * In cents
+   * In dollars
    */
   totalCommissionPaid?: number | null;
   /**
-   * Leave blank to use Global Default. Minimum payout threshold in cents (e.g. 5000 = $50.00).
+   * Leave blank to use Global Default. Minimum payout threshold in dollars (e.g. 50.00).
    */
   minimumPayoutThreshold?: number | null;
   payoutCurrency?: ('USD' | 'BTC' | 'ETH' | 'USDT_ERC20' | 'USDT_TRC20' | 'STORE_CREDIT') | null;
@@ -1153,7 +1153,7 @@ export interface AffiliateClick {
   convertedToOrder?: boolean | null;
   conversion?: (number | null) | AffiliateConversion;
   /**
-   * In cents
+   * In dollars
    */
   conversionValue?: number | null;
   isSuspicious?: boolean | null;
@@ -1181,7 +1181,7 @@ export interface AffiliateConversion {
   eligibleSubtotal?: number | null;
   commissionRate?: number | null;
   /**
-   * In cents
+   * In dollars
    */
   commissionAmount?: number | null;
   status?: ('pending' | 'approved' | 'paid' | 'reversed' | 'voided') | null;
@@ -1256,9 +1256,9 @@ export interface PayoutRequest {
   id: number;
   affiliate: number | Affiliate;
   /**
-   * Amount requested in cents
+   * Amount requested in dollars
    */
-  amountCents: number;
+  amount: number;
   payoutMethod: 'zelle' | 'cashapp' | 'applepay';
   /**
    * Phone number, CashTag, or ApplePay ID
@@ -2170,7 +2170,7 @@ export interface AffiliatePayoutsSelect<T extends boolean = true> {
  */
 export interface PayoutRequestsSelect<T extends boolean = true> {
   affiliate?: T;
-  amountCents?: T;
+  amount?: T;
   payoutMethod?: T;
   payoutDetails?: T;
   status?: T;
@@ -2269,7 +2269,7 @@ export interface AffiliateSetting {
   defaultCookieDurationDays: number;
   defaultPendingPeriodDays: number;
   /**
-   * Global default minimum payout threshold in cents (e.g. 5000 = $50.00).
+   * Global default minimum payout threshold in dollars (e.g. 50.00).
    */
   defaultMinimumPayoutThreshold: number;
   updatedAt?: string | null;

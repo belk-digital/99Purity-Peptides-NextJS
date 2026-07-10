@@ -127,7 +127,7 @@ export async function createPaymentIntent(
       if (fee.type === 'percentage') {
         feeTotal += subtotalAfterDiscount * (fee.amount / 100)
       } else if (fee.type === 'fixed_amount') {
-        feeTotal += (fee.amount / 100)
+        feeTotal += fee.amount
       }
     }
   })
@@ -264,15 +264,15 @@ export async function createPayloadOrder(
   
   activeFees.forEach((fee: any) => {
     if (!fee.isOptional) {
-      const amount = fee.type === 'percentage' 
+      const amount = fee.type === 'percentage'
         ? subtotalAfterDiscount * (fee.amount / 100)
-        : (fee.amount / 100)
-      
+        : fee.amount
+
       feeTotal += amount
       appliedFees.push({
         feeId: fee.id,
         feeName: fee.name,
-        amount: Math.round(amount * 100), // cents for Payload array
+        amount,
         feeType: fee.type,
         // Snapshot the rate actually charged so it stays correct on this order even if
         // the processing-fees config is changed later.
@@ -359,7 +359,7 @@ export async function createPayloadOrder(
         const couponReservation = await reserveCouponUsage(
           payload,
           couponDoc.id,
-          Math.round(discountAmount * 100),
+          discountAmount,
           reservedCouponIsStoreCredit,
         )
         if (!couponReservation.success) {
@@ -430,7 +430,7 @@ export async function createPayloadOrder(
         redeemedPoints: confirmedPointsToRedeem,
         shippingTotal: finalShipping,
         taxTotal: tax,
-        feeTotal: Math.round(feeTotal * 100),
+        feeTotal,
         appliedFees,
         total: confirmedTotal,
         shippingMethod: shippingMethodName,
@@ -445,7 +445,7 @@ export async function createPayloadOrder(
         quantity: item.quantity,
       })))
       if (reservedCouponId) {
-        await releaseCouponUsage(payload, reservedCouponId, Math.round(discountAmount * 100), reservedCouponIsStoreCredit)
+        await releaseCouponUsage(payload, reservedCouponId, discountAmount, reservedCouponIsStoreCredit)
       }
       if (confirmedPointsToRedeem > 0 && payloadUserId) {
         await releasePoints(payload, payloadUserId, confirmedPointsToRedeem)

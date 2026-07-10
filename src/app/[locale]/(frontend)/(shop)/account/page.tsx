@@ -126,10 +126,7 @@ export default async function AccountOverviewPage() {
     orderNumber: order.orderNumber || String(order.id),
     date: order.createdAt ? new Date(order.createdAt).toLocaleDateString(locale === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Unknown Date',
     status: order.status,
-    total: (() => {
-      const isMigrated = order.orderNumber && parseInt(order.orderNumber) < 7000;
-      return isMigrated ? (order.total || 0) / 100 : (order.total || 0);
-    })()
+    total: order.total || 0,
   }))
 
   const defaultAddress = defaultAddressDoc ? {

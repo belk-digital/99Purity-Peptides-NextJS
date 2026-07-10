@@ -59,7 +59,7 @@ export const Coupons: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        description: 'Minimum order amount (in cents) required to apply this coupon.',
+        description: 'Minimum order amount (in dollars) required to apply this coupon.',
         position: 'sidebar',
       },
     },
@@ -133,7 +133,7 @@ export const Coupons: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        description: 'Total store credit value in cents.',
+        description: 'Total store credit value in dollars.',
         condition: (_, siblingData) => siblingData?.type === 'store_credit',
         position: 'sidebar',
       },
@@ -153,7 +153,7 @@ export const Coupons: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        description: 'Percentage (0-100), fixed amount in cents, or ignored for free shipping.',
+        description: 'Percentage (0-100), fixed amount in dollars, or ignored for free shipping.',
       },
     },
 

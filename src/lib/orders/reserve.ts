@@ -47,7 +47,7 @@ export async function releaseStock(payload: Payload, items: ReserveItem[]): Prom
 export async function reserveCouponUsage(
   payload: Payload,
   couponId: number,
-  discountAmountCents: number,
+  discountAmount: number,
   isStoreCredit: boolean,
 ): Promise<{ success: true } | { success: false; error: string }> {
   const db = payload.db as any
@@ -62,10 +62,10 @@ export async function reserveCouponUsage(
     return { success: false, error: 'This coupon just reached its usage limit. Please remove it and try again.' }
   }
 
-  if (isStoreCredit && discountAmountCents > 0) {
+  if (isStoreCredit && discountAmount > 0) {
     const creditResult: any = await db.drizzle.execute(sql`
-      UPDATE "coupons" SET "remaining_balance" = "remaining_balance" - ${discountAmountCents}
-      WHERE "id" = ${couponId} AND "remaining_balance" >= ${discountAmountCents}
+      UPDATE "coupons" SET "remaining_balance" = "remaining_balance" - ${discountAmount}
+      WHERE "id" = ${couponId} AND "remaining_balance" >= ${discountAmount}
       RETURNING "id"`)
     const creditRows = creditResult.rows || creditResult
     if (!creditRows || creditRows.length === 0) {
@@ -83,16 +83,16 @@ export async function reserveCouponUsage(
 export async function releaseCouponUsage(
   payload: Payload,
   couponId: number,
-  discountAmountCents: number,
+  discountAmount: number,
   isStoreCredit: boolean,
 ): Promise<void> {
   const db = payload.db as any
   await db.drizzle.execute(sql`
     UPDATE "coupons" SET "usage_count" = GREATEST(0, COALESCE("usage_count", 0) - 1)
     WHERE "id" = ${couponId}`)
-  if (isStoreCredit && discountAmountCents > 0) {
+  if (isStoreCredit && discountAmount > 0) {
     await db.drizzle.execute(sql`
-      UPDATE "coupons" SET "remaining_balance" = COALESCE("remaining_balance", 0) + ${discountAmountCents}
+      UPDATE "coupons" SET "remaining_balance" = COALESCE("remaining_balance", 0) + ${discountAmount}
       WHERE "id" = ${couponId}`)
   }
 }

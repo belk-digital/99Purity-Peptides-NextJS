@@ -9,15 +9,15 @@ interface ConversionsClientProps {
   conversions: {
     id: string;
     date: string;
-    orderValue: number; // in cents
-    commissionAmount: number; // in cents
+    orderValue: number; // in dollars
+    commissionAmount: number; // in dollars
     status: string;
   }[];
 }
 
 export function ConversionsClient({ conversions }: ConversionsClientProps) {
   const t = useTranslations('affiliate.conversions')
-  const formatMoney = (cents: number) => `$${(cents / 100).toFixed(2)}`
+  const formatMoney = (dollars: number) => `$${dollars.toFixed(2)}`
 
   const statusLabel = (status: string) => {
     if (status === 'pending') return t('statusPending')

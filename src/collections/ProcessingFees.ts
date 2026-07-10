@@ -26,7 +26,7 @@ export const ProcessingFees: CollectionConfig = {
       type: 'number',
       required: true,
       admin: {
-        description: 'Amount in cents (e.g., 250 = $2.50) OR percentage (e.g., 3 = 3%) depending on type',
+        description: 'Amount in dollars (e.g., 2.50) OR percentage (e.g., 3 = 3%) depending on type',
       },
     },
     {

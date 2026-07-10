@@ -72,7 +72,7 @@ export function CartClient() {
                 calculatedTax += subtotal * (fee.amount / 100)
                 percentageFee = fee.amount
               } else if (fee.type === 'fixed_amount') {
-                calculatedTax += (fee.amount / 100) // Assuming amount is in cents
+                calculatedTax += fee.amount
               }
             }
           })
@@ -196,10 +196,10 @@ export function CartClient() {
           return
         }
 
-        // Validate Min Spend (assuming minSpend is in cents)
-        if (coupon.minSpend && (subtotal * 100) < coupon.minSpend) {
+        // Validate Min Spend (both are in dollars)
+        if (coupon.minSpend && subtotal < coupon.minSpend) {
           setCouponState('error')
-          setCouponMessage(t('couponMinSpend', { amount: (coupon.minSpend / 100).toFixed(2) }))
+          setCouponMessage(t('couponMinSpend', { amount: coupon.minSpend.toFixed(2) }))
           return
         }
 
@@ -229,11 +229,11 @@ export function CartClient() {
   useEffect(() => {
     if (activeCoupon) {
       // Re-validate minSpend locally
-      if (activeCoupon.minSpend && (subtotal * 100) < activeCoupon.minSpend) {
+      if (activeCoupon.minSpend && subtotal < activeCoupon.minSpend) {
         setActiveCoupon(null)
         setCouponCode('')
         setCouponState('error')
-        setCouponMessage(t('couponMinSpend', { amount: (activeCoupon.minSpend / 100).toFixed(2) }))
+        setCouponMessage(t('couponMinSpend', { amount: activeCoupon.minSpend.toFixed(2) }))
         setCoupon(null) // Remove from global store
       }
     } else if (storedCouponCode && couponState === 'idle') {

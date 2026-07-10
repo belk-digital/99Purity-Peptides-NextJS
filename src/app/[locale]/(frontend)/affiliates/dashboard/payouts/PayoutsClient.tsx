@@ -10,7 +10,7 @@ interface PayoutsClientProps {
   payoutRequests: {
     id: string;
     date: string;
-    amount: number; // in cents
+    amount: number; // in dollars
     method: string;
     details: string;
     status: string;
@@ -40,7 +40,7 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
-  const formatMoney = (cents: number) => `$${(cents / 100).toFixed(2)}`
+  const formatMoney = (dollars: number) => `$${dollars.toFixed(2)}`
 
   const handleRequestPayout = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -53,12 +53,12 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
       return
     }
 
-    if (parsedAmount * 100 < minimumThreshold) {
+    if (parsedAmount < minimumThreshold) {
       setError(t('errorMinimumAmount', { amount: formatMoney(minimumThreshold) }))
       return
     }
 
-    if (parsedAmount * 100 > availableBalance) {
+    if (parsedAmount > availableBalance) {
       setError(t('errorExceedsBalance'))
       return
     }
@@ -161,8 +161,8 @@ export function PayoutsClient({ payoutRequests, availableBalance, totalPendingHo
             <input
               type="number"
               step="0.01"
-              min={(minimumThreshold / 100).toString()}
-              max={(availableBalance / 100).toString()}
+              min={minimumThreshold.toString()}
+              max={availableBalance.toString()}
               value={amount}
               onChange={e => setAmount(e.target.value)}
               className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black font-medium focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"

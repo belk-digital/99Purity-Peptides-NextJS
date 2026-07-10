@@ -4,7 +4,7 @@ export function generateAdminAffiliateConversionEmail(order: any, affiliate: any
   const affiliateName = affiliate.displayName || 'Partner';
   const orderNumber = order.orderNumber || order.id || 'N/A';
   const orderTotal = `$${(order.total || 0).toFixed(2)}`;
-  const commissionFormatted = `$${(commissionAmount / 100).toFixed(2)}`;
+  const commissionFormatted = `$${(commissionAmount || 0).toFixed(2)}`;
   const customerEmail = (typeof order.owner === 'object' && order.owner !== null ? order.owner.email : order.guestEmail) || 'N/A';
   const adminUrl = `${serverUrl}/admin/collections/orders/${order.id}`;
 

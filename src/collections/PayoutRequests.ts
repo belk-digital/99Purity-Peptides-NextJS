@@ -36,7 +36,7 @@ export const PayoutRequests: CollectionConfig = {
   },
   fields: [
     { name: 'affiliate', type: 'relationship', relationTo: 'affiliates', required: true, index: true },
-    { name: 'amountCents', type: 'number', required: true, admin: { description: 'Amount requested in cents' } },
+    { name: 'amount', type: 'number', required: true, admin: { description: 'Amount requested in dollars' } },
     { 
       name: 'payoutMethod', 
       type: 'select', 

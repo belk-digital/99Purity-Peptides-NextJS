@@ -121,7 +121,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
     items: formattedItems,
     subtotal: order.subtotal || 0,
     shipping: order.shippingTotal || 0,
-    processingFee: (order.feeTotal ? order.feeTotal / 100 : order.taxTotal) || 0,
+    processingFee: (order.feeTotal || order.taxTotal) || 0,
     // Snapshot taken at order-creation time, stored on the order — never re-derived from the
     // live processing-fees config, so this stays correct even after the fee % is changed later.
     processingFeePercentage: Array.isArray(order.appliedFees)

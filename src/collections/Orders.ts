@@ -179,7 +179,7 @@ export const Orders: CollectionConfig = {
       type: 'number',
       required: true,
       defaultValue: 0,
-      admin: { description: 'Total of all applied processing fees in cents' },
+      admin: { description: 'Total of all applied processing fees in dollars' },
     },
     {
       name: 'total',
@@ -194,7 +194,7 @@ export const Orders: CollectionConfig = {
       fields: [
         { name: 'feeId', type: 'relationship', relationTo: 'processing-fees' },
         { name: 'feeName', type: 'text' },
-        { name: 'amount', type: 'number', admin: { description: 'Amount charged in cents' } },
+        { name: 'amount', type: 'number', admin: { description: 'Amount charged in dollars' } },
         {
           name: 'feeType',
           type: 'select',

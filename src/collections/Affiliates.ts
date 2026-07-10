@@ -55,7 +55,7 @@ export const Affiliates: CollectionConfig = {
         {
           label: 'Commission',
           fields: [
-            { name: 'commissionRate', type: 'number', admin: { description: 'Leave blank to use Global Default. Percentage of eligible order value or fixed amount in cents.' }, access: { update: staffOnly } },
+            { name: 'commissionRate', type: 'number', admin: { description: 'Leave blank to use Global Default. Percentage of eligible order value or fixed amount in dollars.' }, access: { update: staffOnly } },
             { name: 'commissionType', type: 'select', options: ['percentage', 'fixed_amount'], admin: { description: 'Leave blank to use Global Default.' }, access: { update: staffOnly } },
             { name: 'customerDiscount', type: 'number', defaultValue: 10, admin: { description: '% discount the customer gets using their coupon' }, access: { update: staffOnly } },
             { name: 'pendingPeriodDays', type: 'number', admin: { description: 'Leave blank to use Global Default. Days before commission is approved.' }, access: { update: staffOnly } },
@@ -69,18 +69,18 @@ export const Affiliates: CollectionConfig = {
             { name: 'totalClicks', type: 'number', defaultValue: 0, access: { update: staffOnly } },
             { name: 'uniqueClicks', type: 'number', defaultValue: 0, access: { update: staffOnly } },
             { name: 'totalConversions', type: 'number', defaultValue: 0, access: { update: staffOnly } },
-            { name: 'totalRevenue', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
-            { name: 'totalCommissionEarned', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
-            { name: 'totalCommissionPending', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
-            { name: 'totalCommissionApproved', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
-            { name: 'totalCommissionRequested', type: 'number', defaultValue: 0, admin: { description: 'In cents (pending/approved payout requests)' }, access: { update: staffOnly } },
-            { name: 'totalCommissionPaid', type: 'number', defaultValue: 0, admin: { description: 'In cents' }, access: { update: staffOnly } },
+            { name: 'totalRevenue', type: 'number', defaultValue: 0, admin: { description: 'In dollars' }, access: { update: staffOnly } },
+            { name: 'totalCommissionEarned', type: 'number', defaultValue: 0, admin: { description: 'In dollars' }, access: { update: staffOnly } },
+            { name: 'totalCommissionPending', type: 'number', defaultValue: 0, admin: { description: 'In dollars' }, access: { update: staffOnly } },
+            { name: 'totalCommissionApproved', type: 'number', defaultValue: 0, admin: { description: 'In dollars' }, access: { update: staffOnly } },
+            { name: 'totalCommissionRequested', type: 'number', defaultValue: 0, admin: { description: 'In dollars (pending/approved payout requests)' }, access: { update: staffOnly } },
+            { name: 'totalCommissionPaid', type: 'number', defaultValue: 0, admin: { description: 'In dollars' }, access: { update: staffOnly } },
           ]
         },
         {
           label: 'Payout',
           fields: [
-            { name: 'minimumPayoutThreshold', type: 'number', admin: { description: 'Leave blank to use Global Default. Minimum payout threshold in cents (e.g. 5000 = $50.00).' }, access: { update: staffOnly } },
+            { name: 'minimumPayoutThreshold', type: 'number', admin: { description: 'Leave blank to use Global Default. Minimum payout threshold in dollars (e.g. 50.00).' }, access: { update: staffOnly } },
             // payoutCurrency + payoutMethods stay self-editable — the affiliate needs to be able to set where they get paid.
             { name: 'payoutCurrency', type: 'select', defaultValue: 'USD', options: ['USD', 'BTC', 'ETH', 'USDT_ERC20', 'USDT_TRC20', 'STORE_CREDIT'] },
             {

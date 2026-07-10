@@ -56,9 +56,9 @@ export const AffiliateSettings: GlobalConfig = {
       name: 'defaultMinimumPayoutThreshold',
       type: 'number',
       required: true,
-      defaultValue: 5000,
+      defaultValue: 50,
       admin: {
-        description: 'Global default minimum payout threshold in cents (e.g. 5000 = $50.00).',
+        description: 'Global default minimum payout threshold in dollars (e.g. 50.00).',
       },
     },
   ],

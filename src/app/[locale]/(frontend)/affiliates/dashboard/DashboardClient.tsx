@@ -14,16 +14,16 @@ export interface DashboardClientProps {
     totalClicks: number;
     totalConversions: number;
     conversionRate: string;
-    totalCommissionPending: number; // in cents
-    totalCommissionApproved: number; // in cents
-    totalCommissionPaid: number; // in cents
+    totalCommissionPending: number; // in dollars
+    totalCommissionApproved: number; // in dollars
+    totalCommissionPaid: number; // in dollars
     referralSlug: string;
     couponCode: string;
   };
   recentConversions: {
     id: string;
     date: string;
-    amount: number; // commission amount in cents
+    amount: number; // commission amount in dollars
     status: string;
   }[];
 }
@@ -52,7 +52,7 @@ export function DashboardClient({ userName = 'Partner', tier = 'standard', stats
   }
 
   // Formatting helpers
-  const formatMoney = (cents: number) => `$${(cents / 100).toFixed(2)}`
+  const formatMoney = (dollars: number) => `$${dollars.toFixed(2)}`
   const [baseUrl, setBaseUrl] = useState('https://99puritypeptides.com')
   
   React.useEffect(() => {

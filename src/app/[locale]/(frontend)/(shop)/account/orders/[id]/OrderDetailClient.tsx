@@ -68,13 +68,10 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
     year: 'numeric'
   }).format(new Date(order.createdAt))
 
-  const orderNum = parseInt(order.orderNumber || '0', 10)
-  const isMigrated = orderNum > 0 && orderNum < 7000
-
-  const subtotal = isMigrated ? (order.subtotal || 0) / 100 : (order.subtotal || 0)
-  const shipping = isMigrated ? (order.shippingTotal || 0) / 100 : (order.shippingTotal || 0)
-  const processingFee = (order.feeTotal ? order.feeTotal / 100 : order.taxTotal || 0)
-  const total = isMigrated ? (order.total || 0) / 100 : (order.total || 0)
+  const subtotal = order.subtotal || 0
+  const shipping = order.shippingTotal || 0
+  const processingFee = order.feeTotal || order.taxTotal || 0
+  const total = order.total || 0
 
   return (
     <motion.div 

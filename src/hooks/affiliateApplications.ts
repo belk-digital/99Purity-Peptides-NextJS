@@ -119,7 +119,7 @@ export const afterAffiliateApplicationChange: CollectionAfterChangeHook = async 
           pendingPeriodDays: pendingPeriod,
           commissionOn: commissionOn,
           tier: 'standard',
-          minimumPayoutThreshold: 5000,
+          minimumPayoutThreshold: 50,
           payoutCurrency: 'USD',
         } as any,
         req,

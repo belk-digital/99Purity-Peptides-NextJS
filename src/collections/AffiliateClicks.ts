@@ -23,7 +23,7 @@ export const AffiliateClicks: CollectionConfig = {
     { name: 'sessionId', type: 'text', index: true },
     { name: 'convertedToOrder', type: 'checkbox', defaultValue: false },
     { name: 'conversion', type: 'relationship', relationTo: 'affiliate-conversions' },
-    { name: 'conversionValue', type: 'number', admin: { description: 'In cents' } },
+    { name: 'conversionValue', type: 'number', admin: { description: 'In dollars' } },
     { name: 'isSuspicious', type: 'checkbox', defaultValue: false },
     { name: 'suspicionReason', type: 'text' },
     { name: 'clickedAt', type: 'date', required: true, index: true },

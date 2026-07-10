@@ -12,7 +12,7 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
   const redeemedPoints = order.redeemedPoints || 0;
   const shippingTotal = order.shippingTotal || 0;
   const taxTotal = order.taxTotal || 0;
-  const feeTotal = (order.feeTotal || 0) / 100; // stored in cents
+  const feeTotal = order.feeTotal || 0;
   const total = order.total || 0;
   
   const customerName = escapeHtml(`${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || 'Customer');

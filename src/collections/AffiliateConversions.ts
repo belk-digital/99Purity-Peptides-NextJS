@@ -24,7 +24,7 @@ export const AffiliateConversions: CollectionConfig = {
     { name: 'orderDiscount', type: 'number' },
     { name: 'eligibleSubtotal', type: 'number' },
     { name: 'commissionRate', type: 'number' },
-    { name: 'commissionAmount', type: 'number', admin: { description: 'In cents' } },
+    { name: 'commissionAmount', type: 'number', admin: { description: 'In dollars' } },
     { name: 'status', type: 'select', options: ['pending', 'approved', 'paid', 'reversed', 'voided'], index: true },
     { name: 'pendingUntil', type: 'date', index: true },
     { name: 'approvedAt', type: 'date' },

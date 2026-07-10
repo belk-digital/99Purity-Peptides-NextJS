@@ -185,7 +185,7 @@ export function CheckoutClient() {
       processingFeeAmount += subtotalAfterDiscount * (fee.amount / 100)
       activeFeePercentage = fee.amount
     } else if (fee.type === 'fixed_amount') {
-      processingFeeAmount += (fee.amount / 100)
+      processingFeeAmount += fee.amount
     }
   })
 

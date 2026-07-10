@@ -174,7 +174,7 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
           })
           const coupon = coupons.docs[0]
           if (coupon) {
-            await releaseCouponUsage(req.payload, coupon.id, Math.round((doc.discountTotal || 0) * 100), coupon.type === 'store_credit')
+            await releaseCouponUsage(req.payload, coupon.id, doc.discountTotal || 0, coupon.type === 'store_credit')
           }
         } catch (err) {
           req.payload.logger.error({ err }, `Failed to release coupon usage for order ${doc.id}`)

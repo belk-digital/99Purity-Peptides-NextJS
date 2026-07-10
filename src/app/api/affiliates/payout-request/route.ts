@@ -37,8 +37,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400 })
     }
 
-    const requestedCents = Math.round(amount * 100)
-
     // Recompute totals from the real conversions/payout-requests instead of trusting the
     // affiliate doc's cached fields, which are now write-protected but could still be stale.
     await updateAffiliateStats(affiliate.id, payload)
@@ -47,8 +45,8 @@ export async function POST(request: Request) {
     const approved = freshAffiliate.totalCommissionApproved || 0
     const requested = freshAffiliate.totalCommissionRequested || 0
     const available = approved - requested
-    
-    if (requestedCents > available) {
+
+    if (amount > available) {
       return NextResponse.json({ error: 'Amount exceeds available balance' }, { status: 400 })
     }
 
@@ -57,7 +55,7 @@ export async function POST(request: Request) {
       collection: 'payout-requests',
       data: {
         affiliate: affiliate.id,
-        amountCents: requestedCents,
+        amount,
         payoutMethod: method,
         payoutDetails: details,
         status: 'pending',

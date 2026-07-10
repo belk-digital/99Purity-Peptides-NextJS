@@ -1,5 +1,5 @@
-export async function generateAffiliateSaleEmail(affiliate: any, commissionAmountCents: number, isVoid: boolean): Promise<string> {
-  const amount = (commissionAmountCents / 100).toFixed(2)
+export async function generateAffiliateSaleEmail(affiliate: any, commissionAmount: number, isVoid: boolean): Promise<string> {
+  const amount = (commissionAmount || 0).toFixed(2)
   const name = affiliate.displayName || 'Partner'
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
 

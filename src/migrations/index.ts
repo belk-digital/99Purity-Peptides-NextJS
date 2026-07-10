@@ -21,6 +21,7 @@ import * as migration_20260704_070000_add_product_coa_fields from './20260704_07
 import * as migration_20260705_120000_add_coupon_is_active_and_verify_backfill from './20260705_120000_add_coupon_is_active_and_verify_backfill';
 import * as migration_20260706_120000_add_order_applied_fees_percentage from './20260706_120000_add_order_applied_fees_percentage';
 import * as migration_20260706_150000_add_military_discount_requests from './20260706_150000_add_military_discount_requests';
+import * as migration_20260710_120000_convert_cents_to_dollars from './20260710_120000_convert_cents_to_dollars';
 
 export const migrations = [
   {
@@ -137,5 +138,10 @@ export const migrations = [
     up: migration_20260706_150000_add_military_discount_requests.up,
     down: migration_20260706_150000_add_military_discount_requests.down,
     name: '20260706_150000_add_military_discount_requests',
+  },
+  {
+    up: migration_20260710_120000_convert_cents_to_dollars.up,
+    down: migration_20260710_120000_convert_cents_to_dollars.down,
+    name: '20260710_120000_convert_cents_to_dollars',
   },
 ];

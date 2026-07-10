@@ -76,9 +76,9 @@ export async function updateAffiliateStats(affiliateId: string | number, payload
 
   for (const pr of payoutRequests.docs) {
     if (pr.status === 'pending' || pr.status === 'approved') {
-      totalCommissionRequested += (pr.amountCents || 0)
+      totalCommissionRequested += (pr.amount || 0)
     } else if (pr.status === 'paid') {
-      totalCommissionPaid += (pr.amountCents || 0)
+      totalCommissionPaid += (pr.amount || 0)
     }
   }
 

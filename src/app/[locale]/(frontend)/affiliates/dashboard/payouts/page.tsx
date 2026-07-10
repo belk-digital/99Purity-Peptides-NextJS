@@ -43,7 +43,7 @@ export default async function AffiliatePayoutsPage() {
   const mappedPayouts = payoutsRes.docs.map(req => ({
     id: String(req.id),
     date: new Date(req.processedAt || req.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    amount: req.amountCents || 0,
+    amount: req.amount || 0,
     method: req.payoutMethod || 'Unknown',
     details: req.payoutDetails || '',
     status: req.status || 'pending',
@@ -67,7 +67,7 @@ export default async function AffiliatePayoutsPage() {
   }
 
   const pendingPeriodDays = affiliate.pendingPeriodDays ?? settings?.defaultPendingPeriodDays ?? 30
-  const minimumThreshold = affiliate.minimumPayoutThreshold ?? settings?.defaultMinimumPayoutThreshold ?? 5000
+  const minimumThreshold = affiliate.minimumPayoutThreshold ?? settings?.defaultMinimumPayoutThreshold ?? 50
 
   return (
     <PayoutsClient 
