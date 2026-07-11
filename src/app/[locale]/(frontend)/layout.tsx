@@ -8,6 +8,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { GlobalNavigationSpinner } from '@/components/shared/GlobalNavigationSpinner'
 import { CustomScrollbar } from '@/components/shared/CustomScrollbar'
 import { AgeGate } from '@/components/shared/AgeGate'
+import { HomePreloaderWrapper } from '@/components/home/HomePreloaderWrapper'
 
 // Fallback metadata for any page under this layout that doesn't supply its own generateMetadata.
 export async function generateMetadata() {
@@ -29,7 +30,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
       <SmoothScroll>
         <CustomScrollbar />
         <LayoutClientWrapper header={<Header />} footer={<Footer />}>
-          {children}
+          <HomePreloaderWrapper>{children}</HomePreloaderWrapper>
         </LayoutClientWrapper>
         <Toaster />
       </SmoothScroll>

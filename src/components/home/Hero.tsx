@@ -22,30 +22,10 @@ export function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCardClosed, setIsCardClosed] = useState(false)
   const didDragRef = React.useRef(false)
-  // The hero video is a multi-MB download. On mobile it's pure bandwidth/battery cost for
-  // a background loop few users notice -- skip it there and let the existing gradient
-  // background stand in. Defaults to hidden so SSR/first paint never requests it.
-  const [showVideo, setShowVideo] = useState(false)
-
-  React.useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)')
-    setShowVideo(mq.matches)
-    const update = () => setShowVideo(mq.matches)
-    mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
-  }, [])
-
-  React.useEffect(() => {
-    const sliderTimer = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % HERO_PRODUCTS.length)
-    }, 4000)
-
-    return () => clearInterval(sliderTimer)
-  }, [])
 
   React.useEffect(() => {
     const video = videoRef.current
-    if (!video || !showVideo) return
+    if (!video) return
 
     // Ensure defaultMuted is set for Safari/iOS autoplay policies
     video.defaultMuted = true;
@@ -91,8 +71,15 @@ export function Hero() {
 
     observer.observe(video)
 
-    return () => observer.disconnect()
-  }, [showVideo])
+    const sliderTimer = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % HERO_PRODUCTS.length)
+    }, 4000)
+
+    return () => {
+      observer.disconnect()
+      clearInterval(sliderTimer)
+    }
+  }, [])
 
   return (
     <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
@@ -106,23 +93,21 @@ export function Hero() {
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[64px] -translate-y-1/2 translate-x-1/3 opacity-50 transform-gpu" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[64px] translate-y-1/3 -translate-x-1/3 opacity-50 transform-gpu" />
 
-        {/* Background Video (desktop only — see showVideo comment above) */}
-        {showVideo && (
-          <video
-            suppressHydrationWarning
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            disablePictureInPicture
-            preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover z-[5] pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
-          >
-            <source src="/videos/homepage-hero-video.mp4" type="video/mp4" />
-            <source src="/videos/homepage-hero-video.webm" type="video/webm" />
-          </video>
-        )}
+        {/* Background Video */}
+        <video
+          suppressHydrationWarning
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          disablePictureInPicture
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover z-[5] pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
+        >
+          <source src="/videos/homepage-hero-video.mp4" type="video/mp4" />
+          <source src="/videos/homepage-hero-video.webm" type="video/webm" />
+        </video>
 
         {/* Dark Gradient Overlay inside card */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-10 pointer-events-none" />
