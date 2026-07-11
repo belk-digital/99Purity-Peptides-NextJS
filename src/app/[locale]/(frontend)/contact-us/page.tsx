@@ -2,6 +2,7 @@ import React from 'react'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { ContactClient } from '@/components/contact/ContactClient'
+import { getOgImageUrl } from '@/lib/utils/getOgImageUrl'
 
 const slug = 'contact-us'
 
@@ -31,11 +32,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
+      images: [getOgImageUrl(title, description)],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [getOgImageUrl(title, description)],
     },
   }
 }

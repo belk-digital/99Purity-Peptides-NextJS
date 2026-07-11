@@ -4,6 +4,7 @@ import config from '@payload-config'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { AffiliatesLandingClient, UserAffiliateStatus } from './AffiliatesLandingClient'
+import { getOgImageUrl } from '@/lib/utils/getOgImageUrl'
 
 const slug = 'affiliates'
 
@@ -33,11 +34,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
+      images: [getOgImageUrl(title, description)],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [getOgImageUrl(title, description)],
     },
   }
 }
