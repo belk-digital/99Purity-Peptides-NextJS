@@ -7,16 +7,27 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
 
-    const title = searchParams.has('title')
-      ? searchParams.get('title')?.slice(0, 100)
+    let title = searchParams.has('title')
+      ? searchParams.get('title') || '99 Purity Peptides'
       : '99 Purity Peptides'
       
-    const description = searchParams.has('description')
-      ? searchParams.get('description')?.slice(0, 150)
+    // Strip redundant brand name to keep text short and clean
+    if (title.includes(' | 99PurityPeptides')) {
+      title = title.replace(' | 99PurityPeptides', '')
+    }
+    title = title.slice(0, 90)
+      
+    let description = searchParams.has('description')
+      ? searchParams.get('description')?.slice(0, 120) // Shorter limit for description
       : 'Research-grade excellence. Dedicated to purity.'
 
-    // We use the absolute public R2 url so the image generator can ALWAYS fetch the logo
+    // Always use the public R2 bucket so it 100% renders in local and production
     const logoUrl = 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Logo/99pp-Logo.png'
+    
+    // We must use a PNG or JPG because OG image generator does not support WebP.
+    // I converted the requested og-image.webp to og-image.png so it works natively here!
+    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
+    const bgUrl = `${serverUrl}/99%20Images/og-image.png`
 
     return new ImageResponse(
       (
@@ -27,85 +38,104 @@ export async function GET(req: NextRequest) {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            backgroundColor: '#0a0a0a',
-            backgroundImage: 'linear-gradient(to bottom right, #050505, #12353c)',
+            backgroundColor: '#050505',
+            backgroundImage: `url(${bgUrl})`,
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
             fontFamily: 'sans-serif',
             padding: '80px',
-            borderTop: '16px solid #1e5661'
+            position: 'relative'
           }}
         >
-          {/* Logo */}
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <img
-              src={logoUrl}
-              alt="99 Purity Peptides"
-              style={{ height: '70px', objectFit: 'contain' }}
-            />
-          </div>
+          {/* Dark Overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              zIndex: 1,
+            }}
+          />
 
-          {/* Content block */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '24px',
-              marginTop: 'auto',
-              marginBottom: 'auto',
+              zIndex: 2,
+              width: '100%',
+              height: '100%',
+              justifyContent: 'space-between',
             }}
           >
-            <h1
+            {/* Logo - Made bigger */}
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img
+                src={logoUrl}
+                alt="99 Purity Peptides"
+                style={{ height: '95px', objectFit: 'contain' }}
+              />
+            </div>
+
+            {/* Content block */}
+            <div
               style={{
-                fontSize: '84px',
-                fontWeight: 800,
-                color: '#ffffff',
-                margin: 0,
-                lineHeight: 1.05,
-                letterSpacing: '-0.03em',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '24px',
+                marginTop: 'auto',
+                marginBottom: 'auto',
               }}
             >
-              {title}
-            </h1>
-            
-            {description && (
-              <p
+              <h1
                 style={{
-                  fontSize: '36px',
-                  color: '#94a3b8',
+                  fontSize: '76px',
+                  fontWeight: 800,
+                  color: '#ffffff',
                   margin: 0,
-                  lineHeight: 1.4,
-                  maxWidth: '90%',
-                  fontWeight: 400,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
                 }}
               >
-                {description}
-              </p>
-            )}
-          </div>
-          
-          {/* Footer / Badge */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-            <div 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                padding: '12px 32px',
-                borderRadius: '100px',
-                color: '#e2e8f0',
-                fontSize: '24px',
-                fontWeight: 600,
-                letterSpacing: '0.02em',
-              }}
-            >
-              99puritypeptides.com
+                {title}
+              </h1>
+              
+              {description && (
+                <p
+                  style={{
+                    fontSize: '32px',
+                    color: '#e2e8f0',
+                    margin: 0,
+                    lineHeight: 1.4,
+                    maxWidth: '90%',
+                    fontWeight: 500,
+                  }}
+                >
+                  {description}
+                </p>
+              )}
             </div>
             
-            {/* Decorative dots */}
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#2DD4BF' }}></div>
-              <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'rgba(45, 212, 191, 0.4)' }}></div>
-              <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'rgba(45, 212, 191, 0.15)' }}></div>
+            {/* Footer / Badge */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  padding: '12px 32px',
+                  borderRadius: '100px',
+                  color: '#ffffff',
+                  fontSize: '24px',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
+                }}
+              >
+                99puritypeptides.com
+              </div>
             </div>
           </div>
         </div>
