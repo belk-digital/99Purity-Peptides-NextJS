@@ -49,7 +49,7 @@ export async function submitAffiliateApplication(formData: FormData) {
     const promotionMethods = formData.get('methods') as string
     const agreedToTerms = formData.get('terms') === 'on' || formData.get('terms') === 'true'
 
-    if (!displayName || !platform || !socialUrl || !estimatedMonthlyReach || !promotionMethods || !agreedToTerms) {
+    if (!displayName || !platform || !estimatedMonthlyReach || !promotionMethods || !agreedToTerms) {
       return { success: false, error: t('errorMissingFields') }
     }
 
@@ -61,12 +61,14 @@ export async function submitAffiliateApplication(formData: FormData) {
         status: 'approved',
         displayName,
         websiteUrl,
-        socialLinks: [
-          {
-            platform: platform as any,
-            url: socialUrl,
-          }
-        ],
+        socialLinks: socialUrl
+          ? [
+              {
+                platform: platform as any,
+                url: socialUrl,
+              }
+            ]
+          : [],
         estimatedMonthlyReach: estimatedMonthlyReach as any,
         niche,
         promotionMethods,

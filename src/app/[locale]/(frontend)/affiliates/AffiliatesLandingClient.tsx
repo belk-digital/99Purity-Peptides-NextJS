@@ -666,8 +666,8 @@ export function AffiliatesLandingClient({ userStatus }: Props) {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="socialUrl" className="text-xs font-bold tracking-widest uppercase text-white/70 ml-1">{t('profileUrlLabel')} <span className="text-primary">*</span></Label>
-                        <Input id="socialUrl" name="socialUrl" type="url" required placeholder="https://youtube.com/c/..." className="h-14 rounded-full bg-white/5 border border-white/10 focus:ring-1 focus:ring-primary focus:border-primary px-6 text-white placeholder:text-white/30 backdrop-blur-sm" />
+                        <Label htmlFor="socialUrl" className="text-xs font-bold tracking-widest uppercase text-white/70 ml-1">{t('profileUrlLabel')}</Label>
+                        <Input id="socialUrl" name="socialUrl" type="text" placeholder="https://youtube.com/c/... or @yourhandle" className="h-14 rounded-full bg-white/5 border border-white/10 focus:ring-1 focus:ring-primary focus:border-primary px-6 text-white placeholder:text-white/30 backdrop-blur-sm" />
                       </div>
                     </div>
                   </div>
