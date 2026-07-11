@@ -1671,7 +1671,7 @@
       "basicInfoTitle": "Información Básica",
       "displayNameLabel": "Nombre para Mostrar",
       "displayNamePlaceholder": "Juan Pérez o Nombre del Canal",
-      "websiteUrlLabel": "URL del Sitio Web",
+      "websiteUrlLabel": "URL del Sitio Web (Opcional)",
       "primaryPlatformTitle": "Plataforma Principal",
       "platformLabel": "Plataforma",
       "platformPlaceholder": "Selecciona una plataforma",
