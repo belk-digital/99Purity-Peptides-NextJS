@@ -176,6 +176,7 @@ export async function addToWishlist(productId: string | number, providedVariantS
 async function calculateCartTotals(cartItems: any[], payload: any, coupon?: any) {
   let eligibleSubtotal = 0;
   let totalSubtotal = 0;
+  const ineligibleReasons = new Set<string>();
 
   for (const item of cartItems) {
     let product = item.product;
@@ -193,32 +194,41 @@ async function calculateCartTotals(cartItems: any[], payload: any, coupon?: any)
       let eligible = true;
       if (coupon.excludeSaleItems && typeof product.salePrice === 'number' && product.salePrice > 0) {
         eligible = false;
+        ineligibleReasons.add('sale_excluded');
       }
 
       // Check applicableProductTypes (Singles vs Kits)
       if (coupon.applicableProductTypes && coupon.applicableProductTypes !== 'all') {
-        const matchedVariant = Array.isArray(product.variants) 
+        const matchedVariant = Array.isArray(product.variants)
           ? product.variants.find((v: any) => v.sku === item.variantSku)
           : null;
-        
+
         // A variant is a Kit if 'isKit' is true, or falls back to legacy " - " bundle check
         const isKitBundle = (matchedVariant && matchedVariant.isKit) || (typeof item.variantSku === 'string' && item.variantSku.includes(' - '));
 
         if (coupon.applicableProductTypes === 'normal_only' && isKitBundle) {
           eligible = false; // Coupon is for Singles Only
+          ineligibleReasons.add('kit_not_allowed');
         } else if (coupon.applicableProductTypes === 'bulk_only' && !isKitBundle) {
           eligible = false; // Coupon is for Kits Only
+          ineligibleReasons.add('kit_required');
         }
       }
-      if (eligible && coupon.appliesTo === 'specific_products') {
+      if (coupon.appliesTo === 'specific_products') {
         const allowedProductIds = (coupon.products || []).map((p: any) => typeof p.product === 'object' ? p.product.id : p.product);
-        if (!allowedProductIds.includes(product.id)) eligible = false;
+        if (!allowedProductIds.includes(product.id)) {
+          eligible = false;
+          ineligibleReasons.add('not_specific_product');
+        }
       }
-      if (eligible && coupon.appliesTo === 'specific_categories') {
+      if (coupon.appliesTo === 'specific_categories') {
         const allowedCategoryIds = (coupon.categories || []).map((c: any) => typeof c.category === 'object' ? c.category.id : c.category);
         const productCategoryIds = (product.categories || []).map((c: any) => typeof c === 'object' ? c.id : c);
         const hasIntersect = productCategoryIds.some((id: any) => allowedCategoryIds.includes(id));
-        if (!hasIntersect) eligible = false;
+        if (!hasIntersect) {
+          eligible = false;
+          ineligibleReasons.add('not_specific_category');
+        }
       }
       if (eligible) eligibleSubtotal += itemTotal;
     }
@@ -254,7 +264,7 @@ async function calculateCartTotals(cartItems: any[], payload: any, coupon?: any)
     freeShipping = true;
   }
 
-  return { discount, description, eligibleSubtotal, totalSubtotal, freeShipping };
+  return { discount, description, eligibleSubtotal, totalSubtotal, freeShipping, ineligibleReasons: Array.from(ineligibleReasons) };
 }
 
 export async function verifyCoupon(couponCode: string, subtotal: number, clientCartItems?: any[]) {
@@ -332,7 +342,7 @@ export async function verifyCoupon(couponCode: string, subtotal: number, clientC
       return { valid: false, error: 'Cart is empty' }
     }
 
-    const { discount, description, eligibleSubtotal, totalSubtotal } = await calculateCartTotals(cartItems, payload, coupon)
+    const { discount, description, eligibleSubtotal, totalSubtotal, ineligibleReasons } = await calculateCartTotals(cartItems, payload, coupon)
 
     // Check minimum spend (both minSpend and totalSubtotal are in dollars)
     if (coupon.minSpend && totalSubtotal < coupon.minSpend) {
@@ -356,12 +366,23 @@ export async function verifyCoupon(couponCode: string, subtotal: number, clientC
         overrideAccess: true,
       })
       if (priorOrders.docs.length > 0) {
-        return { valid: false, error: 'This coupon is only valid for new customers' }
+        return { valid: false, error: 'This coupon is only valid for new customers with no previous orders' }
       }
     }
 
     if (eligibleSubtotal === 0 && coupon.type !== 'free_shipping') {
-      return { valid: false, error: 'This coupon does not apply to any items in your cart' }
+      const reasonMessages: Record<string, string> = {
+        sale_excluded: 'This coupon cannot be combined with items already on sale',
+        kit_not_allowed: 'This coupon only applies to single items, not kit/bundle products',
+        kit_required: 'This coupon only applies to kit/bundle products',
+        not_specific_product: 'This coupon only applies to specific products that are not in your cart',
+        not_specific_category: 'This coupon only applies to specific product categories that are not in your cart',
+      }
+      const messages = (ineligibleReasons || []).map((r: string) => reasonMessages[r]).filter(Boolean)
+      return {
+        valid: false,
+        error: messages.length > 0 ? messages.join('. ') + '.' : 'This coupon does not apply to any items in your cart',
+      }
     }
 
     return {
