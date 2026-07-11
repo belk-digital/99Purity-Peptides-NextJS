@@ -21,7 +21,7 @@ const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod
 const ANNOUNCEMENTS = [
   {
     key: "puritySale",
-    couponCode: "PURITY25",
+    couponCode: "PURITY20",
     expiresAt: new Date(Date.now() + 86400000).toISOString() // 24 hours
   },
   {
