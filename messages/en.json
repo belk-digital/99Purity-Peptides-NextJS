@@ -1671,7 +1671,7 @@
       "basicInfoTitle": "Basic Information",
       "displayNameLabel": "Display Name",
       "displayNamePlaceholder": "John Doe or Channel Name",
-      "websiteUrlLabel": "Website URL",
+      "websiteUrlLabel": "Website URL (Optional)",
       "primaryPlatformTitle": "Primary Platform",
       "platformLabel": "Platform",
       "platformPlaceholder": "Select platform",
