@@ -75,7 +75,7 @@ export async function GET(req: Request) {
           usageLimit: 1, // One-time use — a repeat request generates its own separate coupon
           lockedEmails: [{ email }],
           appliesTo: 'all',
-          applicableProductTypes: 'all',
+          applicableProductTypes: 'normal_only',
           freeShipping: false,
           stackable: false,
           excludeSaleItems: false,
