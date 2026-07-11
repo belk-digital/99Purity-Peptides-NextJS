@@ -51,6 +51,14 @@ async function main() {
     appliesTo: 'all',
   })
 
+  await upsertCoupon(payload, 'KITS15', {
+    type: 'percentage',
+    value: 15,
+    isActive: true,
+    applicableProductTypes: 'bulk_only',
+    appliesTo: 'all',
+  })
+
   console.log('Done.')
   process.exit(0)
 }

@@ -33,6 +33,11 @@ const ANNOUNCEMENTS = [
     key: "newCustomerDiscount",
     couponCode: null,
     expiresAt: null
+  },
+  {
+    key: "kitsDiscount",
+    couponCode: null,
+    expiresAt: null
   }
 ]
 
