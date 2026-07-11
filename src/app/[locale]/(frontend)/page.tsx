@@ -13,6 +13,7 @@ import { MerchandiseSection } from '@/components/home/MerchandiseSection'
 import { MilitaryDiscountSection } from '@/components/home/MilitaryDiscountSection'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { getOgImageUrl } from '@/lib/utils'
 
 export async function generateMetadata({
   params,
@@ -40,13 +41,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
-      images: ['/99 Images/99pp-Logo.png'],
+      images: [{ url: getOgImageUrl(title, description) }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/99 Images/99pp-Logo.png'],
+      images: [getOgImageUrl(title, description)],
     },
   }
 }

@@ -26,7 +26,9 @@ export function emailLayout({
           <!-- Header -->
           <tr>
             <td style="background-color: #000000; padding: 40px; text-align: center;">
-              <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Logo/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto;" />
+              <a href="${serverUrl}" target="_blank" style="text-decoration: none;">
+                <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Logo/99pp-Logo.png" alt="99 Purity Peptides" style="height: 50px; width: auto; max-width: 100%; display: block; margin: 0 auto;" />
+              </a>
             </td>
           </tr>
           
@@ -49,10 +51,12 @@ export function emailLayout({
           <!-- Signature & Footer -->
           <tr>
             <td style="background-color: #fdfbf7; padding: 32px 40px; text-align: center; border-top: 1px solid #E8E2D5;">
-              <p style="margin: 0 0 8px 0; color: #1e5661; font-weight: bold; font-size: 16px;">99 Purity Peptides</p>
+              <p style="margin: 0 0 8px 0; color: #1e5661; font-weight: bold; font-size: 16px;">
+                <a href="${serverUrl}" target="_blank" style="color: #1e5661; text-decoration: none;">99 Purity Peptides</a>
+              </p>
               <p style="margin: 0 0 20px 0; color: #8A8A8A; font-size: 13px;">Research-grade excellence. Dedicated to purity.</p>
               <p style="margin: 0 0 12px 0; color: #8A8A8A; font-size: 12px;">Need help? Reply to this email or contact support.</p>
-              <p style="margin: 0; color: #A0A0A0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">&copy; ${new Date().getFullYear()} 99 Purity Peptides. All rights reserved.</p>
+              <p style="margin: 0; color: #A0A0A0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">&copy; ${new Date().getFullYear()} <a href="${serverUrl}" target="_blank" style="color: inherit; text-decoration: none;">99 Purity Peptides</a>. All rights reserved.</p>
             </td>
           </tr>
         </table>

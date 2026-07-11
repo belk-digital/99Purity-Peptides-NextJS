@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { getShopProducts } from '../(shop)/actions'
+import { getOgImageUrl } from '@/lib/utils'
 
 const title = 'Shop High-Quality Synthetic Research Peptides | 99PurityPeptides'
 const description = 'Shop high-quality synthetic research peptides at 99PurityPeptides. Wide selection of lab-grade peptides crafted for research and analytical studies.'
@@ -31,13 +32,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
-      images: ['/99 Images/99pp-Logo.png'],
+      images: [{ url: getOgImageUrl('Shop Peptides', description) }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/99 Images/99pp-Logo.png'],
+      images: [getOgImageUrl('Shop Peptides', description)],
     },
   }
 }

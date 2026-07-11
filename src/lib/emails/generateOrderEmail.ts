@@ -1,7 +1,7 @@
 import { escapeHtml } from './escapeHtml'
 import { emailLayout } from './emailLayout'
 
-export async function generateOrderInvoiceHtml(order: any, payload?: any, customNote?: string): Promise<string> {
+export async function generateOrderInvoiceHtml(order: any, payload?: any, customNote?: string, statusContext: 'success' | 'failed' | 'cancelled' | 'refunded' = 'success'): Promise<string> {
   const orderNumber = order.orderNumber || order.id;
   const orderDate = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com';
@@ -139,7 +139,22 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
     title: `Order Invoice #${orderNumber}`,
     serverUrl,
     content: `
-              <h2 style="margin: 0 0 16px 0; font-size: 24px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">Thank you for your order, ${customerName}!</h2>
+              ${statusContext === 'failed' ? `
+                <h2 style="margin: 0 0 16px 0; font-size: 24px; color: #B91C1C; font-weight: 800; letter-spacing: -0.5px;">Your payment could not be processed</h2>
+                <p style="margin: 0 0 16px 0; font-size: 15px; color: #2A2A2A; line-height: 1.6;">Hi ${customerName},</p>
+                <p style="margin: 0 0 24px 0; font-size: 15px; color: #2A2A2A; line-height: 1.6;">We weren't able to process payment for your order <strong>#${orderNumber}</strong>, so it hasn't been placed. You're welcome to try placing the order again.</p>
+                
+                <div style="text-align: center; margin: 32px 0;">
+                  <a href="${serverUrl}/checkout" style="background-color: #1e5661; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 16px; display: inline-block;">Try Checking Out Again</a>
+                </div>
+              ` : statusContext === 'cancelled' || statusContext === 'refunded' ? `
+                <h2 style="margin: 0 0 16px 0; font-size: 24px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">Your order has been ${statusContext}</h2>
+                <p style="margin: 0 0 16px 0; font-size: 15px; color: #2A2A2A; line-height: 1.6;">Hi ${customerName},</p>
+                <p style="margin: 0 0 24px 0; font-size: 15px; color: #2A2A2A; line-height: 1.6;">Your order <strong>#${orderNumber}</strong> has been <strong>${statusContext}</strong>.</p>
+                ${order.redeemedPoints ? `<p style="margin: 0 0 16px 0; font-size: 15px; color: #2A2A2A; line-height: 1.6;">Any Purity Points used on this order have been credited back to your account.</p>` : ''}
+              ` : `
+                <h2 style="margin: 0 0 16px 0; font-size: 24px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">Thank you for your order, ${customerName}!</h2>
+              `}
               
           ${customNote ? `
           <!-- Custom Admin Note -->
@@ -149,13 +164,15 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
               </div>
           ` : ''}
 
-          ${order.paymentMethod === 'zelle' && order.paymentStatus === 'unpaid' ? `
+          ${statusContext === 'success' && order.paymentMethod === 'zelle' && order.paymentStatus === 'unpaid' ? `
           <!-- Zelle Payment Instructions -->
               <div style="background-color: #F3E8FF; border: 1px solid #E9D5FF; padding: 30px 20px; border-radius: 12px; text-align: center; margin-bottom: 32px;">
                 <div style="display: inline-block; width: 48px; height: 48px; background-color: #E9D5FF; border-radius: 50%; color: #7E22CE; font-weight: bold; font-size: 24px; line-height: 48px; margin-bottom: 16px;">Z</div>
                 <h3 style="margin: 0 0 8px 0; color: #6B21A8; font-size: 18px; font-weight: 700;">Complete Your Payment via Zelle</h3>
                 <p style="margin: 0 0 20px 0; color: #7E22CE; font-size: 14px; line-height: 1.5;">To finalize your order, please send exactly <strong>${formatMoney(total)}</strong> to our Zelle account.</p>
                 
+                <p style="margin: 0 0 16px 0; color: #B91C1C; font-size: 13px; font-weight: 600;">Please make sure to include your order number <strong>#${orderNumber}</strong> in the Zelle memo.</p>
+
                 <div style="display: block; margin-bottom: 20px;">
                   <div style="background-color: #ffffff; border: 1px solid #E9D5FF; border-radius: 12px; padding: 8px; display: inline-block;">
                     <img src="https://res.cloudinary.com/denskvdyt/image/upload/v1783110064/zelle-qr_h2xhvt.jpg" alt="Zelle QR Code" style="width: 150px; height: 150px; display: block;" />
@@ -169,12 +186,11 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
                   </div>
                 </div>
                 
-                <p style="margin: 0 0 8px 0; color: #7E22CE; font-size: 12px;">Please make sure to include your order number <strong>#${orderNumber}</strong> in the Zelle memo.</p>
                 <p style="margin: 0; color: #9333EA; font-size: 11px; font-style: italic;">Note: Please ignore this payment instruction if you have already completed your payment on the website.</p>
               </div>
           ` : ''}
 
-          ${order.paymentMethod === 'amex' && order.paymentStatus === 'unpaid' ? `
+          ${statusContext === 'success' && order.paymentMethod === 'amex' && order.paymentStatus === 'unpaid' ? `
           <!-- AMEX Payment Instructions -->
               <div style="background-color: #EFF6FF; border: 1px solid #DBEAFE; padding: 30px 20px; border-radius: 12px; text-align: center; margin-bottom: 32px;">
                 <div style="display: inline-block; width: 48px; height: 48px; background-color: #DBEAFE; border-radius: 50%; color: #1D4ED8; font-weight: bold; font-size: 24px; line-height: 48px; margin-bottom: 16px;">A</div>
@@ -183,7 +199,7 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
               </div>
           ` : ''}
 
-          ${safeTrackingLink ? `
+          ${statusContext === 'success' && safeTrackingLink ? `
           <!-- Tracking Link -->
               <div style="background-color: #fdfbf7; border-left: 4px solid #10B981; padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 32px;">
                 <h3 style="margin: 0 0 8px 0; color: #065F46; font-size: 15px; font-weight: 600;">Track Your Order</h3>

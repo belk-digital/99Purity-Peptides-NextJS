@@ -7,6 +7,7 @@ import { WhyChooseUsGrid } from '@/components/about/WhyChooseUsGrid'
 import { OurServices } from '@/components/about/OurServices'
 import { ComplianceStatement } from '@/components/about/ComplianceStatement'
 import { SharedFaqSection } from '@/components/shared/SharedFaqSection'
+import { getOgImageUrl } from '@/lib/utils'
 
 const ABOUT_FAQ_KEYS = ['trustworthySupplier', 'analyticalQuality', 'laboratoryResearchOnly', 'documentationProvided']
 
@@ -38,11 +39,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
+      images: [{ url: getOgImageUrl(title, description) }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [getOgImageUrl(title, description)],
     },
   }
 }

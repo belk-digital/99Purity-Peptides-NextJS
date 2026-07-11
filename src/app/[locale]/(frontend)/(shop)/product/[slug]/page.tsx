@@ -1,5 +1,6 @@
 import React from 'react'
 import { ProductClient } from './ProductClient'
+import { getOgImageUrl } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
@@ -52,14 +53,14 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      images: imageUrl ? [imageUrl] : undefined,
+      images: [{ url: getOgImageUrl(title, description) }],
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: imageUrl ? [imageUrl] : undefined,
+      images: [getOgImageUrl(title, description)],
     },
     alternates: {
       canonical: locale === 'en' ? `/product/${slug}` : `/${locale}/product/${slug}`,

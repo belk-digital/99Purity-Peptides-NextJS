@@ -1002,7 +1002,8 @@
         "orders": "Orders",
         "addresses": "Addresses",
         "wishlist": "Wishlist",
-        "settings": "Settings"
+        "settings": "Settings",
+        "affiliateDashboard": "Affiliate Dashboard"
       },
       "affiliateDashboard": "Affiliate Dashboard",
       "signOut": "Sign out",
