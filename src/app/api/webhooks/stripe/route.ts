@@ -56,7 +56,7 @@ export async function POST(req: Request) {
           const order = await payload.findByID({ collection: 'orders', id: Number(orderId), depth: 0 })
           if (order && !order.isFinalized && order.status === 'pending') {
             // Cancelling releases the reserved stock/coupon/points via the afterOrderChange hook.
-            await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' } })
+            await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, context: { paymentFailed: true } })
           }
         } catch (err) {
           console.error(`Failed to cancel order ${orderId} after payment failure:`, err)

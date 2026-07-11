@@ -591,25 +591,47 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
 
     if (!order) return { success: false }
 
+    const orderNumber = order.orderNumber || orderId
     const customerEmail = (typeof order.owner === 'object' && order.owner !== null ? order.owner.email : order.guestEmail) || 'N/A'
+    const customerPhone = order.customerPhone || 'N/A'
     const total = `$${(order.total || 0).toFixed(2)}`
 
-    const html = `
-      <h2>Payment Failed Alert</h2>
-      <p>A customer attempted to checkout but their payment failed.</p>
-      <ul>
-        <li><strong>Order ID:</strong> ${escapeHtml(orderId)}</li>
-        <li><strong>Customer Email:</strong> ${escapeHtml(customerEmail)}</li>
-        <li><strong>Total:</strong> ${escapeHtml(total)}</li>
-        <li><strong>Error Message:</strong> ${escapeHtml(errorMessage)}</li>
-      </ul>
-      <p>You can check their cart/order details in the Payload Admin panel to see what they were trying to buy.</p>
-    `
+    const { emailLayout } = await import('@/lib/emails/emailLayout')
+    const html = emailLayout({
+      title: `Payment Failed - Order #${orderNumber}`,
+      content: `
+        <h2 style="margin: 0 0 16px 0; font-size: 22px; color: #B91C1C; font-weight: 800;">⚠️ Payment Failed Alert</h2>
+        <p style="margin: 0 0 20px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">A customer attempted to checkout but their payment failed.</p>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
+          <tr>
+            <td style="padding: 8px 0; font-size: 14px; color: #6b7280; width: 160px;">Order Number</td>
+            <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(String(orderNumber))}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Customer Email</td>
+            <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(customerEmail)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Customer Phone</td>
+            <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(customerPhone)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Total</td>
+            <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(total)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Error Message</td>
+            <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(errorMessage)}</td>
+          </tr>
+        </table>
+        <p style="margin: 0; font-size: 13px; color: #6b7280;">You can check their cart/order details in the Payload Admin panel to see what they were trying to buy.</p>
+      `,
+    })
 
     await sendTrackedEmail(payload, {
       from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
       to: 'support@99puritypeptides.com',
-      subject: `⚠️ Payment Failed - Order ${orderId}`,
+      subject: `⚠️ Payment Failed - Order #${orderNumber}`,
       html: html,
     })
 

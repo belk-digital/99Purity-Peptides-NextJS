@@ -4,6 +4,8 @@ import { sql } from '@payloadcms/db-postgres'
 import { validateStatusTransition } from '@/lib/orders/state'
 import { sendTrackedEmail } from '@/lib/emails/sendTrackedEmail'
 import { releaseStock, releaseCouponUsage, releasePoints } from '@/lib/orders/reserve'
+import { emailLayout } from '@/lib/emails/emailLayout'
+import { escapeHtml } from '@/lib/emails/escapeHtml'
 
 export const beforeOrderChange: CollectionBeforeChangeHook = async ({ operation, originalDoc, data, req }) => {
   if (operation === 'create') {
@@ -181,7 +183,10 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
         }
       }
 
-      // Notify the customer their order was cancelled/refunded
+      // Notify the customer their order was cancelled/refunded/failed. A payment-failure
+      // auto-cancel (see webhooks/circoflows, webhooks/stripe, checkout/circoflowsActions —
+      // they set context.paymentFailed on the triggering payload.update call) reads as
+      // "failed" here rather than "cancelled", since the customer never chose to cancel.
       try {
         let customerEmail = doc.guestEmail
         if (!customerEmail && doc.owner) {
@@ -190,16 +195,38 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
           customerEmail = user?.email
         }
         if (customerEmail) {
-          const label = doc.status === 'refunded' ? 'refunded' : 'cancelled'
+          const orderNumber = doc.orderNumber || doc.id
+          const label = doc.status === 'refunded' ? 'refunded' : (req.context?.paymentFailed ? 'failed' : 'cancelled')
+          const customerFirstName = escapeHtml(doc.customerFirstName || 'there')
+          const subject = label === 'failed'
+            ? `Your Order #${orderNumber} payment failed`
+            : `Your Order #${orderNumber} has been ${label}`
+          const html = emailLayout({
+            title: subject,
+            content: `
+              <h2 style="margin: 0 0 16px 0; font-size: 22px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">
+                ${label === 'failed' ? 'Your payment could not be processed' : `Your order has been ${label}`}
+              </h2>
+              <p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">Hi ${customerFirstName},</p>
+              <p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">
+                ${label === 'failed'
+                  ? `We weren't able to process payment for your order <strong>#${orderNumber}</strong>, so it hasn't been placed.`
+                  : `Your order <strong>#${orderNumber}</strong> has been <strong>${label}</strong>.`}
+              </p>
+              ${doc.redeemedPoints ? `<p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">Any Purity Points used on this order have been credited back to your account.</p>` : ''}
+              ${label === 'failed' ? `<p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">You're welcome to try placing the order again.</p>` : ''}
+              <p style="margin: 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">If you have questions, just reply to this email.</p>
+            `,
+          })
           await sendTrackedEmail(req.payload, {
             from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
             to: customerEmail,
-            subject: `Your Order #${doc.orderNumber || doc.id} has been ${label}`,
-            html: `<p>Hi,</p><p>Your order <strong>#${doc.orderNumber || doc.id}</strong> has been <strong>${label}</strong>.</p>${doc.redeemedPoints ? `<p>Any Purity Points used on this order have been credited back to your account.</p>` : ''}<p>If you have questions, just reply to this email.</p>`,
+            subject,
+            html,
           })
         }
       } catch (err) {
-        req.payload.logger.error({ err }, `Failed to send cancellation/refund email for order ${doc.id}`)
+        req.payload.logger.error({ err }, `Failed to send cancellation/refund/failure email for order ${doc.id}`)
       }
     }
   }

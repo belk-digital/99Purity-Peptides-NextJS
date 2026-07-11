@@ -46,6 +46,9 @@ export async function createCircoFlowsPayment(
 
   const headersList = await headers()
   const origin = headersList.get('origin') || `https://${headersList.get('host')}`
+  // x-forwarded-for can carry a "client, proxy1, proxy2" chain (Vercel included) — the first
+  // entry is the actual customer, the rest are intermediate proxies.
+  const ipAddress = headersList.get('x-forwarded-for')?.split(',')[0].trim() || headersList.get('x-real-ip') || '127.0.0.1'
 
   try {
     const response = await fetch(`${CIRCOFLOWS_BASE_URL}/hosted/create`, {
@@ -64,6 +67,7 @@ export async function createCircoFlowsPayment(
         state: formData.state,
         postal_code: formData.zip,
         country: 'US',
+        ip_address: ipAddress,
         amount: String(order.total),
         currency: 'USD',
         merchant_transaction_id: String(order.id),
@@ -97,7 +101,7 @@ async function cancelUnfinalizedOrder(orderId: string | number) {
     const payload = await getPayload({ config: configPromise })
     const order = await payload.findByID({ collection: 'orders', id: Number(orderId), depth: 0, overrideAccess: true })
     if (order && !order.isFinalized && order.status === 'pending') {
-      await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, overrideAccess: true })
+      await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, overrideAccess: true, context: { paymentFailed: true } })
     }
   } catch (err) {
     console.error(`Failed to cancel unfinalized CircoFlows order ${orderId}:`, err)

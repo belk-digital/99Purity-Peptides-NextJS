@@ -65,7 +65,7 @@ export async function POST(req: Request) {
       if (!order.isFinalized && order.status === 'pending') {
         // Cancelling releases the reserved stock/coupon/points via the afterOrderChange hook,
         // same as the Stripe payment_intent.payment_failed handler.
-        await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, overrideAccess: true })
+        await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, overrideAccess: true, context: { paymentFailed: true } })
       }
       try {
         const { notifyAdminFailedPayment } = await import('@/app/[locale]/(frontend)/(shop)/checkout/actions')
