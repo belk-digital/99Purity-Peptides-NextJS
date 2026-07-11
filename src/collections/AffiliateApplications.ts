@@ -7,6 +7,12 @@ export const AffiliateApplications: CollectionConfig = {
     useAsTitle: 'displayName',
     group: 'Affiliate System',
   },
+  // estimatedMonthlyReach's option values ('<1k', '1k-10k', '10k-100k', '100k+') aren't valid
+  // GraphQL enum names, which crashes /api/graphql schema generation on every request. This
+  // collection isn't consumed via GraphQL anywhere in the app (only the REST/local API is
+  // used), so excluding it from the GraphQL schema is the safe fix -- renaming the option
+  // values would require a live Postgres enum migration for no functional benefit.
+  graphQL: false,
   access: {
     read: ({ req: { user } }) => {
       if (!user) return false
