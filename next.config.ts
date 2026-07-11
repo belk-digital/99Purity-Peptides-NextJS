@@ -83,6 +83,10 @@ const nextConfig: NextConfig = {
       { source: '/:locale/product-category/bioregulators', destination: '/:locale/shop?category=Bioregulators', permanent: true },
       { source: '/product-category/aminos', destination: '/shop?category=Aminos', permanent: true },
       { source: '/:locale/product-category/aminos', destination: '/:locale/shop?category=Aminos', permanent: true },
+      // WordPress's "glutathione" product was re-slugged to "glutathione-600-1500" in Payload
+      // (dosage variant added to the slug). Without this, the indexed WP URL 404s post-cutover.
+      { source: '/product/glutathione', destination: '/product/glutathione-600-1500', permanent: true },
+      { source: '/:locale/product/glutathione', destination: '/:locale/product/glutathione-600-1500', permanent: true },
       // WordPress products not yet imported into Payload. These URLs are indexed and
       // ranking on the live WordPress site but have no Next.js product page yet, so they
       // redirect to the homepage rather than soft-404ing. Remove each entry here once its
