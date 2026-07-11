@@ -22,6 +22,7 @@ type OrderItem = {
 
 type OrderData = {
   id: string
+  orderId: string
   customerName: string
   email: string
   shippingAddress: {
@@ -48,7 +49,7 @@ type OrderData = {
   discountTotal?: number
   redeemedPoints?: number
   couponCode?: string
-  paymentMethod: 'stripe' | 'zelle' | 'amex'
+  paymentMethod: 'stripe' | 'zelle' | 'amex' | 'circoflows'
 }
 
 const ZELLE_RECIPIENT_EMAIL = 'orders@99puritypeptides.com'
@@ -67,10 +68,21 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
     useCartStore.getState().clear()
   }, [])
 
+  // CircoFlows' webhook is the source of truth for finalizing the order, but it can lag behind
+  // the customer's browser redirect back from the hosted card page. This fallback re-checks
+  // status directly with CircoFlows and finalizes immediately if the webhook hasn't landed yet —
+  // same role syncPaymentStatus plays for Stripe in StripeCheckoutForm.tsx.
+  React.useEffect(() => {
+    if (order.paymentMethod === 'circoflows') {
+      import('../../checkout/circoflowsActions').then(m => m.syncCircoFlowsPaymentStatus(order.orderId))
+    }
+  }, [order.paymentMethod, order.orderId])
+
   const PAYMENT_METHOD_LABELS: Record<OrderData['paymentMethod'], string> = {
     stripe: t('paymentMethodCard'),
     zelle: t('paymentMethodZelle'),
     amex: 'American Express',
+    circoflows: t('paymentMethodCard'),
   }
 
   return (

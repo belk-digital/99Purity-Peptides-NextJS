@@ -101,6 +101,10 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
   // Format OrderData
   const orderData = {
     id: order.orderNumber || String(order.id),
+    // Real numeric Payload id — distinct from the display `id` above (which prefers the
+    // human-facing orderNumber), needed for API calls back to actions keyed by the true id
+    // (e.g. CircoFlows' merchant_transaction_id, which was set to this at order-creation time).
+    orderId: String(order.id),
     customerName: `${order.customerFirstName || ''} ${order.customerLastName || ''}`.trim() || t('defaultCustomerName'),
     email: order.guestEmail || '',
     shippingAddress: {

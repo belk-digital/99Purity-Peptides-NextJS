@@ -768,7 +768,11 @@ export interface Order {
   /**
    * Zelle orders require manual payment confirmation before fulfillment.
    */
-  paymentMethod?: ('stripe' | 'zelle' | 'amex') | null;
+  paymentMethod?: ('stripe' | 'zelle' | 'amex' | 'circoflows') | null;
+  /**
+   * CircoFlows transaction_id, for support/reconciliation lookups.
+   */
+  circoflowsTransactionId?: string | null;
   couponCode?: string | null;
   /**
    * Affiliate ID if referred
@@ -1872,6 +1876,7 @@ export interface OrdersSelect<T extends boolean = true> {
   trackingLink?: T;
   sendTrackingEmail?: T;
   paymentMethod?: T;
+  circoflowsTransactionId?: T;
   couponCode?: T;
   affiliateId?: T;
   clickId?: T;

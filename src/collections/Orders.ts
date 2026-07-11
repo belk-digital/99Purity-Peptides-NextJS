@@ -226,10 +226,21 @@ export const Orders: CollectionConfig = {
         { label: 'Card (Stripe)', value: 'stripe' },
         { label: 'Zelle', value: 'zelle' },
         { label: 'American Express', value: 'amex' },
+        { label: 'Card (CircoFlows)', value: 'circoflows' },
       ],
       admin: {
         position: 'sidebar',
         description: 'Zelle orders require manual payment confirmation before fulfillment.',
+      },
+    },
+    {
+      name: 'circoflowsTransactionId',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'CircoFlows transaction_id, for support/reconciliation lookups.',
+        condition: (data) => data?.paymentMethod === 'circoflows',
       },
     },
     { name: 'couponCode', type: 'text', admin: { position: 'sidebar' } },

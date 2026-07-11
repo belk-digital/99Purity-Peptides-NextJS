@@ -45,6 +45,7 @@ export function CartClient() {
   // Fetch Shipping and Tax on mount
   useEffect(() => {
     async function fetchCartData() {
+      setIsLoadingData(true)
       try {
         // Fetch Shipping Zones to get an estimated base shipping cost
         const shippingRes = await fetch('/api/shippingzones')

@@ -23,6 +23,9 @@ import { createPaymentIntent, getShippingMethods } from './actions'
 // the rest of the Stripe integration below is left intact, just not rendered/called while off.
 const ENABLE_STRIPE = false
 
+// Toggle to enable/disable the CircoFlows hosted-card option without touching Stripe/Zelle/Amex.
+const ENABLE_CIRCOFLOWS = true
+
 const stripePromise = typeof window !== 'undefined' ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '') : null
 
 export function CheckoutClient() {
@@ -49,7 +52,7 @@ export function CheckoutClient() {
   // Form State
   const [attemptedSubmit, setAttemptedSubmit] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'zelle' | 'amex'>('zelle')
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'zelle' | 'amex' | 'circoflows'>(ENABLE_CIRCOFLOWS ? 'circoflows' : 'zelle')
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -108,24 +111,28 @@ export function CheckoutClient() {
   const [shippingMethod, setShippingMethod] = useState<string>('')
   const [activeFees, setActiveFees] = useState<any[]>([])
   
+  const [dataLoaded, setDataLoaded] = useState(false)
+
   // Fetch data
   useEffect(() => {
-    getShippingMethods().then(methods => {
+    Promise.all([
+      getShippingMethods(),
+      fetch('/api/processing-fees').then(res => res.json()).catch(() => ({}))
+    ]).then(([methods, data]) => {
       setAvailableShippingMethods(methods)
       if (methods.length > 0) {
         setShippingMethod(methods[0].method)
       }
+      
+      if (data?.docs) {
+        const active = data.docs.filter((f: any) => f.isActive && !f.isOptional)
+        setActiveFees(active)
+      }
+      
+      setDataLoaded(true)
+    }).catch(() => {
+      setDataLoaded(true)
     })
-    
-    // Fetch processing fees from generic /api to avoid complex server actions import issues
-    fetch('/api/processing-fees')
-      .then(res => res.json())
-      .then(data => {
-         if (data?.docs) {
-           const active = data.docs.filter((f: any) => f.isActive && !f.isOptional)
-           setActiveFees(active)
-         }
-      })
   }, [])
 
   // Coupon State
@@ -381,11 +388,56 @@ export function CheckoutClient() {
     }
   }
 
+  const handleCircoFlowsPlaceOrder = async () => {
+    setAttemptedSubmit(true)
+    if (!formData.email || !formData.firstName || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.phone) {
+      toast.error(t('fillRequiredFieldsOrder'))
+      return
+    }
+
+    setIsProcessing(true)
+
+    try {
+      const { createCircoFlowsPayment } = await import('./circoflowsActions')
+      const orderRes = await createCircoFlowsPayment(
+        items, shippingMethod, appliedCoupon?.code, isRedeemingPoints,
+        { ...formData, email: user?.email || formData.email },
+        user?.id as string,
+        selectedAddressId === 'new'
+      )
+
+      if (orderRes.error || !orderRes.redirectUrl) {
+        toast.error(orderRes.error || t('freeOrderInitFailed'))
+        if ((orderRes as any).priceChanged && (orderRes as any).updatedItems) {
+          useCartStore.getState().setItems((orderRes as any).updatedItems)
+        }
+        setIsProcessing(false)
+        return
+      }
+
+      // Cart is intentionally left intact here — the customer hasn't paid yet, they're only
+      // being redirected to CircoFlows' hosted card page. It's cleared once payment actually
+      // succeeds (see OrderConfirmationClient's sync fallback / the webhook-driven finalize).
+      window.location.href = orderRes.redirectUrl
+    } catch (e: any) {
+      toast.error(t('unexpectedError'))
+      setIsProcessing(false)
+    }
+  }
+
   useEffect(() => {
     if (storedCouponCode && !isVerifyingCoupon) {
       handleApplyCoupon(undefined, storedCouponCode)
     }
   }, [storedCouponCode, subtotal])
+
+  if (!isReady || (items.length > 0 && !dataLoaded)) {
+    return (
+      <div className="pt-32 pb-24 min-h-[70vh] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ink"></div>
+      </div>
+    )
+  }
 
   if (items.length === 0) {
     return (
@@ -781,6 +833,26 @@ export function CheckoutClient() {
                 ) : (
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-3">
+                      {ENABLE_CIRCOFLOWS && (
+                        <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
+                          selectedPaymentMethod === 'circoflows' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
+                        }`}>
+                          <div className="flex items-center gap-4">
+                            <input
+                              type="radio"
+                              name="paymentMethod"
+                              value="circoflows"
+                              className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0"
+                              checked={selectedPaymentMethod === 'circoflows'}
+                              onChange={() => setSelectedPaymentMethod('circoflows')}
+                            />
+                            <div className="flex flex-col">
+                              <span className="text-sm font-bold text-ink">{t('payWithCard')}</span>
+                              <span className="text-xs text-ink/60 mt-0.5">{t('circoflowsCheckoutNote')}</span>
+                            </div>
+                          </div>
+                        </label>
+                      )}
                       <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
                         selectedPaymentMethod === 'zelle' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
                       }`}>
@@ -821,7 +893,10 @@ export function CheckoutClient() {
                     </div>
 
                     <div className="w-full p-6 sm:p-8 bg-white border border-ink/10 rounded-3xl shadow-sm flex flex-col items-center gap-6 text-center mt-2">
-                      <Button onClick={selectedPaymentMethod === 'zelle' ? handleZellePlaceOrder : handleAmexPlaceOrder} disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
+                      <Button onClick={
+                        selectedPaymentMethod === 'circoflows' ? handleCircoFlowsPlaceOrder :
+                        selectedPaymentMethod === 'zelle' ? handleZellePlaceOrder : handleAmexPlaceOrder
+                      } disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
                         {isProcessing ? <Loader2 className="animate-spin" /> : t('placeOrder')}
                       </Button>
                     </div>

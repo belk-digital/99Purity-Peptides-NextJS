@@ -1159,6 +1159,8 @@
       "zelleCheckoutNote": "You'll receive Zelle payment instructions on the next page after placing your order.",
       "payWithAmex": "Pay with American Express",
       "amexCheckoutNote": "Place your order now. You will receive a link to complete the payment on your email.",
+      "payWithCard": "Credit / Debit Card",
+      "circoflowsCheckoutNote": "You'll be securely redirected to enter your card details.",
       "placeOrder": "Place Order"
     },
     "checkoutSummary": {

@@ -179,7 +179,7 @@ export async function createPayloadOrder(
   formData: any,
   paymentIntentId: string,
   userId?: string,
-  paymentMethod: 'stripe' | 'zelle' | 'amex' = 'stripe',
+  paymentMethod: 'stripe' | 'zelle' | 'amex' | 'circoflows' = 'stripe',
   isNewAddress = false
 ) {
   const payload = await getPayload({ config: configPromise })
