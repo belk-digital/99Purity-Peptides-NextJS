@@ -5,7 +5,8 @@ import Image from 'next/image'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
-import { motion, AnimatePresence } from 'framer-motion'
+// Zoom-on-hover effect disabled for now.
+// import { motion, AnimatePresence } from 'framer-motion'
 
 export interface ImageGalleryProps {
   images: string[]
@@ -14,9 +15,10 @@ export interface ImageGalleryProps {
 export function ImageGallery({ images }: ImageGalleryProps) {
   const t = useTranslations('shop.imageGallery')
   const [activeIndex, setActiveIndex] = useState(0)
-  const [isHovering, setIsHovering] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  
+  // Zoom-on-hover effect disabled for now.
+  // const [isHovering, setIsHovering] = useState(false)
+  // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
   // Embla for mobile swipe
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
 
@@ -37,28 +39,28 @@ export function ImageGallery({ images }: ImageGalleryProps) {
     if (emblaApi) emblaApi.scrollTo(index)
   }, [emblaApi])
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect()
-    const x = ((e.clientX - left) / width) * 100
-    const y = ((e.clientY - top) / height) * 100
-    const img = e.currentTarget.querySelector('img')
-    if (img) {
-      img.style.transformOrigin = `${x}% ${y}%`
-    }
-  }
+  // const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const { left, top, width, height } = e.currentTarget.getBoundingClientRect()
+  //   const x = ((e.clientX - left) / width) * 100
+  //   const y = ((e.clientY - top) / height) * 100
+  //   const img = e.currentTarget.querySelector('img')
+  //   if (img) {
+  //     img.style.transformOrigin = `${x}% ${y}%`
+  //   }
+  // }
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const img = e.currentTarget.querySelector('img')
-    if (img) {
-      img.style.transformOrigin = 'center center'
-      // Reset scale is handled by CSS group-hover removing the scale class
-    }
-  }
+  // const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const img = e.currentTarget.querySelector('img')
+  //   if (img) {
+  //     img.style.transformOrigin = 'center center'
+  //     // Reset scale is handled by CSS group-hover removing the scale class
+  //   }
+  // }
 
-  const handleCursorMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top } = e.currentTarget.getBoundingClientRect()
-    setMousePosition({ x: e.clientX - left, y: e.clientY - top })
-  }
+  // const handleCursorMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const { left, top } = e.currentTarget.getBoundingClientRect()
+  //   setMousePosition({ x: e.clientX - left, y: e.clientY - top })
+  // }
 
   if (!images || images.length === 0) return null
 
@@ -67,26 +69,27 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Main Image */}
       <div
-        className="relative w-full mx-auto aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:flex-1 lg:h-full bg-gray-50 rounded-2xl overflow-hidden cursor-none group"
+        className="relative w-full mx-auto aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:flex-1 lg:h-full bg-gray-50 rounded-2xl overflow-hidden"
         ref={emblaRef}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        onMouseMove={handleCursorMove}
+        // Zoom-on-hover effect disabled for now.
+        // onMouseEnter={() => setIsHovering(true)}
+        // onMouseLeave={() => setIsHovering(false)}
+        // onMouseMove={handleCursorMove}
       >
         <div className="flex h-full">
           {images.map((img, idx) => (
             <div
               key={idx}
               className="relative min-w-0 shrink-0 grow-0 basis-full h-full overflow-hidden"
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
+              // onMouseMove={handleMouseMove}
+              // onMouseLeave={handleMouseLeave}
             >
               <Image
                 src={img}
                 alt={t('productViewAlt', { number: idx + 1 })}
                 fill
                 priority={idx === 0}
-                className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.6]"
+                className="object-contain transition-transform duration-700 ease-out"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
@@ -133,7 +136,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
           </div>
         )}
 
-        {/* Custom Frosted Glass Cursor */}
+        {/* Custom Frosted Glass Cursor — zoom-on-hover effect disabled for now.
         <AnimatePresence>
           {isHovering && (
             <motion.div
@@ -154,6 +157,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
             </motion.div>
           )}
         </AnimatePresence>
+        */}
 
       </div>
 

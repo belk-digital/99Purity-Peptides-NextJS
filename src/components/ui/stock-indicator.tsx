@@ -8,7 +8,7 @@ export interface StockIndicatorProps extends React.HTMLAttributes<HTMLDivElement
 export function StockIndicator({ stock, className, ...props }: StockIndicatorProps) {
   let status: 'in-stock' | 'low-stock' | 'out-of-stock' = 'in-stock'
   let label = 'In Stock'
-  let dotClass = 'bg-ink-muted'
+  let dotClass = 'bg-success'
   let textClass = 'text-ink-muted'
 
   if (stock === 0) {
