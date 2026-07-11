@@ -180,3 +180,80 @@ export async function revalidateCartPrices(items: CartLine[]): Promise<CartLine[
   }
 }
 
+export async function getProductsFromAffiliateCart(cartParam: string): Promise<CartLine[]> {
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const entries = cartParam.split(',')
+    const items: CartLine[] = []
+
+    for (const entry of entries) {
+      const parts = entry.split(':')
+      if (parts.length >= 3) {
+        const slug = parts[0]
+        const sku = parts.slice(1, -1).join(':') // in case sku has colons, though unlikely
+        const qty = parseInt(parts[parts.length - 1], 10)
+
+        if (!isNaN(qty) && qty > 0) {
+          const productRes = await payload.find({
+            collection: 'products',
+            where: { slug: { equals: slug } },
+            limit: 1,
+            depth: 0,
+          })
+
+          const product = productRes.docs[0]
+          if (product) {
+            let matchedPrice = typeof product.price === 'number' ? product.price : parseFloat(String(product.price).replace(/[^0-9.]/g, ''))
+            let matchedSale = product.salePrice ? (typeof product.salePrice === 'number' ? product.salePrice : parseFloat(String(product.salePrice).replace(/[^0-9.]/g, ''))) : null
+            let finalTitle = sku
+            let finalSku = sku
+
+            // If it's a variable product, find the variant by SKU
+            if (product.variants && product.variants.length > 0) {
+              const variant = product.variants.find((v: any) => v.sku === sku)
+              if (variant) {
+                const vPrice = typeof variant.price === 'number' ? variant.price : parseFloat(String(variant.price).replace(/[^0-9.]/g, ''))
+                const vSale = variant.salePrice ? (typeof variant.salePrice === 'number' ? variant.salePrice : parseFloat(String(variant.salePrice).replace(/[^0-9.]/g, ''))) : null
+                matchedPrice = vPrice
+                matchedSale = vSale
+                finalTitle = variant.options?.map((o: any) => o.value).join(' ') || `Variant ${variant.sku}`
+              }
+            } else if (product.bulkBundles && product.bulkBundles.length > 0) {
+              // It could be a bundle SKU
+              const bundle = product.bulkBundles.find((b: any) => b.name === sku)
+              if (bundle) {
+                 const bPrice = typeof bundle.price === 'number' ? bundle.price : parseFloat(String(bundle.price || 0).replace(/[^0-9.]/g, ''))
+                 const bSale = bundle.salePrice ? (typeof bundle.salePrice === 'number' ? bundle.salePrice : parseFloat(String(bundle.salePrice).replace(/[^0-9.]/g, ''))) : null
+                 matchedPrice = bPrice
+                 matchedSale = bSale
+                 finalTitle = bundle.name
+              }
+            }
+
+            const livePrice = matchedSale || matchedPrice
+
+            items.push({
+              lineId: `${product.id}-${finalSku}-${Date.now()}-${Math.random()}`,
+              productId: String(product.id),
+              product: {
+                id: product.id,
+                slug: product.slug,
+                name: product.name,
+                imageUrl: product.images?.[0]?.image?.url || '/placeholder.png'
+              } as any,
+              variantSku: finalSku,
+              variantTitle: finalTitle,
+              priceSnapshot: livePrice,
+              quantity: qty
+            })
+          }
+        }
+      }
+    }
+    return items
+  } catch (error) {
+    console.error('Error fetching affiliate cart products:', error)
+    return []
+  }
+}
+
