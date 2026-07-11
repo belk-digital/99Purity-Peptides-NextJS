@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
+import { getCategoryDisplayName } from '@/lib/categoryDisplay'
 
 export interface Category {
   id: string | number
@@ -99,7 +100,7 @@ function FilterSidebarInner({ categories = [] }: FilterSidebarProps) {
                 onCheckedChange={() => toggleCategory(cat.name)}
               />
               <Label htmlFor={`cat-${cat.slug}`} className="text-sm font-medium text-black cursor-pointer leading-none">
-                {cat.name}
+                {getCategoryDisplayName(cat.name)}
               </Label>
             </div>
           ))}

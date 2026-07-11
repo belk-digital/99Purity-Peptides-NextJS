@@ -5,17 +5,17 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'fram
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { getCategoryDisplayName } from '@/lib/categoryDisplay'
 
-const CATEGORIES = [
-  { key: 'recovery', name: 'Recovery', slug: 'recovery' },
-  { key: 'receptorAgonist', name: 'Receptor Agonist', slug: 'receptor-agonist' },
-  { key: 'metabolic', name: 'Metabolic', slug: 'metabolic' },
-  { key: 'growthFactor', name: 'Growth Factor', slug: 'growth-factor' },
-  { key: 'cognitiveFunction', name: 'Cognitive Function', slug: 'cognitive-function' },
-  { key: 'cellularHealth', name: 'Cellular Health', slug: 'cellular-health' },
-  { key: 'bioregulators', name: 'Bioregulators', slug: 'bioregulators' },
-  { key: 'essentials', name: 'Essentials', slug: 'essentials' }
-]
+export interface HomeCategory {
+  id: string | number
+  name: string
+  slug?: string
+}
+
+export interface CategoriesSectionProps {
+  categories?: HomeCategory[]
+}
 
 const CATEGORY_IMAGES = [
   '/99 Images/category-1.webp',
@@ -28,7 +28,7 @@ const CATEGORY_IMAGES = [
   '/99 Images/category-8.webp',
 ]
 
-export function CategoriesSection() {
+export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
   const t = useTranslations('home.categories')
   const targetRef = useRef<HTMLDivElement>(null)
   const [isHoveringCategory, setIsHoveringCategory] = useState(false);
@@ -102,10 +102,10 @@ export function CategoriesSection() {
 
         {/* Horizontal Scrolling Vertical Slice Gallery */}
         <motion.div style={{ x }} className="flex w-max h-[60vh] min-h-[400px] max-h-[700px] will-change-transform max-md:transition-transform max-md:duration-300 max-md:ease-out">
-          {CATEGORIES.map((category, index) => (
-            <Link 
+          {categories.map((category, index) => (
+            <Link
               href={`/shop?category=${encodeURIComponent(category.name)}`}
-              key={category.slug} 
+              key={category.id}
               className="shrink-0 w-[85vw] sm:w-[45vw] md:w-[33.333vw] lg:w-[25vw] h-full relative group overflow-hidden border-r border-ink/5 cursor-none block"
               onMouseEnter={() => setIsHoveringCategory(true)}
               onMouseLeave={() => setIsHoveringCategory(false)}
@@ -113,8 +113,8 @@ export function CategoriesSection() {
               {/* Background Image */}
               <div className="absolute inset-0 w-full h-full bg-black/5">
                 <Image
-                  src={CATEGORY_IMAGES[index]}
-                  alt={t(`items.${category.key}.name`)}
+                  src={CATEGORY_IMAGES[index % CATEGORY_IMAGES.length]}
+                  alt={getCategoryDisplayName(category.name)}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
@@ -124,10 +124,10 @@ export function CategoriesSection() {
 
               {/* Bottom Centered Text */}
               <div className="absolute inset-x-0 bottom-12 flex justify-center pointer-events-none px-4 z-10">
-                  <h3 
+                  <h3
                     className="font-heading text-[1.1rem] sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white tracking-tight text-center drop-shadow-md transition-all duration-500 group-hover:-translate-y-2 uppercase break-words w-full"
                   >
-                    {t(`items.${category.key}.name`)}
+                    {getCategoryDisplayName(category.name)}
                   </h3>
               </div>
               </Link>

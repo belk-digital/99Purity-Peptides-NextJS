@@ -6,6 +6,7 @@ import configPromise from '@payload-config'
 import { Metadata } from 'next'
 import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
 import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
+import { getCategoryDisplayName } from '@/lib/categoryDisplay'
 
 function getBlogPosts(locale: string) {
   return locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
@@ -120,7 +121,7 @@ export default async function ProductPage({
 
   // Map categories
   const mappedCategories = rawProduct.categories?.map((cat: any) => {
-    return typeof cat === 'object' ? cat.name : 'Category'
+    return typeof cat === 'object' ? getCategoryDisplayName(cat.name) : 'Category'
   }).filter(Boolean) || []
 
   // Map variants

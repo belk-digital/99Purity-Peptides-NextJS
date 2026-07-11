@@ -6,24 +6,24 @@ import { Search, X, Loader2, Zap, Sparkles, BatteryCharging, Dna, ArrowRight, Co
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
+import { getCategoryDisplayName } from '@/lib/categoryDisplay'
+
+export interface QuickCategory {
+  id: string | number
+  name: string
+  slug?: string
+}
 
 interface SearchOverlayProps {
   isOpen: boolean
   onClose: () => void
+  categories?: QuickCategory[]
 }
 
-const QUICK_CATEGORIES = [
-  { key: 'metabolic', icon: Zap, href: '/shop?category=metabolic' },
-  { key: 'growthFactor', icon: Sparkles, href: '/shop?category=growth-factor' },
-  { key: 'recovery', icon: BatteryCharging, href: '/shop?category=recovery' },
-  { key: 'cellularHealth', icon: Dna, href: '/shop?category=cellular-health' },
-  { key: 'bioregulators', icon: Activity, href: '/shop?category=bioregulators' },
-  { key: 'cognitive', icon: Brain, href: '/shop?category=cognitive' },
-  { key: 'essentials', icon: ShieldPlus, href: '/shop?category=essentials' },
-  { key: 'receptorAgonist', icon: Network, href: '/shop?category=receptor-agonist' },
-]
+// Payload has no per-category icon field, so icons are assigned by position.
+const QUICK_CATEGORY_ICONS = [Zap, Sparkles, BatteryCharging, Dna, Activity, Brain, ShieldPlus, Network]
 
-export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
+export function SearchOverlay({ isOpen, onClose, categories = [] }: SearchOverlayProps) {
   const t = useTranslations('searchOverlay')
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<any[]>([])
@@ -144,24 +144,27 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
-                    {QUICK_CATEGORIES.map((cat, index) => (
-                      <Link
-                        key={cat.key}
-                        href={cat.href}
-                        onClick={onClose}
-                        className={`group items-center p-4 rounded-2xl bg-[#FAFAFA] border border-black/5 hover:border-black/20 hover:bg-white transition-all shadow-sm hover:shadow-md ${
-                          index >= 4 ? 'hidden sm:flex' : 'flex'
-                        }`}
-                      >
-                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-black/5 shrink-0 group-hover:scale-105 transition-transform">
-                          <cat.icon size={18} className="text-black" strokeWidth={1.5} />
-                        </div>
-                        <span className="ml-4 text-sm font-semibold text-black flex-1">
-                          {t(`categories.${cat.key}`)}
-                        </span>
-                        <ArrowRight size={16} className="text-black/20 group-hover:text-black/60 transition-colors" />
-                      </Link>
-                    ))}
+                    {categories.map((cat, index) => {
+                      const Icon = QUICK_CATEGORY_ICONS[index % QUICK_CATEGORY_ICONS.length]
+                      return (
+                        <Link
+                          key={cat.id}
+                          href={`/shop?category=${encodeURIComponent(cat.name)}`}
+                          onClick={onClose}
+                          className={`group items-center p-4 rounded-2xl bg-[#FAFAFA] border border-black/5 hover:border-black/20 hover:bg-white transition-all shadow-sm hover:shadow-md ${
+                            index >= 4 ? 'hidden sm:flex' : 'flex'
+                          }`}
+                        >
+                          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-black/5 shrink-0 group-hover:scale-105 transition-transform">
+                            <Icon size={18} className="text-black" strokeWidth={1.5} />
+                          </div>
+                          <span className="ml-4 text-sm font-semibold text-black flex-1">
+                            {getCategoryDisplayName(cat.name)}
+                          </span>
+                          <ArrowRight size={16} className="text-black/20 group-hover:text-black/60 transition-colors" />
+                        </Link>
+                      )
+                    })}
                   </div>
                 </div>
               )}

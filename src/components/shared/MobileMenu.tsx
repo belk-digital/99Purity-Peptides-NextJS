@@ -8,24 +8,24 @@ import {
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { getCategoryDisplayName } from '@/lib/categoryDisplay'
+
+export interface MenuCategory {
+  id: string | number
+  name: string
+  slug?: string
+}
 
 export interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
   isLoggedIn?: boolean
   onSearchClick?: () => void
+  categories?: MenuCategory[]
 }
 
-const CATEGORIES = [
-  { name: 'Bioregulators', key: 'bioregulators', icon: Activity },
-  { name: 'Cellular Health', key: 'cellularHealth', icon: Dna },
-  { name: 'Cognitive', key: 'cognitive', icon: Brain },
-  { name: 'Essentials', key: 'essentials', icon: ShieldPlus },
-  { name: 'Growth Factor', key: 'growthFactor', icon: Sparkles },
-  { name: 'Metabolic', key: 'metabolic', icon: Zap },
-  { name: 'Receptor Agonist', key: 'receptorAgonist', icon: Network },
-  { name: 'Recovery', key: 'recovery', icon: BatteryCharging }
-]
+// Payload has no per-category icon field, so icons are assigned by position.
+const CATEGORY_ICONS = [Activity, Dna, Brain, ShieldPlus, Sparkles, Zap, Network, BatteryCharging]
 
 const MAIN_LINKS = [
   { key: 'shopFormulations', href: '/shop' },
@@ -40,7 +40,7 @@ const SUPPORT_LINKS = [
   { key: 'affiliateProgram', href: '/affiliates', icon: Users },
 ]
 
-export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick, categories = [] }: MobileMenuProps) {
   const t = useTranslations('mobileMenu')
 
   useEffect(() => {
@@ -137,19 +137,22 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick 
               <motion.div variants={itemVariants} className="flex flex-col">
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-6">{t('exploreCategories')}</h3>
                 <div className="flex flex-col gap-4">
-                  {CATEGORIES.map((cat) => (
-                    <Link
-                      key={cat.name}
-                      href={`/shop/${cat.name.toLowerCase().replace(' ', '-')}`}
-                      onClick={onClose}
-                      className="group flex items-center gap-4 py-1"
-                    >
-                      <div className="w-10 h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-ink/50 group-hover:text-primary group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-300 shrink-0 shadow-sm">
-                        <cat.icon size={18} strokeWidth={1.5} />
-                      </div>
-                      <span className="text-[15px] font-semibold text-ink/80 group-hover:text-ink transition-colors">{t(`categories.${cat.key}`)}</span>
-                    </Link>
-                  ))}
+                  {categories.map((cat, index) => {
+                    const Icon = CATEGORY_ICONS[index % CATEGORY_ICONS.length]
+                    return (
+                      <Link
+                        key={cat.id}
+                        href={`/shop?category=${encodeURIComponent(cat.name)}`}
+                        onClick={onClose}
+                        className="group flex items-center gap-4 py-1"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-ink/50 group-hover:text-primary group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-300 shrink-0 shadow-sm">
+                          <Icon size={18} strokeWidth={1.5} />
+                        </div>
+                        <span className="text-[15px] font-semibold text-ink/80 group-hover:text-ink transition-colors">{getCategoryDisplayName(cat.name)}</span>
+                      </Link>
+                    )
+                  })}
                 </div>
               </motion.div>
 
