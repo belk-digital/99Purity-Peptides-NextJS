@@ -14,6 +14,7 @@ import { BLOG_POSTS } from '@/data/blog-posts'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { getCategoryDisplayName } from '@/lib/categoryDisplay'
 
 const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod => mod.CartDrawer), { ssr: false })
 
@@ -532,7 +533,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                       className={`group relative w-full block transition-all duration-500 py-0.5 cursor-pointer ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
                     >
                       <h3 className={`text-xs lg:text-sm xl:text-base 2xl:text-lg font-light tracking-tight transition-all duration-500 ${isActive ? 'text-primary translate-x-4' : 'text-white'}`}>
-                        {cat.name}
+                        {getCategoryDisplayName(cat.name)}
                       </h3>
                       {/* Animated indicator dot */}
                       <span className={`absolute left-[-20px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary transition-all duration-500 ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
@@ -557,7 +558,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                     <div className="w-full flex justify-between items-end mb-4 xl:mb-6 relative z-20">
                       <div className="flex flex-col">
                         <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-1">{t('megaMenu.featuredFormulations')}</span>
-                        <h4 className="text-xl xl:text-2xl font-light text-white">{cat.name}</h4>
+                        <h4 className="text-xl xl:text-2xl font-light text-white">{getCategoryDisplayName(cat.name)}</h4>
                       </div>
                       <Link
                         href={`/shop?category=${encodeURIComponent(cat.name)}`}
@@ -628,14 +629,15 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       </div>
         </>
       )}
-      <MobileMenu 
-        isOpen={mobileMenuOpen} 
-        onClose={() => setMobileMenuOpen(false)} 
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
         isLoggedIn={isLoggedIn}
         onSearchClick={() => setIsSearchOpen(true)}
+        categories={categoriesData}
       />
       <CartDrawer />
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} categories={categoriesData} />
     </>
   )
 }

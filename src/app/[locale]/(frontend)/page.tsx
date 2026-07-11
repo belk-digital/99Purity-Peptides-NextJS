@@ -52,12 +52,19 @@ export async function generateMetadata({
 }
 
 import { getShopProducts } from '@/app/[locale]/(frontend)/(shop)/actions'
+import { getVisibleCategories } from '@/app/[locale]/(frontend)/actions/categories'
 
 export default async function Homepage() {
   const t = await getTranslations('home')
   const title = t('metaTitle')
   const description = t('metaDescription')
   let products: any[] = []
+  let categories: any[] = []
+  try {
+    categories = await getVisibleCategories()
+  } catch (e) {
+    console.error("Failed to fetch categories", e)
+  }
   try {
     const bestSellers = await getShopProducts({ limit: 8, sort: 'newest', bestSellersOnly: true })
     products = bestSellers.success && bestSellers.products ? (bestSellers.products as any[]) : []
@@ -83,7 +90,7 @@ export default async function Homepage() {
         <BestSellerSection products={products} />
         <DifferenceSection />
         <TrustBadges />
-        <CategoriesSection />
+        <CategoriesSection categories={categories} />
         {/* <MerchandiseSection /> */}
         <WhatSetsUsApart />
         <MilitaryDiscountSection />

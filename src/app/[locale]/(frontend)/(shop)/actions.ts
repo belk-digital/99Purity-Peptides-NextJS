@@ -6,6 +6,7 @@ import { getPayloadUser } from '@/lib/auth/getPayloadUser'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { getLocale } from 'next-intl/server'
+import { getCategoryDisplayName } from '@/lib/categoryDisplay'
 
 export async function addToCart(productId: string | number, quantity: number = 1, providedVariantSku?: string, providedPriceSnapshot?: number, providedVariantTitle?: string) {
   try {
@@ -454,7 +455,7 @@ export async function getShopProducts(params: {
 
       let categoryName = 'Research'
       if (doc.categories && doc.categories.length > 0 && typeof doc.categories[0] === 'object') {
-        categoryName = (doc.categories[0] as any).name || categoryName
+        categoryName = getCategoryDisplayName((doc.categories[0] as any).name) || categoryName
       }
 
 
