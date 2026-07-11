@@ -239,7 +239,7 @@ export async function getProductsFromAffiliateCart(cartParam: string): Promise<C
                 id: product.id,
                 slug: product.slug,
                 name: product.name,
-                imageUrl: product.images?.[0]?.image?.url || '/placeholder.png'
+                imageUrl: (product.images?.[0]?.image as any)?.url || '/placeholder.png'
               } as any,
               variantSku: finalSku,
               variantTitle: finalTitle,
