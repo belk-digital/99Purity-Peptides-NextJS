@@ -124,14 +124,27 @@ export async function syncCircoFlowsPaymentStatus(orderId: string) {
       body: JSON.stringify({ merchant_transaction_id: orderId }),
     })
     const data = await response.json()
-
-    if (data.status !== 'success') {
-      return { success: false, status: data.status }
-    }
+    console.log(`CircoFlows status check for order ${orderId}:`, JSON.stringify(data))
 
     const payload = await getPayload({ config: configPromise })
     const order = await payload.findByID({ collection: 'orders', id: Number(orderId), depth: 0, overrideAccess: true })
     if (!order) return { error: 'Order not found' }
+
+    if (data.status === 'declined') {
+      // The webhook may never arrive (or may arrive later) — without this, a declined
+      // payment left the order silently stuck as pending/unpaid forever, with no email to
+      // the customer or support. Mirrors the webhook's declined handling exactly.
+      if (!order.isFinalized && order.status === 'pending') {
+        await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, overrideAccess: true, context: { paymentFailed: true } })
+      }
+      await notifyAdminFailedPayment(orderId, data.reason || 'CircoFlows payment declined').catch(console.error)
+      return { success: false, status: data.status }
+    }
+
+    if (data.status !== 'success') {
+      // 'processing' (3DS in flight) or an unrecognized status — nothing to finalize yet.
+      return { success: false, status: data.status }
+    }
 
     const expectedAmount = (order.total || 0).toFixed(2)
     if (String(data.amount) !== expectedAmount && Number(data.amount) !== Number(expectedAmount)) {
