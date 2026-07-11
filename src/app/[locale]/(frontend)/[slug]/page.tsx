@@ -12,9 +12,7 @@ import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
 import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
 import { BLOG_SEO as BLOG_SEO_EN } from '@/data/blog-seo'
 import { BLOG_SEO_ES } from '@/data/blog-seo.es'
-import { getBlogPosts } from '@/lib/data/blog'
-import { getBlogSeo } from '@/lib/seo/blog'
-import { getOgImageUrl } from '@/lib/utils/getOgImageUrl'
+import { getOgImageUrl } from '@/lib/utils'
 
 const BLOG_POSTS = BLOG_POSTS_EN
 

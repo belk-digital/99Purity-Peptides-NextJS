@@ -4,7 +4,7 @@ import config from '@payload-config'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { AffiliatesLandingClient, UserAffiliateStatus } from './AffiliatesLandingClient'
-import { getOgImageUrl } from '@/lib/utils/getOgImageUrl'
+import { getOgImageUrl } from '@/lib/utils'
 
 const slug = 'affiliates'
 

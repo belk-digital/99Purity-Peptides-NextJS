@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import { getOgImageUrl } from '@/lib/utils/getOgImageUrl'
+import { getOgImageUrl } from '@/lib/utils'
 
 const breadcrumbName = 'Blog'
 const slug = 'blog'

@@ -2,7 +2,7 @@ import React from 'react'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { ContactClient } from '@/components/contact/ContactClient'
-import { getOgImageUrl } from '@/lib/utils/getOgImageUrl'
+import { getOgImageUrl } from '@/lib/utils'
 
 const slug = 'contact-us'
 

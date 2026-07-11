@@ -4,7 +4,7 @@ import { getLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { CertificatesClient, type COA } from './CertificatesClient'
-import { getOgImageUrl } from '@/lib/utils/getOgImageUrl'
+import { getOgImageUrl } from '@/lib/utils'
 
 const slug = 'certificates'
 
