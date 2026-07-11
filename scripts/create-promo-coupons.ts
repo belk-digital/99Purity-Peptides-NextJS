@@ -34,11 +34,11 @@ async function upsertCoupon(payload: any, code: string, data: Record<string, any
 async function main() {
   const payload = await getPayload({ config })
 
-  await upsertCoupon(payload, 'PURITY25', {
+  await upsertCoupon(payload, 'PURITY20', {
     type: 'percentage',
-    value: 25,
+    value: 20,
     isActive: true,
-    applicableProductTypes: 'all',
+    applicableProductTypes: 'normal_only',
     appliesTo: 'all',
   })
 
