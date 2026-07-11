@@ -113,7 +113,7 @@ async function cancelUnfinalizedOrder(orderId: string | number) {
  * webhook has arrived — mirrors syncPaymentStatus's role for Stripe. Never trusts anything the
  * client passes beyond the orderId; the amount/status truth always comes from CircoFlows itself.
  */
-export async function syncCircoFlowsPaymentStatus(orderId: string) {
+export async function syncCircoFlowsPaymentStatus(orderId: string): Promise<{ success?: boolean; status?: string; error?: string }> {
   try {
     const response = await fetch(`${CIRCOFLOWS_BASE_URL}/payment/status`, {
       method: 'POST',
@@ -123,8 +123,12 @@ export async function syncCircoFlowsPaymentStatus(orderId: string) {
       },
       body: JSON.stringify({ merchant_transaction_id: orderId }),
     })
-    const data = await response.json()
-    console.log(`CircoFlows status check for order ${orderId}:`, JSON.stringify(data))
+    const rawResponse = await response.json()
+    console.log(`CircoFlows status check for order ${orderId}:`, JSON.stringify(rawResponse))
+    // The real payload is nested under `data` (e.g. {"success":true,"data":{"status":...}}) —
+    // not flat as the docs' example suggested. Falling back to the top level too in case a
+    // future response shape flattens it back out.
+    const data = rawResponse.data || rawResponse
 
     const payload = await getPayload({ config: configPromise })
     const order = await payload.findByID({ collection: 'orders', id: Number(orderId), depth: 0, overrideAccess: true })
@@ -137,12 +141,13 @@ export async function syncCircoFlowsPaymentStatus(orderId: string) {
       if (!order.isFinalized && order.status === 'pending') {
         await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, overrideAccess: true, context: { paymentFailed: true } })
       }
-      await notifyAdminFailedPayment(orderId, data.reason || 'CircoFlows payment declined').catch(console.error)
+      await notifyAdminFailedPayment(orderId, data.message || data.reason || 'CircoFlows payment declined').catch(console.error)
       return { success: false, status: data.status }
     }
 
     if (data.status !== 'success') {
-      // 'processing' (3DS in flight) or an unrecognized status — nothing to finalize yet.
+      // 'processing'/'redirected' (3DS or hosted-page redirect still in flight) or an
+      // unrecognized status — nothing to finalize yet.
       return { success: false, status: data.status }
     }
 
