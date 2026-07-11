@@ -598,6 +598,10 @@ export interface Coupon {
    */
   autoApply?: boolean | null;
   /**
+   * Only valid for logged-in accounts with no prior orders.
+   */
+  newCustomersOnly?: boolean | null;
+  /**
    * Restrict coupon usage to specific email addresses (leave empty for unrestricted).
    */
   lockedEmails?:
@@ -1777,6 +1781,7 @@ export interface CouponsSelect<T extends boolean = true> {
   expiresAt?: T;
   excludeSaleItems?: T;
   autoApply?: T;
+  newCustomersOnly?: T;
   lockedEmails?:
     | T
     | {

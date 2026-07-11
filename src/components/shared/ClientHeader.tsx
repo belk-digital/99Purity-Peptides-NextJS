@@ -20,8 +20,8 @@ const CartDrawer = dynamic(() => import('@/components/cart/CartDrawer').then(mod
 
 const ANNOUNCEMENTS = [
   {
-    key: "summerSale",
-    couponCode: "SUMMER15",
+    key: "puritySale",
+    couponCode: "PURITY25",
     expiresAt: new Date(Date.now() + 86400000).toISOString() // 24 hours
   },
   {
@@ -30,7 +30,7 @@ const ANNOUNCEMENTS = [
     expiresAt: null
   },
   {
-    key: "newBlends",
+    key: "newCustomerDiscount",
     couponCode: null,
     expiresAt: null
   }

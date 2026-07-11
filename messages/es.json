@@ -151,9 +151,9 @@
     "couponCopiedTitle": "¡Cupón copiado al portapapeles!",
     "couponCopiedDescription": "Usa el código {code} al finalizar la compra.",
     "announcements": {
-      "summerSale": "OFERTA DE VERANO: 15% DE DESCUENTO EN TODOS LOS PÉPTIDOS",
+      "puritySale": "OFERTA PURITY: 25% DE DESCUENTO EN TODOS LOS PÉPTIDOS",
       "freeShipping": "ENVÍO ASEGURADO GRATIS EN PEDIDOS SUPERIORES A $300",
-      "newBlends": "NUEVAS MEZCLAS DE PÉPTIDOS DISPONIBLES"
+      "newCustomerDiscount": "CLIENTES NUEVOS: 25% DE DESCUENTO EN TU PRIMER PEDIDO CON EL CÓDIGO NEW25"
     },
     "megaMenu": {
       "navigation": "Navegación",

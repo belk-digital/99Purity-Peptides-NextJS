@@ -113,6 +113,16 @@ export const Coupons: CollectionConfig = {
       },
     },
     {
+      name: 'newCustomersOnly',
+      type: 'checkbox',
+      label: 'New Customers Only',
+      defaultValue: false,
+      admin: {
+        description: 'Only valid for logged-in accounts with no prior orders.',
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'lockedEmails',
       type: 'array',
       admin: {

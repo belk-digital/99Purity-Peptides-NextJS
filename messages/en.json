@@ -151,9 +151,9 @@
     "couponCopiedTitle": "Coupon copied to clipboard!",
     "couponCopiedDescription": "Use code {code} at checkout.",
     "announcements": {
-      "summerSale": "SUMMER SALE: 15% OFF ALL PEPTIDES",
+      "puritySale": "PURITY SALE: 25% OFF ALL PEPTIDES",
       "freeShipping": "FREE SECURED SHIPPING ON ORDERS OVER $300",
-      "newBlends": "NEW PEPTIDE BLENDS JUST DROPPED"
+      "newCustomerDiscount": "NEW CUSTOMERS: 25% OFF YOUR FIRST ORDER WITH CODE NEW25"
     },
     "megaMenu": {
       "navigation": "Navigation",

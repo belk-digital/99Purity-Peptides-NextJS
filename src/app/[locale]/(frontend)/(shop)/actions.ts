@@ -346,6 +346,20 @@ export async function verifyCoupon(couponCode: string, subtotal: number, clientC
       if (!allowed) return { valid: false, error: 'This coupon is not available for your account' }
     }
 
+    // New customers only
+    if ((coupon as any).newCustomersOnly) {
+      if (!user) return { valid: false, error: 'You must be logged in to use this coupon' }
+      const priorOrders = await payload.find({
+        collection: 'orders',
+        where: { owner: { equals: user.id } },
+        limit: 1,
+        overrideAccess: true,
+      })
+      if (priorOrders.docs.length > 0) {
+        return { valid: false, error: 'This coupon is only valid for new customers' }
+      }
+    }
+
     if (eligibleSubtotal === 0 && coupon.type !== 'free_shipping') {
       return { valid: false, error: 'This coupon does not apply to any items in your cart' }
     }
