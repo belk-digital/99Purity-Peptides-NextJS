@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
   // Next 16 no longer runs ESLint as part of `next build` (the old `eslint.ignoreDuringBuilds`
   // option was removed from NextConfig) — lint separately with `pnpm lint`.
   images: {
-    unoptimized: true,
     localPatterns: [
       {
         pathname: '/api/media/file/**',
