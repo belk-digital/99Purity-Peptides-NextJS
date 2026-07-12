@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { getOgImageUrl } from '@/lib/utils'
 
 const breadcrumbName = 'Blog'
 const slug = 'blog'
@@ -31,11 +32,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
+      images: [getOgImageUrl(title, description)],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [getOgImageUrl(title, description)],
     },
   }
 }

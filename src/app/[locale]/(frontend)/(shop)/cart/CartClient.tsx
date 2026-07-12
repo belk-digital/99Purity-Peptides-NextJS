@@ -20,9 +20,14 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 
 
 
+import { useSearchParams, useRouter } from 'next/navigation'
+import { getProductsFromAffiliateCart } from '@/app/[locale]/(frontend)/actions/cart'
+
 export function CartClient() {
   const t = useTranslations('checkout.cartClient')
-  const { items, removeItem, updateQuantity, couponCode: storedCouponCode, setCoupon } = useCartStore()
+  const { items, removeItem, updateQuantity, couponCode: storedCouponCode, setCoupon, clear, setItems } = useCartStore()
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   // Dynamic Data States
   const [shippingCost, setShippingCost] = useState<number | null>(null)
@@ -41,6 +46,50 @@ export function CartClient() {
 
   // Base Subtotal
   const subtotal = items.reduce((acc, item) => acc + item.priceSnapshot * item.quantity, 0)
+
+  // Handle Affiliate Cart URL Parameters
+  useEffect(() => {
+    const affiliateCartParams = searchParams.get('affiliate-cart')
+    const shouldClear = searchParams.get('clear-cart') === '1'
+    
+    if (affiliateCartParams) {
+      setIsLoadingData(true)
+      getProductsFromAffiliateCart(affiliateCartParams).then((fetchedItems) => {
+        if (fetchedItems && fetchedItems.length > 0) {
+          if (shouldClear) {
+            setItems(fetchedItems)
+          } else {
+            // Append and merge quantities if same sku
+            const merged = [...items]
+            fetchedItems.forEach(fi => {
+              const existing = merged.find(mi => mi.productId === fi.productId && mi.variantSku === fi.variantSku)
+              if (existing) {
+                existing.quantity += fi.quantity
+              } else {
+                merged.push(fi)
+              }
+            })
+            setItems(merged)
+          }
+        }
+        
+        // Remove params from URL to avoid re-triggering
+        const url = new URL(window.location.href)
+        url.searchParams.delete('affiliate-cart')
+        url.searchParams.delete('clear-cart')
+        url.searchParams.delete('empty-cart')
+        url.searchParams.delete('origin')
+        url.searchParams.delete('utm_source')
+        url.searchParams.delete('utm_medium')
+        url.searchParams.delete('utm_campaign')
+        router.replace(url.pathname + url.search)
+      }).catch(err => {
+        console.error("Failed to parse affiliate cart:", err)
+      }).finally(() => {
+        setIsLoadingData(false)
+      })
+    }
+  }, [searchParams, router, setItems])
 
   // Fetch Shipping and Tax on mount
   useEffect(() => {

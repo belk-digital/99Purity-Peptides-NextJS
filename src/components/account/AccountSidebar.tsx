@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, ArrowRight, ArrowLeft, Bot, Truck, LifeBuoy, Send } from 'lucide-react'
+import { LayoutDashboard, Package, MapPin, Heart, Settings, LogOut, ArrowRight, ArrowLeft, Bot, Truck, LifeBuoy, Send, BarChart } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -32,6 +32,11 @@ export function AccountSidebar({
   const pathname = usePathname() || ''
   const [open, setOpen] = useState(false)
 
+  const activeNavItems = [
+    ...NAV_ITEMS,
+    ...(affiliateStatus === 'approved' ? [{ key: 'affiliateDashboard', href: '/affiliates/dashboard', icon: BarChart }] : [])
+  ]
+
   return (
     <aside className="w-full h-full flex flex-col gap-6 p-6 lg:py-10 lg:px-6">
       
@@ -51,17 +56,19 @@ export function AccountSidebar({
 
       {/* Navigation */}
       <nav className="flex flex-col gap-1">
-        {NAV_ITEMS.map((item) => {
+        {activeNavItems.map((item) => {
+          // Fix for overview which is just /account, vs other paths that are /account/something
           const isActive = item.href === '/account' 
-            ? pathname.endsWith('/account') 
-            : pathname.includes(item.href)
-
+            ? pathname === '/account' 
+            : pathname.startsWith(item.href)
+            
           const Icon = item.icon
-
+          
           return (
-            <Link
-              key={item.href}
+            <Link 
+              key={item.key} 
               href={item.href}
+              onClick={() => setOpen(false)}
               className={`
                 relative flex items-center justify-start gap-4 px-5 py-3 rounded-xl text-[12px] font-bold uppercase tracking-[0.1em] transition-all duration-300
                 ${isActive 

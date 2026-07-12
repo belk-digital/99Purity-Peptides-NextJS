@@ -9,6 +9,7 @@ import { GlobalNavigationSpinner } from '@/components/shared/GlobalNavigationSpi
 import { CustomScrollbar } from '@/components/shared/CustomScrollbar'
 import { AgeGate } from '@/components/shared/AgeGate'
 import { HomePreloaderWrapper } from '@/components/home/HomePreloaderWrapper'
+import { getOgImageUrl } from '@/lib/utils'
 
 // Fallback metadata for any page under this layout that doesn't supply its own generateMetadata.
 export async function generateMetadata() {
@@ -17,6 +18,13 @@ export async function generateMetadata() {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'),
     title: '99 Purity Peptides',
     description: t('siteTagline'),
+    openGraph: {
+      images: [{ url: getOgImageUrl('99 Purity Peptides', t('siteTagline')) }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [getOgImageUrl('99 Purity Peptides', t('siteTagline'))],
+    },
   }
 }
 

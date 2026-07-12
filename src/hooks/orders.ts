@@ -201,23 +201,8 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
           const subject = label === 'failed'
             ? `Your Order #${orderNumber} payment failed`
             : `Your Order #${orderNumber} has been ${label}`
-          const html = emailLayout({
-            title: subject,
-            content: `
-              <h2 style="margin: 0 0 16px 0; font-size: 22px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">
-                ${label === 'failed' ? 'Your payment could not be processed' : `Your order has been ${label}`}
-              </h2>
-              <p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">Hi ${customerFirstName},</p>
-              <p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">
-                ${label === 'failed'
-                  ? `We weren't able to process payment for your order <strong>#${orderNumber}</strong>, so it hasn't been placed.`
-                  : `Your order <strong>#${orderNumber}</strong> has been <strong>${label}</strong>.`}
-              </p>
-              ${doc.redeemedPoints ? `<p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">Any Purity Points used on this order have been credited back to your account.</p>` : ''}
-              ${label === 'failed' ? `<p style="margin: 0 0 16px 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">You're welcome to try placing the order again.</p>` : ''}
-              <p style="margin: 0; font-size: 14px; color: #2A2A2A; line-height: 1.6;">If you have questions, just reply to this email.</p>
-            `,
-          })
+          const { generateOrderInvoiceHtml } = await import('@/lib/emails/generateOrderEmail')
+          const html = await generateOrderInvoiceHtml(doc, req.payload, undefined, label as 'failed' | 'cancelled' | 'refunded')
           await sendTrackedEmail(req.payload, {
             from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
             to: customerEmail,

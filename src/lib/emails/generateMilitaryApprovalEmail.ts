@@ -6,7 +6,7 @@ export function generateMilitaryApprovalEmail(name: string, couponCode: string):
   return emailLayout({
     title: 'Thank you for your service! 🇺🇸',
     serverUrl,
-    heroImage: '/99%20Images/merch/journal_hero_bg_white.png',
+    heroImage: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/Logo/millitary-bg-1.webp',
     content: `
               <h2 style="margin: 0 0 16px 0; font-size: 24px; color: #0A0A0A; font-weight: 800; letter-spacing: -0.5px;">Hi ${name},</h2>
               <p style="margin: 0 0 16px 0; font-size: 16px; color: #4A4A4A; line-height: 1.6;">Your military ID has been successfully verified by our team. We deeply appreciate your service!</p>

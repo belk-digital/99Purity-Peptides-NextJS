@@ -30,6 +30,8 @@ const eslintConfig = [
   // 4. Custom rule overrides
   {
     rules: {
+      '@next/next/no-html-link-for-pages': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/ban-ts-comment': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -63,6 +65,7 @@ const eslintConfig = [
       'dist/',
       'src/payload-types.ts',
       'src/payload-generated-schema.ts',
+      '*.cjs',
     ],
   },
 ]

@@ -593,6 +593,7 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
 
     const orderNumber = order.orderNumber || orderId
     const customerEmail = (typeof order.owner === 'object' && order.owner !== null ? order.owner.email : order.guestEmail) || 'N/A'
+    const customerName = [order.customerFirstName, order.customerLastName].filter(Boolean).join(' ') || 'N/A'
     const customerPhone = order.customerPhone || 'N/A'
     const total = `$${(order.total || 0).toFixed(2)}`
 
@@ -606,6 +607,10 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
           <tr>
             <td style="padding: 8px 0; font-size: 14px; color: #6b7280; width: 160px;">Order Number</td>
             <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(String(orderNumber))}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Customer Name</td>
+            <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(customerName)}</td>
           </tr>
           <tr>
             <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Customer Email</td>

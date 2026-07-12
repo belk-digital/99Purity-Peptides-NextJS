@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { CertificatesClient, type COA } from './CertificatesClient'
+import { getOgImageUrl } from '@/lib/utils'
 
 const slug = 'certificates'
 
@@ -33,11 +34,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
+      images: [getOgImageUrl(title, description)],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [getOgImageUrl(title, description)],
     },
   }
 }

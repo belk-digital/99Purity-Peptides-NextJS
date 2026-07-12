@@ -265,9 +265,12 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
     <div className={`flex items-center justify-between transition-all duration-300 px-6 w-full text-white ${isTransparentHeader && !isScrolled ? 'py-4' : 'py-2'}`}>
       {/* Left: Logo */}
       <div className="flex-1 xl:flex-none flex justify-start">
-        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity gap-2">
+        <a 
+          href="/" 
+          className="flex items-center hover:opacity-80 transition-opacity gap-2"
+        >
           <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-12 sm:h-16 w-auto object-contain" />
-        </Link>
+        </a>
       </div>
 
       {/* Center: Nav */}

@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import { FaqClient } from '@/components/faq/FaqClient'
 import { faqData as faqDataEn } from '@/data/faqs'
 import { faqData as faqDataEs } from '@/data/faqs.es'
+import { getOgImageUrl } from '@/lib/utils'
 
 const slug = 'faq'
 
@@ -37,11 +38,13 @@ export async function generateMetadata({
       description,
       type: 'website',
       url: path,
+      images: [getOgImageUrl(title, description)],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: [getOgImageUrl(title, description)],
     },
   }
 }
