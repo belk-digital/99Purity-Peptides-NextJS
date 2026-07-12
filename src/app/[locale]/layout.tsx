@@ -8,6 +8,7 @@ import { AuthSessionProvider } from '@/components/providers/AuthSessionProvider'
 import { routing } from '@/i18n/routing'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+const TIDIO_PUBLIC_KEY = process.env.NEXT_PUBLIC_TIDIO_PUBLIC_KEY
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -62,6 +63,9 @@ export default async function LocaleLayout({
         </head>
         <body className="min-h-screen antialiased" suppressHydrationWarning>
           <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+          {TIDIO_PUBLIC_KEY && (
+            <Script src={`//code.tidio.co/${TIDIO_PUBLIC_KEY}.js`} strategy="lazyOnload" />
+          )}
         </body>
       </html>
     </AuthSessionProvider>
