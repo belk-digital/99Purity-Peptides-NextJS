@@ -31,7 +31,6 @@ const eslintConfig = [
   {
     rules: {
       '@next/next/no-html-link-for-pages': 'off',
-      '@next/next/no-img-element': 'off',
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/ban-ts-comment': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
