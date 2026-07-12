@@ -425,6 +425,21 @@ export default async function ProductPage({
         shippingDestination: {
           '@type': 'DefinedRegion',
           addressCountry: 'US'
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 1,
+            unitCode: 'd'
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 1,
+            maxValue: 5,
+            unitCode: 'd'
+          }
         }
       },
       hasMerchantReturnPolicy: {
