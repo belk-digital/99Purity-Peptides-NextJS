@@ -26,6 +26,14 @@ export const ShippingZones: CollectionConfig = {
         { name: 'price', type: 'number', required: true, admin: { description: 'Set to 0 for free shipping' } },
         { name: 'estimatedDays', type: 'number' },
         { name: 'minOrderAmount', type: 'number', admin: { description: 'Minimum subtotal required for this method to appear (e.g., 100 for free shipping over $100)' } },
+        {
+          name: 'isInternational',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            description: 'Check this for the method that should be used for any order shipping to a country other than the US. It replaces all other methods at checkout and ignores minOrderAmount/free-shipping rules. Only one method should have this checked.',
+          },
+        },
       ],
       admin: {
         description: 'Sample shipping methods for this zone.',

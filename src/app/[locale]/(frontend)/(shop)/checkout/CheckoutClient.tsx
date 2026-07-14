@@ -161,14 +161,19 @@ export function CheckoutClient() {
     previousSubtotal.current = subtotal
   }, [subtotal, isReady, t])
 
-  // International orders (anything outside the US) get a single flat $50 rate instead of
-  // the configured US shipping zone's methods — no free-shipping threshold, no Express
-  // option, since the US zone's methods/thresholds don't reflect real international cost.
+  // International orders (anything outside the US) get a single flat rate — configured in the
+  // Payload admin's Shipping Zones as the method with "Is International Shipping" checked —
+  // instead of the configured US shipping zone's methods. No free-shipping threshold, no
+  // Express option, since the US zone's methods/thresholds don't reflect real international cost.
   const isInternational = !!formData.country && formData.country !== 'US'
 
+  const internationalMethod = availableShippingMethods.find((method: any) => method.isInternational)
+    || { method: 'International Shipping', price: 50, estimatedDays: null, minOrderAmount: 0 }
+
   const visibleShippingMethods = isInternational
-    ? [{ method: 'International Shipping', price: 50, estimatedDays: null, minOrderAmount: 0 }]
+    ? [internationalMethod]
     : availableShippingMethods.filter((method: any) => {
+        if (method.isInternational) return false
         if (method.minOrderAmount && method.minOrderAmount > 0) {
           return subtotal >= method.minOrderAmount
         }
@@ -237,7 +242,7 @@ export function CheckoutClient() {
   // Fetch client secret when order details change (skipped while Stripe is disabled)
   useEffect(() => {
     if (ENABLE_STRIPE && items.length > 0 && total > 0) {
-      createPaymentIntent(items, shippingMethod, appliedCoupon?.code, isRedeemingPoints)
+      createPaymentIntent(items, shippingMethod, appliedCoupon?.code, isRedeemingPoints, formData.country)
         .then(res => {
           if (res.clientSecret && res.paymentIntentId) {
             setClientSecret(res.clientSecret)
@@ -251,7 +256,7 @@ export function CheckoutClient() {
           }
         })
     }
-  }, [items, shippingMethod, appliedCoupon, isRedeemingPoints])
+  }, [items, shippingMethod, appliedCoupon, isRedeemingPoints, formData.country])
 
   // Handlers
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

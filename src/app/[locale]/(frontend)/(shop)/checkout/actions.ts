@@ -30,7 +30,8 @@ export async function getShippingMethods() {
   // so this fallback is what's actually active in production right now)
   return [
     { method: 'Standard Shipping', price: 20, estimatedDays: 5 },
-    { method: 'Express Shipping', price: 30, estimatedDays: 2 }
+    { method: 'Express Shipping', price: 30, estimatedDays: 2 },
+    { method: 'International Shipping', price: 50, estimatedDays: null, isInternational: true },
   ]
 }
 
@@ -45,11 +46,26 @@ export async function getActiveProcessingFees() {
   return fees.docs.filter((f: any) => f.isActive)
 }
 
+// International orders get a single flat rate — configured in the ShippingZones admin as the
+// method with isInternational checked — rather than any of the regular US zone's methods. Cost
+// must be resolved server-side from the customer's country rather than trusting a client-supplied
+// method name/price (which previously caused Stripe/order totals to fall back to the mismatched
+// "Standard Shipping" rate for international orders).
+function resolveShippingMethod(methods: any[], shippingMethodName: string, country?: string) {
+  const isInternational = !!country && country !== 'US'
+  if (isInternational) {
+    const internationalMethod = methods.find((m: any) => m.isInternational)
+    return internationalMethod || { method: 'International Shipping', price: 50, estimatedDays: null, minOrderAmount: 0 }
+  }
+  return methods.find((m: any) => m.method === shippingMethodName) || methods[0]
+}
+
 export async function createPaymentIntent(
-  items: any[], 
+  items: any[],
   shippingMethodName: string,
   couponCode: string | undefined,
-  isRedeemingPoints: boolean
+  isRedeemingPoints: boolean,
+  country?: string
 ) {
   const payload = await getPayload({ config: configPromise })
 
@@ -101,8 +117,8 @@ export async function createPaymentIntent(
   }
 
   const methods = await getShippingMethods()
-  const selectedMethod = methods.find((m: any) => m.method === shippingMethodName) || methods[0]
-  
+  const selectedMethod = resolveShippingMethod(methods, shippingMethodName, country)
+
   // Validate minOrderAmount for the selected shipping method
   if ((selectedMethod as any)?.minOrderAmount && (selectedMethod as any).minOrderAmount > 0) {
     if (subtotal < (selectedMethod as any).minOrderAmount) {
@@ -113,9 +129,10 @@ export async function createPaymentIntent(
   const shippingCost = selectedMethod?.price || 0
 
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
+  const isInternational = !!country && country !== 'US'
   const isExpressShipping = shippingMethodName.toLowerCase().includes('express')
   const qualifiesForFreeShipping = freeShipping || false
-  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
+  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping && !isInternational) ? 0 : shippingCost
 
   // Calculate dynamic processing fees
   const activeFees = await getActiveProcessingFees()
@@ -237,7 +254,7 @@ export async function createPayloadOrder(
   }
 
   const methods = await getShippingMethods()
-  const selectedMethod = methods.find((m: any) => m.method === shippingMethodName) || methods[0]
+  const selectedMethod = resolveShippingMethod(methods, shippingMethodName, formData?.country)
 
   // Validate minOrderAmount for the selected shipping method
   if ((selectedMethod as any)?.minOrderAmount && (selectedMethod as any).minOrderAmount > 0) {
@@ -249,9 +266,10 @@ export async function createPayloadOrder(
   const shippingCost = selectedMethod?.price || 0
 
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
+  const isInternational = !!formData?.country && formData.country !== 'US'
   const isExpressShipping = shippingMethodName.toLowerCase().includes('express')
   const qualifiesForFreeShipping = freeShipping || false
-  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
+  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping && !isInternational) ? 0 : shippingCost
 
   // Calculate dynamic processing fees
   const activeFees = await getActiveProcessingFees()
@@ -430,7 +448,7 @@ export async function createPayloadOrder(
         feeTotal,
         appliedFees,
         total: confirmedTotal,
-        shippingMethod: shippingMethodName,
+        shippingMethod: selectedMethod?.method || shippingMethodName,
         couponCode: couponCode || '',
         affiliateId: affiliateRef || null,
         clickId: clickCookie || null,

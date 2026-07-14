@@ -125,7 +125,6 @@ export function Hero() {
           className="absolute inset-0 w-full h-full object-cover z-[5] pointer-events-none opacity-80 rounded-[2rem] md:rounded-[4rem]"
         >
           <source src="/videos/homepage-hero-video.mp4" type="video/mp4" />
-          <source src="/videos/homepage-hero-video.webm" type="video/webm" />
         </video>
 
         {/* Dark Gradient Overlay inside card */}
@@ -155,16 +154,12 @@ export function Hero() {
 
         {/* Main Content inside the card */}
         <div className={`relative z-20 flex flex-col items-start ${isCardClosed ? 'justify-center pt-0' : 'justify-start pt-[160px]'} sm:justify-center text-left px-5 sm:px-12 md:px-24 w-full h-full max-w-6xl pb-32 sm:pt-20 md:pb-24 md:pt-10 lg:pb-32 transition-all duration-700 ease-in-out`}>
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
+          <div>
             <h1 className="font-heading text-[9vw] sm:text-4xl md:text-[60px] lg:text-[70px] xl:text-[80px] leading-[1.1] md:leading-[1.05] text-white tracking-tighter uppercase font-black drop-shadow-2xl max-w-4xl mb-1 md:mb-2">
               {t('titleLine1')}<br/>
               {t('titleLine2')}
             </h1>
-          </motion.div>
+          </div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}

@@ -888,6 +888,10 @@ export interface Shippingzone {
          * Minimum subtotal required for this method to appear (e.g., 100 for free shipping over $100)
          */
         minOrderAmount?: number | null;
+        /**
+         * Check this for the method that should be used for any order shipping to a country other than the US. It replaces all other methods at checkout and ignores minOrderAmount/free-shipping rules. Only one method should have this checked.
+         */
+        isInternational?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -1933,6 +1937,7 @@ export interface ShippingzonesSelect<T extends boolean = true> {
         price?: T;
         estimatedDays?: T;
         minOrderAmount?: T;
+        isInternational?: T;
         id?: T;
       };
   updatedAt?: T;
