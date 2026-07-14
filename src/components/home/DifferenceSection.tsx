@@ -181,8 +181,11 @@ export function DifferenceSection() {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-[#003333] to-[#001111] py-24 px-4 md:px-10 overflow-hidden relative font-sans w-full min-h-[800px] flex items-center justify-center">
-      
+    <section
+      className="bg-gradient-to-br from-[#003333] to-[#001111] py-24 px-4 md:px-10 overflow-hidden relative font-sans w-full min-h-[800px] flex items-center justify-center"
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '800px' } as React.CSSProperties}
+    >
+
       {/* Background Tech Pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
@@ -333,14 +336,14 @@ export function DifferenceSection() {
 
             {/* Cards (Absolute positioned with percentages for responsive scaling) */}
             <motion.div custom={0} variants={scatterCardVariants} className="absolute top-[16.6%] left-0 pointer-events-auto z-10 w-[28%]">
-              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                 <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
                     <FlaskConical className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.labTested.title')}</h4>
+                    <h3 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.labTested.title')}</h3>
                     <p className="text-white/80 text-xs leading-relaxed">{t('cards.labTested.desc')}</p>
                   </div>
                 </div>
@@ -348,14 +351,14 @@ export function DifferenceSection() {
             </motion.div>
 
             <motion.div custom={1} variants={scatterCardVariants} className="absolute top-[66.6%] left-0 pointer-events-auto z-10 w-[28%]">
-              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                 <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
                     <Network className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.synthesis.title')}</h4>
+                    <h3 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.synthesis.title')}</h3>
                     <p className="text-white/80 text-xs leading-relaxed">{t('cards.synthesis.desc')}</p>
                   </div>
                 </div>
@@ -363,14 +366,14 @@ export function DifferenceSection() {
             </motion.div>
 
             <motion.div custom={2} variants={scatterCardVariants} className="absolute top-[8.3%] right-0 pointer-events-auto z-10 w-[28%]">
-              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                 <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
                     <Shield className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.madeInUsa.title')}</h4>
+                    <h3 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.madeInUsa.title')}</h3>
                     <p className="text-white/80 text-xs leading-relaxed">{t('cards.madeInUsa.desc')}</p>
                   </div>
                 </div>
@@ -378,14 +381,14 @@ export function DifferenceSection() {
             </motion.div>
 
             <motion.div custom={3} variants={scatterCardVariants} className="absolute top-[41.6%] right-0 pointer-events-auto z-10 w-[28%]">
-              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                 <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
                     <Snowflake className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.coldChain.title')}</h4>
+                    <h3 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.coldChain.title')}</h3>
                     <p className="text-white/80 text-xs leading-relaxed">{t('cards.coldChain.desc')}</p>
                   </div>
                 </div>
@@ -393,14 +396,14 @@ export function DifferenceSection() {
             </motion.div>
 
             <motion.div custom={4} variants={scatterCardVariants} className="absolute top-[75%] right-0 pointer-events-auto z-10 w-[28%]">
-              <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
+              <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                 <div className="relative z-10 flex flex-col xl:flex-row items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center group-hover:scale-110 shadow-lg transition-transform duration-300">
                     <Search className="w-5 h-5 text-[#003333]" />
                   </div>
                   <div className="mt-1 xl:mt-0">
-                    <h4 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.traceability.title')}</h4>
+                    <h3 className="text-white font-bold text-sm mb-1.5 leading-tight tracking-wide">{t('cards.traceability.title')}</h3>
                     <p className="text-white/80 text-xs leading-relaxed">{t('cards.traceability.desc')}</p>
                   </div>
                 </div>
@@ -461,7 +464,7 @@ export function DifferenceSection() {
                       key={idx}
                       custom={idx}
                       variants={mobileCardVariants}
-                      className={`bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default ${idx === 4 ? 'sm:col-span-2 sm:mx-auto sm:w-80' : ''}`}
+                      className={`bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-5 shadow-2xl w-full relative transition-all duration-300 group hover:-translate-y-1 hover:bg-white/20 hover:border-white/40 overflow-hidden cursor-default ${idx === 4 ? 'sm:col-span-2 sm:mx-auto sm:w-80' : ''}`}
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                       <div className="relative z-10 flex flex-col sm:flex-row items-start gap-4">
@@ -469,7 +472,7 @@ export function DifferenceSection() {
                           <Icon className="w-5 h-5 text-[#003333]" />
                         </div>
                         <div className="mt-1 sm:mt-0">
-                          <h4 className="text-white font-bold text-[13px] sm:text-sm mb-1.5 leading-tight tracking-wide">{t(`cards.${card.key}.title`)}</h4>
+                          <h3 className="text-white font-bold text-[13px] sm:text-sm mb-1.5 leading-tight tracking-wide">{t(`cards.${card.key}.title`)}</h3>
                           <p className="text-white/80 text-[11px] sm:text-xs leading-relaxed">{t(`cards.${card.key}.desc`)}</p>
                         </div>
                       </div>

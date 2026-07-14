@@ -3,17 +3,575 @@ import React from 'react'
 
 export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; date: string; readTime: string; excerpt: string; imageSrc: string; content: React.ReactNode }[] = [
   {
+    slug: 'how-much-bacteriostatic-water-reconstitute-peptides',
+    title: 'Cuánta Agua Bacteriostática Usar para Reconstituir Péptidos: La Tabla Completa de Ratio, Unidades y Concentración (2026)',
+    category: 'Protocolos de recuperación',
+    date: '13 de julio de 2026',
+    readTime: '14 min de lectura',
+    excerpt: 'La tabla completa de mL a unidades y mg/mL para la reconstitución, más una calculadora gratuita. Referencia de laboratorio RUO con las proporciones de agua bacteriostática para cada tamaño de vial habitual.',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bac-water-reconstitution-hero.png',
+    content: (
+      <>
+        <div className="p-4 md:p-6 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-10">
+          <strong>Aviso de uso exclusivo en investigación:</strong> Los compuestos aquí mencionados se suministran estrictamente para investigación de laboratorio e in-vitro. Nada de lo siguiente constituye asesoramiento médico, y nada describe administración humana o animal. Cada cifra es un ejemplo de medición — masa, volumen y concentración — para el manejo de material de referencia liofilizado en un entorno de investigación.
+        </div>
+
+        <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
+          Para reconstituir un péptido de investigación liofilizado, añada <a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">agua bacteriostática</a> al vial y lea la concentración como miligramos de péptido ÷ mililitros de agua. Un vial de 10 mg disuelto en 2 mL da 5 mg/mL. En una jeringa de insulina U-100, 1 mL = 100 unidades, por lo que 2 mL llenan la jeringa hasta 200 unidades.
+        </p>
+        <p className="mb-8">Más agua reduce la concentración y mejora la resolución de medición; menos agua produce el efecto contrario. El volumen elegido es una decisión de manejo de investigación, no una regla fija — así que verifíquelo con la <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator">calculadora de péptidos</a>.</p>
+
+        <div className="p-6 bg-cream-warm border border-ink/10 rounded-2xl my-10 quick-answer">
+          <h2 className="text-lg font-bold text-ink mb-2">Respuesta rápida — la versión de 15 segundos</h2>
+          <p className="text-ink/80 text-sm">Para reconstituir un péptido de investigación liofilizado, añada agua bacteriostática al vial y lea la concentración como miligramos de péptido ÷ mililitros de agua. Un vial de 10 mg disuelto en 2 mL da 5 mg/mL. En una jeringa de insulina U-100, 1 mL = 100 unidades, por lo que 2 mL llenan la jeringa hasta 200 unidades. Más agua reduce la concentración y mejora la resolución de medición; menos agua produce el efecto contrario. El volumen elegido es una decisión de manejo de investigación, no una regla fija — así que verifíquelo con una calculadora.</p>
+        </div>
+
+        <h2 id="what-reconstitution-means" className="text-2xl font-semibold text-ink mt-16 mb-6">1. Qué significa realmente "reconstitución"</h2>
+        <div className="p-4 bg-cream-warm border border-ink/10 rounded-xl text-sm text-ink/80 mb-6">
+          <strong>Definición:</strong> La reconstitución es el proceso de disolver un polvo de péptido liofilizado (secado por congelación) de nuevo en un líquido añadiendo un solvente estéril — con mayor frecuencia agua bacteriostática. El resultado es una solución de concentración conocida, expresada en miligramos por mililitro (mg/mL).
+        </div>
+        <p className="mb-4">Los péptidos de investigación se envían como una pastilla o película liofilizada en el fondo de un vial sellado. Los fabricantes eliminan el agua para que el péptido permanezca estable durante el transporte y el almacenamiento. En consecuencia, el polvo no es utilizable para ninguna medición de laboratorio hasta que vuelve a estar en solución.</p>
+        <p className="mb-8">La reconstitución cumple dos funciones a la vez. Primero, hace que el péptido sea medible, porque no se puede pipetear con precisión una película seca. Segundo, fija una concentración, de modo que cada extracción posterior corresponde a una masa precisa. Por lo tanto, el volumen de agua que se añade es la decisión más importante de todo el proceso.</p>
+
+        <h2 id="bacteriostatic-vs-sterile-vs-acetic" className="text-2xl font-semibold text-ink mt-16 mb-6">2. Agua bacteriostática vs estéril vs de ácido acético</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bacteriostatic-vs-sterile-vs-acetic-acid-water.png" alt="Agua bacteriostática vs agua estéril vs agua de ácido acético para péptidos" title="Comparación de solventes para péptidos" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">Eligiendo el solvente adecuado para la reconstitución de péptidos.</figcaption>
+        </figure>
+        <p className="mb-6">No todos los solventes se comportan igual. La elección correcta depende de la solubilidad y del tiempo que la solución permanecerá en uso. Esta es la comparación práctica en la que se basan los investigadores.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Solvente</th>
+                <th className="py-3 px-4 font-bold text-ink">Qué es</th>
+                <th className="py-3 px-4 font-bold text-ink">Mejor para</th>
+                <th className="py-3 px-4 font-bold text-ink">Notas</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">Agua bacteriostática</a></td>
+                <td className="py-3 px-4">Agua estéril con 0.9% de alcohol bencílico como conservante</td>
+                <td className="py-3 px-4">La opción predeterminada para la mayoría de péptidos que se disuelven fácilmente</td>
+                <td className="py-3 px-4">El alcohol bencílico inhibe el crecimiento microbiano, por lo que los viales de múltiples extracciones permanecen utilizables por más tiempo</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">Agua estéril para inyección</td>
+                <td className="py-3 px-4">Agua estéril, sin conservante</td>
+                <td className="py-3 px-4">Preparaciones de un solo uso</td>
+                <td className="py-3 px-4">Sin protección bacteriostática, por lo que es menos adecuada para viales que se abren repetidamente</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">Agua de ácido acético (0.6%)</a></td>
+                <td className="py-3 px-4">Ácido acético diluido en agua</td>
+                <td className="py-3 px-4">Péptidos "pegajosos" o poco solubles que resisten el agua simple</td>
+                <td className="py-3 px-4">La acidez suave ayuda a romper agregados que de otro modo no se disolverían</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 my-6">
+          <strong>Por qué importa el alcohol bencílico:</strong> El 0.9% de alcohol bencílico como conservante en el agua bacteriostática es bacteriostático, no bactericida — ralentiza el crecimiento microbiano en lugar de esterilizar. Esa propiedad es exactamente la razón por la que se prefiere para viales que se muestrearán más de una vez durante varias semanas en el laboratorio.
+        </div>
+        <p className="mb-8">Cuando un péptido se enturbia, forma espuma o deja partículas sin disolver en agua bacteriostática simple, el agua de ácido acético suele ser el siguiente paso. GHK-Cu y ciertos péptidos de cadena larga son candidatos comunes. Puede adquirir ambos solventes directamente en lugar de improvisar.</p>
+
+        <h2 id="three-numbers" className="text-2xl font-semibold text-ink mt-16 mb-6">3. Los tres números detrás de cada reconstitución</h2>
+        <p className="mb-6">Toda reconstitución se reduce a tres valores vinculados. Domine estos y las tablas siguientes resultarán evidentes.</p>
+        <div className="space-y-6 mb-8">
+          <div>
+            <h3 className="font-bold text-lg mb-2">Número 1 — Masa del péptido (mg)</h3>
+            <p className="text-ink/80">Esta es la cantidad de péptido en el vial, impresa en la etiqueta: 5 mg, 10 mg, 15 mg, y así sucesivamente. Nunca cambia cuando se añade agua. Simplemente se está disolviendo esa masa fija.</p>
+          </div>
+          <div>
+            <h3 className="font-bold text-lg mb-2">Número 2 — Volumen del solvente (mL)</h3>
+            <p className="text-ink/80">Esta es la cantidad de agua bacteriostática que usted añade. Usted la elige. Como es la única variable libre, determina la concentración y la resolución de medición de todo lo que sigue.</p>
+          </div>
+          <div>
+            <h3 className="font-bold text-lg mb-2">Número 3 — Concentración (mg/mL)</h3>
+            <p className="text-ink/80">La concentración es simplemente la masa dividida entre el volumen. Le indica cuánto péptido hay en cada mililitro — y, por lo tanto, en cada unidad de la jeringa.</p>
+          </div>
+        </div>
+        <div className="bg-zinc-900 text-white p-6 rounded-xl font-mono text-sm my-6">
+          Concentración (mg/mL) = Masa del péptido (mg) ÷ Agua añadida (mL)<br /><br />
+          <span className="text-white/60">Ejemplo: 10 mg ÷ 2 mL = 5 mg/mL</span><br />
+          <span className="text-white/60">Ejemplo: 5 mg ÷ 1 mL = 5 mg/mL (misma concentración, la mitad del volumen)</span>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8 units-conversion">
+          <strong>El puente entre unidades y jeringa:</strong> Las jeringas de insulina están marcadas en "unidades", no en mililitros. En una jeringa estándar U-100, 100 unidades = 1 mL. Por lo tanto, 0.01 mL = 1 unidad. Una vez que conozca su mg/mL, puede convertir cualquier extracción entre mililitros y unidades sin adivinar.
+        </div>
+
+        <h2 id="master-chart" className="text-2xl font-semibold text-ink mt-16 mb-6">4. La tabla maestra de reconstitución</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-concentration-chart.png" alt="Tabla de reconstitución de péptidos mostrando mg/mL por tamaño de vial y volumen de agua" title="Infografía de tabla de concentración de péptidos" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">Tabla maestra de reconstitución: tamaño del vial × agua añadida = concentración.</figcaption>
+        </figure>
+        <p className="mb-6">Esta es la referencia hacia la que apunta el resto del artículo. Lea a través de su tamaño de vial, hacia abajo desde el volumen de agua elegido, y la celda indica la concentración resultante. Cada valor es masa ÷ volumen — nada más.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <caption className="text-left text-sm text-ink/60 mb-2">Concentración resultante (mg/mL) según el tamaño del vial y el agua añadida</caption>
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Agua añadida ↓ / Vial →</th>
+                <th className="py-3 px-4 font-bold text-ink">5 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">10 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">15 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">20 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">30 mg</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">1 mL</td>
+                <td className="py-3 px-4">5.0</td>
+                <td className="py-3 px-4">10.0</td>
+                <td className="py-3 px-4">15.0</td>
+                <td className="py-3 px-4">20.0</td>
+                <td className="py-3 px-4">30.0</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">2 mL</td>
+                <td className="py-3 px-4">2.5</td>
+                <td className="py-3 px-4">5.0</td>
+                <td className="py-3 px-4">7.5</td>
+                <td className="py-3 px-4">10.0</td>
+                <td className="py-3 px-4">15.0</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">3 mL</td>
+                <td className="py-3 px-4">1.67</td>
+                <td className="py-3 px-4">3.33</td>
+                <td className="py-3 px-4">5.0</td>
+                <td className="py-3 px-4">6.67</td>
+                <td className="py-3 px-4">10.0</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">5 mL</td>
+                <td className="py-3 px-4">1.0</td>
+                <td className="py-3 px-4">2.0</td>
+                <td className="py-3 px-4">3.0</td>
+                <td className="py-3 px-4">4.0</td>
+                <td className="py-3 px-4">6.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>Cómo leer una celda:</strong> Un vial de 10 mg + 2 mL de agua = 5 mg/mL. Extraiga 10 unidades (0.1 mL) y habrá medido 0.5 mg. Extraiga 20 unidades (0.2 mL) y tendrá 1.0 mg. La tabla nunca le dice qué extraer — le dice qué contiene cada extracción.
+        </div>
+
+        <h2 id="units-conversion" className="text-2xl font-semibold text-ink mt-16 mb-6">5. ¿Cuántas unidades son 1 mL, 2 mL y 3 mL de agua BAC?</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ml-to-units-bac-water-conversion.png" alt="Cuántas unidades son 1ml, 2ml y 3ml de agua bacteriostática en una jeringa U-100" title="Conversión de agua BAC de mL a unidades" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">Conversión de mL a unidades en una jeringa de insulina estándar U-100.</figcaption>
+        </figure>
+        <p className="mb-6">Esta pregunta aparece en sus datos de búsqueda en docenas de formas. La respuesta está fijada por la escala de la jeringa, independientemente del péptido que contenga.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Agua bacteriostática</th>
+                <th className="py-3 px-4 font-bold text-ink">Unidades en jeringa U-100</th>
+                <th className="py-3 px-4 font-bold text-ink">Como fracción de una jeringa de 1 mL</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">0.25 mL</td>
+                <td className="py-3 px-4">25 unidades</td>
+                <td className="py-3 px-4">Un cuarto</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">0.5 mL</td>
+                <td className="py-3 px-4">50 unidades</td>
+                <td className="py-3 px-4">La mitad</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors bg-cream-warm">
+                <td className="py-3 px-4 font-medium">1 mL</td>
+                <td className="py-3 px-4">100 unidades</td>
+                <td className="py-3 px-4">Una jeringa completa de 1 mL</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">1.5 mL</td>
+                <td className="py-3 px-4">150 unidades</td>
+                <td className="py-3 px-4">Una jeringa y media</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">2 mL</td>
+                <td className="py-3 px-4">200 unidades</td>
+                <td className="py-3 px-4">Dos jeringas completas</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">3 mL</td>
+                <td className="py-3 px-4">300 unidades</td>
+                <td className="py-3 px-4">Tres jeringas completas</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">5 mL</td>
+                <td className="py-3 px-4">500 unidades</td>
+                <td className="py-3 px-4">Cinco jeringas completas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>Conversión clave:</strong> 1 mL = 100 unidades en toda jeringa de insulina U-100. Así, para llenar un vial con 3 mL, extraerá y añadirá tres jeringas completas (300 unidades en total). La etiqueta "unidades" describe el volumen que mueve, no la dosis del péptido.
+        </div>
+
+        <h2 id="choosing-volume" className="text-2xl font-semibold text-ink mt-16 mb-6">6. Cómo elegir su volumen de reconstitución</h2>
+        <p className="mb-6">Dado que el volumen de agua es la variable libre, la elección se reduce a un equilibrio entre resolución y capacidad del vial. Dos principios lo guían.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+            <h3 className="font-bold text-ink mb-2">Más agua = mayor resolución</h3>
+            <p className="text-ink/80 text-sm">Añadir más solvente distribuye la misma masa de péptido entre más unidades. Cada unidad contiene entonces menos péptido, por lo que las mediciones pequeñas se vuelven más precisas. Los investigadores que trabajan con masas objetivo diminutas suelen preferir esto.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+            <h3 className="font-bold text-ink mb-2">Menos agua = mayor concentración</h3>
+            <p className="text-ink/80 text-sm">Añadir menos solvente concentra el péptido. Cada unidad contiene más, lo cual conviene a masas objetivo más grandes y mantiene el volumen líquido total dentro de un vial pequeño. Sin embargo, la resolución disminuye, por lo que las mediciones muy pequeñas se vuelven más difíciles.</p>
+          </div>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>Una regla práctica sencilla:</strong> Elija un volumen de agua que haga que su medición típica caiga en un número redondo de unidades. Los números redondos reducen los errores de lectura en la jeringa. La <a className="text-primary underline hover:text-primary-dark" href="/peptide-reconstitution-calculator">calculadora de reconstitución</a> hace esto al instante — ingrese el tamaño del vial y la masa objetivo, y le devuelve las unidades exactas a extraer.
+        </div>
+
+        <h2 id="vial-capacity" className="text-2xl font-semibold text-ink mt-16 mb-6">7. ¿Cuánta agua puede contener un vial de péptido?</h2>
+        <p className="mb-6">La capacidad del vial limita cuánta agua puede añadir. Un vial de péptido estándar de 3 mL contiene cómodamente hasta unos 3 mL, y muchos viales llamados "de 10 mL" están llenados solo parcialmente por diseño para dejar espacio de aire. Deje siempre un pequeño espacio de aire para que la presión se mantenga equilibrada al extraer muestras.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Tamaño del vial (nominal)</th>
+                <th className="py-3 px-4 font-bold text-ink">Llenado práctico de trabajo</th>
+                <th className="py-3 px-4 font-bold text-ink">Comentario</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">Vial de 3 mL</td>
+                <td className="py-3 px-4">Hasta ~2.5–3 mL</td>
+                <td className="py-3 px-4">Vial de péptido de investigación más común</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">Vial de 5 mL</td>
+                <td className="py-3 px-4">Hasta ~4–5 mL</td>
+                <td className="py-3 px-4">Útil cuando se necesita alta resolución</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">Vial de 10 mL</td>
+                <td className="py-3 px-4">Hasta ~8–10 mL</td>
+                <td className="py-3 px-4">A menudo sobreespecificado; deje espacio de aire</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="procedure" className="text-2xl font-semibold text-ink mt-16 mb-6">8. El procedimiento de reconstitución, paso a paso</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/how-to-reconstitute-peptides-steps.png" alt="Paso a paso cómo reconstituir un vial de péptido con agua bacteriostática" title="Pasos para reconstituir péptidos" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">La secuencia suave de reconstitución, sin agitación.</figcaption>
+        </figure>
+        <p className="mb-6">Este es el manejo aséptico de laboratorio estándar para un material de referencia liofilizado — consulte la <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator-reconstitution-guide">guía de reconstitución de péptidos</a> completa para notas técnicas ampliadas. Trabaje en una superficie limpia con manos limpias y suministros nuevos.</p>
+        <ol className="list-decimal pl-6 space-y-3 my-6 text-ink/80">
+          <li><strong>Lleve ambos viales a temperatura ambiente.</strong> Los viales fríos pueden causar condensación y ralentizar la disolución.</li>
+          <li><strong>Limpie ambos tapones con una toallita de alcohol.</strong> Limpie el vial del péptido y el vial de agua bacteriostática antes de perforar cualquiera de los dos.</li>
+          <li><strong>Extraiga su volumen de agua medido.</strong> Use la tabla anterior para fijar el volumen, luego extráigalo del vial de agua bacteriostática.</li>
+          <li><strong>Añada el agua lentamente por la pared del vial.</strong> Dirija el chorro hacia el vidrio, no directamente sobre la pastilla de péptido. Esto protege las cadenas frágiles del péptido del esfuerzo cortante.</li>
+          <li><strong>Deje que se disuelva — no agite.</strong> Gire suavemente o déjelo reposar. La agitación vigorosa puede desnaturalizar o hacer espuma el péptido.</li>
+          <li><strong>Confirme una solución clara.</strong> Un vial correctamente reconstituido es transparente y libre de partículas. La turbidez o las partículas indican un problema de solubilidad — considere el agua de ácido acético.</li>
+          <li><strong>Etiquete y refrigere.</strong> Registre la concentración y la fecha, luego almacene en frío. Vea la sección de estabilidad a continuación.</li>
+        </ol>
+        <div className="p-4 bg-red-50 border border-red-200 text-red-900 rounded-xl text-sm mb-8">
+          <strong>El movimiento que arruina los viales:</strong> Agitar. Los péptidos son cadenas delicadas, y la agitación agresiva las corta o introduce aire en la solución. Siempre gire; nunca agite.
+        </div>
+
+        <h2 id="storage-stability" className="text-2xl font-semibold text-ink mt-16 mb-6">9. Almacenamiento y estabilidad tras la reconstitución</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/reconstituted-peptide-storage.png" alt="Péptidos de investigación reconstituidos en almacenamiento en frío para estabilidad" title="Almacenamiento de péptidos reconstituidos" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">Refrigere los péptidos reconstituidos para ralentizar la degradación.</figcaption>
+        </figure>
+        <p className="mb-4">Una vez en solución, un péptido es mucho menos estable que el polvo seco. El manejo a partir de aquí determina cuánto tiempo permanece utilizable el material para investigación.</p>
+        <ul className="list-disc pl-6 space-y-3 my-6 text-ink/80">
+          <li><strong>Refrigere los viales reconstituidos.</strong> El almacenamiento en frío ralentiza drásticamente la degradación en comparación con la temperatura ambiente.</li>
+          <li><strong>El agua bacteriostática gana tiempo.</strong> Su conservante es la razón por la que los viales reconstituidos toleran muestreos repetidos durante semanas en lugar de días.</li>
+          <li><strong>Proteja de la luz y el calor.</strong> Ambos aceleran la degradación de muchas cadenas de péptidos.</li>
+          <li><strong>Congele solo cuando sea apropiado.</strong> Algunos péptidos toleran una única congelación; los ciclos repetidos de congelación-descongelación dañan a la mayoría. Verifique según el compuesto.</li>
+        </ul>
+        <p className="mb-8">Para el protocolo completo — temperaturas, plazos y detalles de congelación-descongelación — consulte la <a className="text-primary underline hover:text-primary-dark" href="/reconstituted-peptide-stability-storage">guía de almacenamiento</a> dedicada y nuestras <a className="text-primary underline hover:text-primary-dark" href="/research-peptide-storage-best-practices">mejores prácticas de almacenamiento</a>, respaldadas por la investigación revisada por pares sobre estabilidad de péptidos.</p>
+
+        <h2 id="compound-examples" className="text-2xl font-semibold text-ink mt-16 mb-6">10. Ejemplos de reconstitución por compuesto</h2>
+        <p className="mb-6">Diferentes péptidos de investigación se envían en distintos tamaños de vial y tienen diferentes particularidades de solubilidad. La siguiente tabla muestra preparaciones de ejemplo — tamaño de vial, un volumen de agua de ejemplo y la concentración resultante. Estos son solo ejemplos de medición; no son una guía de administración.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Compuesto (RUO)</th>
+                <th className="py-3 px-4 font-bold text-ink">Vial común</th>
+                <th className="py-3 px-4 font-bold text-ink">Agua de ejemplo</th>
+                <th className="py-3 px-4 font-bold text-ink">Conc. resultante</th>
+                <th className="py-3 px-4 font-bold text-ink">Nota de manejo</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/retatrutide-peptide-research-guide">Retatrutida</a></td>
+                <td className="py-3 px-4">5–15 mg</td>
+                <td className="py-3 px-4">2 mL</td>
+                <td className="py-3 px-4">2.5–7.5 mg/mL</td>
+                <td className="py-3 px-4">Agonista triple en investigación; se disuelve fácilmente en agua BAC</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/tesamorelin-visceral-fat-research">Tesamorelina</a></td>
+                <td className="py-3 px-4">5–10 mg</td>
+                <td className="py-3 px-4">2 mL</td>
+                <td className="py-3 px-4">2.5–5 mg/mL</td>
+                <td className="py-3 px-4">Reconstitución estándar con agua BAC</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/ghk-cu-copper-peptide-research-guide">GHK-Cu</a></td>
+                <td className="py-3 px-4">50 mg</td>
+                <td className="py-3 px-4">5 mL</td>
+                <td className="py-3 px-4">10 mg/mL</td>
+                <td className="py-3 px-4">Puede necesitar agua de ácido acético si no aclara</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">BPC-157</td>
+                <td className="py-3 px-4">5–10 mg</td>
+                <td className="py-3 px-4">2 mL</td>
+                <td className="py-3 px-4">2.5–5 mg/mL</td>
+                <td className="py-3 px-4">Se disuelve limpiamente; gire, no agite</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/klow-peptide-blend-research-guide-2026">Mezcla KLOW</a></td>
+                <td className="py-3 px-4">~80 mg totales</td>
+                <td className="py-3 px-4">3–5 mL</td>
+                <td className="py-3 px-4">~16–27 mg/mL</td>
+                <td className="py-3 px-4">Mezcla multipeptídica; use mayor volumen para resolución</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">SS-31 (elamipretida)</td>
+                <td className="py-3 px-4">50 mg</td>
+                <td className="py-3 px-4">5 mL</td>
+                <td className="py-3 px-4">10 mg/mL</td>
+                <td className="py-3 px-4">Reconstitución estándar con agua BAC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>Recordatorio:</strong> La retatrutida sigue siendo investigacional — se encuentra en ensayos de Fase 3 (programa TRIUMPH) y no está aprobada para uso humano a partir de 2026. Todas las cifras anteriores describen cómo un laboratorio prepara una solución de referencia, no un protocolo de administración.
+        </div>
+
+        <h2 id="mistakes" className="text-2xl font-semibold text-ink mt-16 mb-6">11. Errores comunes en la reconstitución</h2>
+        <ul className="list-disc pl-6 space-y-3 my-6 text-ink/80">
+          <li><strong>Agitar en lugar de girar.</strong> El hábito más dañino — corta las cadenas del péptido.</li>
+          <li><strong>Rociar agua directamente sobre la pastilla.</strong> Apunte a la pared de vidrio para proteger el péptido.</li>
+          <li><strong>Adivinar el volumen.</strong> Calcular a ojo arruina la precisión de la concentración. Use la calculadora.</li>
+          <li><strong>Confundir unidades con dosis.</strong> Las "unidades" miden el volumen del líquido, no la masa del péptido. Solo la concentración vincula ambas cosas.</li>
+          <li><strong>Usar agua simple para un péptido pegajoso.</strong> Si no aclara, cambie a agua de ácido acético.</li>
+          <li><strong>Almacenar en caliente.</strong> Los péptidos reconstituidos se degradan rápidamente a temperatura ambiente.</li>
+        </ul>
+
+        <h2 id="takeaways" className="text-2xl font-semibold text-ink mt-16 mb-6">12. Puntos clave para recordar</h2>
+        <div className="p-6 bg-cream-warm border border-ink/10 rounded-2xl mb-8">
+          <p className="font-bold text-ink mb-3">Recuerde estos seis puntos</p>
+          <ul className="space-y-2 text-ink/80 text-sm">
+            <li>▸ Concentración (mg/mL) = masa del péptido ÷ agua añadida. Esa única ecuación lo rige todo.</li>
+            <li>▸ 1 mL de agua bacteriostática = 100 unidades en una jeringa U-100. Volumen, no dosis.</li>
+            <li>▸ Más agua = mayor resolución; menos agua = mayor concentración. Usted elige.</li>
+            <li>▸ El agua bacteriostática es la opción predeterminada; el agua de ácido acético rescata péptidos pegajosos.</li>
+            <li>▸ Gire, nunca agite — y añada el agua por la pared de vidrio.</li>
+            <li>▸ Refrigere después de la reconstitución y verifique cada cifra con la calculadora.</li>
+          </ul>
+        </div>
+
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Conclusión</h2>
+        <p className="mb-8">La reconstitución no es adivinar — es aritmética. Una vez que ve un vial como una masa fija y el agua como su única variable libre, las tablas anteriores responden casi cualquier pregunta de "cuánto" o "cuántas unidades" en segundos. Elija su volumen, añádalo con suavidad, almacénelo en frío y registre la concentración.</p>
+
+        <div className="my-12 p-8 bg-zinc-900 rounded-2xl text-center">
+          <h3 className="text-xl font-bold font-serif text-white mb-4">Calcule sus cifras exactas</h3>
+          <p className="text-white/70 mb-6 max-w-xl mx-auto text-sm">Evite el cálculo mental. Ingrese el tamaño de su vial y la masa objetivo en la <a className="text-gold underline hover:text-gold/80" href="/peptide-calculator">calculadora de péptidos</a> y la <a className="text-gold underline hover:text-gold/80" href="/peptide-reconstitution-calculator">calculadora de reconstitución</a> de 99 Purity Peptides — devuelven al instante el volumen de agua y las unidades de jeringa precisas, en mililitros o unidades. Después explore el <a className="text-gold underline hover:text-gold/80" href="/shop">catálogo de investigación</a> para compuestos de pureza 99% verificados por terceros y el agua bacteriostática y de ácido acético correctas.</p>
+        </div>
+
+        <hr className="border-t border-ink/10 my-16" />
+
+        <h2 id="faq" className="text-2xl font-semibold text-ink mb-6">Preguntas Frecuentes</h2>
+        <div className="space-y-6">
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuánta agua bacteriostática debo usar para reconstituir un péptido de 10 mg?</h3>
+            <p className="text-ink/80 text-sm">Depende de la concentración que desee. Añadir 1 mL da 10 mg/mL, y añadir 2 mL da 5 mg/mL. La masa permanece fija en 10 mg; el volumen de agua que elija determina la concentración. Use una calculadora de péptidos para ajustarse a su medición objetivo.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuántas unidades es 1 mL de agua bacteriostática?</h3>
+            <p className="text-ink/80 text-sm">En una jeringa de insulina U-100 estándar, 1 mL equivale a 100 unidades. Esta proporción está fijada por la escala de la jeringa y no depende del péptido que haya en el vial.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuántas unidades es 2 mL de agua bacteriostática?</h3>
+            <p className="text-ink/80 text-sm">2 mL equivale a 200 unidades en una jeringa de insulina U-100, o dos jeringas completas de 1 mL extraídas y añadidas al vial.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuántas unidades es 3 mL de agua bacteriostática?</h3>
+            <p className="text-ink/80 text-sm">3 mL equivale a 300 unidades en una jeringa de insulina U-100 — tres jeringas completas. Las "unidades" aquí describen el volumen líquido, no la masa del péptido.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Qué es el agua bacteriostática?</h3>
+            <p className="text-ink/80 text-sm">El agua bacteriostática es agua estéril que contiene 0.9% de alcohol bencílico, un conservante que ralentiza el crecimiento microbiano. Esa propiedad la convierte en el solvente preferido para viales de péptido que se muestrearán repetidamente durante varias semanas.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuál es la diferencia entre agua bacteriostática y agua estéril?</h3>
+            <p className="text-ink/80 text-sm">El agua estéril no tiene conservante, mientras que el agua bacteriostática contiene 0.9% de alcohol bencílico. El conservante permite que el agua bacteriostática resista la contaminación durante extracciones repetidas, por lo que es más adecuada para viales de investigación de múltiples usos.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuándo debo usar agua de ácido acético en su lugar?</h3>
+            <p className="text-ink/80 text-sm">Use agua de ácido acético (típicamente 0.6%) cuando un péptido no se disuelva completamente en agua bacteriostática simple. Su acidez suave ayuda a romper agregados en péptidos "pegajosos" como algunas preparaciones de GHK-Cu.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cómo calculo la concentración de un péptido?</h3>
+            <p className="text-ink/80 text-sm">Divida la masa del péptido entre el volumen de agua: concentración (mg/mL) = mg ÷ mL. Por ejemplo, 10 mg disueltos en 2 mL dan 5 mg/mL.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Qué significa mg/mL en la reconstitución de péptidos?</h3>
+            <p className="text-ink/80 text-sm">Es la concentración — cuántos miligramos de péptido hay en cada mililitro de solución. Vincula la masa fija del péptido con cualquier volumen que mida después.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cómo convierto mililitros a unidades de insulina?</h3>
+            <p className="text-ink/80 text-sm">Multiplique los mililitros por 100 en una jeringa U-100. Así, 0.1 mL son 10 unidades, 0.5 mL son 50 unidades y 1 mL son 100 unidades.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Debo agitar el vial para disolver el péptido?</h3>
+            <p className="text-ink/80 text-sm">No. Agitar puede cortar las delicadas cadenas del péptido e introducir espuma. Gire suavemente o deje reposar el vial hasta que la solución quede transparente.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Dónde debo añadir el agua en el vial?</h3>
+            <p className="text-ink/80 text-sm">Dirija el chorro por la pared interior de vidrio en lugar de directamente sobre la pastilla de péptido. Este contacto más suave protege al péptido durante la reconstitución.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuánta agua puede contener un vial de péptido?</h3>
+            <p className="text-ink/80 text-sm">Un vial común de 3 mL contiene hasta aproximadamente 2.5–3 mL; los viales más grandes contienen más. Deje siempre un pequeño espacio de aire para que la presión permanezca equilibrada durante la extracción.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuánto tiempo duran los péptidos reconstituidos?</h3>
+            <p className="text-ink/80 text-sm">La estabilidad varía según el compuesto, pero los péptidos reconstituidos se degradan más rápido que el polvo seco. La refrigeración y el conservante del agua bacteriostática extienden la vida útil a semanas para muchos péptidos. Consulte la guía específica del compuesto.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Necesito refrigerar los péptidos reconstituidos?</h3>
+            <p className="text-ink/80 text-sm">Sí. El almacenamiento en frío ralentiza significativamente la degradación en comparación con la temperatura ambiente. Mantenga los viales fríos, en oscuridad y protegidos del calor.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Puedo congelar péptidos reconstituidos?</h3>
+            <p className="text-ink/80 text-sm">Algunos péptidos toleran una única congelación, pero los ciclos repetidos de congelación-descongelación dañan a la mayoría. Verifique según el compuesto antes de congelar cualquier solución reconstituida.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Qué sucede si añado demasiada agua?</h3>
+            <p className="text-ink/80 text-sm">Nada se arruina — simplemente obtiene una concentración menor. Cada unidad contiene entonces menos péptido, lo que mejora la resolución de medición pero llena más el vial.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Qué sucede si añado muy poca agua?</h3>
+            <p className="text-ink/80 text-sm">Obtiene una concentración mayor, por lo que cada unidad contiene más péptido. La resolución disminuye, haciendo que las mediciones muy pequeñas sean más difíciles de leer con precisión.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿El agua bacteriostática es lo mismo que la solución salina?</h3>
+            <p className="text-ink/80 text-sm">No. La solución salina es una solución de sal; el agua bacteriostática es agua estéril con conservante. No son intercambiables para la reconstitución de péptidos.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Por qué mi péptido reconstituido está turbio?</h3>
+            <p className="text-ink/80 text-sm">La turbidez o partículas visibles usualmente significan que el péptido no se ha disuelto completamente. Intente girar suavemente, y si persiste, cambie a agua de ácido acético.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuánta agua bacteriostática para un péptido de 5 mg?</h3>
+            <p className="text-ink/80 text-sm">Añadir 1 mL da 5 mg/mL y añadir 2 mL da 2.5 mg/mL. Elija el volumen que haga que su medición objetivo caiga en un número redondo de unidades.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuánta agua bacteriostática para un péptido de 15 mg?</h3>
+            <p className="text-ink/80 text-sm">1 mL da 15 mg/mL, 2 mL da 7.5 mg/mL, y 3 mL da 5 mg/mL. Cuanto mayor sea el volumen, mayor será la resolución.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuánta agua bacteriostática para un péptido de 20 mg?</h3>
+            <p className="text-ink/80 text-sm">1 mL da 20 mg/mL, 2 mL da 10 mg/mL, y 5 mL da 4 mg/mL. Elija un volumen dentro de la capacidad de su vial que se ajuste a su medición.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cambia la cantidad de péptido cuando añado agua?</h3>
+            <p className="text-ink/80 text-sm">No. La masa del péptido impresa en la etiqueta es fija. El agua solo cambia la concentración y el volumen, nunca los miligramos totales.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Qué jeringa se usa para la reconstitución de péptidos?</h3>
+            <p className="text-ink/80 text-sm">Una jeringa de insulina U-100 estándar, marcada en unidades donde 100 unidades equivalen a 1 mL, es típica para medir volúmenes pequeños de investigación con precisión.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Qué significan las "unidades" en una jeringa de insulina?</h3>
+            <p className="text-ink/80 text-sm">Las unidades son una escala de volumen: 100 unidades equivalen a 1 mL en una jeringa U-100. Miden cuánto líquido mueve, no cuánto péptido contiene.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cómo reconstituyo el GHK-Cu?</h3>
+            <p className="text-ink/80 text-sm">Un vial de <a className="text-primary underline hover:text-primary-dark" href="/ghk-cu-copper-peptide-research-guide">GHK-Cu</a> de 50 mg disuelto en 5 mL produce 10 mg/mL. Si no aclara en agua bacteriostática simple, el agua de ácido acético suele ayudar.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cómo reconstituyo la retatrutida?</h3>
+            <p className="text-ink/80 text-sm">Como material de referencia de laboratorio, un vial de <a className="text-primary underline hover:text-primary-dark" href="/retatrutide-peptide-research-guide">retatrutida</a> de 5–15 mg en 2 mL de agua bacteriostática da 2.5–7.5 mg/mL. La retatrutida es investigacional y no está aprobada para uso humano.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cómo reconstituyo la mezcla KLOW?</h3>
+            <p className="text-ink/80 text-sm">KLOW es una mezcla multipeptídica de aproximadamente 80 mg totales, por lo que un mayor volumen de 3–5 mL mejora la resolución de medición en toda la mezcla. Consulte la <a className="text-primary underline hover:text-primary-dark" href="/klow-peptide-blend-research-guide-2026">guía de investigación de KLOW</a> para conocer su composición.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Puedo usar agua del grifo o destilada?</h3>
+            <p className="text-ink/80 text-sm">No. Solo son apropiados solventes estériles como el agua bacteriostática, el agua estéril para inyección o el agua de ácido acético. El agua del grifo y la destilada no son estériles.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Es la reconstitución lo mismo que la dosificación?</h3>
+            <p className="text-ink/80 text-sm">No. La reconstitución prepara una solución de concentración conocida; no determina ninguna dosis. Esta guía cubre únicamente la preparación de laboratorio, bajo términos de uso exclusivo en investigación.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cómo sé que el péptido se disolvió completamente?</h3>
+            <p className="text-ink/80 text-sm">Un vial correctamente reconstituido está completamente transparente y libre de partículas. Cualquier turbidez, película o partículas flotantes indica una disolución incompleta.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuál es la vida útil del polvo de péptido sin abrir?</h3>
+            <p className="text-ink/80 text-sm">El polvo liofilizado almacenado en frío y sellado es estable durante meses a años dependiendo del compuesto — mucho más que la solución reconstituida.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Por qué los péptidos vienen en polvo?</h3>
+            <p className="text-ink/80 text-sm">La liofilización elimina el agua para que el péptido permanezca estable durante el envío y el almacenamiento. La reconstitución simplemente lo devuelve a un estado líquido utilizable.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Cuánto péptido hay en 10 unidades de una solución de 5 mg/mL?</h3>
+            <p className="text-ink/80 text-sm">10 unidades equivalen a 0.1 mL, y a 5 mg/mL eso contiene 0.5 mg de péptido. La concentración es lo que convierte el volumen en masa.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Puedo reconstituir dos péptidos en un mismo vial?</h3>
+            <p className="text-ink/80 text-sm">Solo las mezclas preformuladas están diseñadas para eso. Combinar péptidos individuales por separado conlleva riesgos de solubilidad y estabilidad, y no se recomienda.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Caduca el agua bacteriostática?</h3>
+            <p className="text-ink/80 text-sm">Sí. Tiene una fecha de caducidad, y un vial abierto tiene un período de uso limitado. Use siempre solvente vigente y sin contaminar en cada reconstitución.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Qué pureza debe tener un péptido de investigación?</h3>
+            <p className="text-ink/80 text-sm">Los proveedores confiables publican <a className="text-primary underline hover:text-primary-dark" href="/certificates">certificados de análisis</a> de terceros que confirman la pureza, comúnmente del 99%. Verifique siempre el CoA antes de reconstituir.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Es precisa una calculadora de péptidos?</h3>
+            <p className="text-ink/80 text-sm">Una calculadora aplica la ecuación exacta de concentración, eliminando el error aritmético. Ingrese el tamaño del vial, la masa objetivo y el volumen de agua, y le devuelve las unidades precisas a medir.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">¿Por qué mi péptido hace espuma al mezclarlo?</h3>
+            <p className="text-ink/80 text-sm">La espuma proviene de agitar o mover el vial, lo cual introduce aire en la solución y puede dañar el péptido. Gire suavemente y déjelo asentar en su lugar.</p>
+          </div>
+        </div>
+      </>
+    )
+  },
+  {
     slug: 'reconstituted-peptide-stability-storage',
     title: 'Estabilidad de Péptidos Reconstituidos: Guía de Almacenamiento e Investigación 2026',
     category: 'Protocolos de recuperación',
     date: '26 de abril de 2026',
     readTime: '5 min de lectura',
     excerpt: 'Guía completa sobre la estabilidad de péptidos reconstituidos, mecanismos de degradación y protocolos óptimos de almacenamiento para la integridad de la investigación de laboratorio.',
-    imageSrc: '/99 Blog Images/reconstituted-peptide-stability-storage-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/reconstituted-peptide-stability-storage-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/reconstituted-peptide-stability-storage-hero.jpg" alt="Estabilidad de Péptidos Reconstituidos: Guía de Almacenamiento e Investigación 2026" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/reconstituted-peptide-stability-storage-hero.jpg" alt="Estabilidad de Péptidos Reconstituidos: Guía de Almacenamiento e Investigación 2026" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2"><strong>La estabilidad de los péptidos reconstituidos</strong> determina la reproducibilidad experimental en entornos de laboratorio. Comprender los mecanismos de degradación y las condiciones óptimas de almacenamiento garantiza la integridad del material de investigación a lo largo de estudios de múltiples sesiones.</p>
         <p className="mb-4">La estabilidad de los péptidos depende de factores ambientales como la temperatura, el pH, la exposición a la luz y la composición del solvente. Los compuestos reconstituidos enfrentan una degradación acelerada en comparación con las formas liofilizadas. Los protocolos de manejo adecuados previenen la hidrólisis, la oxidación y la agregación.</p>
@@ -115,11 +673,11 @@ export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; 
     date: '7 de abril de 2026',
     readTime: '5 min de lectura',
     excerpt: 'Explora la sinergia del stack BPC-157 TB-500 en modelos preclínicos. Análisis de mecanismos de reparación tisular, vías de angiogénesis e investigación emergente.',
-    imageSrc: '/99 Blog Images/bpc-157-tb-500-stack-research-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bpc-157-tb-500-stack-research-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/bpc-157-tb-500-stack-research-hero.jpg" alt="BPC-157 TB-500 Stack: Investigación Sinérgica y Mecanismos" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bpc-157-tb-500-stack-research-hero.jpg" alt="BPC-157 TB-500 Stack: Investigación Sinérgica y Mecanismos" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">El <strong>stack BPC-157 TB-500</strong> representa una de las combinaciones de péptidos más estudiadas en la investigación regenerativa. Este análisis explora datos preclínicos sobre sus mecanismos sinérgicos en modelos de reparación tisular.</p>
         <p className="mb-4"><a className="text-primary underline hover:text-primary-dark" href="/product/bpc-157">BPC-157 (Body Protection Compound-157)</a> y <a className="text-primary underline hover:text-primary-dark" href="/product/tb-500">TB-500 (fragmento de Timosina Beta-4)</a> actúan sobre vías complementarias. BPC-157 regula al alza principalmente VEGF y eNOS para la angiogénesis. TB-500 se centra en la remodelación de actina y la migración celular. Juntos, crean efectos regenerativos superpuestos en estudios de laboratorio.</p>
@@ -226,11 +784,11 @@ export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; 
     date: '31 de marzo de 2026',
     readTime: '7 min de lectura',
     excerpt: 'Los ensayos de Fase III muestran que la tesamorelina reduce la grasa visceral en un 69% en 26 semanas. Aprende cómo este análogo de GHRH actúa sobre el VAT frente a CJC-1295.',
-    imageSrc: '/99 Blog Images/tesamorelin-visceral-fat-research-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-visceral-fat-research-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/tesamorelin-visceral-fat-research-hero.jpg" alt="Investigación de Tesamorelina y Grasa Visceral: Datos Clínicos 2025" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-visceral-fat-research-hero.jpg" alt="Investigación de Tesamorelina y Grasa Visceral: Datos Clínicos 2025" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">No toda la grasa es igual. Mientras que la grasa subcutánea — la que se puede pellizcar bajo la piel — es en gran parte cosmética, la grasa visceral es un asunto completamente diferente. Almacenado en lo profundo de la cavidad abdominal y envuelto alrededor de los órganos, el tejido adiposo visceral (VAT) es metabólicamente activo, proinflamatorio, y está directamente asociado con enfermedad cardiovascular, resistencia a la insulina y síndrome metabólico.</p>
         <p className="mb-4">La <a className="text-primary underline hover:text-primary-dark" href="/product/tesamorelin">tesamorelina</a> (un análogo sintético de la hormona liberadora de hormona de crecimiento, o GHRH) ha surgido como uno de los compuestos peptídicos más específicos y mejor estudiados en la investigación de grasa visceral. A diferencia de los agentes generales para pérdida de peso, la tesamorelina actúa específicamente sobre el eje GH/IGF-1 para movilizar selectivamente la grasa visceral, sin alterar de manera significativa la grasa subcutánea o el peso corporal total en la mayoría de los modelos de investigación.</p>
@@ -333,11 +891,11 @@ export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; 
     date: '18 de marzo de 2026',
     readTime: '8 min de lectura',
     excerpt: 'Nuevos estudios preclínicos muestran los efectos de la retatrutida en células de cáncer pancreático, pulmonar y de mama. Descubre lo que revela la investigación sobre el triple receptor.',
-    imageSrc: '/99 Blog Images/retatrutide-cancer-research-preclinical-studies-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-cancer-research-preclinical-studies-hero.webp',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-cancer-research-preclinical-studies-hero.webp" alt="Investigación de Retatrutida y Cáncer: Estudios Preclínicos 2026" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-cancer-research-preclinical-studies-hero.webp" alt="Investigación de Retatrutida y Cáncer: Estudios Preclínicos 2026" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">La <a className="text-primary underline hover:text-primary-dark" href="/product/retatrutide">retatrutida</a> (LY3437943) entró en el centro de atención de la investigación como un agonista triple receptor dirigido a las vías de GLP-1, GIP y glucagón (GCGR) — estudiada principalmente por sus efectos sobre la función metabólica y la regulación del peso. Pero un cuerpo emergente de literatura preclínica ahora apunta a los investigadores en una nueva dirección: la relación entre el perfil de receptores de la retatrutida y el comportamiento de las células cancerosas.</p>
         <p className="mb-4">Esta es investigación preclínica en etapa temprana. No se pueden extraer conclusiones clínicas. Pero para los investigadores que estudian la intersección de la señalización metabólica, la biología de la obesidad y los microambientes tumorales, los hallazgos están generando un interés significativo — y plantean preguntas importantes sobre cómo el agonismo de triple receptor puede interactuar con la dinámica de las células cancerosas de maneras que los compuestos de un solo agonista no lo hacen. Para entender por qué la retatrutida aparece en la investigación oncológica, ayuda comprender el vínculo obesidad-cáncer que los investigadores están trabajando en mapear.</p>
@@ -394,11 +952,11 @@ export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; 
     date: '12 de marzo de 2026',
     readTime: '3 min de lectura',
     excerpt: 'Guía completa de laboratorio para almacenar péptidos de investigación. Requisitos de temperatura y prevención de degradación para resultados reproducibles.',
-    imageSrc: '/99 Blog Images/research-peptide-storage-best-practices-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-peptide-storage-best-practices-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-peptide-storage-best-practices-hero.jpg" alt="Almacenamiento de Péptidos de Investigación en Laboratorios | 99PurityPeptides" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-peptide-storage-best-practices-hero.jpg" alt="Almacenamiento de Péptidos de Investigación en Laboratorios | 99PurityPeptides" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introducción</h2>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">El almacenamiento adecuado de los péptidos de investigación es fundamental para mantener la integridad molecular, garantizar la reproducibilidad experimental y maximizar la utilidad de estos valiosos compuestos de laboratorio. Los péptidos de investigación son moléculas biológicas sensibles que pueden degradarse mediante múltiples vías, incluyendo hidrólisis, oxidación, desamidación y agregación, cuando se exponen a condiciones de almacenamiento inapropiadas.</p>
@@ -526,11 +1084,11 @@ export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; 
     date: '23 de febrero de 2026',
     readTime: '3 min de lectura',
     excerpt: '¿Qué son los péptidos de investigación? Aprende cómo se producen, prueban en pureza y clasifican los péptidos sintéticos de investigación para uso de laboratorio.',
-    imageSrc: '/99 Blog Images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg" alt="¿Qué Son los Péptidos de Investigación? Guía Completa de Laboratorio (2026)" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg" alt="¿Qué Son los Péptidos de Investigación? Guía Completa de Laboratorio (2026)" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">Los péptidos de investigación son compuestos sintéticos utilizados exclusivamente en entornos de laboratorio científicos y analíticos. Si te preguntas <strong>qué son los péptidos de investigación</strong>, esta guía explica cómo se producen, clasifican, prueban y regulan los péptidos sintéticos de investigación.</p>
         <p className="mb-4">En los estudios de laboratorio modernos, los <strong>péptidos de investigación</strong> son secuencias de aminoácidos cuidadosamente sintetizadas utilizadas para estudiar vías de señalización celular, investigación de estructura y función de péptidos, péptidos de investigación metabólica y sistemas de interacción molecular. Estos compuestos se suministran como <strong>péptidos de grado de laboratorio</strong> y se designan estrictamente para uso exclusivo en investigación.</p>
@@ -635,11 +1193,11 @@ export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; 
     date: '14 de enero de 2026',
     readTime: '3 min de lectura',
     excerpt: 'Explora los péptidos para la investigación metabólica en 2026, incluyendo BPC-157, TB-500, MOTS-C y AOD-9604.',
-    imageSrc: '/99 Blog Images/top-peptides-for-metabolic-studies-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/top-peptides-for-metabolic-studies-hero.webp',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/top-peptides-for-metabolic-studies-hero.webp" alt="Los Mejores Péptidos para la Investigación Metabólica en 2026" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/top-peptides-for-metabolic-studies-hero.webp" alt="Los Mejores Péptidos para la Investigación Metabólica en 2026" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">El campo de los péptidos para la investigación metabólica continúa expandiéndose a medida que los científicos investigan cómo los péptidos sintéticos interactúan con las vías de señalización celular, la regulación mitocondrial y los sistemas de vías metabólicas. En la investigación de péptidos metabólicos de laboratorio, los compuestos se evalúan por su comportamiento estructural en entornos experimentales controlados, en lugar de por resultados clínicos.</p>
         <p className="mb-4">Los péptidos de investigación metabólica se estudian comúnmente por su participación en la investigación metabólica de señalización celular, las vías de regulación energética y los modelos de investigación del tejido adiposo. A continuación, un resumen estructurado de los péptidos frecuentemente referenciados en los estudios metabólicos de laboratorio en 2026. En la investigación metabólica de laboratorio, ciertos péptidos sintéticos de investigación se estudian por su participación en entornos de señalización que se superponen con la regulación de vías metabólicas.</p>
@@ -735,11 +1293,11 @@ export const BLOG_POSTS_PART3: { slug: string; title: string; category: string; 
     date: '7 de enero de 2026',
     readTime: '4 min de lectura',
     excerpt: 'Explora la investigación de BPC-157, estudios de laboratorio, mecanismo de acción y estado regulatorio. Una visión científica para profesionales de la investigación.',
-    imageSrc: '/99 Blog Images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp" alt="Todo Lo Que los Investigadores Deben Saber Sobre BPC-157" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp" alt="Todo Lo Que los Investigadores Deben Saber Sobre BPC-157" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">La investigación de BPC-157 continúa generando un interés científico significativo dentro de entornos de laboratorio controlados. Como péptido sintético de BPC-157, este compuesto se estudia en sistemas experimentales enfocados en vías de señalización celular, modelado de respuesta tisular y marcos de interacción molecular.</p>
         <p className="mb-4">Esta guía examina la <strong>investigación de laboratorio de BPC-157</strong>, incluyendo el mecanismo de acción (perspectiva de investigación), consideraciones de pruebas analíticas y clasificación regulatoria, estrictamente desde una perspectiva científica y enfocada en el cumplimiento normativo.</p>

@@ -57,25 +57,20 @@ export async function syncCartToPayload(items: CartLine[]) {
       return { success: true }
     }
 
-    if (mappedItems.length === 0) {
-      await payload.delete({
-        collection: 'carts',
-        id: cart.id,
-        req: { payload } as any,
-        overrideAccess: true,
-      })
-    } else {
-      await payload.update({
-        collection: 'carts',
-        id: cart.id,
-        req: { payload } as any,
-        data: {
-          // @ts-ignore
-          items: mappedItems
-        },
-        overrideAccess: true,
-      })
-    }
+    // Update in place rather than deleting when the cart empties out — `user` is unique on
+    // this collection (one cart per user), so the doc would just get recreated on the next
+    // add anyway. Deleting-and-recreating on every empty/refill cycle only served to spam
+    // the Trashes collection via the global beforeDelete archival hook (payload.config.ts).
+    await payload.update({
+      collection: 'carts',
+      id: cart.id,
+      req: { payload } as any,
+      data: {
+        // @ts-ignore
+        items: mappedItems
+      },
+      overrideAccess: true,
+    })
 
     return { success: true }
   } catch (error) {
@@ -180,6 +175,76 @@ export async function revalidateCartPrices(items: CartLine[]): Promise<CartLine[
   }
 }
 
+/**
+ * Fetches the current price/stock for the two required-accessory products (BAC water's
+ * 30ML variant, and the needles product) so the cart store can silently add them whenever
+ * a peptide product is added. Always reads fresh from Payload rather than caching, since
+ * these prices can change independently of whatever page the shopper is currently on.
+ */
+export async function getAutoAddAccessoryItems(): Promise<{
+  bacWater: Omit<CartLine, 'lineId' | 'quantity'> | null
+  needles: Omit<CartLine, 'lineId' | 'quantity'> | null
+}> {
+  try {
+    const payload = await getPayload({ config: configPromise })
+
+    // depth: 1 so `images[].image` (and variant images) resolve to populated media docs
+    // with a usable `.url` — depth: 0 would leave them as bare numeric IDs, which is why
+    // the cart line images broke.
+    const [bacWaterRes, needlesRes] = await Promise.all([
+      payload.find({ collection: 'products', where: { slug: { equals: 'bac-water-bacteriostatic-water' } }, limit: 1, depth: 1 }),
+      payload.find({ collection: 'products', where: { slug: { equals: '10-needles' } }, limit: 1, depth: 1 }),
+    ])
+
+    let bacWater: Omit<CartLine, 'lineId' | 'quantity'> | null = null
+    const bacProduct = bacWaterRes.docs[0]
+    if (bacProduct) {
+      const variant = bacProduct.variants?.find((v: any) => v.sku === 'BACK-WATER-30ML')
+      if (variant) {
+        const vPrice = typeof variant.price === 'number' ? variant.price : parseFloat(String(variant.price).replace(/[^0-9.]/g, ''))
+        const vSale = variant.salePrice ? (typeof variant.salePrice === 'number' ? variant.salePrice : parseFloat(String(variant.salePrice).replace(/[^0-9.]/g, ''))) : null
+        const variantTitle = variant.options?.map((o: any) => o.value).join(' ') || `Variant ${variant.sku}`
+        bacWater = {
+          productId: String(bacProduct.id),
+          variantSku: variant.sku,
+          variantTitle,
+          priceSnapshot: vSale || vPrice,
+          product: {
+            id: String(bacProduct.id),
+            name: bacProduct.name,
+            slug: bacProduct.slug,
+            imageUrl: (variant.images?.[0]?.image as any)?.url || (bacProduct.images?.[0]?.image as any)?.url || '/placeholder.png',
+          },
+        }
+      }
+    }
+
+    let needles: Omit<CartLine, 'lineId' | 'quantity'> | null = null
+    const needlesProduct = needlesRes.docs[0]
+    if (needlesProduct) {
+      const pPrice = typeof needlesProduct.price === 'number' ? needlesProduct.price : parseFloat(String(needlesProduct.price).replace(/[^0-9.]/g, ''))
+      const pSale = needlesProduct.salePrice ? (typeof needlesProduct.salePrice === 'number' ? needlesProduct.salePrice : parseFloat(String(needlesProduct.salePrice).replace(/[^0-9.]/g, ''))) : null
+      needles = {
+        productId: String(needlesProduct.id),
+        variantSku: needlesProduct.sku || '10-NEEDLES',
+        variantTitle: null,
+        priceSnapshot: pSale || pPrice,
+        product: {
+          id: String(needlesProduct.id),
+          name: needlesProduct.name,
+          slug: needlesProduct.slug,
+          imageUrl: (needlesProduct.images?.[0]?.image as any)?.url || '/placeholder.png',
+        },
+      }
+    }
+
+    return { bacWater, needles }
+  } catch (error) {
+    console.error('Error fetching auto-add accessory items:', error)
+    return { bacWater: null, needles: null }
+  }
+}
+
 export async function getProductsFromAffiliateCart(cartParam: string): Promise<CartLine[]> {
   try {
     const payload = await getPayload({ config: configPromise })
@@ -194,11 +259,13 @@ export async function getProductsFromAffiliateCart(cartParam: string): Promise<C
         const qty = parseInt(parts[parts.length - 1], 10)
 
         if (!isNaN(qty) && qty > 0) {
+          // depth: 1 so `images[].image` (and variant images) resolve to populated media
+          // docs with a usable `.url` — depth: 0 would leave them as bare numeric IDs.
           const productRes = await payload.find({
             collection: 'products',
             where: { slug: { equals: slug } },
             limit: 1,
-            depth: 0,
+            depth: 1,
           })
 
           const product = productRes.docs[0]
@@ -207,6 +274,7 @@ export async function getProductsFromAffiliateCart(cartParam: string): Promise<C
             let matchedSale = product.salePrice ? (typeof product.salePrice === 'number' ? product.salePrice : parseFloat(String(product.salePrice).replace(/[^0-9.]/g, ''))) : null
             let finalTitle = sku
             let finalSku = sku
+            let variantImageUrl: string | undefined
 
             // If it's a variable product, find the variant by SKU
             if (product.variants && product.variants.length > 0) {
@@ -217,6 +285,7 @@ export async function getProductsFromAffiliateCart(cartParam: string): Promise<C
                 matchedPrice = vPrice
                 matchedSale = vSale
                 finalTitle = variant.options?.map((o: any) => o.value).join(' ') || `Variant ${variant.sku}`
+                variantImageUrl = (variant.images?.[0]?.image as any)?.url
               }
             } else if (product.bulkBundles && product.bulkBundles.length > 0) {
               // It could be a bundle SKU
@@ -239,7 +308,7 @@ export async function getProductsFromAffiliateCart(cartParam: string): Promise<C
                 id: product.id,
                 slug: product.slug,
                 name: product.name,
-                imageUrl: (product.images?.[0]?.image as any)?.url || '/placeholder.png'
+                imageUrl: variantImageUrl || (product.images?.[0]?.image as any)?.url || '/placeholder.png'
               } as any,
               variantSku: finalSku,
               variantTitle: finalTitle,

@@ -21,6 +21,7 @@ export async function addAddress(formData: FormData) {
     const state = formData.get('state') as string
     const zip = formData.get('zip') as string
     const phone = formData.get('phone') as string
+    const country = (formData.get('country') as string) || 'US'
 
     if (!firstName || !lastName || !line1 || !city || !state || !zip || !phone) {
       return { success: false, error: t('errorRequiredFields') }
@@ -60,7 +61,7 @@ export async function addAddress(formData: FormData) {
         city,
         state,
         postalCode: zip,
-        country: 'US', // Hardcoded to US for this lab
+        country,
         phone,
         isDefaultShipping: isDefault,
         isDefaultBilling: isDefault,
@@ -120,6 +121,7 @@ export async function updateAddress(addressId: string, formData: FormData) {
     const state = formData.get('state') as string
     const zip = formData.get('zip') as string
     const phone = formData.get('phone') as string
+    const country = (formData.get('country') as string) || 'US'
 
     if (!firstName || !lastName || !line1 || !city || !state || !zip || !phone) {
       return { success: false, error: t('errorRequiredFields') }
@@ -170,7 +172,7 @@ export async function updateAddress(addressId: string, formData: FormData) {
         city,
         state,
         postalCode: zip,
-        country: 'US', // Hardcoded to US for this lab
+        country,
         phone,
         isDefaultShipping: isDefault,
         isDefaultBilling: isDefault,

@@ -166,18 +166,10 @@ export const BLOG_SCHEMAS: Record<string, any[]> = {
         "height": 675
       },
       "author": {
-        "@type": "Person",
-        "name": "[Author Name]",
-        "jobTitle": "Senior Research Editor",
-        "description": "MSc Biochemistry — Senior Research Editor specializing in research-grade peptide blends and preclinical literature.",
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "[University Placeholder]"
-        },
-        "sameAs": [
-          "https://www.linkedin.com/in/[linkedin-placeholder]",
-          "https://orcid.org/[orcid-placeholder]"
-        ]
+        "@type": "Organization",
+        "name": "99 Purity Peptides Research Team",
+        "description": "Research Editorial Team specializing in research-grade peptide blends and preclinical literature.",
+        "url": "https://99puritypeptides.com"
       },
       "publisher": {
         "@type": "Organization",
@@ -321,7 +313,7 @@ export const BLOG_SCHEMAS: Record<string, any[]> = {
       "logo": "https://99puritypeptides.com/wp-content/uploads/2026/05/Logo.png",
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+1-843-743-9007",
+        "telephone": "+1-843-330-7365",
         "email": "orders@99puritypeptides.com",
         "contactType": "customer service",
         "areaServed": "US",
@@ -605,7 +597,7 @@ export const BLOG_SCHEMAS: Record<string, any[]> = {
       "areaServed": "US",
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+1-843-743-9007",
+        "telephone": "+1-843-330-7365",
         "email": "orders@99puritypeptides.com",
         "contactType": "Research Support"
       }

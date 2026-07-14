@@ -268,7 +268,7 @@ export function BestSellerSection({ products = [] }: { products?: any[] }) {
         {/* Centered Header */}
         <div className="text-center mb-20 flex flex-col items-center">
           <div className="inline-block border border-ink/10 rounded-full px-4 py-1.5 mb-6 bg-white shadow-sm">
-            <span className="text-primary text-xs font-bold tracking-[0.2em] uppercase">{t('eyebrow')}</span>
+            <span className="text-primary-dark text-xs font-bold tracking-[0.2em] uppercase">{t('eyebrow')}</span>
           </div>
           <h2 className="font-heading text-5xl lg:text-7xl font-black text-ink leading-[0.9] tracking-tighter uppercase mb-6">
             {t('title')}

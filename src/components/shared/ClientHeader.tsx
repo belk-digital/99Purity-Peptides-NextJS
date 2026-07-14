@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import { ShoppingBag, Menu, Search, X, User, Copy, Timer } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
 import { useCartStore } from '@/lib/cart/store'
+import { useUiStore } from '@/lib/ui/store'
 import { useWishlistStore } from '@/lib/wishlist/store'
 import dynamic from 'next/dynamic'
 import { SearchOverlay } from './SearchOverlay'
@@ -127,6 +128,13 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   const setWishlistItems = useWishlistStore((state) => state.setItems)
   const activeCartCount = cartStore.items.reduce((acc: any, i: any) => acc + i.quantity, 0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const setUiMobileMenuOpen = useUiStore((state) => state.setMobileMenuOpen)
+
+  // Mirrors local open state into the shared UI store so sections elsewhere on the page
+  // (e.g. the Hero's autoplaying video) can react to the mobile menu opening/closing.
+  useEffect(() => {
+    setUiMobileMenuOpen(mobileMenuOpen)
+  }, [mobileMenuOpen, setUiMobileMenuOpen])
   const [hidden, setHidden] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [announcementIndex, setAnnouncementIndex] = useState(0)
@@ -336,7 +344,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
           <Search size={18} strokeWidth={1.5} />
         </button>
 
-        <button onClick={cartStore.openCart} className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`}>
+        <button onClick={cartStore.openCart} className={`p-1.5 transition-colors relative flex items-center justify-center ${textColor} ${textHoverColor}`} aria-label={t('openCart')}>
           <ShoppingBag size={18} strokeWidth={1.5} />
           <AnimatePresence>
             {activeCartCount > 0 && (
@@ -377,7 +385,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
         </Link>
 
         {/* Mobile Hamburger */}
-        <button onClick={() => setMobileMenuOpen(true)} className={`xl:hidden p-1 -mr-1 transition-colors ${textColor} hover:text-primary`}>
+        <button onClick={() => setMobileMenuOpen(true)} className={`xl:hidden p-1 -mr-1 transition-colors ${textColor} hover:text-primary`} aria-label={t('openMenu')}>
           <Menu size={20} strokeWidth={1.5} />
         </button>
       </div>
@@ -407,7 +415,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
                 initial={{ height: 44, opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="w-full bg-[#008B8B] text-white flex items-center justify-center pointer-events-auto overflow-hidden relative"
+                className="w-full bg-primary-dark text-white flex items-center justify-center pointer-events-auto overflow-hidden relative"
               >
                 <AnimatePresence mode="wait">
                   <motion.div

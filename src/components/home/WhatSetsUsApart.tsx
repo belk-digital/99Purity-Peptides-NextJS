@@ -264,12 +264,13 @@ export function WhatSetsUsApart() {
                     />
                   )}
 
-                  <motion.button 
+                  <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setActiveIndex(i)}
                     onMouseEnter={() => setIsHoveringClickable(true)}
                     onMouseLeave={() => setIsHoveringClickable(false)}
+                    aria-label={t(`items.${key}.shortLabel`)}
                     className={`absolute inset-0 w-full h-full flex items-center justify-center rounded-full transition-all duration-500 backdrop-blur-2xl ${
                       isActive 
                         ? 'bg-primary border-4 border-white shadow-[0_12px_30px_rgba(0,139,139,0.25)] scale-110 z-10' 

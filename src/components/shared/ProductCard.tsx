@@ -101,11 +101,12 @@ export function ProductCard({ product }: ProductCardProps) {
       
       {/* Top Text Content & Wishlist */}
       <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative z-30 pointer-events-none">
-        <div className="absolute top-3 sm:top-5 right-3 sm:right-5 pointer-events-auto z-30">
-          <button 
+        <div className="absolute top-1 right-1 sm:top-2.5 sm:right-2.5 pointer-events-auto z-30">
+          <button
             disabled={isPending}
             onClick={handleWishlistClick}
-            className={`transition-all duration-300 relative ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
+            aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+            className={`p-2 sm:p-2.5 transition-all duration-300 relative ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
           >
             {isPending ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <Heart className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={inWishlist ? 2.5 : 1.5} fill={inWishlist ? 'currentColor' : 'none'} />}
             {/* Particles */}
@@ -190,8 +191,9 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Action Button - Pointer Events Auto to intercept clicks */}
-        <button 
+        <button
           onClick={handleAddToCart}
+          aria-label="Add to cart"
           className="absolute bottom-2 right-2 sm:bottom-5 sm:right-5 w-8 h-8 sm:w-12 sm:h-12 bg-white text-ink rounded-full flex items-center justify-center transition-all duration-300 shadow-xl group-hover:scale-110 z-30 hover:bg-black hover:text-white group-hover:bg-black group-hover:text-white pointer-events-auto"
         >
           <ShoppingCart className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-current transition-colors" />

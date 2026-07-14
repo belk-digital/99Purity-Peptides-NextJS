@@ -98,25 +98,20 @@ export async function toggleWishlistInPayload(productId: string | number, isAddi
       })
     }
 
-    if (newItems.length === 0) {
-      await payload.delete({
-        collection: 'wishlists',
-        id: wishlist.id,
-        req: { payload } as any,
-        overrideAccess: true,
-      })
-    } else {
-      await payload.update({
-        collection: 'wishlists',
-        id: wishlist.id,
-        req: { payload } as any,
-        data: {
-          // @ts-ignore
-          items: newItems
-        },
-        overrideAccess: true,
-      })
-    }
+    // Update in place rather than deleting when the wishlist empties out — `user` is unique
+    // on this collection (one wishlist per user), so the doc would just get recreated on the
+    // next add anyway. Deleting-and-recreating on every empty/refill cycle only served to
+    // spam the Trashes collection via the global beforeDelete archival hook (payload.config.ts).
+    await payload.update({
+      collection: 'wishlists',
+      id: wishlist.id,
+      req: { payload } as any,
+      data: {
+        // @ts-ignore
+        items: newItems
+      },
+      overrideAccess: true,
+    })
 
     return { success: true }
   } catch (error) {

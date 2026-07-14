@@ -1,6 +1,17 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { syncCartToPayload } from '@/app/[locale]/(frontend)/actions/cart'
+import { toast } from 'sonner'
+import { syncCartToPayload, getAutoAddAccessoryItems } from '@/app/[locale]/(frontend)/actions/cart'
+
+// Slugs excluded from the "peptide" auto-add-accessories trigger — these ARE the
+// accessories, so adding one shouldn't add another copy of itself alongside it.
+const ACCESSORY_PRODUCT_SLUGS = ['bac-water-bacteriostatic-water', '10-needles'] as const
+
+function generateLineId() {
+  return typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : Math.random().toString(36).substring(2, 15)
+}
 
 export type MinimalProduct = {
   id: string
@@ -43,7 +54,38 @@ interface CartState {
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set, get) => ({
+    (set, get) => {
+      const maybeAutoAddAccessories = async () => {
+        const state = get()
+        const hasBacWater = state.items.some((i) => i.product?.slug === 'bac-water-bacteriostatic-water')
+        const hasNeedles = state.items.some((i) => i.product?.slug === '10-needles')
+        if (hasBacWater && hasNeedles) return
+
+        const { bacWater, needles } = await getAutoAddAccessoryItems()
+        const addedNames: string[] = []
+
+        set((current) => {
+          const newItems = [...current.items]
+          if (!hasBacWater && bacWater) {
+            newItems.push({ ...bacWater, lineId: generateLineId(), quantity: 1 })
+            addedNames.push('BAC Water')
+          }
+          if (!hasNeedles && needles) {
+            newItems.push({ ...needles, lineId: generateLineId(), quantity: 1 })
+            addedNames.push('Needles')
+          }
+          if (addedNames.length === 0) return current
+
+          syncCartToPayload(newItems).catch(console.error)
+          return { items: newItems }
+        })
+
+        if (addedNames.length > 0) {
+          toast.success(`Added ${addedNames.join(' & ')} — required for reconstitution`)
+        }
+      }
+
+      return {
       items: [],
       couponCode: null,
       isOpen: false,
@@ -65,15 +107,10 @@ export const useCartStore = create<CartState>()(
             return { items: newItems, isOpen: true }
           }
 
-          const lineId =
-            typeof crypto !== 'undefined' && crypto.randomUUID
-              ? crypto.randomUUID()
-              : Math.random().toString(36).substring(2, 15)
-
           const newItems = [
             ...state.items,
             {
-              lineId,
+              lineId: generateLineId(),
               productId: product.id,
               variantSku,
               variantTitle: variantTitle || variantSku,
@@ -90,6 +127,14 @@ export const useCartStore = create<CartState>()(
             isOpen: true,
           }
         })
+
+        // Every product except the accessories themselves is a research peptide that needs
+        // reconstituting — silently add BAC water + needles alongside it (capped at one of
+        // each total, regardless of how many peptides/quantity end up in the cart) rather
+        // than requiring the shopper to remember to add them separately.
+        if (!product.slug || !ACCESSORY_PRODUCT_SLUGS.includes(product.slug as any)) {
+          maybeAutoAddAccessories()
+        }
       },
 
       removeItem: (lineId) => {
@@ -120,7 +165,8 @@ export const useCartStore = create<CartState>()(
       toggleDrawer: () => set((state) => ({ isOpen: !state.isOpen })),
       openCart: () => set({ isOpen: true }),
       closeCart: () => set({ isOpen: false }),
-    }),
+      }
+    },
     {
       name: '99 Purity Peptides-cart-storage',
     },

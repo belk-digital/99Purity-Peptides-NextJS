@@ -9,6 +9,9 @@ import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { CheckoutPageSkeleton } from '@/components/ui/skeleton'
+import { COUNTRIES } from '@/lib/countries'
 import { useCartStore } from '@/lib/cart/store'
 import { verifyCoupon, getUserDefaultAddress, getUserPurityPoints, getUserAddresses } from '../actions'
 import { toast } from 'sonner'
@@ -63,6 +66,7 @@ export function CheckoutClient() {
     city: '',
     state: '',
     zip: '',
+    country: 'US',
     marketing: false,
     saveInfo: false
   })
@@ -92,6 +96,7 @@ export function CheckoutClient() {
             city: defaultAddress.city,
             state: defaultAddress.state,
             zip: defaultAddress.postalCode,
+            country: defaultAddress.country || 'US',
             phone: defaultAddress.phone || ''
           }))
         }
@@ -156,35 +161,59 @@ export function CheckoutClient() {
     previousSubtotal.current = subtotal
   }, [subtotal, isReady, t])
 
-  const visibleShippingMethods = availableShippingMethods.filter((method: any) => {
-    if (method.minOrderAmount && method.minOrderAmount > 0) {
-      return subtotal >= method.minOrderAmount
-    }
-    return true
-  })
+  // International orders (anything outside the US) get a single flat $50 rate instead of
+  // the configured US shipping zone's methods — no free-shipping threshold, no Express
+  // option, since the US zone's methods/thresholds don't reflect real international cost.
+  const isInternational = !!formData.country && formData.country !== 'US'
+
+  const visibleShippingMethods = isInternational
+    ? [{ method: 'International Shipping', price: 50, estimatedDays: null, minOrderAmount: 0 }]
+    : availableShippingMethods.filter((method: any) => {
+        if (method.minOrderAmount && method.minOrderAmount > 0) {
+          return subtotal >= method.minOrderAmount
+        }
+        return true
+      })
+
+  // Tracks which methods were visible last time this effect ran, so the "auto-upgrade to a
+  // newly available cheaper method" branch only fires the moment that set actually changes
+  // (e.g. crossing the free-shipping subtotal threshold) — not on every re-run triggered by
+  // the user's own manual shippingMethod selection, which would otherwise immediately revert
+  // any choice other than the cheapest option.
+  const previousVisibleMethodsKey = useRef<string>('')
 
   useEffect(() => {
-    if (visibleShippingMethods.length > 0) {
-      const isCurrentValid = visibleShippingMethods.some(m => m.method === shippingMethod)
-      
-      const isCurrentExpress = shippingMethod.toLowerCase().includes('express')
-      const cheapestMethod = [...visibleShippingMethods].sort((a, b) => a.price - b.price)[0]
-      const currentMethodObj = visibleShippingMethods.find(m => m.method === shippingMethod)
+    if (visibleShippingMethods.length === 0) return
 
-      if (!isCurrentValid) {
-        setShippingMethod(cheapestMethod.method)
-      } else if (!isCurrentExpress && currentMethodObj && cheapestMethod.price < currentMethodObj.price) {
-        // Auto-select the cheaper method (like Free Shipping) if it becomes available and they aren't on Express
+    const isCurrentValid = visibleShippingMethods.some(m => m.method === shippingMethod)
+    const cheapestMethod = [...visibleShippingMethods].sort((a, b) => a.price - b.price)[0]
+
+    if (!isCurrentValid) {
+      // Previously selected method dropped out (e.g. subtotal fell below its own
+      // minOrderAmount) — fall back to the cheapest available option.
+      setShippingMethod(cheapestMethod.method)
+      return
+    }
+
+    const visibleMethodsKey = visibleShippingMethods.map(m => m.method).sort().join(',')
+    const methodsSetChanged = visibleMethodsKey !== previousVisibleMethodsKey.current
+    previousVisibleMethodsKey.current = visibleMethodsKey
+
+    if (methodsSetChanged) {
+      const isCurrentExpress = shippingMethod.toLowerCase().includes('express')
+      const currentMethodObj = visibleShippingMethods.find(m => m.method === shippingMethod)
+      if (!isCurrentExpress && currentMethodObj && cheapestMethod.price < currentMethodObj.price) {
+        // Auto-select the cheaper method (like Free Shipping) the moment it becomes available.
         setShippingMethod(cheapestMethod.method)
       }
     }
-  }, [subtotal, availableShippingMethods, shippingMethod])
+  }, [subtotal, availableShippingMethods, shippingMethod, isInternational])
 
   const selectedMethodObj = visibleShippingMethods.find(m => m.method === shippingMethod) || visibleShippingMethods[0]
   const shippingCost = selectedMethodObj?.price || 0
   const isExpressShipping = shippingMethod.toLowerCase().includes('express')
   const qualifiesForFreeShipping = appliedCoupon?.freeShipping || false
-  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping) ? 0 : shippingCost
+  const finalShipping = (qualifiesForFreeShipping && !isExpressShipping && !isInternational) ? 0 : shippingCost
   const discountAmount = appliedCoupon ? appliedCoupon.discount : 0
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount)
   
@@ -432,11 +461,7 @@ export function CheckoutClient() {
   }, [storedCouponCode, subtotal])
 
   if (!isReady || (items.length > 0 && !dataLoaded)) {
-    return (
-      <div className="pt-32 pb-24 min-h-[70vh] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ink"></div>
-      </div>
-    )
+    return <CheckoutPageSkeleton />
   }
 
   if (items.length === 0) {
@@ -699,6 +724,7 @@ export function CheckoutClient() {
                               city: addr.city,
                               state: addr.state,
                               zip: addr.postalCode,
+                              country: addr.country || 'US',
                               phone: addr.phone || ''
                             }))
                           }}
@@ -729,7 +755,7 @@ export function CheckoutClient() {
                         checked={selectedAddressId === 'new'}
                         onChange={() => {
                           setSelectedAddressId('new')
-                          setFormData(prev => ({ ...prev, address: '', apartment: '', city: '', state: '', zip: '', phone: '' }))
+                          setFormData(prev => ({ ...prev, address: '', apartment: '', city: '', state: '', zip: '', country: 'US', phone: '' }))
                         }}
                         className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0" 
                       />
@@ -759,6 +785,32 @@ export function CheckoutClient() {
                         <Input name="zip" value={formData.zip} onChange={handleInputChange} placeholder={t('zipCode')} className={`h-14 rounded-2xl bg-white shadow-sm focus-visible:ring-ink transition-colors ${attemptedSubmit && selectedAddressId === 'new' && !formData.zip ? 'border-red-500 ring-1 ring-red-500 bg-red-50/30' : 'border-slate-100'}`} required={selectedAddressId === 'new'} />
                       </div>
                     </div>
+                    <Select
+                      value={formData.country}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, country: value }))}
+                    >
+                      <SelectTrigger className="h-14 rounded-2xl bg-white shadow-sm border-slate-100 focus:ring-ink w-full data-[state=open]:ring-1 data-[state=open]:ring-ink/10 transition-shadow">
+                        <SelectValue placeholder={t('country')} />
+                      </SelectTrigger>
+                      <SelectContent
+                        position="popper"
+                        sideOffset={8}
+                        className="max-h-72 rounded-2xl border-slate-100 bg-white p-2 shadow-xl shadow-black/[0.06]"
+                      >
+                        {COUNTRIES.map((c) => (
+                          <SelectItem
+                            key={c.code}
+                            value={c.code}
+                            className="rounded-xl py-3 px-3 text-sm cursor-pointer data-[highlighted]:bg-ink/5 data-[state=checked]:bg-ink/5 data-[state=checked]:font-semibold"
+                          >
+                            {c.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {isInternational && (
+                      <p className="text-xs text-ink/50 px-1 -mt-1">{t('internationalShippingNotice')}</p>
+                    )}
                   </div>
                 )}
 

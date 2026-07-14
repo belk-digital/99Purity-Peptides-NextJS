@@ -163,7 +163,7 @@ export function SharedFaqSection({
       <div className="container mx-auto px-4 md:px-10 max-w-[1600px] mb-24 md:mb-32">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full">
           <div className="flex flex-col mb-6 md:mb-0 max-w-xl">
-            <p className="text-ink/50 text-sm font-bold tracking-widest uppercase mb-6">
+            <p className="text-ink-muted text-sm font-bold tracking-widest uppercase mb-6">
               {resolvedSubtitle}
             </p>
             {description && (

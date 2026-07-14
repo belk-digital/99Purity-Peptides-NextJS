@@ -398,6 +398,7 @@ export async function createPayloadOrder(
     const cookieStore = await cookies()
     const affiliateRef = cookieStore.get('affiliate_ref')?.value
     const clickCookie = cookieStore.get('affiliate_click_id')?.value
+    const orderSourceCookie = cookieStore.get('order_source')?.value
 
     const order = await payload.create({
       collection: 'orders',
@@ -413,7 +414,7 @@ export async function createPayloadOrder(
           city: formData.city,
           state: formData.state,
           postalCode: formData.zip,
-          country: 'US', // default
+          country: formData.country || 'US',
         },
         items: orderItems,
         status: confirmedTotal <= 0 ? 'paid' : 'pending',
@@ -433,6 +434,7 @@ export async function createPayloadOrder(
         couponCode: couponCode || '',
         affiliateId: affiliateRef || null,
         clickId: clickCookie || null,
+        orderSource: orderSourceCookie || null,
       }
     }).catch(async (err) => {
       // Order creation itself failed — release everything we already reserved above.
@@ -448,6 +450,13 @@ export async function createPayloadOrder(
       }
       throw err
     })
+
+    // Consume the order-source attribution now that it's been applied to an order — only the
+    // first order placed after a sibling-storefront referral (e.g. peptides7) should be
+    // attributed to it; a later, unrelated order within the same cookie window should not be.
+    if (orderSourceCookie) {
+      cookieStore.delete('order_source')
+    }
 
     // Update Stripe PaymentIntent with the Order ID (unless it's a free order or Zelle, which has no PaymentIntent)
     if (paymentMethod === 'stripe' && paymentIntentId && paymentIntentId !== 'free_order') {
@@ -512,7 +521,7 @@ export async function createPayloadOrder(
               city: formData.city,
               state: formData.state,
               postalCode: formData.zip,
-              country: 'US',
+              country: formData.country || 'US',
               phone: formData.phone,
               isDefaultShipping: existingAddresses.docs.length === 0,
             },
@@ -596,6 +605,13 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
     const customerName = [order.customerFirstName, order.customerLastName].filter(Boolean).join(' ') || 'N/A'
     const customerPhone = order.customerPhone || 'N/A'
     const total = `$${(order.total || 0).toFixed(2)}`
+    const paymentMethodLabels: Record<string, string> = {
+      stripe: 'Card',
+      zelle: 'Zelle',
+      amex: 'American Express',
+      circoflows: 'Card',
+    }
+    const paymentMethod = (order.paymentMethod && paymentMethodLabels[order.paymentMethod]) || order.paymentMethod || 'N/A'
 
     const { emailLayout } = await import('@/lib/emails/emailLayout')
     const html = emailLayout({
@@ -623,6 +639,10 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
           <tr>
             <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Total</td>
             <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(total)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Payment Method</td>
+            <td style="padding: 8px 0; font-size: 14px; color: #0A0A0A; font-weight: 600;">${escapeHtml(paymentMethod)}</td>
           </tr>
           <tr>
             <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Error Message</td>

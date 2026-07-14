@@ -66,7 +66,7 @@ export async function createCircoFlowsPayment(
         city: formData.city,
         state: formData.state,
         postal_code: formData.zip,
-        country: 'US',
+        country: formData.country || 'US',
         ip_address: ipAddress,
         amount: String(order.total),
         currency: 'USD',
@@ -138,10 +138,17 @@ export async function syncCircoFlowsPaymentStatus(orderId: string): Promise<{ su
       // The webhook may never arrive (or may arrive later) — without this, a declined
       // payment left the order silently stuck as pending/unpaid forever, with no email to
       // the customer or support. Mirrors the webhook's declined handling exactly.
+      //
+      // Both the webhook and the client-side confirmation-page fallback call this function,
+      // and CircoFlows' own status check is idempotent (it just re-reports "declined" every
+      // time it's asked) — so without this guard, whichever of the two callers runs *second*
+      // would still send its own admin alert for a decline someone already handled. Tying the
+      // notification to the same pending-status guard as the cancellation means it only fires
+      // on the one call that actually transitions the order.
       if (!order.isFinalized && order.status === 'pending') {
         await payload.update({ collection: 'orders', id: Number(orderId), data: { status: 'cancelled' }, overrideAccess: true, context: { paymentFailed: true } })
+        await notifyAdminFailedPayment(orderId, data.message || data.reason || 'CircoFlows payment declined').catch(console.error)
       }
-      await notifyAdminFailedPayment(orderId, data.message || data.reason || 'CircoFlows payment declined').catch(console.error)
       return { success: false, status: data.status }
     }
 

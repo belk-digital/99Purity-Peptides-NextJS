@@ -129,6 +129,14 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
     ? escapeHtml(order.trackingLink)
     : ''
 
+  const paymentMethodLabels: Record<string, string> = {
+    stripe: 'Card',
+    zelle: 'Zelle',
+    amex: 'American Express',
+    circoflows: 'Card',
+  }
+  const paymentMethodLabel = paymentMethodLabels[order.paymentMethod] || 'Card'
+
   const feeRow = feeTotal > 0 ? `
     <tr>
       <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">${feeLabel}</td>
@@ -211,15 +219,19 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
           <!-- Order Info -->
               <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 32px;">
                 <tr>
-                  <td width="33%">
+                  <td width="25%">
                     <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8A8A8A; font-weight: 700;">Order Number</p>
                     <p style="margin: 4px 0 0 0; font-size: 16px; color: #0A0A0A; font-weight: 500;">${orderNumber}</p>
                   </td>
-                  <td width="33%" align="center">
+                  <td width="25%" align="center">
+                    <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8A8A8A; font-weight: 700;">Payment Method</p>
+                    <p style="margin: 4px 0 0 0; font-size: 16px; color: #0A0A0A; font-weight: 500;">${escapeHtml(paymentMethodLabel)}</p>
+                  </td>
+                  <td width="25%" align="center">
                     <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8A8A8A; font-weight: 700;">Payment Status</p>
                     <p style="margin: 4px 0 0 0; font-size: 16px; color: ${order.paymentStatus === 'unpaid' ? '#B91C1C' : '#15803D'}; font-weight: 700;">${order.paymentStatus === 'unpaid' ? 'UNPAID' : 'PAID'}</p>
                   </td>
-                  <td width="33%" align="right">
+                  <td width="25%" align="right">
                     <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8A8A8A; font-weight: 700;">Date</p>
                     <p style="margin: 4px 0 0 0; font-size: 16px; color: #0A0A0A; font-weight: 500;">${orderDate}</p>
                   </td>

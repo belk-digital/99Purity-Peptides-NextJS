@@ -102,7 +102,7 @@ export function MobileMenu({ isOpen, onClose, isLoggedIn = false, onSearchClick,
             </span>
             
             <div className="flex flex-1 justify-end">
-              <button onClick={onClose} className="p-2 -mr-2 text-ink hover:text-primary hover:bg-black/5 transition-colors rounded-full">
+              <button onClick={onClose} className="p-2 -mr-2 text-ink hover:text-primary hover:bg-black/5 transition-colors rounded-full" aria-label={t('closeMenu')}>
                 <X size={24} strokeWidth={1.5} />
               </button>
             </div>

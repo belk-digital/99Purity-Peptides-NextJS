@@ -56,11 +56,27 @@ html {
 
 /* Override Browser Autofill Blue Background */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
     -webkit-text-fill-color: #111111 !important;
+}
+
+/* Dark-background inputs (e.g. footer newsletter) need the inverse of the rule above —
+   a transparent inset shadow so the dark parent background shows through, and white text,
+   instead of inheriting the light-form autofill styling meant for auth/checkout inputs. */
+.footer-newsletter-input:-webkit-autofill,
+.footer-newsletter-input:-webkit-autofill:hover,
+.footer-newsletter-input:-webkit-autofill:focus,
+.footer-newsletter-input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff;
+    /* Chrome animates its own autofill background-color in via a transition; without
+       overriding that transition's duration, its tint briefly shows/blends in before the
+       box-shadow override above visually settles. */
+    transition: background-color 9999s ease-in-out 0s !important;
 }
 
 /* Force Borders on Auth Form Inputs */

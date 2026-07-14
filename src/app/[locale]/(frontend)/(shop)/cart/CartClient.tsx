@@ -35,6 +35,23 @@ export function CartClient() {
   const [feePercentage, setFeePercentage] = useState<number | null>(null)
   const [isLoadingData, setIsLoadingData] = useState(true)
 
+  // Cart Hydration State — zustand's persist middleware reads localStorage asynchronously,
+  // so `items` is briefly `[]` (subtotal 0) on first render. Without waiting for hydration,
+  // the shipping/fee fetch below would run once against that empty-cart subtotal and finish
+  // before the real items arrive, flashing a total based on stale shipping/tax data.
+  // `useCartStore.persist` only exists client-side (its localStorage-backed storage isn't
+  // available during SSR, so the middleware never attaches `.persist` on the server) — this
+  // check must stay inside an effect, never in a render-phase initializer.
+  const [hasHydrated, setHasHydrated] = useState(false)
+
+  useEffect(() => {
+    if (useCartStore.persist.hasHydrated()) {
+      setHasHydrated(true)
+      return
+    }
+    return useCartStore.persist.onFinishHydration(() => setHasHydrated(true))
+  }, [])
+
   // Coupon States
   const [couponCode, setCouponCode] = useState('')
   const [couponState, setCouponState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -53,6 +70,14 @@ export function CartClient() {
     const shouldClear = searchParams.get('clear-cart') === '1'
     
     if (affiliateCartParams) {
+      // Record which sibling storefront's cart handoff this came from (e.g. Scarlett-Peptides
+      // sends origin=peptides7) so the order created at checkout can be tagged with it. Whitelisted
+      // to a safe charset since this value is attacker-controlled (arrives via a public URL param).
+      const origin = searchParams.get('origin')
+      if (origin && /^[a-zA-Z0-9_-]{1,50}$/.test(origin)) {
+        document.cookie = `order_source=${origin}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`
+      }
+
       setIsLoadingData(true)
       getProductsFromAffiliateCart(affiliateCartParams).then((fetchedItems) => {
         if (fetchedItems && fetchedItems.length > 0) {
@@ -91,8 +116,11 @@ export function CartClient() {
     }
   }, [searchParams, router, setItems])
 
-  // Fetch Shipping and Tax on mount
+  // Fetch Shipping and Tax on mount — waits for cart hydration so it runs against the real
+  // subtotal instead of the transient empty-cart (0) subtotal.
   useEffect(() => {
+    if (!hasHydrated) return
+
     async function fetchCartData() {
       setIsLoadingData(true)
       try {
@@ -197,7 +225,7 @@ export function CartClient() {
 
     fetchCartData()
     fetchRelatedProducts()
-  }, [subtotal])
+  }, [subtotal, hasHydrated])
 
   // Handle Coupon Application
   const handleApplyCoupon = async (codeToApply?: string) => {
@@ -348,10 +376,18 @@ export function CartClient() {
   const finalShipping = (qualifiesForFreeShipping || subtotal === 0) ? 0 : (shippingCost || 0)
   const finalTotal = Math.max(0, subtotal - discountAmount + finalShipping + taxAmount)
 
+  if (!hasHydrated) {
+    return (
+      <Container size="page" className="py-24 md:py-32 flex items-center justify-center min-h-[60vh]">
+        <Loader2 size={32} className="animate-spin text-ink/30" />
+      </Container>
+    )
+  }
+
   if (items.length === 0) {
     return (
       <Container size="page" className="py-24 md:py-32 flex flex-col items-center justify-center text-center min-h-[60vh]">
-        <motion.div 
+        <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -480,7 +516,7 @@ export function CartClient() {
                   >
                     <span className="font-medium flex items-center gap-2">
                       {t('discount')}
-                      <button onClick={handleRemoveCoupon} className="hover:text-red-500 transition-colors">
+                      <button onClick={handleRemoveCoupon} aria-label={t('removeCouponAria')} className="hover:text-red-500 transition-colors">
                         <X size={14} />
                       </button>
                     </span>
@@ -507,9 +543,13 @@ export function CartClient() {
 
             <div className="flex justify-between items-end mb-10">
               <span className="text-sm font-bold uppercase tracking-widest text-ink/60">{t('total')}</span>
-              <span className={`text-4xl font-bold text-ink ${spaceGrotesk.className}`}>
-                ${finalTotal.toFixed(2)}
-              </span>
+              {isLoadingData ? (
+                <Loader2 size={28} className="animate-spin text-ink/40" />
+              ) : (
+                <span className={`text-4xl font-bold text-ink ${spaceGrotesk.className}`}>
+                  ${finalTotal.toFixed(2)}
+                </span>
+              )}
             </div>
 
             {/* Coupon Code Engine */}

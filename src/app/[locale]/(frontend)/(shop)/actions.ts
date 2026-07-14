@@ -476,7 +476,7 @@ export async function getShopProducts(params: {
     })
 
     const uiProducts = results.docs.map(doc => {
-      let imageUrl = '/temp-products/product-image.png'
+      let imageUrl = '/99 Images/product-image.webp'
       let hoverImageUrl: string | undefined = undefined
 
       if (doc.images && doc.images.length > 0) {

@@ -79,8 +79,11 @@ function SelectContent({
           data-position={position}
           className={cn(
             'p-1',
-            position === 'popper' &&
-              'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
+            // Match the trigger's width in popper mode, but never its height — the viewport
+            // must size to its own content (and scroll within SelectContent's max-h) rather
+            // than being squeezed down to the trigger's ~56px height, which made long lists
+            // like a country picker appear frozen/unscrollable.
+            position === 'popper' && 'w-full min-w-[var(--radix-select-trigger-width)]'
           )}
         >
           {children}

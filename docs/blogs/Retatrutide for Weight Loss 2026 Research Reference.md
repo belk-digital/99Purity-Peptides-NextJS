@@ -825,7 +825,7 @@ html
       "areaServed": { "@type": "Country", "name": "United States" },
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+1-843-743-9007",
+        "telephone": "+1-843-330-7365",
         "contactType": "customer service",
         "email": "orders@99puritypeptides.com",
         "areaServed": "US"

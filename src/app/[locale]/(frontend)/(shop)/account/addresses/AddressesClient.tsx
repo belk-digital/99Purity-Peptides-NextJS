@@ -7,8 +7,10 @@ import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import { COUNTRIES } from '@/lib/countries'
 
 export interface AddressItem {
   id: string;
@@ -167,6 +169,29 @@ export function AddressesClient({ addresses }: AccountAddressesProps) {
                   <div className="flex flex-col gap-2">
                     <Label htmlFor="phone" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('phone')}</Label>
                     <Input name="phone" id="phone" defaultValue={editingAddress?.phone || ''} required type="tel" placeholder="(555) 555-5555" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading" />
+                  </div>
+                  <div className="col-span-2 flex flex-col gap-2">
+                    <Label htmlFor="country" className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.1em] font-heading">{t('country')}</Label>
+                    <Select name="country" defaultValue={editingAddress?.country || 'US'} required>
+                      <SelectTrigger id="country" className="h-12 bg-gray-50 border-gray-100 focus:border-black focus:ring-black rounded-xl font-heading w-full data-[state=open]:ring-1 data-[state=open]:ring-black/10 transition-shadow">
+                        <SelectValue placeholder={t('country')} />
+                      </SelectTrigger>
+                      <SelectContent
+                        position="popper"
+                        sideOffset={8}
+                        className="max-h-72 rounded-2xl border-gray-100 bg-white p-2 shadow-xl shadow-black/[0.06]"
+                      >
+                        {COUNTRIES.map((c) => (
+                          <SelectItem
+                            key={c.code}
+                            value={c.code}
+                            className="rounded-xl py-3 px-3 text-sm cursor-pointer font-heading data-[highlighted]:bg-black/5 data-[state=checked]:bg-black/5 data-[state=checked]:font-semibold"
+                          >
+                            {c.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="col-span-2 flex items-center space-x-3 mt-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
                     <Checkbox name="isDefault" id="default" defaultChecked={editingAddress?.isDefault || false} className="border-gray-300 data-[state=checked]:bg-black data-[state=checked]:border-black" />

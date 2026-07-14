@@ -3,7 +3,7 @@ import { CollectionConfig } from 'payload'
 export const Orders: CollectionConfig = {
   slug: 'orders',
   admin: {
-    defaultColumns: ['orderNumber', 'status', 'paymentStatus', 'paymentMethod', 'fulfillmentStatus', 'owner', 'orderTime'],
+    defaultColumns: ['orderNumber', 'status', 'paymentStatus', 'paymentMethod', 'orderSource', 'fulfillmentStatus', 'owner', 'orderTime'],
     description: 'Customer orders – generated server‑side only.',
   },
   access: {
@@ -246,6 +246,15 @@ export const Orders: CollectionConfig = {
     { name: 'couponCode', type: 'text', admin: { position: 'sidebar' } },
     { name: 'affiliateId', type: 'text', admin: { position: 'sidebar', description: 'Affiliate ID if referred' } },
     { name: 'clickId', type: 'text', admin: { position: 'sidebar', description: 'Affiliate click ID if referred' } },
+    {
+      name: 'orderSource',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Where this order originated from (e.g. a sibling storefront that redirects its cart here), if not placed directly on this site.',
+      },
+    },
     { name: 'customerNote', type: 'textarea' },
     { name: 'guestEmail', type: 'text', admin: { position: 'sidebar', description: 'For orders without a registered user account' } },
     { name: 'createdAt', type: 'date', admin: { position: 'sidebar', disabled: true } },

@@ -660,7 +660,7 @@ html
   "areaServed": "US",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-843-743-9007",
+    "telephone": "+1-843-330-7365",
     "email": "orders@99puritypeptides.com",
     "contactType": "Research Support"
   },

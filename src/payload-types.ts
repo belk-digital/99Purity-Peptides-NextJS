@@ -786,6 +786,10 @@ export interface Order {
    * Affiliate click ID if referred
    */
   clickId?: string | null;
+  /**
+   * Where this order originated from (e.g. a sibling storefront that redirects its cart here), if not placed directly on this site.
+   */
+  orderSource?: string | null;
   customerNote?: string | null;
   /**
    * For orders without a registered user account
@@ -1885,6 +1889,7 @@ export interface OrdersSelect<T extends boolean = true> {
   couponCode?: T;
   affiliateId?: T;
   clickId?: T;
+  orderSource?: T;
   customerNote?: T;
   guestEmail?: T;
   createdAt?: T;

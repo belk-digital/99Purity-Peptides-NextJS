@@ -206,6 +206,9 @@ export const afterOrderChange: CollectionAfterChangeHook = async ({ doc, previou
           await sendTrackedEmail(req.payload, {
             from: 'Orders | 99 Purity Peptides <orders@99puritypeptides.com>',
             to: customerEmail,
+            // On payment failure, admin gets the identical invoice email (same cart/totals)
+            // the customer receives, rather than a separate summary-only alert.
+            ...(label === 'failed' ? { bcc: 'support@99puritypeptides.com' } : {}),
             subject,
             html,
           })

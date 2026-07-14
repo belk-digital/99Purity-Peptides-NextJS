@@ -930,7 +930,7 @@ KLOW Peptide Guide → https://99puritypeptides.com/klow-peptide-blend-research-
   "logo": "https://99puritypeptides.com/wp-content/uploads/2026/05/Logo.png",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-843-743-9007",
+    "telephone": "+1-843-330-7365",
     "email": "orders@99puritypeptides.com",
     "contactType": "customer service",
     "areaServed": "US",

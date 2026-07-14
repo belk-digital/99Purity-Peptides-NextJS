@@ -107,6 +107,7 @@
   },
   "mobileMenu": {
     "menu": "Menú",
+    "closeMenu": "Cerrar menú",
     "exploreCategories": "Explorar Categorías",
     "support": "Soporte",
     "links": {
@@ -145,6 +146,8 @@
     "navContact": "Contacto",
     "navAffiliates": "Afiliados",
     "openSearch": "Abrir búsqueda",
+    "openCart": "Abrir carrito",
+    "openMenu": "Abrir menú",
     "shopNow": "Comprar Ahora",
     "closeAnnouncement": "Cerrar aviso",
     "clickToCopy": "Haz clic para copiar el cupón",
@@ -171,6 +174,7 @@
     "ctaHeadlineLine2": "Explora nuestro catálogo completo.",
     "exploreCatalogue": "Explorar Catálogo",
     "brandBlurbPrefix": "Laboratorios de investigación y universidades de todo el país confían en",
+    "subscribeAria": "Suscribirse al boletín",
     "explore": "Explorar",
     "navHome": "Inicio",
     "navAbout": "Nosotros",
@@ -208,6 +212,8 @@
       "featured": "Destacado",
       "total": "Total",
       "addedToCart": "¡{name} añadido al carrito!",
+      "closeFeaturedProduct": "Cerrar producto destacado",
+      "viewFeaturedProduct": "Ver producto destacado",
       "products": {
         "retatrutide": "Péptido avanzado de investigación metabólica diseñado para máxima eficacia. Rigurosamente probado en cuanto a pureza.",
         "tirzepatide": "Agonista dual de los receptores GIP y GLP-1 para investigación metabólica y cardiovascular integral.",
@@ -461,14 +467,7 @@
       "unsubscribeNote": "Cancela tu suscripción en cualquier momento."
     },
     "parallaxImage": {
-      "imageAlt": "Imagen de la Búsqueda de la Pureza",
-      "doNotClick": "No Hacer Clic",
-      "glitchLine1": "GIGACHAD",
-      "glitchLine2": "ACTIVADO",
-      "rewardTitle": "Secreto Desbloqueado",
-      "rewardText": "Encontraste el botón Gigachad. Obtén un 15% de descuento en tu próximo proyecto de investigación.",
-      "copiedAlert": "¡Copiado al portapapeles!",
-      "copyButton": "Copiar"
+      "imageAlt": "Imagen de la Búsqueda de la Pureza"
     },
     "pinterestGlassCard": {
       "defaultTag": "Verificado"
@@ -608,6 +607,8 @@
       "removedFromWishlistDescription": "{name} ha sido eliminado.",
       "addedToWishlist": "Añadido a la lista de deseos",
       "addedToWishlistDescription": "{name} ahora está en tu lista de deseos.",
+      "addToWishlistAria": "Añadir a la lista de deseos",
+      "removeFromWishlistAria": "Eliminar de la lista de deseos",
       "viewWishlist": "Ver Lista de Deseos",
       "failedToUpdateWishlist": "Error al actualizar la lista de deseos",
       "unexpectedError": "Ocurrió un error inesperado.",
@@ -866,12 +867,14 @@
       "searchStates": "Buscar estados...",
       "noStatesFound": "No se encontraron estados",
       "zipCode": "Código Postal",
+      "country": "País",
       "phone": "Teléfono",
       "setAsDefault": "Establecer como dirección de envío predeterminada",
       "cancel": "Cancelar",
       "saving": "Guardando...",
       "saveAddress": "Guardar Dirección",
       "default": "Predeterminada",
+      "edit": "Editar",
       "delete": "Eliminar",
       "toastUpdateFailed": "No se pudo actualizar la dirección",
       "toastUpdateSuccess": "Dirección actualizada correctamente",
@@ -1085,6 +1088,7 @@
       "browseProducts": "VER PRODUCTOS",
       "yourCart": "Tu Carrito",
       "removeItemAria": "Eliminar artículo",
+      "removeCouponAria": "Eliminar cupón",
       "remove": "Eliminar",
       "total": "Total",
       "subtotal": "Subtotal",
@@ -1147,6 +1151,8 @@
       "city": "Ciudad",
       "state": "Estado",
       "zipCode": "Código Postal",
+      "country": "País",
+      "internationalShippingNotice": "El envío internacional tiene una tarifa fija de $50.",
       "phoneForDelivery": "Teléfono (para actualizaciones de entrega)",
       "shippingMethod": "Método de Envío",
       "businessDays": "{days} días hábiles",
@@ -1337,7 +1343,7 @@
       "section3Item4": "Pedidos personalizados o al por mayor si están explícitamente marcados como no reembolsables.",
       "section4Title": "Proceso de Reembolso",
       "section4Intro": "Para solicitar un reembolso, sigue estos pasos:",
-      "section4Item1": "Contacta a nuestro equipo de Atención al Cliente en <email>support@99puritypeptides.com</email> o al <phone>843 743 9007</phone> con tu número de pedido y el motivo del reembolso.",
+      "section4Item1": "Contacta a nuestro equipo de Atención al Cliente en <email>support@99puritypeptides.com</email> o al <phone>+1 (843) 330-7365</phone> con tu número de pedido y el motivo del reembolso.",
       "section4Item2": "Proporciona fotos del producto y el empaque si se te solicita.",
       "section4Item3": "Nuestro equipo revisará tu solicitud y te notificará en un plazo de 3 a 5 días hábiles sobre la aprobación.",
       "section4Item4": "Si se aprueba, los reembolsos se emitirán mediante el método de pago original o como crédito en tienda, según tu preferencia.",
@@ -2075,7 +2081,7 @@
       "faqs": {
         "contactInfo": {
           "question": "¿Cuál es la información de contacto de 99PurityPeptides en Estados Unidos?",
-          "answer": "Contáctenos en 5768 Wyncliff Drive, North Charleston, Carolina del Sur 29418, EE. UU. Teléfono: <phone>843 743 9007</phone>, y correo electrónico: <email>support@99puritypeptides.com</email> para consultas de laboratorio."
+          "answer": "Contáctenos en 5768 Wyncliff Drive, North Charleston, Carolina del Sur 29418, EE. UU. Teléfono: <phone>+1 (843) 330-7365</phone>, y correo electrónico: <email>support@99puritypeptides.com</email> para consultas de laboratorio."
         },
         "usLabsContact": {
           "question": "¿Cómo pueden los laboratorios de EE. UU. contactar a 99PurityPeptides para pedidos de péptidos de investigación?",

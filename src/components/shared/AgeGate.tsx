@@ -128,7 +128,7 @@ export function AgeGate() {
                     <div className="flex-auto min-h-[1rem]"></div>
 
                     <div className="max-w-xl w-full flex flex-col items-center sm:items-start text-center sm:text-left shrink-0 mx-auto">
-                      <p className="font-bold tracking-[0.2em] uppercase text-primary text-[10px] md:text-xs mb-3">
+                      <p className="font-bold tracking-[0.2em] uppercase text-primary-dark text-[10px] md:text-xs mb-3">
                         {t('restrictedAccess')}
                       </p>
                       <h2 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-ink mb-6 tracking-tighter font-heading uppercase leading-none break-words w-full">
@@ -168,7 +168,7 @@ export function AgeGate() {
 
                     <div className="flex-auto min-h-[1rem]"></div>
 
-                    <div className="mt-8 text-ink/30 text-[9px] uppercase tracking-[0.2em] text-center sm:text-left shrink-0 max-w-xl w-full mx-auto pb-4 md:pb-0">
+                    <div className="mt-8 text-ink-muted text-[9px] uppercase tracking-[0.2em] text-center sm:text-left shrink-0 max-w-xl w-full mx-auto pb-4 md:pb-0">
                       {t('agreementPrefix')} <Link href="/terms-and-conditions" className="hover:text-primary transition-colors underline underline-offset-2 opacity-80 hover:opacity-100">{t('termsLink')}</Link>
                     </div>
                   </motion.div>

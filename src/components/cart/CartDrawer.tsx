@@ -95,7 +95,7 @@ export function CartDrawer() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
             onClick={closeCart}
-            className="fixed inset-0 bg-[#001111]/40 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/30 z-[100]"
             aria-hidden="true"
           />
 

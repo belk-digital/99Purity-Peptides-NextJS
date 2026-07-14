@@ -18,13 +18,28 @@ export function TableOfContents() {
     const elements = Array.from(document.querySelectorAll('.prose-article h2, .prose-article h3'))
       .filter(el => el.textContent?.trim().length) as HTMLElement[];
     
+    const seenIds = new Set<string>();
+
     const extractedHeadings = elements.map((element, index) => {
-      // If the heading doesn't have an ID, assign one automatically
-      if (!element.id) {
-        element.id = element.textContent?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') || `heading-${index}`;
+      // Get base ID or generate one from text
+      const baseId = element.id || element.textContent?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') || `heading-${index}`;
+      
+      // Ensure it is unique
+      let finalId = baseId;
+      let counter = 1;
+      while (seenIds.has(finalId)) {
+        finalId = `${baseId}-${counter}`;
+        counter++;
       }
+      seenIds.add(finalId);
+
+      // Update the DOM element's ID so scrolling works
+      if (element.id !== finalId) {
+        element.id = finalId;
+      }
+
       return {
-        id: element.id,
+        id: finalId,
         text: element.textContent || '',
         level: element.tagName === 'H3' ? 3 : 2
       }

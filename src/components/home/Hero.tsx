@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
+import { useCartStore } from '@/lib/cart/store'
+import { useUiStore } from '@/lib/ui/store'
 
 const HERO_PRODUCTS = [
   { key: "retatrutide", name: "Retatrutide", slug: "retatrutide", dose: "10mg", price: "$140.00", image: "/99 Images/transparant-vial.png" },
@@ -22,6 +24,13 @@ export function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCardClosed, setIsCardClosed] = useState(false)
   const didDragRef = React.useRef(false)
+  // The cart drawer's (and mobile menu's) backdrop sits directly over this section —
+  // pausing the video and marquee while either is open avoids compositing an autoplaying
+  // video, an infinite-loop animation, and large blurred gradients underneath their
+  // open/close transitions.
+  const isCartOpen = useCartStore((s) => s.isOpen)
+  const isMobileMenuOpen = useUiStore((s) => s.isMobileMenuOpen)
+  const shouldPauseHero = isCartOpen || isMobileMenuOpen
 
   React.useEffect(() => {
     const video = videoRef.current
@@ -80,6 +89,16 @@ export function Hero() {
       clearInterval(sliderTimer)
     }
   }, [])
+
+  React.useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    if (shouldPauseHero) {
+      video.pause()
+    } else {
+      video.play().catch(() => {})
+    }
+  }, [shouldPauseHero])
 
   return (
     <div className="relative w-full h-[100dvh] min-h-[500px] md:min-h-[700px] bg-cream p-3 pt-[56px] [.announcement-closed_&]:pt-3 sm:p-5 sm:pt-[64px] [.announcement-closed_&]:sm:pt-5 md:p-8 md:pt-[76px] [.announcement-closed_&]:md:pt-8 font-sans overflow-hidden flex transition-[padding] duration-300">
@@ -175,10 +194,10 @@ export function Hero() {
             {/* Gradient mask for smooth fade in/out of marquee */}
             <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-cream to-transparent z-10 pointer-events-none" />
             
-            <motion.div 
+            <motion.div
               className="flex whitespace-nowrap items-center text-zinc-900 font-heading font-extrabold tracking-[0.25em] text-[10px] sm:text-xs md:text-sm w-max pointer-events-none"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 15 }}
+              animate={shouldPauseHero ? { x: "0%" } : { x: ["0%", "-50%"] }}
+              transition={shouldPauseHero ? { duration: 0.3 } : { repeat: Infinity, ease: "linear", duration: 15 }}
               style={{ willChange: "transform" }}
             >
                {[...Array(4)].map((_, i) => (
@@ -217,7 +236,7 @@ export function Hero() {
 
             {/* The Glass Card (Masked perfectly with CSS mask on the SAME element to avoid WebKit bounding box bugs) */}
             <div 
-              className="absolute inset-0 bg-white/[0.05] backdrop-blur-md z-10 pointer-events-none transform-gpu"
+              className="absolute inset-0 bg-white/[0.05] backdrop-blur-sm z-10 pointer-events-none transform-gpu"
               style={{
                 maskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,
                 WebkitMaskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,
@@ -231,8 +250,9 @@ export function Hero() {
               <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 pointer-events-none z-0" />
 
             {/* Mobile Close Button */}
-            <button 
+            <button
               onClick={() => setIsCardClosed(true)}
+              aria-label={t('closeFeaturedProduct')}
               className="absolute top-4 right-4 z-50 w-10 h-10 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center sm:hidden backdrop-blur-md pointer-events-auto transition-colors"
             >
               <X className="w-5 h-5" />
@@ -297,7 +317,10 @@ export function Hero() {
                     </div>
                     <div className="w-full text-left flex flex-col items-start shrink-0 relative z-20 px-6">
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-2xl font-bold text-white font-heading tracking-tight drop-shadow-md">{HERO_PRODUCTS[currentSlide].name}</h3>
+                        {/* Not a true heading — a rotating promo card's product name inside the
+                            hero widget, appearing before this page's first h2. A real <h3>
+                            here would break the document's heading order (h1 -> h3). */}
+                        <p className="text-2xl font-bold text-white font-heading tracking-tight drop-shadow-md">{HERO_PRODUCTS[currentSlide].name}</p>
                         <span className="text-white/80 px-2 py-0.5 text-[10px] font-medium bg-white/10 rounded-full border border-white/5 shadow-sm">{HERO_PRODUCTS[currentSlide].dose}</span>
                       </div>
                       <p className="hidden sm:block text-white/60 text-xs font-light leading-relaxed line-clamp-2">
@@ -348,6 +371,7 @@ export function Hero() {
                 e.stopPropagation();
                 router.push(`/product/${HERO_PRODUCTS[currentSlide].slug}`);
               }}
+              aria-label={t('viewFeaturedProduct')}
               className="absolute bottom-[11px] right-[11px] w-12 h-12 bg-primary hover:bg-white text-white hover:text-primary flex items-center justify-center rounded-full transition-colors duration-500 z-40 group shadow-[0_10px_30px_rgba(28,228,201,0.3)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)]"
             >
               <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform duration-500" />

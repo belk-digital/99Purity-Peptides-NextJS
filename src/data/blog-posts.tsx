@@ -29,7 +29,7 @@ export const BLOG_POSTS: {
     date: 'May 9, 2026',
     readTime: '6 min read',
     excerpt: 'Accurate peptide calculator results in seconds. Enter your vial size, bacteriostatic water volume, and target dose — our tool instantly converts your peptide dosage into precise syringe units.',
-    imageSrc: '/99 Blog Images/peptide-reconstitution-calculator-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-calculator-hero.webp',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -42,8 +42,8 @@ export const BLOG_POSTS: {
         {/* Placeholder for the calculator */}
         <div className="my-12 p-8 bg-cream-warm rounded-[2rem] border border-ink/10 text-center">
             <h3 className="text-2xl font-bold font-heading mb-4">Peptide Calculator Tool</h3>
-            <p className="text-ink/60 mb-6 font-medium">Interactive calculator component will be placed here.</p>
-            <button className="px-8 py-3 bg-ink text-white rounded-full font-bold uppercase tracking-widest text-xs hover:bg-primary transition-colors">Use the Calculator</button>
+            <p className="text-ink/60 mb-6 font-medium">Use our free interactive calculator to get instant reconstitution results.</p>
+            <a href="/peptide-calculator" className="inline-block px-8 py-3 bg-ink text-white rounded-full font-bold uppercase tracking-widest text-xs hover:bg-primary transition-colors">Use the Calculator</a>
         </div>
 
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">How to Use the Peptide Calculator</h2>
@@ -56,7 +56,7 @@ export const BLOG_POSTS: {
         <p>Results update instantly. No refresh needed. Bookmark this page for fast access during every reconstitution session.</p>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-reconstitution-calculator-inline-1.webp" alt="Step-by-step peptide reconstitution technique showing correct and incorrect vial handling, syringe draw, and swirling method" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-calculator-inline-1.webp" alt="Step-by-step peptide reconstitution technique showing correct and incorrect vial handling, syringe draw, and swirling method" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">How Peptide Reconstitution Works</h2>
         <p>Peptide reconstitution is the process of dissolving a lyophilized (freeze-dried) peptide powder into a sterile liquid solution. Most research peptides are supplied as dry powder in a sealed, vacuum-pressurized vial. Bacteriostatic water is the preferred diluent because its 0.9% benzyl alcohol content inhibits microbial growth, extending the usable shelf life of the reconstituted solution to 28–30 days under refrigerated conditions.</p>
@@ -72,14 +72,14 @@ export const BLOG_POSTS: {
             <li>5mg vial + 2mL BAC water → 2.5mg/mL (2,500mcg/mL). Each 10 units = 250mcg.</li>
             <li>10mg vial + 2mL BAC water → 5mg/mL (5,000mcg/mL). Each 10 units = 500mcg.</li>
         </ul>
-        <p>Always inject the bacteriostatic water slowly down the inside wall of the vial, not directly onto the peptide cake. This technique minimizes mechanical agitation. If the vial has a vacuum, the water will be drawn in automatically. If resistance is felt, gently relieve the vacuum with an empty syringe before adding BAC water. Use our BAC water mixing calculator above to generate custom ratios for any vial size.</p>
+        <p>Always inject the bacteriostatic water slowly down the inside wall of the vial, not directly onto the peptide cake. This technique minimizes mechanical agitation. If the vial has a vacuum, the water will be drawn in automatically. If resistance is felt, gently relieve the vacuum with an empty syringe before adding BAC water. Use our BAC water mixing calculator above to generate custom ratios for any vial size, or see the <a className="text-primary underline hover:text-primary-dark" href="/how-much-bacteriostatic-water-reconstitute-peptides">complete bacteriostatic water reconstitution chart</a> for every common vial size.</p>
 
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Peptide Dosage Calculation: The Formula Explained</h2>
         <p>Every peptide dosage calculation follows the same fundamental formula. Understanding it means you can verify any calculator result manually:</p>
         <div className="p-6 bg-cream-warm rounded-2xl border border-ink/10 font-mono text-center my-6 text-sm text-ink/70">
-            Draw Volume (mL) = Desired Dose (mcg) Ã· Concentration (mcg/mL)
+            Draw Volume (mL) = Desired Dose (mcg) ÷ Concentration (mcg/mL)
         </div>
-        <p>Example: You have a 10mg vial reconstituted with 2mL BAC water. Concentration = 10,000mcg Ã· 2mL = 5,000mcg/mL. Your desired dose is 500mcg. Draw volume = 500 Ã· 5,000 = 0.1mL. On a U-100 insulin syringe, 0.1mL = 10 units. This is your draw mark.</p>
+        <p>Example: You have a 10mg vial reconstituted with 2mL BAC water. Concentration = 10,000mcg ÷ 2mL = 5,000mcg/mL. Your desired dose is 500mcg. Draw volume = 500 ÷ 5,000 = 0.1mL. On a U-100 insulin syringe, 0.1mL = 10 units. This is your draw mark.</p>
         <p>The most common mistake researchers make is confusing milligrams (mg) with micrograms (mcg). Remember: 1mg = 1,000mcg. The peptide calculator above handles this conversion automatically, but it is worth understanding the relationship when reviewing your results.</p>
 
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">How to Read Your Syringe for Peptide Research</h2>
@@ -98,18 +98,18 @@ export const BLOG_POSTS: {
 
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Peptide Storage: How to Maximize Potency and Shelf Life</h2>
         <p>Proper storage is as critical as accurate dosing. Lyophilized peptide powder is stable for 24 months or longer at room temperature away from light and humidity. However, once reconstituted with bacteriostatic water, shelf life drops significantly.</p>
-        <p>Reconstituted peptides should be refrigerated at 2–8°C (36–46°F) and used within 28–30 days. Avoid repeated freeze-thaw cycles, as the thermal stress disrupts the peptide chain structure and accelerates degradation. Keep vials in a dark environment — UV light catalyzes oxidation of sensitive amino acids, particularly tryptophan and methionine residues.</p>
+        <p>Reconstituted peptides should be refrigerated at 2–8°C (36–46°F) and used within 28–30 days. Avoid repeated freeze-thaw cycles, as the thermal stress disrupts the peptide chain structure and accelerates degradation. Keep vials in a dark environment — UV light catalyzes oxidation of sensitive amino acids, particularly tryptophan and methionine residues. For a deeper look at degradation mechanisms and optimal protocols, see our <a className="text-primary underline hover:text-primary-dark" href="/reconstituted-peptide-stability-storage">reconstituted peptide stability guide</a>.</p>
         <p>For long-term storage beyond 30 days, re-lyophilization is ideal but impractical without laboratory equipment. A pragmatic alternative is to prepare smaller vials from your reconstituted stock and freeze them as single-use aliquots at −20°C, minimizing repeated freeze-thaw exposure to your main vial.</p>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-reconstitution-calculator-inline-2.webp" alt="Research peptide vials, molecular model, and calibrated syringe used for accurate peptide reconstitution calculator dosing" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-calculator-inline-2.webp" alt="Research peptide vials, molecular model, and calibrated syringe used for accurate peptide reconstitution calculator dosing" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Why Use a Dedicated Peptide Reconstitution Calculator?</h2>
         <p>Mental math and generic calculators introduce risk. A purpose-built peptide calculator eliminates three critical failure points: unit conversion errors, concentration miscalculation, and syringe misread. For research requiring repeatable, precise dosing protocols, this level of accuracy is non-negotiable.</p>
         <p>This tool also removes friction from the calculation process entirely. Instead of reaching for a notepad mid-experiment, researchers input three numbers and receive an immediate, unambiguous result. The result is displayed as a syringe unit count — the most practical unit for bench-side use. No additional conversion is needed.</p>
 
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Start Your Research with Verified Precision</h2>
-        <p>Every accurate experiment starts with an accurate calculation. Use the peptide dosage calculator above to verify your reconstitution math before every session. Browse our research guides below for deeper coverage of BAC water mixing ratios, syringe reading, and peptide storage protocols.</p>
+        <p>Every accurate experiment starts with an accurate calculation. Use the peptide dosage calculator above to verify your reconstitution math before every session. For a step-by-step walkthrough of the full reconstitution process, see our <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator-reconstitution-guide">peptide calculator reconstitution guide</a>. Browse our research guides below for deeper coverage of BAC water mixing ratios, syringe reading, and peptide storage protocols.</p>
 
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Frequently Asked Questions</h2>
         <div className="space-y-6">
@@ -151,7 +151,7 @@ export const BLOG_POSTS: {
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">How accurate is the peptide calculator?</h3>
-                <p className="text-ink/80 text-sm">This peptide reconstitution calculator applies the exact same formula used in pharmaceutical compounding: Dose Ã· Concentration = Volume. Accuracy is dependent on the inputs you provide. Use a calibrated 1mL or 3mL syringe to measure your BAC water volume as precisely as possible. The calculation itself introduces zero mathematical error.</p>
+                <p className="text-ink/80 text-sm">This peptide reconstitution calculator applies the exact same formula used in pharmaceutical compounding: Dose ÷ Concentration = Volume. Accuracy is dependent on the inputs you provide. Use a calibrated 1mL or 3mL syringe to measure your BAC water volume as precisely as possible. The calculation itself introduces zero mathematical error.</p>
             </div>
         </div>
       </>
@@ -164,7 +164,7 @@ export const BLOG_POSTS: {
     date: 'May 10, 2026',
     readTime: '8 min read',
     excerpt: 'Does Retatrutide require carbohydrates to work? Explore the science behind triple agonism, glucagon receptor activity, and carbohydrate metabolism in research.',
-    imageSrc: '/99 Blog Images/retatrutide-and-carbs-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-hero.webp',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -180,7 +180,7 @@ export const BLOG_POSTS: {
         </p>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-and-carbs-inline-2.webp" alt="Infographic of retatrutide triple-receptor mechanism across GLP-1, GIP, and glucagon receptors and glucose-dependent effects" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-inline-2.webp" alt="Infographic of retatrutide triple-receptor mechanism across GLP-1, GIP, and glucagon receptors and glucose-dependent effects" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Here's What the Research Shows</h2>
         <p className="mb-4">
@@ -207,7 +207,7 @@ export const BLOG_POSTS: {
             <p className="text-ink font-medium"><strong>Key clinical insight:</strong> The weight loss and metabolic improvements observed in retatrutide trials occurred without standardized carbohydrate protocols, which supports the hypothesis that this triple agonist does not require high carbohydrate availability to exert its core effects.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-and-carbs-inline-1.webp" alt="Molecular research illustration of retatrutide triple-receptor structure and metabolic signaling pathway" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-inline-1.webp" alt="Molecular research illustration of retatrutide triple-receptor structure and metabolic signaling pathway" className="w-full h-auto object-cover" />
         </div>
 
         <h3 className="text-xl font-bold font-heading text-ink mt-12 mb-4">Receptor vs. Carbohydrate Interaction</h3>
@@ -328,7 +328,7 @@ export const BLOG_POSTS: {
         </ul>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-and-carbs-inline-3.webp" alt="Illustration of retatrutide research covering metabolic pathways, liver effects, and nutrient interactions in laboratory studies" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-inline-3.webp" alt="Illustration of retatrutide research covering metabolic pathways, liver effects, and nutrient interactions in laboratory studies" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Summary</h2>
         <p className="mb-4">Retatrutide's triple agonist design creates a pharmacodynamic profile that is meaningfully different from earlier GLP-1 compounds in its relationship with carbohydrate intake. Its GLP-1 and GIP arms are glucose-dependent and reduce insulin secretion activity in carbohydrate-restricted states — a protective mechanism that limits hypoglycemia risk. Its glucagon receptor component, however, operates independently of dietary glucose, sustaining hepatic glucose production, thermogenic energy expenditure, and adipose tissue mobilization even during fasting or low-carbohydrate research protocols.</p>
@@ -382,7 +382,7 @@ export const BLOG_POSTS: {
     date: 'May 16, 2026',
     readTime: '12 min read',
     excerpt: 'Master peptide reconstitution with our interactive calculator. Learn bacteriostatic water ratios, mcg to mg conversions & sterile techniques for U.S. labs.',
-    imageSrc: '/99 Blog Images/peptide-calculator-reconstitution-guide-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-hero.webp',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -393,8 +393,10 @@ export const BLOG_POSTS: {
 
         <p className="mb-8 italic text-ink/70">For researchers seeking the highest quality: 99PurityPeptides provides 99% purity research peptides with full Certificates of Analysis and third-party ISO-certified lab testing—ensuring your reconstitution calculations are based on verified peptide content.</p>
 
+        <p className="mb-8">Looking for the full mL-to-units and mg/mL breakdown by vial size? See the <a className="text-primary underline hover:text-primary-dark" href="/how-much-bacteriostatic-water-reconstitute-peptides">complete bacteriostatic water reconstitution chart</a> for every common ratio at a glance.</p>
+
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-calculator-reconstitution-guide-inline-1.webp" alt="Laboratory workstation with peptide calculator dashboard, glassware, and test tubes for research dosing calculations" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-inline-1.webp" alt="Laboratory workstation with peptide calculator dashboard, glassware, and test tubes for research dosing calculations" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">What Is a Peptide Calculator and Why Do Researchers Need It?</h2>
         <p className="mb-4">A <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator">peptide calculator</a> is a specialized calculation tool designed to determine the exact amount of bacteriostatic water needed to reconstitute lyophilized peptide powder to a desired concentration. Unlike standard dilution calculators, peptide calculators account for the unique characteristics of peptide vials, including:</p>
@@ -441,8 +443,8 @@ export const BLOG_POSTS: {
                 <p className="mb-2">Using an alcohol prep pad, thoroughly swab the rubber stopper of both the peptide vial and bacteriostatic water vial. Allow alcohol to air-dry completely (30-60 seconds) before proceeding—puncturing while wet can introduce alcohol into the solution.</p>
                 <p className="mb-2">Calculate your required bacteriostatic water volume using the peptide calculator below or this formula:</p>
                 <div className="bg-cream-warm p-4 rounded-xl font-mono text-sm border border-ink/10 my-4">
-                    Volume (mL) = Peptide Amount (mg) Ã· Desired Concentration (mg/mL)<br/><br/>
-                    <span className="text-ink/60">For example: 10mg peptide Ã· 2mg/mL desired concentration = 5mL bacteriostatic water</span>
+                    Volume (mL) = Peptide Amount (mg) ÷ Desired Concentration (mg/mL)<br/><br/>
+                    <span className="text-ink/60">For example: 10mg peptide ÷ 2mg/mL desired concentration = 5mL bacteriostatic water</span>
                 </div>
             </div>
 
@@ -484,7 +486,7 @@ export const BLOG_POSTS: {
         </div>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-calculator-reconstitution-guide-inline-2.webp" alt="Peptide reconstitution workflow diagram showing vial preparation, syringe draw, and bacteriostatic water dosing steps" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-inline-2.webp" alt="Peptide reconstitution workflow diagram showing vial preparation, syringe draw, and bacteriostatic water dosing steps" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Bacteriostatic Water Ratios for Common Vial Sizes</h2>
         <p className="mb-4">Understanding standard bacteriostatic water ratios accelerates reconstitution while maintaining optimal peptide stability. These ratios are based on U.S. laboratory protocols and published peptide stability research:</p>
@@ -535,7 +537,7 @@ export const BLOG_POSTS: {
         </div>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-calculator-reconstitution-guide-inline-3.webp" alt="Step-by-step diagram illustrating common peptide reconstitution mistakes and correct bacteriostatic water dosing technique" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-inline-3.webp" alt="Step-by-step diagram illustrating common peptide reconstitution mistakes and correct bacteriostatic water dosing technique" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Common Peptide Reconstitution Mistakes (And How to Avoid Them)</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
@@ -567,7 +569,7 @@ export const BLOG_POSTS: {
         <div className="space-y-6">
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">How does a peptide calculator work?</h3>
-                <p className="text-ink/80 text-sm">A peptide calculator uses the fundamental dilution formula to determine how much bacteriostatic water is needed to achieve a desired peptide concentration. The calculation is: Volume of Bacteriostatic Water (mL) = Peptide Vial Amount (mg) Ã· Desired Concentration (mg/mL). Advanced peptide calculators also provide dose-per-unit conversions for U-100 insulin syringes and microgram-to-milliliter translations for precise research dosing.</p>
+                <p className="text-ink/80 text-sm">A peptide calculator uses the fundamental dilution formula to determine how much bacteriostatic water is needed to achieve a desired peptide concentration. The calculation is: Volume of Bacteriostatic Water (mL) = Peptide Vial Amount (mg) ÷ Desired Concentration (mg/mL). Advanced peptide calculators also provide dose-per-unit conversions for U-100 insulin syringes and microgram-to-milliliter translations for precise research dosing.</p>
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">How do I reconstitute a peptide vial?</h3>
@@ -579,7 +581,7 @@ export const BLOG_POSTS: {
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">How do I calculate peptide dose in mcg after reconstitution?</h3>
-                <p className="text-ink/80 text-sm">To calculate dose in micrograms (mcg): First, determine your solution concentration in mg/mL. Then use this formula: Dose (mcg) = Volume Drawn (mL) Ã— Concentration (mg/mL) Ã— 1,000. For example, if you have a 2mg/mL solution and draw 0.15mL: 0.15mL Ã— 2mg/mL Ã— 1,000 = 300mcg. Alternatively, use the "dose per 0.1mL" value from your peptide calculator and scale proportionally based on syringe markings.</p>
+                <p className="text-ink/80 text-sm">To calculate dose in micrograms (mcg): First, determine your solution concentration in mg/mL. Then use this formula: Dose (mcg) = Volume Drawn (mL) × Concentration (mg/mL) × 1,000. For example, if you have a 2mg/mL solution and draw 0.15mL: 0.15mL × 2mg/mL × 1,000 = 300mcg. Alternatively, use the "dose per 0.1mL" value from your peptide calculator and scale proportionally based on syringe markings.</p>
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">How do I use a peptide calculator for my 5mg vial?</h3>
@@ -603,8 +605,566 @@ export const BLOG_POSTS: {
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">How do I read syringe markings for peptide doses?</h3>
-                <p className="text-ink/80 text-sm">U-100 insulin syringes (most common for peptide research) are marked in "units" where 100 units = 1mL. Each small marking typically represents 1 unit (0.01mL), and larger markings represent 10 units (0.1mL). To dose peptides accurately: First, determine your "dose per 0.1mL" (from the peptide calculator). For example, if you have 200mcg per 0.1mL and need 300mcg, calculate: 300mcg Ã· 200mcg = 1.5 Ã— 0.1mL = 0.15mL = 15 units on the syringe.</p>
+                <p className="text-ink/80 text-sm">U-100 insulin syringes (most common for peptide research) are marked in "units" where 100 units = 1mL. Each small marking typically represents 1 unit (0.01mL), and larger markings represent 10 units (0.1mL). To dose peptides accurately: First, determine your "dose per 0.1mL" (from the peptide calculator). For example, if you have 200mcg per 0.1mL and need 300mcg, calculate: 300mcg ÷ 200mcg = 1.5 × 0.1mL = 0.15mL = 15 units on the syringe.</p>
             </div>
+        </div>
+      </>
+    )
+  },
+  {
+    slug: 'how-much-bacteriostatic-water-reconstitute-peptides',
+    title: 'How Much Bacteriostatic Water to Reconstitute Peptides: The Complete Ratio, Unit & Concentration Chart (2026)',
+    category: 'Recovery protocols',
+    date: 'July 13, 2026',
+    readTime: '14 min read',
+    excerpt: 'The complete mL-to-units and mg/mL reconstitution chart, plus a free calculator. RUO laboratory reference covering bacteriostatic water ratios for every common vial size.',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bac-water-reconstitution-hero.png',
+    content: (
+      <>
+        <div className="p-4 md:p-6 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-10">
+          <strong>Research-use-only notice:</strong> The compounds referenced here are supplied strictly for laboratory and in-vitro research. Nothing below is medical advice, and none of it describes human or animal administration. Every number is a measurement example — mass, volume, and concentration — for handling lyophilized reference material in a research setting.
+        </div>
+
+        <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
+          To reconstitute a lyophilized research peptide, add <a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">bacteriostatic water</a> to the vial and read the concentration as milligrams of peptide ÷ millilitres of water. A 10 mg vial dissolved in 2 mL gives 5 mg/mL. On a U-100 insulin syringe, 1 mL = 100 units, so 2 mL fills the syringe to 200 units.
+        </p>
+        <p className="mb-8">More water lowers the concentration and improves measurement resolution; less water does the opposite. The chosen volume is a research-handling decision, not a fixed rule — so verify it with the <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator">peptide calculator</a>.</p>
+
+        <div className="p-6 bg-cream-warm border border-ink/10 rounded-2xl my-10 quick-answer">
+          <h2 className="text-lg font-bold text-ink mb-2">Quick answer — the 15-second version</h2>
+          <p className="text-ink/80 text-sm">To reconstitute a lyophilized research peptide, add bacteriostatic water to the vial and read the concentration as milligrams of peptide ÷ millilitres of water. A 10 mg vial dissolved in 2 mL gives 5 mg/mL. On a U-100 insulin syringe, 1 mL = 100 units, so 2 mL fills the syringe to 200 units. More water lowers the concentration and improves measurement resolution; less water does the opposite. The chosen volume is a research-handling decision, not a fixed rule — so verify it with a calculator.</p>
+        </div>
+
+        <h2 id="what-reconstitution-means" className="text-2xl font-semibold text-ink mt-16 mb-6">1. What "reconstitution" actually means</h2>
+        <div className="p-4 bg-cream-warm border border-ink/10 rounded-xl text-sm text-ink/80 mb-6">
+          <strong>Definition:</strong> Reconstitution is the process of dissolving a freeze-dried (lyophilized) peptide powder back into a liquid by adding a sterile solvent — most often bacteriostatic water. The result is a solution of known concentration, expressed in milligrams per millilitre (mg/mL).
+        </div>
+        <p className="mb-4">Research peptides ship as a lyophilized cake or film at the bottom of a sealed vial. Manufacturers remove the water so the peptide stays stable in transit and storage. Consequently, the powder is not usable for any laboratory measurement until it returns to solution.</p>
+        <p className="mb-8">Reconstitution does two jobs at once. First, it makes the peptide measurable, because you cannot pipette a dry film accurately. Second, it fixes a concentration, so every later draw maps to a precise mass. Therefore the volume of water you add is the single most important choice in the whole process.</p>
+
+        <h2 id="bacteriostatic-vs-sterile-vs-acetic" className="text-2xl font-semibold text-ink mt-16 mb-6">2. Bacteriostatic vs sterile vs acetic acid water</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bacteriostatic-vs-sterile-vs-acetic-acid-water.png" alt="Bacteriostatic water vs sterile water vs acetic acid water for peptides" title="Peptide solvent comparison" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">Choosing the right solvent for peptide reconstitution.</figcaption>
+        </figure>
+        <p className="mb-6">Not all solvents behave the same way. The right choice depends on solubility and how long the solution will sit. Here is the practical comparison researchers rely on.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Solvent</th>
+                <th className="py-3 px-4 font-bold text-ink">What it is</th>
+                <th className="py-3 px-4 font-bold text-ink">Best for</th>
+                <th className="py-3 px-4 font-bold text-ink">Notes</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">Bacteriostatic water</a></td>
+                <td className="py-3 px-4">Sterile water with 0.9% benzyl alcohol as a preservative</td>
+                <td className="py-3 px-4">The default for most peptides that dissolve readily</td>
+                <td className="py-3 px-4">Benzyl alcohol suppresses microbial growth, so multi-draw vials stay usable longer</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">Sterile water for injection</td>
+                <td className="py-3 px-4">Sterile water, no preservative</td>
+                <td className="py-3 px-4">Single-use preparations</td>
+                <td className="py-3 px-4">No bacteriostatic protection, so it is less suited to vials opened repeatedly</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">Acetic acid water (0.6%)</a></td>
+                <td className="py-3 px-4">Dilute acetic acid in water</td>
+                <td className="py-3 px-4">"Sticky" or poorly soluble peptides that resist plain water</td>
+                <td className="py-3 px-4">Mild acidity helps break up aggregates that will not dissolve otherwise</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 my-6">
+          <strong>Why benzyl alcohol matters:</strong> The 0.9% <a className="text-primary underline hover:text-primary-dark" href="https://dailymed.nlm.nih.gov/dailymed/" target="_blank" rel="noopener noreferrer">benzyl alcohol as a preservative</a> in bacteriostatic water is bacteriostatic, not bactericidal — it slows microbial growth rather than sterilizing. That property is exactly why it is preferred for vials that will be sampled more than once over several weeks in the lab.
+        </div>
+        <p className="mb-8">When a peptide clouds, foams, or leaves undissolved specks in plain bacteriostatic water, acetic acid water is the usual next step. GHK-Cu and certain long-chain peptides are common candidates. You can source both solvents directly rather than improvising.</p>
+
+        <h2 id="three-numbers" className="text-2xl font-semibold text-ink mt-16 mb-6">3. The three numbers behind every reconstitution</h2>
+        <p className="mb-6">Every reconstitution reduces to three linked values. Master these and the charts below become obvious.</p>
+        <div className="space-y-6 mb-8">
+          <div>
+            <h3 className="font-bold text-lg mb-2">Number 1 — Peptide mass (mg)</h3>
+            <p className="text-ink/80">This is the amount of peptide in the vial, printed on the label: 5 mg, 10 mg, 15 mg, and so on. It never changes when you add water. You are simply dissolving that fixed mass.</p>
+          </div>
+          <div>
+            <h3 className="font-bold text-lg mb-2">Number 2 — Solvent volume (mL)</h3>
+            <p className="text-ink/80">This is how much bacteriostatic water you add. You choose it. Because it is the only free variable, it sets the concentration and the measurement resolution for everything that follows.</p>
+          </div>
+          <div>
+            <h3 className="font-bold text-lg mb-2">Number 3 — Concentration (mg/mL)</h3>
+            <p className="text-ink/80">Concentration is simply mass divided by volume. It tells you how much peptide sits in each millilitre — and, therefore, in each syringe unit.</p>
+          </div>
+        </div>
+        <div className="bg-zinc-900 text-white p-6 rounded-xl font-mono text-sm my-6">
+          Concentration (mg/mL) = Peptide mass (mg) ÷ Water added (mL)<br /><br />
+          <span className="text-white/60">Example: 10 mg ÷ 2 mL = 5 mg/mL</span><br />
+          <span className="text-white/60">Example: 5 mg ÷ 1 mL = 5 mg/mL (same concentration, half the volume)</span>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8 units-conversion">
+          <strong>The syringe-unit bridge:</strong> Insulin syringes are marked in "units", not millilitres. On a standard U-100 syringe, 100 units = 1 mL. So 0.01 mL = 1 unit. Once you know your mg/mL, you can convert any draw between millilitres and units without guesswork.
+        </div>
+
+        <h2 id="master-chart" className="text-2xl font-semibold text-ink mt-16 mb-6">4. The master reconstitution chart</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-concentration-chart.png" alt="Peptide reconstitution chart showing mg/mL by vial size and water volume" title="Peptide concentration chart infographic" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">Master reconstitution chart: vial size × water added = concentration.</figcaption>
+        </figure>
+        <p className="mb-6">This is the reference the rest of the article builds toward. Read across from your vial size, down from your chosen water volume, and the cell gives the resulting concentration. Every value is mass ÷ volume — nothing more.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <caption className="text-left text-sm text-ink/60 mb-2">Resulting concentration (mg/mL) by vial size and water added</caption>
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Water added ↓ / Vial →</th>
+                <th className="py-3 px-4 font-bold text-ink">5 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">10 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">15 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">20 mg</th>
+                <th className="py-3 px-4 font-bold text-ink">30 mg</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">1 mL</td>
+                <td className="py-3 px-4">5.0</td>
+                <td className="py-3 px-4">10.0</td>
+                <td className="py-3 px-4">15.0</td>
+                <td className="py-3 px-4">20.0</td>
+                <td className="py-3 px-4">30.0</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">2 mL</td>
+                <td className="py-3 px-4">2.5</td>
+                <td className="py-3 px-4">5.0</td>
+                <td className="py-3 px-4">7.5</td>
+                <td className="py-3 px-4">10.0</td>
+                <td className="py-3 px-4">15.0</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">3 mL</td>
+                <td className="py-3 px-4">1.67</td>
+                <td className="py-3 px-4">3.33</td>
+                <td className="py-3 px-4">5.0</td>
+                <td className="py-3 px-4">6.67</td>
+                <td className="py-3 px-4">10.0</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">5 mL</td>
+                <td className="py-3 px-4">1.0</td>
+                <td className="py-3 px-4">2.0</td>
+                <td className="py-3 px-4">3.0</td>
+                <td className="py-3 px-4">4.0</td>
+                <td className="py-3 px-4">6.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>How to read a cell:</strong> A 10 mg vial + 2 mL water = 5 mg/mL. Draw 10 units (0.1 mL) and you have measured 0.5 mg. Draw 20 units (0.2 mL) and you have 1.0 mg. The chart never tells you what to draw — it tells you what each draw contains.
+        </div>
+
+        <h2 id="units-conversion" className="text-2xl font-semibold text-ink mt-16 mb-6">5. How many units is 1 mL, 2 mL &amp; 3 mL of BAC water?</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ml-to-units-bac-water-conversion.png" alt="How many units is 1ml, 2ml and 3ml of bacteriostatic water on a U-100 syringe" title="BAC water mL to units conversion" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">mL-to-units conversion on a standard U-100 insulin syringe.</figcaption>
+        </figure>
+        <p className="mb-6">This single question appears in your search data in dozens of forms. The answer is fixed by the syringe scale, independent of which peptide is inside.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Bacteriostatic water</th>
+                <th className="py-3 px-4 font-bold text-ink">U-100 syringe units</th>
+                <th className="py-3 px-4 font-bold text-ink">As a fraction of a 1 mL syringe</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">0.25 mL</td>
+                <td className="py-3 px-4">25 units</td>
+                <td className="py-3 px-4">One quarter</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">0.5 mL</td>
+                <td className="py-3 px-4">50 units</td>
+                <td className="py-3 px-4">One half</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors bg-cream-warm">
+                <td className="py-3 px-4 font-medium">1 mL</td>
+                <td className="py-3 px-4">100 units</td>
+                <td className="py-3 px-4">Full 1 mL syringe</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">1.5 mL</td>
+                <td className="py-3 px-4">150 units</td>
+                <td className="py-3 px-4">One and a half syringes</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">2 mL</td>
+                <td className="py-3 px-4">200 units</td>
+                <td className="py-3 px-4">Two full syringes</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">3 mL</td>
+                <td className="py-3 px-4">300 units</td>
+                <td className="py-3 px-4">Three full syringes</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">5 mL</td>
+                <td className="py-3 px-4">500 units</td>
+                <td className="py-3 px-4">Five full syringes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>Key conversion:</strong> 1 mL = 100 units on every U-100 insulin syringe. So to fill a vial with 3 mL, you draw and add three full syringes (300 units total). The "units" label describes the volume you move, not the peptide dose.
+        </div>
+
+        <h2 id="choosing-volume" className="text-2xl font-semibold text-ink mt-16 mb-6">6. Choosing your reconstitution volume</h2>
+        <p className="mb-6">Because water volume is the free variable, the choice comes down to a trade-off between resolution and vial capacity. Two principles guide it.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+            <h3 className="font-bold text-ink mb-2">More water = finer resolution</h3>
+            <p className="text-ink/80 text-sm">Adding more solvent spreads the same peptide mass across more units. Each unit then holds less peptide, so small measurements become more precise. Researchers working with tiny target masses often prefer this.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
+            <h3 className="font-bold text-ink mb-2">Less water = higher concentration</h3>
+            <p className="text-ink/80 text-sm">Adding less solvent concentrates the peptide. Each unit holds more, which suits larger target masses and keeps the total liquid volume within a small vial. However, resolution drops, so very small measurements get harder.</p>
+          </div>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>A clean rule of thumb:</strong> Pick a water volume that makes your typical measurement land on a round number of units. Round numbers reduce reading errors at the syringe. The <a className="text-primary underline hover:text-primary-dark" href="/peptide-reconstitution-calculator">reconstitution calculator</a> does this instantly — enter vial size and target mass, and it returns the exact units to draw.
+        </div>
+
+        <h2 id="vial-capacity" className="text-2xl font-semibold text-ink mt-16 mb-6">7. How much water can a peptide vial hold?</h2>
+        <p className="mb-6">Vial capacity caps how much water you can add. A standard 3 mL peptide vial comfortably holds up to about 3 mL, and many so-called "10 mL" vials are only partially filled by design to leave headspace. Always leave a small air gap so pressure stays balanced when you withdraw samples.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Vial size (nominal)</th>
+                <th className="py-3 px-4 font-bold text-ink">Practical working fill</th>
+                <th className="py-3 px-4 font-bold text-ink">Comment</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">3 mL vial</td>
+                <td className="py-3 px-4">Up to ~2.5–3 mL</td>
+                <td className="py-3 px-4">Most common research peptide vial</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">5 mL vial</td>
+                <td className="py-3 px-4">Up to ~4–5 mL</td>
+                <td className="py-3 px-4">Useful when high resolution is needed</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">10 mL vial</td>
+                <td className="py-3 px-4">Up to ~8–10 mL</td>
+                <td className="py-3 px-4">Often over-specified; leave headspace</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="procedure" className="text-2xl font-semibold text-ink mt-16 mb-6">8. The reconstitution procedure, step by step</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/how-to-reconstitute-peptides-steps.png" alt="Step by step how to reconstitute a peptide vial with bacteriostatic water" title="How to reconstitute peptides steps" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">The gentle, no-shake reconstitution sequence.</figcaption>
+        </figure>
+        <p className="mb-6">This is standard aseptic laboratory handling for a lyophilized reference material — see the full <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator-reconstitution-guide">peptide reconstitution guide</a> for extended technique notes. Work on a clean surface with clean hands and fresh supplies.</p>
+        <ol className="list-decimal pl-6 space-y-3 my-6 text-ink/80">
+          <li><strong>Bring both vials to room temperature.</strong> Cold vials can cause condensation and slow dissolution.</li>
+          <li><strong>Wipe both stoppers with an alcohol swab.</strong> Clean the peptide vial and the bacteriostatic water vial before piercing either.</li>
+          <li><strong>Draw your measured water volume.</strong> Use the chart above to fix the volume, then draw it from the bacteriostatic water vial.</li>
+          <li><strong>Add water slowly down the vial wall.</strong> Aim the stream at the glass, not directly onto the peptide cake. This protects fragile peptide chains from shear.</li>
+          <li><strong>Let it dissolve — do not shake.</strong> Swirl gently or leave it to sit. Vigorous shaking can denature or foam the peptide.</li>
+          <li><strong>Confirm a clear solution.</strong> A properly reconstituted vial is clear and particle-free. Cloudiness or specks signal a solubility issue — consider acetic acid water.</li>
+          <li><strong>Label and refrigerate.</strong> Record concentration and date, then store cold. See the stability section next.</li>
+        </ol>
+        <div className="p-4 bg-red-50 border border-red-200 text-red-900 rounded-xl text-sm mb-8">
+          <strong>The one move that ruins vials:</strong> Shaking. Peptides are delicate chains, and aggressive agitation shears them or whips air into the solution. Always swirl; never shake.
+        </div>
+
+        <h2 id="storage-stability" className="text-2xl font-semibold text-ink mt-16 mb-6">9. Storage &amp; stability after reconstitution</h2>
+        <figure className="my-8">
+          <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/reconstituted-peptide-storage.png" alt="Reconstituted research peptides in cold storage for stability" title="Reconstituted peptide storage" className="w-full rounded-2xl shadow-sm border border-ink/5" />
+          <figcaption className="text-center text-sm text-ink/60 mt-3 italic">Refrigerate reconstituted peptides to slow degradation.</figcaption>
+        </figure>
+        <p className="mb-4">Once in solution, a peptide is far less stable than the dry powder. Handling from here decides how long the material stays usable for research.</p>
+        <ul className="list-disc pl-6 space-y-3 my-6 text-ink/80">
+          <li><strong>Refrigerate reconstituted vials.</strong> Cold storage slows degradation dramatically compared with room temperature.</li>
+          <li><strong>Bacteriostatic water buys time.</strong> Its preservative is why reconstituted vials tolerate repeated sampling over weeks rather than days.</li>
+          <li><strong>Protect from light and heat.</strong> Both accelerate breakdown of many peptide chains.</li>
+          <li><strong>Freeze only when appropriate.</strong> Some peptides tolerate a single freeze; repeated freeze-thaw cycles damage most. Verify per compound.</li>
+        </ul>
+        <p className="mb-8">For the full protocol — temperatures, timelines, and freeze-thaw specifics — see the dedicated <a className="text-primary underline hover:text-primary-dark" href="/reconstituted-peptide-stability-storage">storage guide</a> and our <a className="text-primary underline hover:text-primary-dark" href="/research-peptide-storage-best-practices">storage best practices</a> reference, backed by <a className="text-primary underline hover:text-primary-dark" href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">peptide stability research</a> in the peer-reviewed literature.</p>
+
+        <h2 id="compound-examples" className="text-2xl font-semibold text-ink mt-16 mb-6">10. Compound-specific reconstitution examples</h2>
+        <p className="mb-6">Different research peptides ship in different vial sizes and have different solubility quirks. The table below shows example preparations — vial size, an example water volume, and the resulting concentration. These are measurement examples only; they are not administration guidance.</p>
+        <div className="overflow-x-auto my-6">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-ink/20">
+                <th className="py-3 px-4 font-bold text-ink">Compound (RUO)</th>
+                <th className="py-3 px-4 font-bold text-ink">Common vial</th>
+                <th className="py-3 px-4 font-bold text-ink">Example water</th>
+                <th className="py-3 px-4 font-bold text-ink">Resulting conc.</th>
+                <th className="py-3 px-4 font-bold text-ink">Handling note</th>
+              </tr>
+            </thead>
+            <tbody className="text-ink/80 text-sm md:text-base">
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/retatrutide-peptide-research-guide">Retatrutide</a></td>
+                <td className="py-3 px-4">5–15 mg</td>
+                <td className="py-3 px-4">2 mL</td>
+                <td className="py-3 px-4">2.5–7.5 mg/mL</td>
+                <td className="py-3 px-4">Investigational triple-agonist; dissolves readily in BAC water</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/tesamorelin-visceral-fat-research">Tesamorelin</a></td>
+                <td className="py-3 px-4">5–10 mg</td>
+                <td className="py-3 px-4">2 mL</td>
+                <td className="py-3 px-4">2.5–5 mg/mL</td>
+                <td className="py-3 px-4">Standard BAC water reconstitution</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/ghk-cu-copper-peptide-research-guide">GHK-Cu</a></td>
+                <td className="py-3 px-4">50 mg</td>
+                <td className="py-3 px-4">5 mL</td>
+                <td className="py-3 px-4">10 mg/mL</td>
+                <td className="py-3 px-4">May need acetic acid water if it will not clear</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">BPC-157</td>
+                <td className="py-3 px-4">5–10 mg</td>
+                <td className="py-3 px-4">2 mL</td>
+                <td className="py-3 px-4">2.5–5 mg/mL</td>
+                <td className="py-3 px-4">Dissolves cleanly; swirl, do not shake</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium"><a className="text-primary underline hover:text-primary-dark" href="/klow-peptide-blend-research-guide-2026">KLOW blend</a></td>
+                <td className="py-3 px-4">~80 mg total</td>
+                <td className="py-3 px-4">3–5 mL</td>
+                <td className="py-3 px-4">~16–27 mg/mL</td>
+                <td className="py-3 px-4">Multi-peptide blend; use larger volume for resolution</td>
+              </tr>
+              <tr className="border-b border-ink/5 hover:bg-cream-warm transition-colors">
+                <td className="py-3 px-4 font-medium">SS-31 (elamipretide)</td>
+                <td className="py-3 px-4">50 mg</td>
+                <td className="py-3 px-4">5 mL</td>
+                <td className="py-3 px-4">10 mg/mL</td>
+                <td className="py-3 px-4">Standard BAC water reconstitution</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl text-sm text-ink/80 mb-8">
+          <strong>Reminder:</strong> Retatrutide remains investigational — it is in <a className="text-primary underline hover:text-primary-dark" href="https://clinicaltrials.gov/" target="_blank" rel="noopener noreferrer">Phase 3 trials (TRIUMPH program)</a> and is not approved for human use as of 2026. All figures above describe how a laboratory prepares a reference solution, not a protocol for administration.
+        </div>
+
+        <h2 id="mistakes" className="text-2xl font-semibold text-ink mt-16 mb-6">11. Common reconstitution mistakes</h2>
+        <ul className="list-disc pl-6 space-y-3 my-6 text-ink/80">
+          <li><strong>Shaking instead of swirling.</strong> The single most damaging habit — it shears peptide chains.</li>
+          <li><strong>Squirting water onto the cake.</strong> Aim at the glass wall to protect the peptide.</li>
+          <li><strong>Guessing the volume.</strong> Eyeballing wrecks concentration accuracy. Use the calculator.</li>
+          <li><strong>Confusing units with dose.</strong> "Units" measure liquid volume, not peptide mass. Only concentration links the two.</li>
+          <li><strong>Using plain water for a sticky peptide.</strong> If it will not clear, switch to acetic acid water.</li>
+          <li><strong>Storing warm.</strong> Reconstituted peptides degrade fast at room temperature.</li>
+        </ul>
+
+        <h2 id="takeaways" className="text-2xl font-semibold text-ink mt-16 mb-6">12. Key takeaways</h2>
+        <div className="p-6 bg-cream-warm border border-ink/10 rounded-2xl mb-8">
+          <p className="font-bold text-ink mb-3">Remember these six</p>
+          <ul className="space-y-2 text-ink/80 text-sm">
+            <li>▸ Concentration (mg/mL) = peptide mass ÷ water added. That one equation runs everything.</li>
+            <li>▸ 1 mL of bacteriostatic water = 100 units on a U-100 syringe. Volume, not dose.</li>
+            <li>▸ More water = finer resolution; less water = higher concentration. You choose.</li>
+            <li>▸ Bacteriostatic water is the default; acetic acid water rescues sticky peptides.</li>
+            <li>▸ Swirl, never shake — and add water down the glass wall.</li>
+            <li>▸ Refrigerate after reconstitution, and verify every number with the calculator.</li>
+          </ul>
+        </div>
+
+        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Conclusion</h2>
+        <p className="mb-8">Reconstitution is not guesswork — it is arithmetic. Once you see a vial as a fixed mass and the water as your one free variable, the charts above answer almost any "how much" or "how many units" question in seconds. Choose your volume, add it gently, store it cold, and record the concentration.</p>
+
+        <div className="my-12 p-8 bg-zinc-900 rounded-2xl text-center">
+          <h3 className="text-xl font-bold font-serif text-white mb-4">Run your exact numbers</h3>
+          <p className="text-white/70 mb-6 max-w-xl mx-auto text-sm">Skip the mental math. Enter your vial size and target mass into the 99 Purity Peptides <a className="text-gold underline hover:text-gold/80" href="/peptide-calculator">peptide calculator</a> and <a className="text-gold underline hover:text-gold/80" href="/peptide-reconstitution-calculator">reconstitution calculator</a> — they return the precise water volume and syringe units instantly, in millilitres or units. Then explore the <a className="text-gold underline hover:text-gold/80" href="/shop">research catalog</a> for third-party-tested, 99%-purity compounds and the correct bacteriostatic and acetic-acid water.</p>
+        </div>
+
+        <hr className="border-t border-ink/10 my-16" />
+
+        <h2 id="faq" className="text-2xl font-semibold text-ink mb-6">Frequently Asked Questions</h2>
+        <div className="space-y-6">
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How much bacteriostatic water do I use to reconstitute a 10 mg peptide?</h3>
+            <p className="text-ink/80 text-sm">It depends on the concentration you want. Adding 1 mL gives 10 mg/mL, and adding 2 mL gives 5 mg/mL. The mass stays fixed at 10 mg; the water volume you choose sets the concentration. Use a peptide calculator to match your target measurement.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How many units is 1 mL of bacteriostatic water?</h3>
+            <p className="text-ink/80 text-sm">On a standard U-100 insulin syringe, 1 mL equals 100 units. This ratio is fixed by the syringe scale and does not depend on which peptide is in the vial.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How many units is 2 mL of bacteriostatic water?</h3>
+            <p className="text-ink/80 text-sm">2 mL equals 200 units on a U-100 insulin syringe, or two full 1 mL syringes drawn and added to the vial.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How many units is 3 mL of bacteriostatic water?</h3>
+            <p className="text-ink/80 text-sm">3 mL equals 300 units on a U-100 insulin syringe — three full syringes. "Units" here describe the liquid volume, not the peptide mass.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What is bacteriostatic water?</h3>
+            <p className="text-ink/80 text-sm">Bacteriostatic water is sterile water containing 0.9% benzyl alcohol, a preservative that slows microbial growth. That property makes it the preferred solvent for peptide vials that will be sampled repeatedly over several weeks.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What is the difference between bacteriostatic and sterile water?</h3>
+            <p className="text-ink/80 text-sm">Sterile water has no preservative, while bacteriostatic water contains 0.9% benzyl alcohol. The preservative lets bacteriostatic water resist contamination during repeated draws, so it suits multi-use research vials better.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">When should I use acetic acid water instead?</h3>
+            <p className="text-ink/80 text-sm">Use acetic acid water (typically 0.6%) when a peptide will not fully dissolve in plain bacteriostatic water. Its mild acidity helps break up aggregates in "sticky" peptides such as some GHK-Cu preparations.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How do I calculate peptide concentration?</h3>
+            <p className="text-ink/80 text-sm">Divide the peptide mass by the water volume: concentration (mg/mL) = mg ÷ mL. For example, 10 mg dissolved in 2 mL gives 5 mg/mL.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What does mg/mL mean in peptide reconstitution?</h3>
+            <p className="text-ink/80 text-sm">It is the concentration — how many milligrams of peptide sit in each millilitre of solution. It links the fixed peptide mass to any volume you later measure.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How do I convert millilitres to insulin units?</h3>
+            <p className="text-ink/80 text-sm">Multiply millilitres by 100 on a U-100 syringe. So 0.1 mL is 10 units, 0.5 mL is 50 units, and 1 mL is 100 units.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Should I shake the vial to dissolve the peptide?</h3>
+            <p className="text-ink/80 text-sm">No. Shaking can shear delicate peptide chains and introduce foam. Swirl gently or let the vial sit until the solution turns clear.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Where should I add the water in the vial?</h3>
+            <p className="text-ink/80 text-sm">Aim the stream down the inside glass wall rather than directly onto the peptide cake. This gentler contact protects the peptide during reconstitution.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How much water can a peptide vial hold?</h3>
+            <p className="text-ink/80 text-sm">A common 3 mL vial holds up to roughly 2.5–3 mL; larger vials hold more. Always leave a small headspace so pressure stays balanced during withdrawal.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How long do reconstituted peptides last?</h3>
+            <p className="text-ink/80 text-sm">Stability varies by compound, but reconstituted peptides degrade faster than dry powder. Refrigeration and the preservative in bacteriostatic water extend usable life to weeks for many peptides. Check compound-specific guidance.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Do I need to refrigerate reconstituted peptides?</h3>
+            <p className="text-ink/80 text-sm">Yes. Cold storage slows degradation significantly compared with room temperature. Keep vials cold, dark, and protected from heat.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Can I freeze reconstituted peptides?</h3>
+            <p className="text-ink/80 text-sm">Some peptides tolerate a single freeze, but repeated freeze-thaw cycles damage most. Verify per compound before freezing any reconstituted solution.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What happens if I add too much water?</h3>
+            <p className="text-ink/80 text-sm">Nothing is ruined — you simply get a lower concentration. Each unit then holds less peptide, which improves measurement resolution but fills more of the vial.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What happens if I add too little water?</h3>
+            <p className="text-ink/80 text-sm">You get a higher concentration, so each unit holds more peptide. Resolution drops, making very small measurements harder to read accurately.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Is bacteriostatic water the same as saline?</h3>
+            <p className="text-ink/80 text-sm">No. Saline is a salt solution; bacteriostatic water is preservative-containing sterile water. They are not interchangeable for peptide reconstitution.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Why is my reconstituted peptide cloudy?</h3>
+            <p className="text-ink/80 text-sm">Cloudiness or visible specks usually mean the peptide has not fully dissolved. Try gentle swirling, and if it persists, switch to acetic acid water.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How much bacteriostatic water for a 5 mg peptide?</h3>
+            <p className="text-ink/80 text-sm">Adding 1 mL gives 5 mg/mL and adding 2 mL gives 2.5 mg/mL. Choose the volume that makes your target measurement land on a round number of units.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How much bacteriostatic water for a 15 mg peptide?</h3>
+            <p className="text-ink/80 text-sm">1 mL gives 15 mg/mL, 2 mL gives 7.5 mg/mL, and 3 mL gives 5 mg/mL. The larger the volume, the finer the resolution.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How much bacteriostatic water for a 20 mg peptide?</h3>
+            <p className="text-ink/80 text-sm">1 mL gives 20 mg/mL, 2 mL gives 10 mg/mL, and 5 mL gives 4 mg/mL. Pick a volume within your vial capacity that suits your measurement.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Does the peptide amount change when I add water?</h3>
+            <p className="text-ink/80 text-sm">No. The peptide mass printed on the label is fixed. Water only changes the concentration and the volume, never the total milligrams.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What syringe is used for peptide reconstitution?</h3>
+            <p className="text-ink/80 text-sm">A standard U-100 insulin syringe, marked in units where 100 units equal 1 mL, is typical for measuring small research volumes precisely.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What does "units" mean on an insulin syringe?</h3>
+            <p className="text-ink/80 text-sm">Units are a volume scale: 100 units equal 1 mL on a U-100 syringe. They measure how much liquid you move, not how much peptide it contains.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How do I reconstitute GHK-Cu?</h3>
+            <p className="text-ink/80 text-sm">A 50 mg <a className="text-primary underline hover:text-primary-dark" href="/ghk-cu-copper-peptide-research-guide">GHK-Cu</a> vial dissolved in 5 mL yields 10 mg/mL. If it will not clear in plain bacteriostatic water, acetic acid water often helps.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How do I reconstitute retatrutide?</h3>
+            <p className="text-ink/80 text-sm">As a laboratory reference material, a 5–15 mg <a className="text-primary underline hover:text-primary-dark" href="/retatrutide-peptide-research-guide">retatrutide</a> vial in 2 mL of bacteriostatic water gives 2.5–7.5 mg/mL. Retatrutide is investigational and not approved for human use.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How do I reconstitute the KLOW blend?</h3>
+            <p className="text-ink/80 text-sm">KLOW is a multi-peptide blend of roughly 80 mg total, so a larger volume of 3–5 mL improves measurement resolution across the blend. See the <a className="text-primary underline hover:text-primary-dark" href="/klow-peptide-blend-research-guide-2026">KLOW research guide</a> for composition.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Can I use tap or distilled water?</h3>
+            <p className="text-ink/80 text-sm">No. Only sterile solvents such as bacteriostatic water, sterile water for injection, or acetic acid water are appropriate. Tap and distilled water are not sterile.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Is reconstitution the same as dosing?</h3>
+            <p className="text-ink/80 text-sm">No. Reconstitution prepares a solution of known concentration; it does not determine any dose. This guide covers laboratory preparation only, under research-use-only terms.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How do I know the peptide fully dissolved?</h3>
+            <p className="text-ink/80 text-sm">A properly reconstituted vial is completely clear and free of particles. Any haze, film, or floating specks indicates incomplete dissolution.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What is the shelf life of unopened peptide powder?</h3>
+            <p className="text-ink/80 text-sm">Lyophilized powder stored cold and sealed is stable for months to years depending on the compound — far longer than the reconstituted solution.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Why do peptides come as powder?</h3>
+            <p className="text-ink/80 text-sm">Freeze-drying removes water so the peptide stays stable during shipping and storage. Reconstitution simply returns it to a usable liquid state.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">How much peptide is in 10 units of a 5 mg/mL solution?</h3>
+            <p className="text-ink/80 text-sm">10 units equal 0.1 mL, and at 5 mg/mL that contains 0.5 mg of peptide. Concentration is what converts volume into mass.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Can I reconstitute two peptides in one vial?</h3>
+            <p className="text-ink/80 text-sm">Only pre-formulated blends are designed for that. Combining separate single peptides risks solubility and stability problems and is not advised.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Does bacteriostatic water expire?</h3>
+            <p className="text-ink/80 text-sm">Yes. It carries an expiry date, and an opened vial has a limited in-use period. Use in-date, uncontaminated solvent for every reconstitution.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">What purity should a research peptide be?</h3>
+            <p className="text-ink/80 text-sm">Reputable suppliers publish third-party <a className="text-primary underline hover:text-primary-dark" href="/certificates">certificates of analysis</a> confirming purity, commonly 99%. Always check the COA before reconstituting.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Is a peptide calculator accurate?</h3>
+            <p className="text-ink/80 text-sm">A calculator applies the exact concentration equation, removing arithmetic error. Enter vial size, target mass, and water volume, and it returns the precise units to measure.</p>
+          </div>
+          <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 faq-answer">
+            <h3 className="font-bold text-lg mb-2">Why does my peptide foam when I mix it?</h3>
+            <p className="text-ink/80 text-sm">Foaming comes from shaking or agitation, which whips air into the solution and can damage the peptide. Swirl gently and let it settle instead.</p>
+          </div>
         </div>
       </>
     )
@@ -616,7 +1176,7 @@ export const BLOG_POSTS: {
     date: 'May 16, 2026',
     readTime: '10 min read',
     excerpt: 'Discover the top science-backed collagen peptides benefits for skin, joints, bone, and muscle. Research-grade hydrolyzed collagen available at 99 Purity Peptides.',
-    imageSrc: '/99 Blog Images/collagen-peptides-benefits-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-hero.webp',
     content: (
       <>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introduction</h2>
@@ -627,7 +1187,7 @@ export const BLOG_POSTS: {
         <p className="mb-4">This guide answers exactly that. You will find a complete breakdown of collagen peptides benefits backed by peer-reviewed research, a clear explanation of how collagen peptides work at the cellular level, and practical guidance for researchers and health-conscious adults who want to make informed decisions.</p>
         <p className="mb-4">At 99 Purity Peptides, we supply research-grade hydrolyzed collagen peptides with verified purity — because the quality of your peptides determines the quality of your results.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-benefits-inline-1.webp" alt="Diagram showing collagen protein fibers breaking down into hydrolyzed collagen peptides dissolved in water" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-inline-1.webp" alt="Diagram showing collagen protein fibers breaking down into hydrolyzed collagen peptides dissolved in water" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">What Are Collagen Peptides?</h2>
         <p className="mb-4">Collagen peptides are short-chain amino acids derived from the enzymatic hydrolysis of full-length collagen protein. This process — called hydrolyzation — breaks collagen's long triple-helix structure into smaller, rapidly absorbed fragments called peptides.</p>
@@ -736,7 +1296,7 @@ export const BLOG_POSTS: {
             </table>
         </div>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-benefits-inline-2.webp" alt="Comparison of collagen peptides versus whey and plant protein powders showing hydration, joint, and digestive benefits" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-inline-2.webp" alt="Comparison of collagen peptides versus whey and plant protein powders showing hydration, joint, and digestive benefits" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Are Collagen Peptides Safe?</h2>
         </ul>
@@ -767,7 +1327,7 @@ export const BLOG_POSTS: {
             <li><strong>Cellulite reduction:</strong> A 2015 study found significant improvement in skin texture and reduced cellulite appearance after 6 months of collagen peptide supplementation</li>
             <li><strong>Hormonal collagen decline:</strong> Estrogen plays a role in collagen synthesis; supplementation may partially offset postmenopausal collagen loss</li>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-benefits-inline-3.webp" alt="Collagen peptide absorption pathway illustration showing effects on skin, joints, bone density, and gut lining" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-inline-3.webp" alt="Collagen peptide absorption pathway illustration showing effects on skin, joints, bone density, and gut lining" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Collagen Peptides for Men: Emerging Research</h2>
         </ul>
@@ -913,7 +1473,7 @@ export const BLOG_POSTS: {
     date: 'May 21, 2026',
     readTime: '12 min read',
     excerpt: 'Retatrutide peptide explained: triple-agonist mechanism, Phase 3 TRIUMPH-1 data, FDA status, and lab handling. A neutral, research-use-only reference.',
-    imageSrc: '/99 Blog Images/retatrutide-peptide-research-guide-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-hero.webp',
     content: (
       <>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introduction</h2>
@@ -923,26 +1483,26 @@ export const BLOG_POSTS: {
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
             <strong>Quick Facts: Retatrutide at a Glance</strong><br/>
             <ul className="list-disc pl-6 mt-2">
-                <li>&lt;strong&gt;Definition:&lt;/strong&gt; Retatrutide (LY3437943) is an investigational peptide that activates three metabolic receptors — GIP, GLP-1, and glucagon — through a single molecule [1][3].</li>
-                <li>&lt;strong&gt;Mechanism:&lt;/strong&gt; It is the first compound in clinical development to act simultaneously on all three of those receptors, which investigators describe as triple agonism [3][4].</li>
-                <li>&lt;strong&gt;Trial status (May 2026):&lt;/strong&gt; Eli Lilly reported positive topline results from the Phase 3 TRIUMPH-1 obesity trial on May 21, 2026, with mean weight reduction of 28.3% at 80 weeks on the 12 mg arm [1][2].</li>
-                <li>&lt;strong&gt;Regulatory status:&lt;/strong&gt; Retatrutide is not approved by the FDA, EMA, or any other regulatory body, and the FDA has explicitly stated it cannot be used in compounding under federal law [5][6].</li>
+                <li><strong>Definition:</strong> Retatrutide (LY3437943) is an investigational peptide that activates three metabolic receptors — GIP, GLP-1, and glucagon — through a single molecule [1][3].</li>
+                <li><strong>Mechanism:</strong> It is the first compound in clinical development to act simultaneously on all three of those receptors, which investigators describe as triple agonism [3][4].</li>
+                <li><strong>Trial status (May 2026):</strong> Eli Lilly reported positive topline results from the Phase 3 TRIUMPH-1 obesity trial on May 21, 2026, with mean weight reduction of 28.3% at 80 weeks on the 12 mg arm [1][2].</li>
+                <li><strong>Regulatory status:</strong> Retatrutide is not approved by the FDA, EMA, or any other regulatory body, and the FDA has explicitly stated it cannot be used in compounding under federal law [5][6].</li>
             </ul>
         </blockquote>
         <p className="mb-4">The article is structured so a reader can move from a baseline definition to mechanism, then to the trial data, then to a like-for-like comparison with tirzepatide and <a className="text-primary underline hover:text-primary-dark" href="/product/semaglutide">semaglutide</a>, and finally to the regulatory and laboratory-handling questions that researchers most often ask. Every clinical figure cited below is drawn from a primary source listed at the end. Nothing here constitutes a therapeutic recommendation, and retatrutide as discussed in this guide refers exclusively to material supplied as a research reference standard, not a medicine.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-peptide-research-guide-inline-1.webp" alt="Retatrutide research peptide vial and lyophilized powder alongside molecular ball-and-stick structure diagram" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-inline-1.webp" alt="Retatrutide research peptide vial and lyophilized powder alongside molecular ball-and-stick structure diagram" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">What Is Retatrutide?</h2>
         <p className="mb-4">Retatrutide is a synthetic peptide of 39 amino acids, with several non-natural residues and a fatty acid conjugation that extends its half-life sufficiently to support once-weekly subcutaneous dosing in clinical trials [3][4]. The molecule is best understood not by its sequence alone but by its receptor target set: it binds and activates the glucose-dependent insulinotropic polypeptide receptor, the glucagon-like peptide-1 receptor, and the glucagon receptor [3]. Each of those receptors regulates a different lever of human energy metabolism, and combining them in one molecule is the mechanistic rationale that distinguishes retatrutide from earlier-generation incretin peptides [3][4].</p>
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">The "Reta" Nickname Explained</h3>
         <p className="mb-4">In forum and search-engine data, "reta" is the shorthand researchers and laypeople have adopted for retatrutide, in the same way "tirz" emerged for <a className="text-primary underline hover:text-primary-dark" href="/product/tirzepatide">tirzepatide</a> and "sema" for semaglutide [7]. The nickname appears across rising-search data and across community posts; for clarity, this guide uses the full name "retatrutide" except where citing how a query is phrased.</p>
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Chemical Structure and Amino Acid Sequence</h3>
-        <p className="mb-4">The published sequence carries several modifications relative to native GLP-1: 2-aminoisobutyric acid substitutions to resist enzymatic cleavage, an Î±-methyl-leucine to alter conformation, a serinamide C-terminus, and a fatty-acid attachment that supports albumin binding for extended duration of action [3][4]. The full peptide sequence and the chemical identity of each modified residue are documented in the publicly available technical literature, including a detailed entry on the compound in published reference databases [3].</p>
+        <p className="mb-4">The published sequence carries several modifications relative to native GLP-1: 2-aminoisobutyric acid substitutions to resist enzymatic cleavage, an α-methyl-leucine to alter conformation, a serinamide C-terminus, and a fatty-acid attachment that supports albumin binding for extended duration of action [3][4]. The full peptide sequence and the chemical identity of each modified residue are documented in the publicly available technical literature, including a detailed entry on the compound in published reference databases [3].</p>
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Development by Eli Lilly (LY3437943)</h3>
         <p className="mb-4">Retatrutide is internally designated LY3437943 within Eli Lilly's pipeline [1][3]. It originated as part of Lilly's program to extend the dual-agonist concept proven by tirzepatide into a triple-agonist class, and it is the first such molecule to advance into Phase 3 in any indication [1][3][4].</p>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Retatrutide is Eli Lilly's investigational triple hormone receptor agonist, designated LY3437943. It is a structurally modified 39-amino-acid peptide engineered for once-weekly subcutaneous delivery in clinical trials.</p>
+            <p className="mt-2"><strong>Section summary.</strong> Retatrutide is Eli Lilly's investigational triple hormone receptor agonist, designated LY3437943. It is a structurally modified 39-amino-acid peptide engineered for once-weekly subcutaneous delivery in clinical trials.</p>
         </blockquote>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Mechanism of Action — Why Retatrutide Is Called a "Triple Agonist"</h2>
         <p className="mb-4">Investigators classify retatrutide as a triple agonist because the same molecule activates three distinct G-protein-coupled receptors that regulate human metabolism [3][4]. The downstream physiological effects observed in trials reflect the combined signaling of all three pathways rather than any one of them in isolation [3][4][8].</p>
@@ -996,10 +1556,10 @@ export const BLOG_POSTS: {
             </table>
         </div>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Retatrutide activates GLP-1, GIP, and glucagon receptors in one molecule, distinguishing it from single agonists like semaglutide and dual agonists like tirzepatide. In published Phase 3 data, the triple-agonist mechanism is associated with the largest mean weight reductions of any GLP-1-class compound reported to date.</p>
+            <p className="mt-2"><strong>Section summary.</strong> Retatrutide activates GLP-1, GIP, and glucagon receptors in one molecule, distinguishing it from single agonists like semaglutide and dual agonists like tirzepatide. In published Phase 3 data, the triple-agonist mechanism is associated with the largest mean weight reductions of any GLP-1-class compound reported to date.</p>
         </blockquote>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-peptide-research-guide-inline-2.webp" alt="Molecular structure diagram of retatrutide highlighting GLP-1R, GIPR, and GCGR receptor binding regions" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-inline-2.webp" alt="Molecular structure diagram of retatrutide highlighting GLP-1R, GIPR, and GCGR receptor binding regions" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Current Clinical Trial Status (Updated May 2026)</h2>
         <p className="mb-4">The TRIUMPH and TRANSCEND-T2D programs are Eli Lilly's parallel Phase 3 readouts for retatrutide. As of May 2026, three pivotal readouts have been reported, with additional results expected through the remainder of 2026 [1][2][8][10].</p>
@@ -1014,10 +1574,10 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Reported Adverse Events in Trial Data</h3>
         <p className="mb-4">Across the retatrutide trial program, gastrointestinal adverse events — nausea, vomiting, and diarrhea — were the most frequently reported, consistent with the broader GLP-1 receptor agonist class [3][4]. In TRIUMPH-1, treatment discontinuations due to adverse events occurred at 4.1%, 6.9%, and 11.3% on the 4 mg, 9 mg, and 12 mg arms respectively, compared with 4.9% on placebo [2]. In TRIUMPH-4 the discontinuation rates were higher, which investigators noted correlated with baseline BMI and with discontinuations for perceived excessive weight loss [10]. Lilly indicated that detailed safety data would be presented at the American Diabetes Association Scientific Sessions in June 2026 [1][2].</p>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Phase 3 results reported through May 2026 show retatrutide produced mean weight loss of up to 28.3% at 80 weeks and 30.3% at 104 weeks in non-diabetic populations, with gastrointestinal adverse events the most common reported safety signal. Additional Phase 3 readouts in diabetes, cardiovascular disease, and several other indications are scheduled through 2026.</p>
+            <p className="mt-2"><strong>Section summary.</strong> Phase 3 results reported through May 2026 show retatrutide produced mean weight loss of up to 28.3% at 80 weeks and 30.3% at 104 weeks in non-diabetic populations, with gastrointestinal adverse events the most common reported safety signal. Additional Phase 3 readouts in diabetes, cardiovascular disease, and several other indications are scheduled through 2026.</p>
         </blockquote>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-peptide-research-guide-inline-3.webp" alt="Retatrutide molecule diagram showing binding interactions with GLP-1, GIP, and glucagon receptor structures" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-inline-3.webp" alt="Retatrutide molecule diagram showing binding interactions with GLP-1, GIP, and glucagon receptor structures" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Retatrutide vs Tirzepatide vs Semaglutide</h2>
         <p className="mb-4">Three compounds dominate current GLP-1-class research conversation: semaglutide (single agonist), tirzepatide (dual agonist), and retatrutide (triple agonist) [3][4][9]. They are best compared by mechanism, by published trial efficacy, and by reported tolerability — and across all three dimensions the differences track with the number of receptors engaged [3][4][9].</p>
@@ -1079,7 +1639,7 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Side Effect Profile in Trials</h3>
         <p className="mb-4">Reported side effects across all three compounds are dominated by gastrointestinal events [3][4][10]. The published TRIUMPH-1 and TRIUMPH-4 data suggest discontinuation rates due to adverse events climb with dose, and that the 12 mg arm of retatrutide has shown the highest discontinuation figures of the three compounds at their respective top doses in published Phase 3 trials [2][10]. Investigators have suggested that this rate is partly explained by patients reaching weight loss thresholds at which they themselves chose to discontinue [10].</p>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Across pivotal Phase 3 trials, mean weight loss has scaled with the number of receptors a compound engages: semaglu</p>
+            <p className="mt-2"><strong>Section summary.</strong> Across pivotal Phase 3 trials, mean weight loss has scaled with the number of receptors a compound engages: semaglu</p>
         </blockquote>
         <p className="mb-4">tide (single agonist) at 14.9%, tirzepatide (dual agonist) at 22.5%, and retatrutide (triple agonist) at 28.3% over 80 weeks. Gastrointestinal events dominate the reported tolerability profile of all three.</p>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Regulatory and Legal Status</h2>
@@ -1093,7 +1653,7 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Legal Considerations for Researchers</h3>
         <p className="mb-4">For laboratories purchasing retatrutide as a chemical reference standard, the relevant compliance considerations are well-defined: the material must be labeled and sold strictly for laboratory research, must not bear instructions for human administration, must be supported by a Certificate of Analysis, and must be stored and handled under standard research-laboratory protocols. The legal exposure created by the September 2025 and March 2026 enforcement actions is concentrated where vendors blurred the line between research-use supply and consumer-directed marketing [5][14][15][16].</p>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Retatrutide is not FDA-approved and cannot lawfully be used in compounding under U.S. federal law. The FDA's September 2025 and March 2026 enforcement actions establish that "research use only" labeling does not exempt a product from federal requirements when it is in fact marketed for human use.</p>
+            <p className="mt-2"><strong>Section summary.</strong> Retatrutide is not FDA-approved and cannot lawfully be used in compounding under U.S. federal law. The FDA's September 2025 and March 2026 enforcement actions establish that "research use only" labeling does not exempt a product from federal requirements when it is in fact marketed for human use.</p>
         </blockquote>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Handling Retatrutide in a Research Setting</h2>
         <p className="mb-4">This section describes the laboratory handling of retatrutide reference material as it is documented in published peptide research protocols. It is not, and is not intended as, instruction for human or animal administration.</p>
@@ -1104,7 +1664,7 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Common Concentrations Used in Published Research</h3>
         <p className="mb-4">The concentrations used in published preclinical and analytical retatrutide research vary by application — chromatographic characterization, receptor binding assays, and pharmacokinetic studies each call for different working concentrations. The Phase 3 trial program tested 4 mg, 9 mg, and 12 mg per once-weekly subcutaneous dose in human participants [1][2], and analytical work is typically referenced to those clinical concentrations even though laboratory protocols use much lower working dilutions for in vitro analysis.</p>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Laboratory handling of retatrutide reference material follows standard peptide-chemistry practice: bacteriostatic water reconstitution, –20 °C lyophilized storage, and analytical characterization against a Certificate of Analysis before use. None of the handling described constitutes instruction for human administration.</p>
+            <p className="mt-2"><strong>Section summary.</strong> Laboratory handling of retatrutide reference material follows standard peptide-chemistry practice: bacteriostatic water reconstitution, –20 °C lyophilized storage, and analytical characterization against a Certificate of Analysis before use. None of the handling described constitutes instruction for human administration.</p>
         </blockquote>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Sourcing Research-Grade Retatrutide</h2>
         <p className="mb-4">The retatrutide research-supply landscape in 2026 is shaped both by demand for the compound and by the FDA's enforcement posture [5][14][15][16].</p>
@@ -1115,7 +1675,7 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Red Flags When Evaluating a Peptide Vendor</h3>
         <p className="mb-4">Suppliers whose labeling or website language implies human use, suggests therapeutic effects, or markets the compound by comparison to FDA-approved drugs were the focus of the FDA's enforcement actions in 2025 and 2026 [5][14][15][16]. Other indicators worth weighing include the absence of a batch-specific CoA, the absence of third-party analytical verification, the absence of a documented U.S. shipping and warehousing chain, and pricing significantly below the analytical-cost floor of producing a research-grade peptide.</p>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Sourcing research-grade retatrutide reasonably means buying material that is labeled and sold strictly as a reference standard, accompanied by a batch-specific Certificate of Analysis, with documented HPLC and mass spectrometry verification. Vendors whose marketing implies human use carry both legal and quality risk.</p>
+            <p className="mt-2"><strong>Section summary.</strong> Sourcing research-grade retatrutide reasonably means buying material that is labeled and sold strictly as a reference standard, accompanied by a batch-specific Certificate of Analysis, with documented HPLC and mass spectrometry verification. Vendors whose marketing implies human use carry both legal and quality risk.</p>
         </blockquote>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">The Future of Triple-Agonist Peptide Research</h2>
         <p className="mb-4">The trajectory of metabolic peptide research, viewed across the published literature, is toward broader receptor coverage in single molecules and toward combination protocols using complementary mechanisms [4][11].</p>
@@ -1124,7 +1684,7 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Four-Receptor Compounds in Early Development</h3>
         <p className="mb-4">Earlier-stage research on four-receptor agonists — adding amylin receptor activity to GLP-1, GIP, and glucagon activity — has appeared in preclinical literature [4]. None has yet entered Phase 3, and triple agonism remains the most-watched class in current clinical-trial publication.</p>
         <blockquote className="border-l-4 border-gold pl-4 py-2 my-6 bg-cream-warm italic">
-            <p className="mt-2">&lt;strong&gt;Section summary.&lt;/strong&gt; Retatrutide sits at the leading edge of a research trajectory toward broader receptor coverage in metabolic peptides. Combination formulations like CagriSema and earlier-stage four-receptor compounds illustrate the directions the field is moving next.</p>
+            <p className="mt-2"><strong>Section summary.</strong> Retatrutide sits at the leading edge of a research trajectory toward broader receptor coverage in metabolic peptides. Combination formulations like CagriSema and earlier-stage four-receptor compounds illustrate the directions the field is moving next.</p>
         </blockquote>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Key Takeaways</h2>
         <ul className="list-disc pl-6 space-y-4 my-6">
@@ -1148,7 +1708,7 @@ export const BLOG_POSTS: {
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">What is the chemical structure of retatrutide?</h3>
-                <p className="text-ink/80 text-sm">Retatrutide is a 39-amino-acid peptide containing several non-natural residues — including 2-aminoisobutyric acid and an Î±-methyl-leucine — along with a serinamide C-terminal modification and a fatty acid attachment that supports a once-weekly dosing interval in trials. The complete sequence is documented in published technical references [3]. </p>
+                <p className="text-ink/80 text-sm">Retatrutide is a 39-amino-acid peptide containing several non-natural residues — including 2-aminoisobutyric acid and an α-methyl-leucine — along with a serinamide C-terminal modification and a fatty acid attachment that supports a once-weekly dosing interval in trials. The complete sequence is documented in published technical references [3]. </p>
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">Who developed retatrutide?</h3>
@@ -1249,7 +1809,7 @@ export const BLOG_POSTS: {
     date: 'June 2, 2026',
     readTime: '12 min read',
     excerpt: 'Research-use-only reference on retatrutide (LY3437943), Eli Lilly\'s investigational triple hormone receptor agonist (GLP-1, GIP, glucagon) being studied for obesity and related indications.',
-    imageSrc: '/99 Blog Images/retatrutide-weight-loss-research-guide-2026-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-hero.webp',
     content: (
       <>
         <div className="prose prose-lg text-ink/80 max-w-none">
@@ -1269,23 +1829,23 @@ export const BLOG_POSTS: {
             </ul>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-1.webp" alt="Laboratory research setting displaying a retatrutide triple-agonist molecular schematic and Phase II clinical trial chart" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-1.webp" alt="Laboratory research setting displaying a retatrutide triple-agonist molecular schematic and Phase II clinical trial chart" className="w-full h-auto object-cover" />
         </div>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-2.webp" alt="Molecular structure and binding site diagram of retatrutide showing GLP-1R, GIPR, and GCGR receptor regions" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-2.webp" alt="Molecular structure and binding site diagram of retatrutide showing GLP-1R, GIPR, and GCGR receptor regions" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">What Is Retatrutide?</h2>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">The Compound (LY3437943)</h3>
         <p className="mb-4">Retatrutide is a synthetic peptide of 39 amino acids that Eli Lilly developed. Inside Lilly's pipeline, it carries the designation LY3437943. Specifically, it is an investigational triple hormone receptor agonist that activates the GLP-1, GIP, and glucagon receptors through one molecule. Investigators describe it as the first triple-agonist peptide to advance to Phase 3 in any indication.</p>
         <p className="mb-4">Definition — Retatrutide: A 39-amino-acid synthetic peptide that activates the GIP, GLP-1, and glucagon receptors simultaneously. Not approved by any regulatory authority as of June 2026.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Chemical Identity and Structure</h3>
-        <p className="mb-4">The published sequence carries several modifications relative to native GLP-1: 2-aminoisobutyric acid substitutions resist enzymatic cleavage; an Î±-methyl-leucine alters conformation; a serinamide C-terminus; and a fatty-acid attachment that supports albumin binding for extended duration of action. As a result, trial protocols administer retatrutide once weekly by subcutaneous injection.</p>
+        <p className="mb-4">The published sequence carries several modifications relative to native GLP-1: 2-aminoisobutyric acid substitutions resist enzymatic cleavage; an α-methyl-leucine alters conformation; a serinamide C-terminus; and a fatty-acid attachment that supports albumin binding for extended duration of action. As a result, trial protocols administer retatrutide once weekly by subcutaneous injection.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">The "Reta" Nickname and Common Misspellings</h3>
         <p className="mb-4">In forum and search-engine data, "reta" is the colloquial shorthand for retatrutide. Similarly, "tirz" emerged for tirzepatide and "sema" for <a className="text-primary underline hover:text-primary-dark" href="/product/semaglutide">semaglutide</a>. Notably, a common misspelling — "retta peptides" — has been surging in U.S. search data. All of these terms refer to the same investigational compound.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Developed by Eli Lilly — Research and Trial Pipeline</h3>
         <p className="mb-4">Eli Lilly developed retatrutide as part of a program to extend the dual-agonist concept <a className="text-primary underline hover:text-primary-dark" href="/product/tirzepatide">tirzepatide</a> proved. As of June 2026, Lilly is running two parallel Phase 3 programs: the TRIUMPH program in obesity and the TRANSCEND-T2D program in type 2 diabetes. Several other indications are under study, including obstructive sleep apnea, MASLD, knee osteoarthritis, chronic kidney disease, and cardiovascular outcomes.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-3.webp" alt="Diagram illustrating retatrutide simultaneous binding to GLP-1, GIP, and glucagon receptors as a triple agonist" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-3.webp" alt="Diagram illustrating retatrutide simultaneous binding to GLP-1, GIP, and glucagon receptors as a triple agonist" className="w-full h-auto object-cover" />
         </div>
 <h3 className="text-xl font-bold text-ink mt-8 mb-4">Is Retatrutide a GLP-1? Understanding Triple Agonism</h3>
         <p className="mb-4">Retatrutide is not "a GLP-1" in the narrow sense. Specifically, it activates the GLP-1 receptor along with two others. Investigators classify it as a GLP-1-class compound, but the more precise label is triple hormone receptor agonist.</p>
@@ -1302,75 +1862,41 @@ export const BLOG_POSTS: {
         <div className="overflow-x-auto my-6">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-ink/10">
+              <tr className="border-b border-ink/10 bg-cream-warm">
+                <th className="py-3 px-4 font-bold text-ink">Compound</th>
+                <th className="py-3 px-4 font-bold text-ink">GLP-1</th>
+                <th className="py-3 px-4 font-bold text-ink">GIP</th>
+                <th className="py-3 px-4 font-bold text-ink">Glucagon</th>
+                <th className="py-3 px-4 font-bold text-ink">Peak Phase 3 Weight Loss</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Compound</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">GLP-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">GIP</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Glucagon</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Peak Phase 3 Weight Loss</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Semaglutide</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">—</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">—</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">14.9% (STEP-1, 68 wks)</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">—</td>
+                <td className="py-3 px-4">—</td>
+                <td className="py-3 px-4">14.9% (STEP-1, 68 wks)</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Tirzepatide</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">—</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">22.5% (SURMOUNT-1, 72 wks)</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">—</td>
+                <td className="py-3 px-4">22.5% (SURMOUNT-1, 72 wks)</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Retatrutide</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">28.3% at 80 wks; 30.3% at 104 wks (TRIUMPH-1)</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">28.3% at 80 wks; 30.3% at 104 wks (TRIUMPH-1)</td>
               </tr>
             </tbody>
           </table>
         </div>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-4.webp" alt="Clinical trial dose trajectory chart comparing 4mg, 9mg, and 12mg retatrutide research doses over 24 weeks" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-4.webp" alt="Clinical trial dose trajectory chart comparing 4mg, 9mg, and 12mg retatrutide research doses over 24 weeks" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Retatrutide and Weight Loss: What the Research Shows</h2>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Phase 2 Body Weight Reduction Data (Jastreboff 2023)</h3>
@@ -1392,93 +1918,49 @@ export const BLOG_POSTS: {
         <div className="overflow-x-auto my-6">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-ink/10">
+              <tr className="border-b border-ink/10 bg-cream-warm">
+                <th className="py-3 px-4 font-bold text-ink">Attribute</th>
+                <th className="py-3 px-4 font-bold text-ink">Semaglutide</th>
+                <th className="py-3 px-4 font-bold text-ink">Tirzepatide</th>
+                <th className="py-3 px-4 font-bold text-ink">Retatrutide</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Attribute</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Semaglutide</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Tirzepatide</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Retatrutide</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Mechanism</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">GLP-1 agonist</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">GLP-1 + GIP agonist</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">GLP-1 + GIP + glucagon agonist</td>
+                <td className="py-3 px-4">GLP-1 agonist</td>
+                <td className="py-3 px-4">GLP-1 + GIP agonist</td>
+                <td className="py-3 px-4">GLP-1 + GIP + glucagon agonist</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Pivotal trial</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">STEP-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">SURMOUNT-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">TRIUMPH-1</td>
+                <td className="py-3 px-4">STEP-1</td>
+                <td className="py-3 px-4">SURMOUNT-1</td>
+                <td className="py-3 px-4">TRIUMPH-1</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Trial duration</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">68 weeks</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">72 weeks</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">80 weeks (104-week extension)</td>
+                <td className="py-3 px-4">68 weeks</td>
+                <td className="py-3 px-4">72 weeks</td>
+                <td className="py-3 px-4">80 weeks (104-week extension)</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Mean weight reduction (high dose)</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">14.9%</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">22.5%</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">28.3% / 30.3%</td>
+                <td className="py-3 px-4">14.9%</td>
+                <td className="py-3 px-4">22.5%</td>
+                <td className="py-3 px-4">28.3% / 30.3%</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Dosing in trials</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Once weekly</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Once weekly</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Once weekly</td>
+                <td className="py-3 px-4">Once weekly</td>
+                <td className="py-3 px-4">Once weekly</td>
+                <td className="py-3 px-4">Once weekly</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">FDA status (June 2026)</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Approved</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Approved</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Investigational</td>
+                <td className="py-3 px-4">Approved</td>
+                <td className="py-3 px-4">Approved</td>
+                <td className="py-3 px-4">Investigational</td>
               </tr>
             </tbody>
           </table>
@@ -1507,7 +1989,7 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">FDA Warning Letters to GLP-1 Peptide Vendors (Sept 2025)</h3>
         <p className="mb-4">In September 2025, the FDA issued more than 50 warning letters to U.S. and international companies marketing compounded GLP-1 products. Several letters explicitly named retatrutide. The agency cited violations of the Federal Food, Drug, and Cosmetic Act and stated that a "research use only" label does not exempt a product from federal requirements when the seller in fact markets it for human use. A follow-up round of warning letters in March 2026 targeted telehealth platforms marketing compounded GLP-1 products.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-5.webp" alt="TRIUMPH-1 trial bar chart showing reported adverse event rates by retatrutide dose arm over 80 weeks" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-5.webp" alt="TRIUMPH-1 trial bar chart showing reported adverse event rates by retatrutide dose arm over 80 weeks" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Retatrutide Handling in Research Settings</h2>
         <p className="mb-4">This section describes laboratory handling of retatrutide reference material as published peptide protocols document it. None of this is instruction for human or animal administration.</p>
@@ -1548,8 +2030,6 @@ export const BLOG_POSTS: {
         <p className="mb-4">The CagriSema program pairs cagrilintide with semaglutide, representing the combination-formulation approach. Earlier-stage preclinical literature describes four-receptor designs that add amylin receptor activity to GLP-1, GIP, and glucagon coverage.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Where the Field Is Heading</h3>
         <p className="mb-4">The retatrutide weight loss readout has set a new published Phase 3 ceiling for the GLP-1-class category. Adjacent peptide research continues across distinct mechanistic categories, including <a className="text-primary underline hover:text-primary-dark" href="/product/tesamorelin">tesamorelin</a> (growth hormone axis), <a className="text-primary underline hover:text-primary-dark" href="/product/cjc-1295-ipamorelin">CJC-1295</a> paired with <a className="text-primary underline hover:text-primary-dark" href="/product/ipamorelin">ipamorelin</a> (GH-axis research), and <a className="text-primary underline hover:text-primary-dark" href="/product/mots-c">MOTS-c</a> (mitochondrial metabolism). None of these compounds is mechanistically equivalent to retatrutide, but each contributes to the broader weight-loss-adjacent research landscape.</p>
-        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Para quÃ© sirve la retatrutida?</h2>
-        <p className="mb-4">La retatrutida (LY3437943) es un pÃ©ptido investigacional desarrollado por Eli Lilly como agonista triple de los receptores GLP-1, GIP y glucagÃ³n. EspecÃ­ficamente, se estÃ¡ estudiando en ensayos clÃ­nicos de Fase 3 para la obesidad, la diabetes tipo 2, la enfermedad hepÃ¡tica (MASLD), la apnea obstructiva del sueÃ±o, la osteoartritis de rodilla, la enfermedad renal crÃ³nica y los resultados cardiovasculares. La FDA aÃºn no ha aprobado la retatrutida para ningÃºn uso, y la agencia ha indicado que no puede utilizarse en compounding bajo la ley federal de EE. UU. Cualquier material vendido como "retatrutide" actualmente fuera de un ensayo clÃ­nico se suministra como estÃ¡ndar de referencia para uso exclusivo en investigaciÃ³n de laboratorio.</p>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Glossary</h2>
         <p className="mb-4">Incretin: A class of gut-derived hormones (including GLP-1 and GIP) that stimulate insulin secretion in response to nutrient intake.</p>
         <p className="mb-4">TRIUMPH trial: Eli Lilly's Phase 3 clinical trial program evaluating retatrutide in obesity and related indications. TRIUMPH-1 is the pivotal obesity trial.</p>
@@ -1663,7 +2143,7 @@ export const BLOG_POSTS: {
             <li>Eli Lilly. Press release on TRANSCEND-T2D-1. March 19, 2026.</li>
             <li>ClinicalTrials.gov. Effect of Retatrutide Compared With Placebo in Adult Participants With Type 2 Diabetes (TRANSCEND-T2D-1). NCT06354660.</li>
             <li>HCPLive. Retatrutide Meets Weight Loss Endpoints in Phase 3 Obesity Trial. May 21, 2026.</li>
-            <li>Jastreboff AM, Kaplan LM, FrÃ­as JP, et al. Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial. New England Journal of Medicine. 2023;389:514-526.</li>
+            <li>Jastreboff AM, Kaplan LM, Frías JP, et al. Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial. New England Journal of Medicine. 2023;389:514-526.</li>
             <li>Eli Lilly Investor Relations. Lilly's triple agonist, retatrutide, delivered weight loss of up to an average of 71.2 lbs along with substantial relief from osteoarthritis pain in first successful Phase 3 trial.</li>
             <li>ClinicalTrials.gov. TRIUMPH cardiovascular outcomes trial entry.</li>
             <li>Wilson Sonsini Goodrich & Rosati. FDA Sends Warning Letters to More Than 50 GLP-1 Compounders and Manufacturers. October 1, 2025.</li>
@@ -1682,20 +2162,20 @@ export const BLOG_POSTS: {
     date: 'June 11, 2026',
     readTime: '10 min read',
     excerpt: 'KLOW peptide blend: verified 50/10/10/10mg composition, BPC-157, TB-500, KPV, GHK-Cu. Research benefits, dosage chart, KLOW vs GLOW comparison. 2026 reference.',
-    imageSrc: '/99 Blog Images/klow-peptide-blend-research-guide-2026-hero.png',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/klow-peptide-blend-research-guide-2026-hero.png',
     content: (
       <>
         <div className="prose prose-lg text-ink/80 max-w-none">
-        <p className="text-sm text-ink/60 italic mb-2">By [Author Name], MSc Biochemistry — Senior Research Editor</p>
+        <p className="text-sm text-ink/60 italic mb-2">By the 99 Purity Peptides Research Team</p>
         <p className="text-sm text-ink/60 italic mb-2">Last reviewed: June 11, 2026 | Last updated: June 11, 2026</p>
         <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 my-8">
             <h3 className="font-bold text-lg mb-4">Quick Facts — KLOW Peptide Blend</h3>
             <ul className="list-disc pl-6 space-y-2">
-                <li>&lt;strong&gt;What it is:&lt;/strong&gt; A four-component research blend combining BPC-157, TB-500, KPV, and <a className="text-primary underline hover:text-primary-dark" href="/product/ghk-cu">GHK-Cu</a> in a single lyophilized vial, studied for joint and soft-tissue recovery models.</li>
-                <li>&lt;strong&gt;Composition:&lt;/strong&gt; 50mg BPC-157 / 10mg TB-500 / 10mg <a className="text-primary underline hover:text-primary-dark" href="/product/kpv">KPV</a> / 10mg GHK-Cu — 80mg total across four peptides.</li>
-                <li>&lt;strong&gt;Research use:&lt;/strong&gt; Investigated in preclinical models of chronic joint stress, tendon and ligament overload, anti-inflammatory pathway modulation, and multi-pathway tissue repair.</li>
-                <li>&lt;strong&gt;Concentration:&lt;/strong&gt; 80mg in 3mL = ~26.67mg/mL combined; BPC-157 alone at ~16.67mg/mL.</li>
-                <li>&lt;strong&gt;Regulatory status:&lt;/strong&gt; Research-use-only (RUO). Not approved for human consumption, therapeutic application, or veterinary use.</li>
+                <li><strong>What it is:</strong> A four-component research blend combining BPC-157, TB-500, KPV, and <a className="text-primary underline hover:text-primary-dark" href="/product/ghk-cu">GHK-Cu</a> in a single lyophilized vial, studied for joint and soft-tissue recovery models.</li>
+                <li><strong>Composition:</strong> 50mg BPC-157 / 10mg TB-500 / 10mg <a className="text-primary underline hover:text-primary-dark" href="/product/kpv">KPV</a> / 10mg GHK-Cu — 80mg total across four peptides.</li>
+                <li><strong>Research use:</strong> Investigated in preclinical models of chronic joint stress, tendon and ligament overload, anti-inflammatory pathway modulation, and multi-pathway tissue repair.</li>
+                <li><strong>Concentration:</strong> 80mg in 3mL = ~26.67mg/mL combined; BPC-157 alone at ~16.67mg/mL.</li>
+                <li><strong>Regulatory status:</strong> Research-use-only (RUO). Not approved for human consumption, therapeutic application, or veterinary use.</li>
             </ul>
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introduction</h2>
@@ -1726,12 +2206,12 @@ export const BLOG_POSTS: {
         <p className="mb-4">Pre-clinical data also points to BPC-157's modulation of the nitric oxide system, with investigators reporting vasoprotective effects in rat models of vessel damage [4]. These findings make it the logical anchor for a recovery-focused research blend.</p>
         <p className="mb-4">Researchers sourcing BPC-157 individually will recognize the 10mg or 5mg vial formats on most suppliers' shelves; the 50mg quantity in KLOW represents a bulk concentration appropriate for extended research protocols without requiring multiple vial reconstitutions.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">TB-500 (10mg) — Thymosin Beta-4 Fragment and Actin Regulation</h3>
-        <p className="mb-4"><strong>&gt; DEFINITION CALLOUT — TB-500:</strong> Synthetic version of the active actin-binding domain of thymosin beta-4 (TÎ²4), specifically the tetrapeptide fragment Ac-SDKP. Full thymosin beta-4 has a molecular weight of approximately 4,960 Da; the Ac-SDKP fragment is considerably smaller. TB-500 is the commercially distributed abbreviated designation.</p>
+        <p className="mb-4"><strong>&gt; DEFINITION CALLOUT — TB-500:</strong> Synthetic version of the active actin-binding domain of thymosin beta-4 (Tβ4), specifically the tetrapeptide fragment Ac-SDKP. Full thymosin beta-4 has a molecular weight of approximately 4,960 Da; the Ac-SDKP fragment is considerably smaller. TB-500 is the commercially distributed abbreviated designation.</p>
         <p className="mb-4">Thymosin beta-4 was first characterized as an actin-sequestering protein by Safer and colleagues, with subsequent work by Goldstein et al. expanding understanding of its role in cell migration, wound healing, and angiogenesis [5,6]. The synthetic Ac-SDKP fragment (TB-500) replicates the actin-binding activity of the larger protein and has been studied in preclinical models of cardiac injury, skeletal muscle repair, and skin wound healing. In vitro studies indicate that TB-500 promotes endothelial cell migration and tube formation, pathways relevant to angiogenesis research.</p>
         <p className="mb-4">At 10mg in the KLOW blend, TB-500 contributes its actin-regulatory and migration-promoting activity alongside BPC-157's VEGF-pathway work — two distinct approaches to the vascular and cellular repair question.</p>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">KPV (10mg) — Î±-MSH C-Terminal Anti-Inflammatory Tripeptide</h3>
-        <p className="mb-4"><strong>&gt; DEFINITION CALLOUT — KPV:</strong> Lys-Pro-Val; the C-terminal tripeptide of alpha-melanocyte-stimulating hormone (Î±-MSH). Molecular weight approximately 340 Da. Functions as a melanocortin receptor agonist with anti-inflammatory properties studied independently of the full Î±-MSH sequence.</p>
-        <p className="mb-4">KPV is the component that distinguishes KLOW from the GLOW blend — it is present in KLOW but absent from GLOW. Investigations into KPV's mechanism have focused on its interaction with melanocortin 1 receptor (MC1R) and melanocortin 4 receptor (MC4R), both of which modulate inflammatory cytokine production. Published studies report that KPV reduces IL-6, IL-1Î², and TNF-Î± expression in macrophage and epithelial cell models, with particular documentation in gut inflammatory research [7,8]. Its low molecular weight (~340 Da) means it reaches tissue compartments that larger peptides may not, and its stability profile is well-suited to combination formulations.</p>
+        <h3 className="text-xl font-bold text-ink mt-8 mb-4">KPV (10mg) — α-MSH C-Terminal Anti-Inflammatory Tripeptide</h3>
+        <p className="mb-4"><strong>&gt; DEFINITION CALLOUT — KPV:</strong> Lys-Pro-Val; the C-terminal tripeptide of alpha-melanocyte-stimulating hormone (α-MSH). Molecular weight approximately 340 Da. Functions as a melanocortin receptor agonist with anti-inflammatory properties studied independently of the full α-MSH sequence.</p>
+        <p className="mb-4">KPV is the component that distinguishes KLOW from the GLOW blend — it is present in KLOW but absent from GLOW. Investigations into KPV's mechanism have focused on its interaction with melanocortin 1 receptor (MC1R) and melanocortin 4 receptor (MC4R), both of which modulate inflammatory cytokine production. Published studies report that KPV reduces IL-6, IL-1β, and TNF-α expression in macrophage and epithelial cell models, with particular documentation in gut inflammatory research [7,8]. Its low molecular weight (~340 Da) means it reaches tissue compartments that larger peptides may not, and its stability profile is well-suited to combination formulations.</p>
         <p className="mb-4">For researchers specifically studying inflammatory pathway modulation in soft-tissue and joint models, KPV's inclusion in KLOW provides a third, distinct anti-inflammatory mechanism alongside BPC-157's nitric oxide modulation and TB-500's cytokine-pathway effects.</p>
         <p className="mb-4"><strong>What is KPV peptide?</strong> In research contexts, KPV is classified as a melanocortin-receptor-targeting anti-inflammatory tripeptide, studied in models of intestinal inflammation, skin inflammation, and wound healing. It is not a scheduled compound in the United States and carries RUO (research-use-only) classification.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">GHK-Cu (10mg) — Copper Signal Peptide and Wound-Repair Research</h3>
@@ -1750,9 +2230,9 @@ export const BLOG_POSTS: {
         <p className="mb-4">Research suggests this dual-mechanism approach — growth factor upregulation via BPC-157 combined with endothelial migration support via TB-500 — represents a meaningful multi-pathway research model for tissue reconstruction studies.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Joint and Soft-Tissue Research Applications</h3>
         <p className="mb-4">The 99 Purity Peptides product page positions KLOW specifically for "joint and soft-tissue recovery blend" research — models of chronic joint stress, tendon and ligament overload, and long-term soft-tissue wear. The preclinical literature supports this framing. Å ikir iÄ‡'s group published multiple studies on BPC-157's effects in rat models of ACL damage, Achilles tendon transection, and quadriceps muscle injury, consistently reporting accelerated structural recovery metrics [2,3].</p>
-        <p className="mb-4">KPV's anti-inflammatory contribution is relevant here: synovial inflammation is a consistent feature of chronic joint stress models, and the reduction of IL-1Î² and TNF-Î± that KPV demonstrates in cell culture models would be a logical correlate in a joint-stress research context [7].</p>
+        <p className="mb-4">KPV's anti-inflammatory contribution is relevant here: synovial inflammation is a consistent feature of chronic joint stress models, and the reduction of IL-1β and TNF-α that KPV demonstrates in cell culture models would be a logical correlate in a joint-stress research context [7].</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Anti-Inflammatory Pathway Research</h3>
-        <p className="mb-4">Three of the four KLOW components demonstrate anti-inflammatory activity through distinct pathways. BPC-157 has been shown in vitro to suppress NF-ÎºB pathway activation and reduce pro-inflammatory prostaglandin production. TB-500's Ac-SDKP fragment inhibits macrophage migration inhibitory factor (MIF) in cell culture models. KPV acts directly on MC1R/MC4R receptors on macrophages and epithelial cells, reducing IL-6 and TNF-Î± at the transcription level [7,8].</p>
+        <p className="mb-4">Three of the four KLOW components demonstrate anti-inflammatory activity through distinct pathways. BPC-157 has been shown in vitro to suppress NF-ÎºB pathway activation and reduce pro-inflammatory prostaglandin production. TB-500's Ac-SDKP fragment inhibits macrophage migration inhibitory factor (MIF) in cell culture models. KPV acts directly on MC1R/MC4R receptors on macrophages and epithelial cells, reducing IL-6 and TNF-α at the transcription level [7,8].</p>
         <p className="mb-4">This three-pathway anti-inflammatory profile makes the blend of particular interest for research models where systemic or localized inflammatory signaling is the study endpoint, as investigators can evaluate the combined effect against individual component controls.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Wound and Skin Repair Models</h3>
         <p className="mb-4">GHK-Cu's wound-repair literature is the most directly applicable here. Pickart's work and subsequent studies document collagen synthesis upregulation, fibroblast proliferation stimulation, and re-epithelialization support in wound models — mechanisms consistent with standard wound-healing research endpoints [9,10]. BPC-157 also appears in published wound-healing literature, with some pre-clinical studies reporting accelerated skin incision healing in rodent models. The combination of GHK-Cu's collagen-synthesis and BPC-157's growth factor upregulation represents an overlapping but mechanistically distinct approach to wound-model research.</p>
@@ -1827,7 +2307,7 @@ export const BLOG_POSTS: {
         </div>
         <p className="mb-4"><em>All values are laboratory dilution reference calculations. Not human dosing guidance. For research use only.</em></p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Dosage Chart Reference (Research Protocol Context Only)</h3>
-        <p className="mb-4">The "klow dosage chart" query reflects researchers looking for a structured reference table to guide experimental design. The table above provides the reconstitution math. For further dilutions from a reconstituted stock, the standard dilution formula applies: C1 Ã— V1 = C2 Ã— V2, where C1 is the post-reconstitution concentration and C2 is the target experimental concentration.</p>
+        <p className="mb-4">The "klow dosage chart" query reflects researchers looking for a structured reference table to guide experimental design. The table above provides the reconstitution math. For further dilutions from a reconstituted stock, the standard dilution formula applies: C1 × V1 = C2 × V2, where C1 is the post-reconstitution concentration and C2 is the target experimental concentration.</p>
         <p className="mb-4">Investigators working with cell culture assays will typically dilute the reconstituted stock further in cell culture media to reach low-microgram or nanogram target concentrations per the individual component's established active range in the published literature.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Using a Peptide Calculator with Multi-Component Blends</h3>
         <p className="mb-4">Standard <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator">peptide calculators</a> are designed for single-component vials and calculate concentration based on total peptide mass and added volume. For a multi-component blend like KLOW, the calculator must be run separately for each component — total mass 50mg for BPC-157, 10mg each for TB-500, KPV, and GHK-Cu — against the same total volume. The results will give the per-component concentration in the reconstituted solution. The 99 Purity Peptides peptide calculator can be used for this purpose; enter each component's mass individually against the same target volume.</p>
@@ -1840,7 +2320,7 @@ export const BLOG_POSTS: {
         <p className="mb-4"><a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">Bacteriostatic water</a> is the standard diluent for KLOW reconstitution in research settings. The protocol for a 3mL vial: draw the desired BAC water volume into a <a className="text-primary underline hover:text-primary-dark" href="/product/10-needles">sterile needle</a> and syringe, inject slowly down the side of the vial (not directly onto the lyophilized cake), allow the cake to dissolve without agitation, then gently swirl (never vortex) to ensure complete dissolution. Allow 10–15 minutes for full dissolution of a multi-component cake.</p>
         <p className="mb-4">Some peptides in complex blends may require slightly acidic conditions for optimal solubility. GHK-Cu and BPC-157 are generally soluble in BAC water at physiological pH ranges; KPV, at its low molecular weight, dissolves readily. If any particulate remains after the 15-minute wait, a very gentle swirl typically resolves it. <a className="text-primary underline hover:text-primary-dark" href="/product/acetic-acid-water">Acetic acid water (0.6%)</a> is available as an alternate diluent for peptides that require mildly acidic conditions.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">80mg in 3mL — Common Dilution Volumes</h3>
-        <p className="mb-4">See the reconstitution math table in the Dosage section above. For research contexts requiring specific per-component concentrations, reconstituting at the full 3mL (standard to the vial size) and then working from the per-component concentrations with C1 Ã— V1 = C2 Ã— V2 dilutions into cell culture media or experimental vehicle provides maximum flexibility.</p>
+        <p className="mb-4">See the reconstitution math table in the Dosage section above. For research contexts requiring specific per-component concentrations, reconstituting at the full 3mL (standard to the vial size) and then working from the per-component concentrations with C1 × V1 = C2 × V2 dilutions into cell culture media or experimental vehicle provides maximum flexibility.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Storage, Refrigeration, and Stability of Multi-Peptide Blends</h3>
         <p className="mb-4">Lyophilized KLOW should be stored at −20°C before reconstitution, sealed and protected from light and moisture. Once reconstituted, refrigerate at 2–8°C. Multi-peptide blends present an additional stability consideration: each component has its own degradation kinetics, and the weakest link determines the effective shelf life of the reconstituted solution. GHK-Cu is sensitive to oxidation (the copper ion can participate in undesired redox reactions under suboptimal storage); BPC-157 is relatively stable in solution; KPV and TB-500 fragment degradation in solution is primarily temperature-dependent.</p>
         <p className="mb-4">For best practices on <a className="text-primary underline hover:text-primary-dark" href="/reconstituted-peptide-stability-storage">reconstituted peptide stability</a>, the 99 Purity Peptides research blog provides detailed guidance on storage conditions for reconstituted solutions.</p>
@@ -1977,7 +2457,7 @@ export const BLOG_POSTS: {
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Reported Reactions Attributed to Each Component</h3>
         <p className="mb-4"><strong>BPC-157:</strong> The preclinical literature on BPC-157 does not report consistent toxic effects at doses studied in animal models. Å ikir iÄ‡ et al. note the peptide's favorable tolerability profile across multiple rodent studies, with no reported organ toxicity at research doses [1,2]. Some community reports mention localized injection-site warmth in animal models, though this is not systematically documented in peer-reviewed studies. No human clinical trial data is available to establish a formal adverse-event profile.</p>
         <p className="mb-4"><strong>TB-500:</strong> Thymosin beta-4 research in animal models has a generally favorable safety profile, with the peptide appearing naturally in most mammalian tissues at physiological concentrations. No significant hepatotoxic, nephrotoxic, or immunosuppressive effects have been reported in preclinical literature at research concentrations [5,6].</p>
-        <p className="mb-4"><strong>KPV:</strong> As a tripeptide fragment of endogenous Î±-MSH, KPV's safety profile in cell culture and animal models is favorable. Published studies on KPV in inflammatory bowel disease models report no adverse histological findings at doses producing anti-inflammatory effects [7,8].</p>
+        <p className="mb-4"><strong>KPV:</strong> As a tripeptide fragment of endogenous α-MSH, KPV's safety profile in cell culture and animal models is favorable. Published studies on KPV in inflammatory bowel disease models report no adverse histological findings at doses producing anti-inflammatory effects [7,8].</p>
         <p className="mb-4"><strong>GHK-Cu:</strong> The copper component of GHK-Cu warrants attention at high concentrations — excess copper can be pro-oxidant. At the concentrations studied in published wound-healing research (typically 1–10 nM to 1–10 μM range in cell culture), GHK-Cu demonstrates antioxidant rather than oxidant activity [11]. High-dose copper accumulation is a known concern in systemic copper metabolism research, though this context differs from the concentration ranges documented in GHK-Cu peptide studies.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Why Side Effects in Blends Cannot Be Attributed to a Single Peptide</h3>
         <p className="mb-4">In a four-component blend, attributing any observed experimental outcome — positive or adverse — to a single component is methodologically problematic. Researchers documenting any unexpected effects from KLOW blend experiments should design follow-up single-component controls to establish causation. This is a standard limitation of blend research and is why the peer-reviewed literature on individual components, rather than blend-specific data, is the primary reference for KLOW safety profiling.</p>
@@ -2034,7 +2514,7 @@ export const BLOG_POSTS: {
         <p className="mb-4"><strong>KLOW</strong> — Branded designation for a four-component research peptide blend containing BPC-157 (50mg), TB-500 (10mg), KPV (10mg), and GHK-Cu (10mg) in a 3mL lyophilized vial. Positioned for joint and soft-tissue recovery research models.</p>
         <p className="mb-4"><strong>BPC-157 (Body Protection Compound-157)</strong> — Synthetic pentadecapeptide (15 amino acids; sequence GEPPPGKPADDAGLV; MW ~1,419 Da) studied for cytoprotection, VEGF/EGF pathway modulation, and tissue repair in preclinical models.</p>
         <p className="mb-4"><strong>TB-500</strong> — Synthetic version of the actin-binding Ac-SDKP tetrapeptide fragment of thymosin beta-4. Studied for actin sequestration, cell migration, and angiogenesis in preclinical models.</p>
-        <p className="mb-4"><strong>KPV (Lys-Pro-Val)</strong> — C-terminal tripeptide of alpha-melanocyte-stimulating hormone (Î±-MSH; MW ~340 Da). Melanocortin receptor agonist studied for MC1R/MC4R-mediated anti-inflammatory effects.</p>
+        <p className="mb-4"><strong>KPV (Lys-Pro-Val)</strong> — C-terminal tripeptide of alpha-melanocyte-stimulating hormone (α-MSH; MW ~340 Da). Melanocortin receptor agonist studied for MC1R/MC4R-mediated anti-inflammatory effects.</p>
         <p className="mb-4"><strong>GHK-Cu (Copper Tripeptide)</strong> — Glycyl-L-histidyl-L-lysine copper complex (MW ~340 Da + Cu ion). Naturally occurring human plasma peptide studied by Loren Pickart for wound healing, collagen synthesis, and antioxidant gene activation.</p>
         <p className="mb-4"><strong>Peptide Blend</strong> — A single formulation containing two or more synthetic peptides combined at defined mass ratios for multi-pathway research applications.</p>
         <p className="mb-4"><strong>Signal Peptide</strong> — In molecular biology, a short amino acid sequence that directs a protein to a specific cellular location. In peptide research, "signal peptide" colloquially refers to small peptides that trigger specific cellular signaling cascades.</p>
@@ -2047,7 +2527,7 @@ export const BLOG_POSTS: {
         <p className="mb-4"><strong>What is KLOW peptide used for?</strong></p>
         <p className="mb-4">In research settings, KLOW peptide is used in preclinical models of joint stress, tendon and ligament overload, wound repair, and multi-pathway tissue recovery. Investigators use it to study the combined effects of BPC-157's cytoprotective pathways, TB-500's actin-regulated cell migration, KPV's melanocortin anti-inflammatory signaling, and GHK-Cu's copper-dependent collagen and antioxidant gene activation simultaneously.</p>
         <p className="mb-4"><strong>What does KLOW peptide do?</strong></p>
-        <p className="mb-4">KLOW provides simultaneous research input into four biological pathways: BPC-157 modulates VEGF/EGF-related cytoprotection and tissue repair; TB-500 supports actin regulation and endothelial cell migration; KPV suppresses pro-inflammatory cytokines (IL-6, IL-1Î², TNF-Î±) via MC1R/MC4R; GHK-Cu activates copper-dependent collagen synthesis and antioxidant gene expression. All in one pre-verified blend.</p>
+        <p className="mb-4">KLOW provides simultaneous research input into four biological pathways: BPC-157 modulates VEGF/EGF-related cytoprotection and tissue repair; TB-500 supports actin regulation and endothelial cell migration; KPV suppresses pro-inflammatory cytokines (IL-6, IL-1β, TNF-α) via MC1R/MC4R; GHK-Cu activates copper-dependent collagen synthesis and antioxidant gene expression. All in one pre-verified blend.</p>
         <p className="mb-4"><strong>What is in the KLOW peptide blend?</strong></p>
         <p className="mb-4">The KLOW blend contains four synthetic peptides: BPC-157 at 50mg, TB-500 at 10mg, KPV (Lys-Pro-Val) at 10mg, and GHK-Cu (glycyl-L-histidyl-L-lysine copper complex) at 10mg — 80mg total in 3mL. This 50/10/10/10mg specification is consistent with the widely referenced four-component recovery stack sold at 99 Purity Peptides.</p>
         <p className="mb-4"><strong>What is KLOW dosage in research?</strong></p>
@@ -2089,11 +2569,11 @@ export const BLOG_POSTS: {
         <p className="mb-4"><strong>What is glow peptide dosage?</strong></p>
         <p className="mb-4">GLOW peptide dosage follows the same reconstitution math as KLOW, adjusted for the 70mg total mass across 3 components: 3mL BAC water gives ~23.33mg/mL combined (~16.67mg/mL GHK-Cu; ~3.33mg/mL BPC-157; ~3.33mg/mL TB-500). Research use only; not human dosing guidance.</p>
         <p className="mb-4"><strong>What is KPV peptide?</strong></p>
-        <p className="mb-4">KPV (Lys-Pro-Val) is the C-terminal tripeptide of alpha-melanocyte-stimulating hormone (Î±-MSH), with a molecular weight of approximately 340 Da. It is studied as a melanocortin receptor (MC1R/MC4R) agonist with documented anti-inflammatory activity in mucosal, epithelial, and wound-healing models. It is the component that distinguishes KLOW from the GLOW blend.</p>
+        <p className="mb-4">KPV (Lys-Pro-Val) is the C-terminal tripeptide of alpha-melanocyte-stimulating hormone (α-MSH), with a molecular weight of approximately 340 Da. It is studied as a melanocortin receptor (MC1R/MC4R) agonist with documented anti-inflammatory activity in mucosal, epithelial, and wound-healing models. It is the component that distinguishes KLOW from the GLOW blend.</p>
         <p className="mb-4"><strong>What is KPV peptide benefits?</strong></p>
-        <p className="mb-4">In preclinical and cell culture research, KPV demonstrates suppression of pro-inflammatory cytokines IL-6, IL-1Î², and TNF-Î± through melanocortin receptor pathway activation. Published studies document these effects in gut inflammatory models and skin wound models. KPV's small size (~340 Da) supports tissue penetration research and is studied in combination formulations for multi-pathway anti-inflammatory endpoint experiments.</p>
+        <p className="mb-4">In preclinical and cell culture research, KPV demonstrates suppression of pro-inflammatory cytokines IL-6, IL-1β, and TNF-α through melanocortin receptor pathway activation. Published studies document these effects in gut inflammatory models and skin wound models. KPV's small size (~340 Da) supports tissue penetration research and is studied in combination formulations for multi-pathway anti-inflammatory endpoint experiments.</p>
         <p className="mb-4"><strong>What is KPV?</strong></p>
-        <p className="mb-4">KPV is the abbreviation for the tripeptide Lys-Pro-Val — lysine, proline, valine. In research, it functions as a melanocortin receptor agonist derived from the C-terminal region of Î±-MSH. It is one of four components in the KLOW blend, present at 10mg per vial.</p>
+        <p className="mb-4">KPV is the abbreviation for the tripeptide Lys-Pro-Val — lysine, proline, valine. In research, it functions as a melanocortin receptor agonist derived from the C-terminal region of α-MSH. It is one of four components in the KLOW blend, present at 10mg per vial.</p>
         <p className="mb-4"><strong>What is GHK-Cu?</strong></p>
         <p className="mb-4">GHK-Cu (glycyl-L-histidyl-L-lysine copper complex) is a naturally occurring tripeptide-copper chelate found in human plasma, studied extensively since Loren Pickart's 1973 characterization. Research applications include wound healing, collagen synthesis, antioxidant gene activation, and fibroblast stimulation. GHK-Cu is the dominant component of the GLOW blend and a supporting component of KLOW at 10mg.</p>
         <p className="mb-4"><strong>What is BAC water?</strong></p>
@@ -2156,7 +2636,7 @@ export const BLOG_POSTS: {
     date: 'June 16, 2026',
     readTime: '8 min read',
     excerpt: 'Collagen peptides vs peptide therapy for skin: compare GHK-Cu and hydrolyzed collagen, what research shows, and where each fits. RUO research peptides.',
-    imageSrc: '/99 Blog Images/collagen-peptides-vs-peptide-therapy-skin-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-vs-peptide-therapy-skin-hero.webp',
     content: (
       <>
         <div className="prose prose-lg text-ink/80 max-w-none">
@@ -2209,7 +2689,7 @@ export const BLOG_POSTS: {
           </table>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-vs-peptide-therapy-skin-inline-1.webp" alt="Comparison graphic of collagen peptides versus peptide therapy for skin health, hydration, and anti-aging support" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-vs-peptide-therapy-skin-inline-1.webp" alt="Comparison graphic of collagen peptides versus peptide therapy for skin health, hydration, and anti-aging support" className="w-full h-auto object-cover" />
         </div>
         <div className="bg-cream-warm p-4 rounded-xl border border-ink/5 my-4">
             <p className="font-semibold text-ink">Takeaway: Collagen peptides have the broader human-trial base for skin appearance. Copper peptides have the more targeted signaling story. Many people researching healthy aging look at both.</p>
@@ -2295,13 +2775,13 @@ export const BLOG_POSTS: {
     date: 'May 26, 2026',
     readTime: '12 min read',
     excerpt: 'GHK-Cu peptide research reference: mechanism, collagen pathway evidence, lab handling, purity standards, and 35+ FAQs from peer-reviewed studies.',
-    imageSrc: '/99 Blog Images/ghk-cu-peptide-research-vial-hero.png',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-peptide-research-vial-hero.png',
     content: (
       <>
         <p className="text-ink/60 text-sm mb-4 italic">Last reviewed: May 27, 2026 · Last updated: May 27, 2026</p>
         <p className="text-ink/60 text-sm mb-12 italic">Author: Dr. M. Rivera, PhD (Peptide Biochemistry) — Research Editor, 99 Purity Peptides</p>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-peptide-research-vial-hero.png" alt="GHK-Cu peptide lyophilized powder vial with HPLC chromatogram for research use" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-peptide-research-vial-hero.png" alt="GHK-Cu peptide lyophilized powder vial with HPLC chromatogram for research use" className="w-full h-auto object-cover" />
         </div>
         <p className="mb-4"><a className="text-primary underline hover:text-primary-dark" href="/product/ghk-cu">GHK-Cu</a> peptide — the copper complex of glycyl-L-histidyl-L-lysine — has occupied a quiet but persistent place in regenerative biochemistry since Loren Pickart's 1973 isolation work. This reference page consolidates the mechanistic, analytical, and laboratory-handling literature on GHK-Cu for research professionals working with the compound in vitro or in pre-clinical models. All material is presented for research use only (RUO).</p>
         <div className="my-12 p-8 bg-cream-warm rounded-[2rem] border border-ink/10">
@@ -2317,7 +2797,7 @@ export const BLOG_POSTS: {
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">What Is GHK-Cu?</h2>
         <p className="mb-4">GHK-Cu is the copper-bound form of the human tripeptide glycyl-L-histidyl-L-lysine, originally isolated by Pickart from human plasma albumin in 1973 [1]. The free peptide chelates a Cu²⁺ ion with high affinity, generating a deep cobalt-blue complex that is the workhorse molecule of modern copper-peptide research. Plasma concentrations of GHK in humans are reported at roughly 200 ng/mL in young adults and decline to approximately 80 ng/mL by age sixty [2].</p>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-peptide-molecular-structure.png" alt="GHK-Cu peptide molecular structure showing copper coordination with glycine, histidine, and lysine" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-peptide-molecular-structure.png" alt="GHK-Cu peptide molecular structure showing copper coordination with glycine, histidine, and lysine" className="w-full h-auto object-cover" />
         </div>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">The GHK Tripeptide and Its Copper Complex</h3>
         <p className="mb-4">The GHK sequence — glycine, histidine, lysine — is small enough to qualify as a "signal peptide," meaning it interacts with cell-surface and intracellular targets to alter transcriptional programs rather than acting as a structural building block. When GHK encounters Cu²⁺ under physiological conditions, the histidine imidazole nitrogen and the N-terminal amine coordinate the metal, with lysine contributing to the binding pocket. The resulting Gly-His-Lys-Cu(II) complex shifts the peptide's behavior from a passive ligand to an active modulator of intracellular copper trafficking [2].</p>
@@ -2341,7 +2821,7 @@ export const BLOG_POSTS: {
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Mechanism of Action: How GHK-Cu Works at the Cellular Level</h2>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-mechanism-fibroblast-signaling.png" alt="GHK-Cu mechanism diagram showing fibroblast activation and collagen pathway signaling" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-mechanism-fibroblast-signaling.png" alt="GHK-Cu mechanism diagram showing fibroblast activation and collagen pathway signaling" className="w-full h-auto object-cover" />
         </div>
         <p className="mb-4">Investigators have characterized GHK-Cu's activity across several overlapping mechanisms. None operate in isolation; the compound's apparent biological effect at any given concentration reflects the sum of these signals.</p>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">Signal Peptide Activity and Fibroblast Stimulation</h3>
@@ -2361,7 +2841,7 @@ export const BLOG_POSTS: {
             <p className="font-semibold text-ink"> <strong>Key Takeaway:</strong> GHK-Cu acts through multiple overlapping mechanisms — fibroblast activation, controlled copper delivery, antioxidant signaling, and broad gene-expression modulation. No single receptor accounts for its activity; the literature treats it as a multi-pathway signal peptide.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-peptide-reconstitution-protocol.png" alt="Research scientist reconstituting copper peptide with bacteriostatic water under sterile conditions" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-peptide-reconstitution-protocol.png" alt="Research scientist reconstituting copper peptide with bacteriostatic water under sterile conditions" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Primary Research Applications of GHK-Cu</h2>
         <p className="mb-4">GHK-Cu's peer-reviewed literature concentrates in six application areas. Each one is briefly summarized below as it appears in published in-vitro and pre-clinical work — not as a therapeutic claim.</p>
@@ -2382,7 +2862,7 @@ export const BLOG_POSTS: {
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">GHK-Cu Compared to Other Research Peptides and Actives</h2>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-vs-bpc-157-retinol-comparison.png" alt="Comparison of GHK-Cu copper peptide versus BPC-157, retinol, and Vitamin C in research contexts" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-vs-bpc-157-retinol-comparison.png" alt="Comparison of GHK-Cu copper peptide versus BPC-157, retinol, and Vitamin C in research contexts" className="w-full h-auto object-cover" />
         </div>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">GHK-Cu vs BPC-157 (Research Context)</h3>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">GHK-Cu vs Retinol (Mechanism Comparison)</h3>
@@ -2396,7 +2876,7 @@ export const BLOG_POSTS: {
             <p className="font-semibold text-ink"> <strong>Key Takeaway:</strong> GHK-Cu, <a className="text-primary underline hover:text-primary-dark" href="/product/bpc-157">BPC-157</a>, retinol, and Vitamin C occupy different points in the regenerative and dermatological-research landscape. Research-grade GHK-Cu is distinguished from cosmetic copper peptide serums primarily by documentation, purity verification, and absence of formulation excipients.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-grade-vs-cosmetic-copper-peptide.png" alt="Research-grade GHK-Cu vial versus cosmetic copper peptide serum showing documentation differences" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-grade-vs-cosmetic-copper-peptide.png" alt="Research-grade GHK-Cu vial versus cosmetic copper peptide serum showing documentation differences" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Laboratory Handling: Reconstitution, Solubility, and Stability</h2>
         <p className="mb-4">This section describes laboratory handling of GHK-Cu as a reference standard. It is not guidance for human administration.</p>
@@ -2457,7 +2937,7 @@ export const BLOG_POSTS: {
             <p className="font-semibold text-ink"> <strong>Key Takeaway:</strong> GHK-Cu is sold strictly for research use only in the U.S. and is not approved for human therapeutic use. Research-grade material differs in regulatory category, documentation, and quality control from cosmetic copper peptide products.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-lab-peptide-vials.png" alt="Research laboratory bench with peptide vials and pipettes" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-lab-peptide-vials.png" alt="Research laboratory bench with peptide vials and pipettes" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Reported Limitations and Considerations in GHK-Cu Research</h2>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">Gaps in the Current Evidence Base</h3>
@@ -2510,7 +2990,7 @@ export const BLOG_POSTS: {
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">5. What pathways does GHK-Cu modulate in skin cells?</h3>
-                <p className="text-ink/80 text-sm">Reported pathways include TGF-Î² signaling, antioxidant defense (superoxide dismutase, <a className="text-primary underline hover:text-primary-dark" href="/product/glutathione">glutathione</a> peroxidase), extracellular-matrix gene expression (collagen types I and III, decorin, perlecan), and inflammatory cytokine modulation. The Broad Institute gene-expression dataset documents changes across 4,192 human genes following GHK exposure.</p>
+                <p className="text-ink/80 text-sm">Reported pathways include TGF-β signaling, antioxidant defense (superoxide dismutase, <a className="text-primary underline hover:text-primary-dark" href="/product/glutathione">glutathione</a> peroxidase), extracellular-matrix gene expression (collagen types I and III, decorin, perlecan), and inflammatory cytokine modulation. The Broad Institute gene-expression dataset documents changes across 4,192 human genes following GHK exposure.</p>
             </div>
             <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5">
                 <h3 className="font-bold text-lg mb-2">6. How does GHK-Cu stimulate collagen and elastin?</h3>
@@ -2664,7 +3144,7 @@ export const BLOG_POSTS: {
     date: 'June 23, 2026',
     readTime: '12 min read',
     excerpt: 'What percentage of visceral fat does tesamorelin reduce in research? Phase 3 clinical trials report roughly an 15-18% VAT reduction near 26 weeks. Review the data, timelines, and reference standards.',
-    imageSrc: '/99 Blog Images/tesamorelin-visceral-fat-reduction-percentage-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-visceral-fat-reduction-percentage-hero.jpg',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -2704,7 +3184,7 @@ export const BLOG_POSTS: {
           </div>
           <figure className="relative w-full aspect-square rounded-2xl overflow-hidden mt-2 md:mt-0 shadow-lg">
             <img 
-              src="/99 Blog Images/tesamorelin-ghrh-analog-molecular-diagram.png" 
+              src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-ghrh-analog-molecular-diagram.png" 
               alt="Tesamorelin GHRH analog 44 amino acid peptide molecular diagram" 
               className="object-cover w-full h-full"
             />
@@ -2787,7 +3267,7 @@ export const BLOG_POSTS: {
 
         <figure className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden mb-16 shadow-lg">
           <img 
-            src="/99 Blog Images/visceral-vs-subcutaneous-fat-ct-comparison.jpg" 
+            src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/visceral-vs-subcutaneous-fat-ct-comparison.jpg" 
             alt="CT comparison visceral versus subcutaneous fat tesamorelin research" 
             className="object-cover w-full h-full"
           />
@@ -2814,7 +3294,7 @@ export const BLOG_POSTS: {
           </div>
           <figure className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg mt-2 md:mt-0">
             <img 
-              src="/99 Blog Images/lyophilized-tesamorelin-vial-reconstitution.jpg" 
+              src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/lyophilized-tesamorelin-vial-reconstitution.jpg" 
               alt="Lyophilized tesamorelin vial reconstitution bacteriostatic water research" 
               className="object-cover w-full h-full"
             />
@@ -2827,7 +3307,7 @@ export const BLOG_POSTS: {
         <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 items-start mb-16">
           <figure className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg hidden md:block">
             <img 
-              src="/99 Blog Images/visceral-adipose-tissue-research-visualization.png" 
+              src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/visceral-adipose-tissue-research-visualization.png" 
               alt="Visceral adipose tissue around organs research visualization" 
               className="object-cover w-full h-full"
             />
@@ -3029,15 +3509,15 @@ export const BLOG_POSTS: {
     date: 'April 26, 2026',
     readTime: '5 min read',
     excerpt: 'Complete guide to reconstituted peptide stability, degradation mechanisms, and optimal storage protocols for laboratory research integrity.',
-    imageSrc: '/99 Blog Images/reconstituted-peptide-stability-storage-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/reconstituted-peptide-stability-storage-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/reconstituted-peptide-stability-storage-hero.jpg" alt="Reconstituted Peptide Stability: Storage & Research Guide 2026" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/reconstituted-peptide-stability-storage-hero.jpg" alt="Reconstituted peptide vials in refrigerated laboratory storage illustrating stability and degradation research" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2"><strong>Reconstituted peptide stability</strong> determines experimental reproducibility in laboratory settings. Understanding degradation mechanisms and optimal storage conditions ensures research material integrity across multi-session studies.</p>
-        <p className="mb-4">Peptide stability depends on environmental factors including temperature, pH, light exposure, and solvent composition. Reconstituted compounds face accelerated degradation compared to lyophilized forms. Proper handling protocols prevent hydrolysis, oxidation, and aggregation.</p>
-        <p className="mb-4">Research-grade peptides require specific storage conditions to maintain molecular integrity. <a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">Bacteriostatic water</a> extends shelf life through microbial inhibition. Temperature-controlled environments slow chemical degradation processes.</p>
+        <p className="mb-4">Peptide stability depends on environmental factors including temperature, pH, light exposure, and solvent composition. Reconstituted compounds face accelerated degradation compared to lyophilized forms. Proper handling protocols prevent hydrolysis, oxidation, and aggregation. Getting the reconstitution math right at the outset also matters — use our <a className="text-primary underline hover:text-primary-dark" href="/peptide-reconstitution-calculator">peptide reconstitution calculator</a> to verify concentration before you begin a storage protocol.</p>
+        <p className="mb-4">Research-grade peptides require specific storage conditions to maintain molecular integrity. <a className="text-primary underline hover:text-primary-dark" href="/product/bac-water-bacteriostatic-water">Bacteriostatic water</a> extends shelf life through microbial inhibition. Temperature-controlled environments slow chemical degradation processes. For the reconstitution ratios themselves, see the <a className="text-primary underline hover:text-primary-dark" href="/how-much-bacteriostatic-water-reconstitute-peptides">complete bacteriostatic water reconstitution chart</a>.</p>
         <p className="mb-4">Reconstituted peptides undergo multiple degradation pathways. Hydrolysis breaks peptide bonds through water interaction. This process accelerates at non-optimal pH levels. Oxidation affects methionine and cysteine residues specifically.</p>
         <p className="mb-4">Deamidation converts asparagine to aspartic acid over time. This alters peptide structure and function. Temperature elevation increases reaction rates exponentially. Aggregation occurs when peptides interact and form insoluble complexes.</p>
         <p className="mb-4">Refrigeration at 2-8°C significantly slows degradation kinetics. Studies show reduced hydrolysis rates compared to room temperature storage. Freeze-thaw cycles damage peptide structure through ice crystal formation.</p>
@@ -3124,7 +3604,7 @@ export const BLOG_POSTS: {
         <p className="mb-4">Reconstituted peptide stability depends on controlled storage conditions and proper handling protocols. Refrigeration at 2-8°C maintains integrity for 30-60 days when bacteriostatic water is used. Degradation mechanisms include hydrolysis, oxidation, and deamidation.</p>
         <p className="mb-4">Temperature management proves critical for research reproducibility. Freeze-thaw cycles damage peptide structure and reduce viability. Aliquoting prevents repeated temperature excursions and contamination exposure.</p>
         <p className="mb-4">Bacteriostatic water extends shelf life through microbial inhibition compared to sterile alternatives. pH-neutral buffers optimize stability for most peptide sequences. Light protection prevents photolytic degradation of sensitive residues.</p>
-        <p className="mb-4">Advanced storage methods including ultra-low freezing and cryopreservation extend stability beyond standard refrigeration. Analytical monitoring through HPLC and spectrophotometry validates sample integrity. Proper documentation and aseptic technique maintain research quality standards.</p>
+        <p className="mb-4">Advanced storage methods including ultra-low freezing and cryopreservation extend stability beyond standard refrigeration. Analytical monitoring through HPLC and spectrophotometry validates sample integrity. Proper documentation and aseptic technique maintain research quality standards. For broader laboratory storage practices beyond the reconstituted stability window, see our <a className="text-primary underline hover:text-primary-dark" href="/research-peptide-storage-best-practices">guide to storing research peptides in laboratories</a>.</p>
       </>
     )
   },
@@ -3135,11 +3615,11 @@ export const BLOG_POSTS: {
     date: 'April 7, 2026',
     readTime: '5 min read',
     excerpt: 'Explore BPC-157 TB-500 stack synergy in preclinical models. Analysis of tissue repair mechanisms, angiogenesis pathways, and emerging research.',
-    imageSrc: '/99 Blog Images/bpc-157-tb-500-stack-research-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bpc-157-tb-500-stack-research-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/bpc-157-tb-500-stack-research-hero.jpg" alt="BPC-157 TB-500 Stack: Synergistic Research & Mechanisms" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/bpc-157-tb-500-stack-research-hero.jpg" alt="BPC-157 and TB-500 research vials alongside a tissue-repair pathway diagram illustrating combined stack mechanisms" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">The <strong>BPC-157 TB-500 stack</strong> represents one of the most studied peptide combinations in regenerative research. This analysis explores preclinical data on their synergistic mechanisms in tissue repair models.</p>
         <p className="mb-4"><a className="text-primary underline hover:text-primary-dark" href="/product/bpc-157">BPC-157 (Body Protection Compound-157)</a> and <a className="text-primary underline hover:text-primary-dark" href="/product/tb-500">TB-500 (Thymosin Beta-4 fragment)</a> target complementary pathways. BPC-157 primarily upregulates VEGF and eNOS for angiogenesis. TB-500 focuses on actin remodeling and cell migration. Together, they create overlapping regenerative effects in lab studies.</p>
@@ -3247,11 +3727,11 @@ export const BLOG_POSTS: {
     date: 'March 31, 2026',
     readTime: '7 min read',
     excerpt: 'Phase III trials show tesamorelin reduces visceral fat by 69% in 26 weeks. Learn how this GHRH analog targets VAT to CJC-1295.',
-    imageSrc: '/99 Blog Images/tesamorelin-visceral-fat-research-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-visceral-fat-research-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/tesamorelin-visceral-fat-research-hero.jpg" alt="Tesamorelin Visceral Fat Research: Clinical Data 2025" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-visceral-fat-research-hero.jpg" alt="Tesamorelin research vial with a CT scan cross-section highlighting visceral adipose tissue reduction data" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">Not all fat is created equal. While subcutaneous fat — the kind you can pinch beneath the skin — is largely cosmetic, visceral fat is a different matter entirely. Stored deep in the abdominal cavity and wrapped around the organs, visceral adipose tissue (VAT) is metabolically active, pro-inflammatory, and directly associated with cardiovascular disease, insulin resistance, and metabolic syndrome.</p>
         <p className="mb-4"><a className="text-primary underline hover:text-primary-dark" href="/product/tesamorelin">Tesamorelin</a> (a synthetic analog of growth hormone-releasing hormone, or GHRH) has emerged as one of the most targeted and well-studied peptide compounds in visceral fat research. Unlike general weight-loss agents, tesamorelin acts specifically on the GH/IGF-1 axis to selectively mobilize visceral fat — without meaningfully altering subcutaneous fat or overall body weight in most research models.</p>
@@ -3349,12 +3829,12 @@ export const BLOG_POSTS: {
     category: 'Metabolic research',
     date: 'March 18, 2026',
     readTime: '8 min read',
-    excerpt: 'New preclinical studies show retatrutide\'s effects on pancreatic, lung, and breast cancer cells. Learn what research reveals about the triple-receptor',
-    imageSrc: '/99 Blog Images/retatrutide-cancer-research-preclinical-studies-hero.webp',
+    excerpt: 'New preclinical studies show retatrutide\'s effects on pancreatic, lung, and breast cancer cells. Learn what research reveals about the triple-receptor mechanism.',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-cancer-research-preclinical-studies-hero.webp',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-cancer-research-preclinical-studies-hero.webp" alt="Retatrutide Cancer Research: Preclinical Studies 2026" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-cancer-research-preclinical-studies-hero.webp" alt="Laboratory research setting illustrating retatrutide preclinical cancer studies across pancreatic, lung, and breast cell models" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2"><a className="text-primary underline hover:text-primary-dark" href="/product/retatrutide">Retatrutide</a> (LY3437943) entered the research spotlight as a triple-receptor agonist targeting GLP-1, GIP, and glucagon (GCGR) pathways — primarily studied for its effects on metabolic function and weight regulation. But an emerging body of preclinical literature is now pointing researchers in a new direction: the relationship between retatrutide’s receptor profile and cancer cell behavior.</p>
         <p className="mb-4">This is early-stage, preclinical research. No clinical conclusions can be drawn. But for researchers studying the intersection of metabolic signaling, obesity biology, and tumor microenvironments, the findings are generating significant interest — and they raise important questions about how triple-receptor agonism may interact with cancer cell dynamics in ways that single-agonist compounds do not.To understand why retatrutide is appearing in cancer research, it helps to understand the obesity–cancer link that researchers are working to map.</p>
@@ -3411,11 +3891,11 @@ export const BLOG_POSTS: {
     date: 'March 12, 2026',
     readTime: '3 min read',
     excerpt: 'Complete laboratory guide for storing research peptides. Temperature requirements, and preventing degradation for reproducible results.',
-    imageSrc: '/99 Blog Images/research-peptide-storage-best-practices-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-peptide-storage-best-practices-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-peptide-storage-best-practices-hero.jpg" alt="Storing Research Peptides in Laboratories | 99PurityPeptides" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-peptide-storage-best-practices-hero.jpg" alt="Research peptide vials stored in a laboratory freezer rack illustrating proper temperature-controlled storage" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introduction</h2>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">Proper storage of research peptides is critical for maintaining molecular integrity, ensuring experimental reproducibility, and maximizing the utility of these valuable laboratory compounds. Research peptides are sensitive biological molecules that can degrade through multiple pathways, including hydrolysis, oxidation, deamidation, and aggregation, when exposed to inappropriate storage conditions.</p>
@@ -3453,7 +3933,7 @@ export const BLOG_POSTS: {
             <li>Oxidation-sensitive peptides</li>
         </ul>
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Reconstituted Peptide Solution Storage</h3>
-        <p className="mb-4">Once reconstituted, peptides require stricter temperature control.</p>
+        <p className="mb-4">Once reconstituted, peptides require stricter temperature control. For the bacteriostatic water ratios and mg/mL math behind reconstitution itself, see the <a className="text-primary underline hover:text-primary-dark" href="/how-much-bacteriostatic-water-reconstitute-peptides">complete bacteriostatic water reconstitution chart</a>. For a deeper look at the degradation mechanisms behind this stricter window, see our <a className="text-primary underline hover:text-primary-dark" href="/reconstituted-peptide-stability-storage">reconstituted peptide stability guide</a>.</p>
         <ul className="list-disc pl-6 space-y-4 my-6">
             <li><strong>-80°C recommended</strong> for long-term storage</li>
             <li><strong>4°C storage</strong> only for 1–2 weeks maximum</li>
@@ -3532,7 +4012,7 @@ export const BLOG_POSTS: {
             <li>Implement FIFO inventory rotation</li>
         </ul>
         <h3 className="text-xl font-semibold text-ink mt-8 mb-4">Vendor Selection</h3>
-        <p className="mb-4">High-quality research peptide suppliers provide products optimized for laboratory storage through proper lyophilization protocols, inert atmosphere packaging, and detailed storage recommendations.</p>
+        <p className="mb-4">High-quality <a className="text-primary underline hover:text-primary-dark" href="/shop">research peptide suppliers</a> provide products optimized for laboratory storage through proper lyophilization protocols, inert atmosphere packaging, and detailed storage recommendations.</p>
       </>
     )
   },
@@ -3543,11 +4023,11 @@ export const BLOG_POSTS: {
     date: 'February 23, 2026',
     readTime: '3 min read',
     excerpt: 'What are research peptides? Learn how synthetic research peptides are produced, tested for purity, and classified for laboratory use.',
-    imageSrc: '/99 Blog Images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg" alt="What Are Research Peptides? Complete Laboratory Guide (2026)" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/what-are-research-peptides-complete-laboratory-guide-2026-hero.jpg" alt="Laboratory bench with synthetic research peptide vials and purity-testing equipment" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">Research peptides are synthetic compounds used exclusively in scientific and analytical laboratory environments. If you are asking <strong>what are research peptides</strong>, this guide explains how synthetic research peptides are produced, classified, tested, and regulated.</p>
         <p className="mb-4">In modern laboratory studies, <strong>research peptides</strong> are carefully synthesized amino acid sequences used to study cell signaling pathways, peptide structure and function research, metabolic research peptides, and molecular interaction systems. These compounds are supplied as <strong>laboratory grade peptides</strong> and designated strictly for research use only.</p>
@@ -3652,11 +4132,11 @@ export const BLOG_POSTS: {
     date: 'January 14, 2026',
     readTime: '3 min read',
     excerpt: 'Explore peptides for metabolic research in 2026, including BPC-157, TB-500, MOTS-C, and AOD-9604.',
-    imageSrc: '/99 Blog Images/top-peptides-for-metabolic-studies-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/top-peptides-for-metabolic-studies-hero.webp',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/top-peptides-for-metabolic-studies-hero.webp" alt="Top Peptides for Metabolic Research in 2026" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/top-peptides-for-metabolic-studies-hero.webp" alt="Research vials for BPC-157, TB-500, MOTS-C, and AOD-9604 arranged for metabolic research studies" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">The field of peptides for metabolic research continues to expand as scientists investigate how synthetic peptides interact with cellular signaling pathways, mitochondrial regulation, and metabolic pathway systems. In laboratory metabolic peptide research, compounds are evaluated for their structural behavior in controlled experimental environments rather than clinical outcomes.</p>
         <p className="mb-4">Metabolic research peptides are commonly studied for their involvement in cell signaling metabolic research, energy regulation pathways, and adipose tissue research models. Below is a structured overview of peptides frequently referenced in laboratory metabolic studies in 2026.In laboratory metabolic research, certain synthetic research peptides are studied due to their involvement in signaling environments that overlap with metabolic pathway regulation.</p>
@@ -3752,11 +4232,11 @@ export const BLOG_POSTS: {
     date: 'January 7, 2026',
     readTime: '4 min read',
     excerpt: 'Explore BPC-157 research, laboratory studies, mechanism of action, and regulatory status. A scientific overview for research professionals.',
-    imageSrc: '/99 Blog Images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp',
     content: (
       <>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp" alt="Everything Researchers Should Know About BPC-157" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/everything-lab-researchers-need-to-know-about-bpc-157-hero.webp" alt="BPC-157 research peptide vial with a molecular structure diagram of the pentadecapeptide sequence" className="w-full h-auto object-cover" />
         </div>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">BPC-157 research continues to generate significant scientific interest within controlled laboratory environments. As a synthetic BPC-157 peptide, this compound is studied in experimental systems focused on cellular signaling pathways, tissue response modeling, and molecular interaction frameworks.</p>
         <p className="mb-4">This guide examines <strong>BPC-157 laboratory research</strong>, including mechanism of action (research perspective), analytical testing considerations, and regulatory classification — strictly from a scientific and compliance-focused standpoint.</p>

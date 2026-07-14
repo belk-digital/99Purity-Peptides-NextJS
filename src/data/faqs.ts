@@ -123,6 +123,10 @@ export const faqData: FaqCategoryType[] = [
       {
         "question": "What is cold chain handling?",
         "answer": "<p><span style=\"font-weight: 400;\">Cold chain handling refers to temperature-managed storage and transport procedures used to maintain material stability.</span></p>\r\n<p><span style=\"font-weight: 400;\">In research supply, controlled handling protocols are implemented to minimize environmental exposure and support product integrity during shipment.</span></p>"
+      },
+      {
+        "question": "How much bacteriostatic water do I use to reconstitute a peptide?",
+        "answer": "<p><span style=\"font-weight: 400;\">It depends on the concentration you want: concentration (mg/mL) = peptide mass (mg) ÷ water added (mL). A 10mg vial in 2mL gives 5mg/mL, and on a U-100 syringe 1mL always equals 100 units.</span></p>\r\n<p><span style=\"font-weight: 400;\">See our complete <a href=\"/how-much-bacteriostatic-water-reconstitute-peptides\">bacteriostatic water reconstitution chart</a> for the full mL-to-units and mg/mL tables by vial size, plus a free calculator.</span></p>"
       }
     ]
   },

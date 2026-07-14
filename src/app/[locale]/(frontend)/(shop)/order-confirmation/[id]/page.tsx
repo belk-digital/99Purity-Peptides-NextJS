@@ -94,7 +94,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
         variant: displayVariant, 
         quantity: item.quantity,
         price: typeof item.price === 'number' ? item.price : (productData?.price || productData?.basePrice || 0),
-        image: productData?.images?.[0]?.image?.url || productData?.images?.[0]?.url || '/temp-products/product-image.png'
+        image: productData?.images?.[0]?.image?.url || productData?.images?.[0]?.url || '/99 Images/product-image.webp'
      }
   })
 

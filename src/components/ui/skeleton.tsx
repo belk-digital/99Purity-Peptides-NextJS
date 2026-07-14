@@ -126,4 +126,67 @@ export function COARowSkeleton() {
   )
 }
 
+// 6. Checkout Page Skeleton — mirrors CheckoutClient's real two-column layout
+// (grid-cols-[1fr_440px]) so the page doesn't jump/reflow once data finishes loading.
+export function CheckoutPageSkeleton() {
+  return (
+    <div className="pt-32 pb-16 md:pt-36 md:pb-24 bg-white min-h-screen">
+      <div className="w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto">
+        <div className="mb-12">
+          <Skeleton className="h-10 w-64 md:h-12 md:w-96 rounded-lg" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_440px] gap-12 lg:gap-20">
+          {/* Left Column: Form sections */}
+          <div className="flex flex-col gap-10">
+            {[
+              { titleWidth: 'w-40', fields: 1 },
+              { titleWidth: 'w-32', fields: 3 },
+              { titleWidth: 'w-36', fields: 2 },
+            ].map((section, i) => (
+              <div key={i} className="flex flex-col gap-4">
+                <Skeleton className={`h-6 ${section.titleWidth} rounded-md mb-1`} />
+                {Array.from({ length: section.fields }).map((_, j) => (
+                  <Skeleton key={j} className="h-14 w-full rounded-2xl" />
+                ))}
+              </div>
+            ))}
+            <Skeleton className="h-16 w-full rounded-2xl mt-2" />
+          </div>
+
+          {/* Right Column: Order summary card */}
+          <div className="bg-[#F5F5F7]/40 rounded-3xl p-6 md:p-8 border border-slate-100 h-fit flex flex-col gap-6">
+            <Skeleton className="h-6 w-36 rounded-md" />
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div key={i} className="flex gap-4 items-center">
+                <Skeleton className="w-16 h-16 rounded-xl shrink-0" />
+                <div className="flex-1 flex flex-col gap-2">
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-3 w-1/3" />
+                </div>
+                <Skeleton className="h-4 w-12" />
+              </div>
+            ))}
+            <div className="flex flex-col gap-3 pt-4 border-t border-slate-200/60">
+              <div className="flex justify-between">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-14" />
+              </div>
+              <div className="flex justify-between">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-14" />
+              </div>
+              <div className="flex justify-between">
+                <Skeleton className="h-6 w-16" />
+                <Skeleton className="h-6 w-20" />
+              </div>
+            </div>
+            <Skeleton className="h-14 w-full rounded-2xl" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export { Skeleton }

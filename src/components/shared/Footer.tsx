@@ -168,8 +168,7 @@ const FooterContent = () => {
 
             <div className="relative z-10 mb-8 space-y-3">
               <h3 className="text-white text-2xl md:text-3xl font-bold tracking-tight leading-snug">
-                Purity You Can Trust. <br />
-                <span className="text-primary/90 font-light italic text-xl md:text-2xl">Research Elevated.</span>
+                Purity You Can Trust.
               </h3>
               <p className="text-white/60 text-[13px] max-w-[300px] leading-relaxed font-light">
                 Setting the gold standard in peptide synthesis with verified HPLC/MS testing for uncompromised results.
@@ -185,11 +184,12 @@ const FooterContent = () => {
                     placeholder="Enter your email address"
                     required
                     disabled={status === 'loading' || status === 'success'}
-                    className="flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-[13px] text-white placeholder:text-white/40 px-4 disabled:opacity-50 [&:-webkit-autofill]:bg-transparent [&:-webkit-autofill]:[-webkit-text-fill-color:white] [&:-webkit-autofill]:[transition-delay:9999s]"
+                    className="footer-newsletter-input flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-[13px] text-white placeholder:text-white/40 px-4 disabled:opacity-50"
                   />
                   <button
                     type="submit"
                     disabled={status === 'loading' || status === 'success'}
+                    aria-label={t('subscribeAria')}
                     className="w-9 h-9 rounded-full bg-primary/20 text-primary border border-primary/30 flex items-center justify-center shrink-0 hover:bg-primary hover:text-black transition-all duration-300 disabled:opacity-50 disabled:hover:bg-primary/20 disabled:hover:text-primary"
                   >
                     {status === 'loading' ? (
@@ -206,7 +206,7 @@ const FooterContent = () => {
                 )}
               </form>
 
-              <p className="text-white/70 text-xs md:text-[13px] leading-relaxed font-light tracking-wide">
+              <p className="text-white/70 text-xs md:text-[13px] leading-relaxed font-light tracking-wide pr-12 md:pr-0">
                 Stay ahead of the curve. <span className="font-semibold text-white">Join 5,000+ top-tier labs</span> getting exclusive formulations, early drop access, and breakthrough research news.
               </p>
             </div>
@@ -296,11 +296,17 @@ const FooterContent = () => {
                   </div>
                   <span className="text-[11px] sm:text-xs text-ink font-semibold tracking-wide truncate">support@99puritypeptides.com</span>
                 </a>
-                <a href="tel:8437439007" className="flex items-center gap-4 hover:bg-black/[0.03] rounded-2xl p-2 -ml-2 transition-colors group w-full">
+                <a href="tel:+18433307365" className="flex items-center gap-4 hover:bg-black/[0.03] rounded-2xl p-2 -ml-2 transition-colors group w-full">
                   <div className="w-10 h-10 rounded-full bg-black/[0.04] border border-black/[0.05] flex items-center justify-center text-ink-muted group-hover:text-white group-hover:bg-primary group-hover:border-primary transition-all duration-300 shrink-0 group-hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                   </div>
-                  <span className="text-[11px] sm:text-xs text-ink font-semibold tracking-wide">843 743 9007</span>
+                  <span className="text-[11px] sm:text-xs text-ink font-semibold tracking-wide">+1 (843) 330-7365</span>
+                </a>
+                <a href="https://x.com/99puritypeptide" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 hover:bg-black/[0.03] rounded-2xl p-2 -ml-2 transition-colors group w-full">
+                  <div className="w-10 h-10 rounded-full bg-black/[0.04] border border-black/[0.05] flex items-center justify-center text-ink-muted group-hover:text-white group-hover:bg-primary group-hover:border-primary transition-all duration-300 shrink-0 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </div>
+                  <span className="text-[11px] sm:text-xs text-ink font-semibold tracking-wide">@99puritypeptide</span>
                 </a>
               </div>
             </div>
@@ -354,7 +360,7 @@ const FooterContent = () => {
 
         {/* Full-width Brand Name Card */}
         <div className="bg-cream rounded-[1.5rem] md:rounded-[2rem] h-[10vw] sm:h-[11vw] md:h-[11.5vw] lg:h-[12vw] xl:h-[12.5vw] relative overflow-hidden border border-primary/10 flex justify-center items-start shadow-sm w-full">
-          <div className="relative z-20 pt-[2vw] sm:pt-[1.5vw] font-heading text-[12.5vw] sm:text-[13.5vw] md:text-[14vw] lg:text-[14.5vw] xl:text-[15vw] leading-[0.8] font-black text-primary/15 text-center tracking-tighter lowercase select-none w-full whitespace-nowrap px-4">
+          <div aria-hidden="true" className="relative z-20 pt-[2vw] sm:pt-[1.5vw] font-heading text-[12.5vw] sm:text-[13.5vw] md:text-[14vw] lg:text-[14.5vw] xl:text-[15vw] leading-[0.8] font-black text-primary/15 text-center tracking-tighter lowercase select-none w-full whitespace-nowrap px-4">
             99purity
           </div>
         </div>

@@ -136,9 +136,9 @@ export function MilitaryDiscountSection() {
                   </div>
                   
                   <div>
-                    <h4 className="text-ink font-black text-sm md:text-base tracking-[0.1em] uppercase mb-1.5 flex items-center gap-2">
+                    <h3 className="text-ink font-black text-sm md:text-base tracking-[0.1em] uppercase mb-1.5 flex items-center gap-2">
                       {t('privacyNoticeTitle')}
-                    </h4>
+                    </h3>
                     <p className="text-ink/75 text-xs md:text-sm leading-relaxed font-medium">
                       {t.rich('privacyNoticeText', {
                         redact: (chunks) => <span className="font-bold text-ink">{chunks}</span>,

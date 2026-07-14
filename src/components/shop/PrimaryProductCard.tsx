@@ -223,9 +223,10 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
           whileHover={isPending ? {} : { scale: 1.05 }}
           whileTap={isPending ? {} : { scale: 0.9 }}
           onClick={handleWishlistClick}
+          aria-label={inWishlist ? t('removeFromWishlistAria') : t('addToWishlistAria')}
           className={`absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2.5 rounded-full backdrop-blur-xl transition-colors z-20 shadow-[0_4px_16px_rgba(0,0,0,0.05)] border flex items-center justify-center disabled:opacity-70 ${
-            inWishlist 
-              ? 'bg-red-500/15 text-red-500 border-red-500/20 hover:bg-red-500/25' 
+            inWishlist
+              ? 'bg-red-500/15 text-red-500 border-red-500/20 hover:bg-red-500/25'
               : 'bg-white/30 text-[#8A95A5] border-white/40 hover:text-red-500 hover:bg-white/50'
           }`}
         >

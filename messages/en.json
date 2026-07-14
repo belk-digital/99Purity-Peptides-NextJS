@@ -107,6 +107,7 @@
   },
   "mobileMenu": {
     "menu": "Menu",
+    "closeMenu": "Close menu",
     "exploreCategories": "Explore Categories",
     "support": "Support",
     "links": {
@@ -145,6 +146,8 @@
     "navContact": "Contact",
     "navAffiliates": "Affiliates",
     "openSearch": "Open search",
+    "openCart": "Open cart",
+    "openMenu": "Open menu",
     "shopNow": "Shop Now",
     "closeAnnouncement": "Close announcement",
     "clickToCopy": "Click to copy coupon",
@@ -171,6 +174,7 @@
     "ctaHeadlineLine2": "Explore our complete catalogue.",
     "exploreCatalogue": "Explore Catalogue",
     "brandBlurbPrefix": "Join research laboratories and universities nationwide relying on",
+    "subscribeAria": "Subscribe to newsletter",
     "explore": "Explore",
     "navHome": "Home",
     "navAbout": "About",
@@ -208,6 +212,8 @@
       "featured": "Featured",
       "total": "Total",
       "addedToCart": "Added {name} to cart!",
+      "closeFeaturedProduct": "Close featured product",
+      "viewFeaturedProduct": "View featured product",
       "products": {
         "retatrutide": "Advanced metabolic research peptide designed for maximum efficacy. Rigorously tested for purity.",
         "tirzepatide": "Dual GIP and GLP-1 receptor agonist for comprehensive metabolic and cardiovascular research.",
@@ -461,14 +467,7 @@
       "unsubscribeNote": "Unsubscribe at any time."
     },
     "parallaxImage": {
-      "imageAlt": "The Pursuit of Purity Visual",
-      "doNotClick": "Do Not Click",
-      "glitchLine1": "GIGACHAD",
-      "glitchLine2": "ACTIVATED",
-      "rewardTitle": "Secret Unlocked",
-      "rewardText": "You found the Gigachad button. Take 15% off your next research project.",
-      "copiedAlert": "Copied to clipboard!",
-      "copyButton": "Copy"
+      "imageAlt": "The Pursuit of Purity Visual"
     },
     "pinterestGlassCard": {
       "defaultTag": "Verified"
@@ -608,6 +607,8 @@
       "removedFromWishlistDescription": "{name} has been removed.",
       "addedToWishlist": "Added to wishlist",
       "addedToWishlistDescription": "{name} is now in your wishlist.",
+      "addToWishlistAria": "Add to wishlist",
+      "removeFromWishlistAria": "Remove from wishlist",
       "viewWishlist": "View Wishlist",
       "failedToUpdateWishlist": "Failed to update wishlist",
       "unexpectedError": "An unexpected error occurred.",
@@ -866,12 +867,14 @@
       "searchStates": "Search states...",
       "noStatesFound": "No states found",
       "zipCode": "ZIP Code",
+      "country": "Country",
       "phone": "Phone",
       "setAsDefault": "Set as default shipping address",
       "cancel": "Cancel",
       "saving": "Saving...",
       "saveAddress": "Save Address",
       "default": "Default",
+      "edit": "Edit",
       "delete": "Delete",
       "toastUpdateFailed": "Failed to update address",
       "toastUpdateSuccess": "Address updated successfully",
@@ -1086,6 +1089,7 @@
       "browseProducts": "BROWSE PRODUCTS",
       "yourCart": "Your Cart",
       "removeItemAria": "Remove item",
+      "removeCouponAria": "Remove coupon",
       "remove": "Remove",
       "total": "Total",
       "subtotal": "Subtotal",
@@ -1148,6 +1152,8 @@
       "city": "City",
       "state": "State",
       "zipCode": "ZIP Code",
+      "country": "Country",
+      "internationalShippingNotice": "International shipping is a flat $50 rate.",
       "phoneForDelivery": "Phone (for delivery updates)",
       "shippingMethod": "Shipping Method",
       "businessDays": "{days} business days",
@@ -1338,7 +1344,7 @@
       "section3Item4": "Custom or bulk orders if explicitly marked as non-refundable.",
       "section4Title": "Refund Process",
       "section4Intro": "To request a refund, please follow these steps:",
-      "section4Item1": "Contact our Customer Support team at <email>support@99puritypeptides.com</email> or <phone>843 743 9007</phone> with your order number and reason for the refund.",
+      "section4Item1": "Contact our Customer Support team at <email>support@99puritypeptides.com</email> or <phone>+1 (843) 330-7365</phone> with your order number and reason for the refund.",
       "section4Item2": "Provide photos of the product and packaging if requested.",
       "section4Item3": "Our team will review your request and notify you within 3–5 business days regarding approval.",
       "section4Item4": "If approved, refunds will be issued via the original payment method or as store credit, depending on your preference.",
@@ -2076,7 +2082,7 @@
       "faqs": {
         "contactInfo": {
           "question": "What is the contact information for 99PurityPeptides in the United States?",
-          "answer": "Reach us at 5768 Wyncliff Drive, North Charleston, South Carolina 29418, US Phone: <phone>843 743 9007</phone>, and email: <email>support@99puritypeptides.com</email> for lab inquiries."
+          "answer": "Reach us at 5768 Wyncliff Drive, North Charleston, South Carolina 29418, US Phone: <phone>+1 (843) 330-7365</phone>, and email: <email>support@99puritypeptides.com</email> for lab inquiries."
         },
         "usLabsContact": {
           "question": "How can US laboratories contact 99PurityPeptides for research peptide orders?",

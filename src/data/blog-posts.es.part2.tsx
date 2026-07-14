@@ -9,7 +9,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
     date: '2 de junio de 2026',
     readTime: '12 min de lectura',
     excerpt: 'Referencia para uso exclusivo en investigación sobre la retatrutida (LY3437943), el agonista triple investigacional de receptores hormonales (GLP-1, GIP, glucagón) de Eli Lilly, en estudio para la obesidad y afecciones relacionadas.',
-    imageSrc: '/99 Blog Images/retatrutide-weight-loss-research-guide-2026-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-hero.webp',
     content: (
       <>
         <div className="prose prose-lg text-ink/80 max-w-none">
@@ -29,10 +29,10 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
             </ul>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-1.webp" alt="Entorno de investigación de laboratorio con un esquema molecular de triple agonista de retatrutida y una gráfica de ensayo clínico de Fase II" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-1.webp" alt="Entorno de investigación de laboratorio con un esquema molecular de triple agonista de retatrutida y una gráfica de ensayo clínico de Fase II" className="w-full h-auto object-cover" />
         </div>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-2.webp" alt="Diagrama de estructura molecular y sitios de unión de la retatrutida mostrando las regiones de los receptores GLP-1R, GIPR y GCGR" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-2.webp" alt="Diagrama de estructura molecular y sitios de unión de la retatrutida mostrando las regiones de los receptores GLP-1R, GIPR y GCGR" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Qué es la retatrutida?</h2>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">El compuesto (LY3437943)</h3>
@@ -45,8 +45,12 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Desarrollado por Eli Lilly — investigación y pipeline de ensayos</h3>
         <p className="mb-4">Eli Lilly desarrolló la retatrutida como parte de un programa para extender el concepto de agonismo dual que demostró la <a className="text-primary underline hover:text-primary-dark" href="/product/tirzepatide">tirzepatida</a>. A partir de junio de 2026, Lilly lleva adelante dos programas paralelos de Fase 3: el programa TRIUMPH en obesidad y el programa TRANSCEND-T2D en diabetes tipo 2. Se estudian varias otras indicaciones, incluyendo apnea obstructiva del sueño, MASLD, osteoartritis de rodilla, enfermedad renal crónica y resultados cardiovasculares.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-3.webp" alt="Diagrama que ilustra la unión simultánea de la retatrutida a los receptores GLP-1, GIP y glucagón como triple agonista" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-3.webp" alt="Diagrama que ilustra la unión simultánea de la retatrutida a los receptores GLP-1, GIP y glucagón como triple agonista" className="w-full h-auto object-cover" />
         </div>
+<h3 className="text-xl font-bold text-ink mt-8 mb-4">¿Es la retatrutida un GLP-1? Entendiendo el agonismo triple</h3>
+        <p className="mb-4">La retatrutida no es "un GLP-1" en el sentido estricto. Específicamente, activa el receptor GLP-1 junto con otros dos. Los investigadores la clasifican como un compuesto de la clase GLP-1, pero la etiqueta más precisa es agonista triple de receptores hormonales.</p>
+        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Actividad del receptor GLP-1</h3>
+        <p className="mb-4">El receptor del péptido similar al glucagón tipo 1 regula la secreción pancreática de insulina, ralentiza el vaciamiento gástrico y reduce el apetito a través de vías centrales. El agonismo del receptor GLP-1 es el mecanismo que utiliza la semaglutida por sí sola; la tirzepatida combina la actividad GLP-1 con la actividad GIP.</p>
 <h3 className="text-xl font-bold text-ink mt-8 mb-4">¿Es la retatrutida un GLP-1? Entendiendo el agonismo triple</h3>
         <p className="mb-4">La retatrutida no es "un GLP-1" en el sentido estricto. Específicamente, activa el receptor GLP-1 junto con otros dos. Los investigadores la clasifican como un compuesto de la clase GLP-1, pero la etiqueta más precisa es agonista triple de receptores hormonales.</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Actividad del receptor GLP-1</h3>
@@ -59,189 +63,42 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
         <p className="mb-4">El receptor de glucagón es la tercera palanca. Cuando se equilibra con la actividad GLP-1 y GIP en la misma molécula, los investigadores creen que aumenta el gasto energético e influye en el manejo hepático de lípidos. Sin embargo, algunos foros en línea a veces etiquetan a la retatrutida como "GLP-3". Esto es inexacto — no existe ningún receptor "GLP-3". La retatrutida es un agonista triple de los receptores GIP, GLP-1 y glucagón, no un GLP-1 de tercera generación.</p>
         <p className="mb-4">Definición — Receptor de glucagón: un receptor que, en <a className="text-primary underline hover:text-primary-dark" href="/certificates">coa</a>ctivación equilibrada con GLP-1 y GIP, se hipotetiza que aumenta el gasto energético. Es el tercer objetivo de la retatrutida. No es "GLP-3".</p>
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Comparación de unión a receptores</h3>
-        <div className="overflow-x-auto my-6">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-ink/10">
+              <tr className="border-b border-ink/10 bg-cream-warm">
+                <th className="py-3 px-4 font-bold text-ink">Compuesto</th>
+                <th className="py-3 px-4 font-bold text-ink">GLP-1</th>
+                <th className="py-3 px-4 font-bold text-ink">GIP</th>
+                <th className="py-3 px-4 font-bold text-ink">Glucagón</th>
+                <th className="py-3 px-4 font-bold text-ink">Pérdida de peso máxima en Fase 3</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Compuesto</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">GLP-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">GIP</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Glucagón</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Pérdida de peso máxima en Fase 3</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Semaglutida</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">—</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">—</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">14.9% (STEP-1, 68 semanas)</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">—</td>
+                <td className="py-3 px-4">—</td>
+                <td className="py-3 px-4">14.9% (STEP-1, 68 semanas)</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Tirzepatida</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">—</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">22.5% (SURMOUNT-1, 72 semanas)</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">—</td>
+                <td className="py-3 px-4">22.5% (SURMOUNT-1, 72 semanas)</td>
               </tr>
               <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
                 <td className="py-3 px-4 font-medium">Retatrutida</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">✓</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">28.3% a las 80 semanas; 30.3% a las 104 semanas (TRIUMPH-1)</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">✓</td>
+                <td className="py-3 px-4">28.3% a las 80 semanas; 30.3% a las 104 semanas (TRIUMPH-1)</td>
               </tr>
             </tbody>
           </table>
-        </div>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-4.webp" alt="Gráfica de trayectoria de dosis en ensayo clínico comparando dosis de investigación de retatrutida de 4mg, 9mg y 12mg durante 24 semanas" className="w-full h-auto object-cover" />
-        </div>
-<h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Retatrutida y pérdida de peso: qué muestra la investigación</h2>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Datos de Fase 2 sobre reducción de peso corporal (Jastreboff 2023)</h3>
-        <p className="mb-4">Los primeros datos de Fase 2 sobre la pérdida de peso con retatrutida aparecieron en el New England Journal of Medicine en 2023. Jastreboff et al. reportaron un ensayo aleatorizado de 48 semanas en adultos con obesidad pero sin diabetes. En la dosis más alta (12 mg semanales), la reducción media del peso corporal alcanzó el 24.2%, en comparación con una reducción del 2.1% en el grupo placebo. El resultado de Fase 2 estableció la señal de relación dosis-respuesta que el programa de Fase 3 confirmó posteriormente a mayor escala.</p>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Resultados del ensayo de Fase 3 TRIUMPH-1 (actualización 2026)</h3>
-        <p className="mb-4">TRIUMPH-1 es el ensayo pivotal de Fase 3 sobre obesidad para la retatrutida. Incluyó a 2,339 adultos con obesidad o sobrepeso más al menos una comorbilidad relacionada con el peso, pero sin diabetes. Los participantes recibieron retatrutida subcutánea una vez por semana a 4 mg, 9 mg o 12 mg, o placebo, durante 80 semanas.</p>
-        <p className="mb-4">El 21 de mayo de 2026, Eli Lilly reportó resultados preliminares: la reducción media del peso corporal fue del 19.0% en el grupo de 4 mg, 25.9% en el grupo de 9 mg y 28.3% en el grupo de 12 mg. El placebo produjo una reducción del 2.2%. Además, el 45.3% de los participantes en el grupo de 12 mg logró al menos un 30% de reducción del peso corporal. Una extensión ciega entre los participantes con un IMC basal ≥35 continuó hasta las 104 semanas, donde la pérdida media de peso alcanzó el 30.3%.</p>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Mecanismos reportados detrás de la reducción del peso corporal</h3>
-        <p className="mb-4">Los investigadores han propuesto que la reducción del peso corporal con retatrutida refleja la contribución combinada de los tres receptores: la actividad GLP-1 reduce el apetito y ralentiza el vaciamiento gástrico; la actividad GIP influye en la liberación de insulina impulsada por nutrientes y en el manejo adiposo; y la actividad de glucagón contribuye al gasto energético y al manejo hepático de lípidos. El mecanismo es aditivo, no duplicativo.</p>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Regulación del apetito y vías de gasto energético</h3>
-        <p className="mb-4">La regulación del apetito transcurre a través de vías centrales que influyen los receptores GLP-1 y GIP. Las contribuciones al gasto energético provienen principalmente de la activación del receptor de glucagón. Esta combinación es el fundamento mecanístico que distingue a la retatrutida de compuestos anteriores de la clase GLP-1. El resultado de TRIUMPH-1 aún no ha aparecido en una revista revisada por pares; Eli Lilly ha indicado que los resultados detallados se presentarán en las Sesiones Científicas de la American Diabetes Association en junio de 2026.</p>
-        <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Retatrutida frente a tirzepatida frente a semaglutida</h2>
-        <p className="mb-4">Tres compuestos dominan la conversación actual de investigación sobre la clase GLP-1: la semaglutida (agonista único), la tirzepatida (agonista dual) y la retatrutida (agonista triple). La mejor comparación abarca tres dimensiones: mecanismo, eficacia publicada en ensayos y tolerabilidad reportada.</p>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Comparación de mecanismos</h3>
-        <p className="mb-4">La semaglutida activa únicamente el receptor GLP-1. La tirzepatida agrega la activación del receptor GIP, convirtiéndola en un agonista dual. La retatrutida agrega la activación del receptor de glucagón sobre el GLP-1 y el GIP, produciendo un mecanismo triple. Cada receptor adicional contribuye con un efecto metabólico distinto.</p>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Eficacia reportada en la pérdida de peso en datos de ensayos</h3>
-        <p className="mb-4">En los ensayos pivotales de Fase 3, la reducción media de peso ha escalado con la cobertura de receptores. La semaglutida produjo una pérdida de peso media del 14.9% en STEP-1 a las 68 semanas; la tirzepatida alcanzó el 22.5% en SURMOUNT-1 a las 72 semanas; la retatrutida alcanzó el 28.3% en TRIUMPH-1 a las 80 semanas, con datos de extensión que llegaron al 30.3% a las 104 semanas.</p>
-        <h3 className="text-xl font-bold text-ink mt-8 mb-4">Resumen comparativo</h3>
-        <div className="overflow-x-auto my-6">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-ink/10">
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Atributo</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Semaglutida</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Tirzepatida</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Retatrutida</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Mecanismo</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Agonista GLP-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Agonista GLP-1 + GIP</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Agonista GLP-1 + GIP + glucagón</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Ensayo pivotal</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">STEP-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">SURMOUNT-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">TRIUMPH-1</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Duración del ensayo</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">68 semanas</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">72 semanas</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">80 semanas (extensión de 104 semanas)</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Reducción media de peso (dosis alta)</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">14.9%</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">22.5%</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">28.3% / 30.3%</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Dosificación en los ensayos</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Una vez por semana</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Una vez por semana</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Una vez por semana</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Estado ante la FDA (junio de 2026)</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Aprobado</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Aprobado</td>
-              </tr>
-              <tr className="border-b border-ink/5 hover:bg-cream-warm/50">
-                <td className="py-3 px-4 font-medium">Investigacional</td>
-              </tr>
-            </tbody>
-          </table>
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-4.webp" alt="Gráfica de trayectoria de dosis en ensayo clínico comparando dosis de investigación de retatrutida de 4mg, 9mg y 12mg durante 24 semanas" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Perfil de efectos secundarios en los ensayos</h2>
         <p className="mb-4">Los efectos secundarios reportados en los tres compuestos se centran en eventos gastrointestinales. Los datos publicados de TRIUMPH-1 y TRIUMPH-4 muestran que las tasas de discontinuación aumentan con la dosis. Específicamente, el grupo de 12 mg de retatrutida ha mostrado las cifras de discontinuación más altas de los tres compuestos en sus respectivas dosis máximas, aunque los investigadores han sugerido que parte de la tasa refleja a participantes que alcanzaron los umbrales de pérdida de peso y decidieron discontinuar.</p>
@@ -267,7 +124,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
         <h3 className="text-xl font-bold text-ink mt-8 mb-4">Cartas de advertencia de la FDA a proveedores de péptidos GLP-1 (septiembre de 2025)</h3>
         <p className="mb-4">En septiembre de 2025, la FDA emitió más de 50 cartas de advertencia a empresas estadounidenses e internacionales que comercializaban productos GLP-1 compuestos (compounded). Varias cartas mencionaron explícitamente a la retatrutida. La agencia citó violaciones de la Ley Federal de Alimentos, Medicamentos y Cosméticos y declaró que una etiqueta de "uso exclusivo en investigación" no exime a un producto de los requisitos federales cuando el vendedor de hecho lo comercializa para uso humano. Una ronda de seguimiento de cartas de advertencia en marzo de 2026 apuntó a plataformas de telesalud que comercializaban productos GLP-1 compuestos.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-weight-loss-research-guide-2026-inline-5.webp" alt="Gráfica de barras del ensayo TRIUMPH-1 mostrando las tasas de eventos adversos reportados por grupo de dosis de retatrutida durante 80 semanas" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-weight-loss-research-guide-2026-inline-5.webp" alt="Gráfica de barras del ensayo TRIUMPH-1 mostrando las tasas de eventos adversos reportados por grupo de dosis de retatrutida durante 80 semanas" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Manejo de la retatrutida en entornos de investigación</h2>
         <p className="mb-4">Esta sección describe el manejo en laboratorio del material de referencia de retatrutida tal como lo documentan los protocolos publicados sobre péptidos. Nada de esto constituye instrucciones para la administración en humanos o animales.</p>
@@ -442,20 +299,20 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
     date: '11 de junio de 2026',
     readTime: '10 min de lectura',
     excerpt: 'Mezcla de péptidos KLOW: composición verificada de 50/10/10/10mg, BPC-157, TB-500, KPV, GHK-Cu. Beneficios de investigación, tabla de dosis, comparación KLOW vs GLOW. Referencia 2026.',
-    imageSrc: '/99 Blog Images/klow-peptide-blend-research-guide-2026-hero.png',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/klow-peptide-blend-research-guide-2026-hero.png',
     content: (
       <>
         <div className="prose prose-lg text-ink/80 max-w-none">
-        <p className="text-sm text-ink/60 italic mb-2">Por [Nombre del Autor], MSc en Bioquímica — Editora Senior de Investigación</p>
+        <p className="text-sm text-ink/60 italic mb-2">Por el Equipo de Investigación de 99 Purity Peptides</p>
         <p className="text-sm text-ink/60 italic mb-2">Última revisión: 11 de junio de 2026 | Última actualización: 11 de junio de 2026</p>
         <div className="bg-cream-warm p-6 rounded-2xl border border-ink/5 my-8">
             <h3 className="font-bold text-lg mb-4">Datos Rápidos — Mezcla de Péptidos KLOW</h3>
             <ul className="list-disc pl-6 space-y-2">
-                <li>&lt;strong&gt;Qué es:&lt;/strong&gt; Una mezcla de investigación de cuatro componentes que combina BPC-157, TB-500, KPV y <a className="text-primary underline hover:text-primary-dark" href="/product/ghk-cu">GHK-Cu</a> en un solo vial liofilizado, estudiada para modelos de recuperación articular y de tejido blando.</li>
-                <li>&lt;strong&gt;Composición:&lt;/strong&gt; 50mg BPC-157 / 10mg TB-500 / 10mg <a className="text-primary underline hover:text-primary-dark" href="/product/kpv">KPV</a> / 10mg GHK-Cu — 80mg en total entre los cuatro péptidos.</li>
-                <li>&lt;strong&gt;Uso en investigación:&lt;/strong&gt; Investigada en modelos preclínicos de estrés articular crónico, sobrecarga de tendones y ligamentos, modulación de vías antiinflamatorias y reparación tisular multivía.</li>
-                <li>&lt;strong&gt;Concentración:&lt;/strong&gt; 80mg en 3mL = ~26.67mg/mL combinados; BPC-157 solo a ~16.67mg/mL.</li>
-                <li>&lt;strong&gt;Estado regulatorio:&lt;/strong&gt; Solo para uso en investigación (RUO). No aprobado para consumo humano, aplicación terapéutica o uso veterinario.</li>
+                <li><strong>Qué es:</strong> Una mezcla de investigación de cuatro componentes que combina BPC-157, TB-500, KPV y <a className="text-primary underline hover:text-primary-dark" href="/product/ghk-cu">GHK-Cu</a> en un solo vial liofilizado, estudiada para modelos de recuperación articular y de tejido blando.</li>
+                <li><strong>Composición:</strong> 50mg BPC-157 / 10mg TB-500 / 10mg <a className="text-primary underline hover:text-primary-dark" href="/product/kpv">KPV</a> / 10mg GHK-Cu — 80mg en total entre los cuatro péptidos.</li>
+                <li><strong>Uso en investigación:</strong> Investigada en modelos preclínicos de estrés articular crónico, sobrecarga de tendones y ligamentos, modulación de vías antiinflamatorias y reparación tisular multivía.</li>
+                <li><strong>Concentración:</strong> 80mg en 3mL = ~26.67mg/mL combinados; BPC-157 solo a ~16.67mg/mL.</li>
+                <li><strong>Estado regulatorio:</strong> Solo para uso en investigación (RUO). No aprobado para consumo humano, aplicación terapéutica o uso veterinario.</li>
             </ul>
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introducción</h2>
@@ -916,7 +773,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
     date: '16 de junio de 2026',
     readTime: '8 min de lectura',
     excerpt: 'Péptidos de colágeno vs. terapia con péptidos para la piel: comparamos GHK-Cu y el colágeno hidrolizado, lo que muestra la investigación y dónde encaja cada uno. Péptidos de investigación RUO.',
-    imageSrc: '/99 Blog Images/collagen-peptides-vs-peptide-therapy-skin-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-vs-peptide-therapy-skin-hero.webp',
     content: (
       <>
         <div className="prose prose-lg text-ink/80 max-w-none">
@@ -969,7 +826,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
           </table>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-vs-peptide-therapy-skin-inline-1.webp" alt="Gráfico comparativo de péptidos de colágeno frente a terapia con péptidos para la salud, hidratación y antienvejecimiento de la piel" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-vs-peptide-therapy-skin-inline-1.webp" alt="Gráfico comparativo de péptidos de colágeno frente a terapia con péptidos para la salud, hidratación y antienvejecimiento de la piel" className="w-full h-auto object-cover" />
         </div>
         <div className="bg-cream-warm p-4 rounded-xl border border-ink/5 my-4">
             <p className="font-semibold text-ink">Conclusión: los péptidos de colágeno cuentan con la base de ensayos en humanos más amplia en cuanto al aspecto de la piel. Los péptidos de cobre tienen la historia de señalización más dirigida. Muchas personas que investigan el envejecimiento saludable analizan ambos.</p>
@@ -1055,13 +912,13 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
     date: '26 de mayo de 2026',
     readTime: '12 min de lectura',
     excerpt: 'Referencia de investigación sobre el péptido GHK-Cu: mecanismo, evidencia de la vía del colágeno, manejo en laboratorio, estándares de pureza y más de 35 preguntas frecuentes basadas en estudios revisados por pares.',
-    imageSrc: '/99 Blog Images/ghk-cu-peptide-research-vial-hero.png',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-peptide-research-vial-hero.png',
     content: (
       <>
         <p className="text-ink/60 text-sm mb-4 italic">Última revisión: 27 de mayo de 2026 · Última actualización: 27 de mayo de 2026</p>
         <p className="text-ink/60 text-sm mb-12 italic">Autor: Dr. M. Rivera, PhD (Bioquímica de Péptidos) — Editor de Investigación, 99 Purity Peptides</p>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-peptide-research-vial-hero.png" alt="GHK-Cu peptide lyophilized powder vial with HPLC chromatogram for research use" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-peptide-research-vial-hero.png" alt="GHK-Cu peptide lyophilized powder vial with HPLC chromatogram for research use" className="w-full h-auto object-cover" />
         </div>
         <p className="mb-4">El péptido <a className="text-primary underline hover:text-primary-dark" href="/product/ghk-cu">GHK-Cu</a> —el complejo de cobre de la glicil-L-histidil-L-lisina— ha ocupado un lugar discreto pero persistente en la bioquímica regenerativa desde el trabajo de aislamiento de Loren Pickart en 1973. Esta página de referencia reúne la literatura mecanicista, analítica y de manejo en laboratorio sobre el GHK-Cu para profesionales de la investigación que trabajan con el compuesto in vitro o en modelos preclínicos. Todo el material se presenta exclusivamente para uso en investigación (RUO, por sus siglas en inglés).</p>
         <div className="my-12 p-8 bg-cream-warm rounded-[2rem] border border-ink/10">
@@ -1077,7 +934,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Qué Es el GHK-Cu?</h2>
         <p className="mb-4">El GHK-Cu es la forma unida a cobre del tripéptido humano glicil-L-histidil-L-lisina, aislado originalmente por Pickart a partir de la albúmina del plasma humano en 1973 [1]. El péptido libre quela un ion Cu²⁺ con alta afinidad, generando un complejo de color azul cobalto intenso que es la molécula de referencia de la investigación moderna sobre péptidos de cobre. Las concentraciones plasmáticas de GHK en humanos se reportan en aproximadamente 200 ng/mL en adultos jóvenes y disminuyen a cerca de 80 ng/mL hacia los sesenta años [2].</p>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-peptide-molecular-structure.png" alt="GHK-Cu peptide molecular structure showing copper coordination with glycine, histidine, and lysine" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-peptide-molecular-structure.png" alt="GHK-Cu peptide molecular structure showing copper coordination with glycine, histidine, and lysine" className="w-full h-auto object-cover" />
         </div>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">El Tripéptido GHK y Su Complejo de Cobre</h3>
         <p className="mb-4">La secuencia GHK —glicina, histidina, lisina— es lo suficientemente pequeña como para calificar como un "péptido señal", lo que significa que interactúa con dianas de superficie celular e intracelulares para alterar programas transcripcionales en lugar de actuar como un bloque estructural. Cuando el GHK encuentra Cu²⁺ en condiciones fisiológicas, el nitrógeno del imidazol de la histidina y la amina N-terminal coordinan el metal, con la lisina contribuyendo al bolsillo de unión. El complejo resultante Gly-His-Lys-Cu(II) transforma el comportamiento del péptido de un ligando pasivo a un modulador activo del tráfico intracelular de cobre [2].</p>
@@ -1101,7 +958,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Mecanismo de Acción: Cómo Funciona el GHK-Cu a Nivel Celular</h2>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-mechanism-fibroblast-signaling.png" alt="GHK-Cu mechanism diagram showing fibroblast activation and collagen pathway signaling" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-mechanism-fibroblast-signaling.png" alt="GHK-Cu mechanism diagram showing fibroblast activation and collagen pathway signaling" className="w-full h-auto object-cover" />
         </div>
         <p className="mb-4">Los investigadores han caracterizado la actividad del GHK-Cu a través de varios mecanismos superpuestos. Ninguno opera de forma aislada; el efecto biológico aparente del compuesto en una concentración determinada refleja la suma de estas señales.</p>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">Actividad de Péptido Señal y Estimulación de Fibroblastos</h3>
@@ -1121,7 +978,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
             <p className="font-semibold text-ink"> <strong>Conclusión Clave:</strong> El GHK-Cu actúa a través de múltiples mecanismos superpuestos —activación de fibroblastos, entrega controlada de cobre, señalización antioxidante y modulación amplia de la expresión génica. Ningún receptor único explica su actividad; la literatura lo trata como un péptido señal de múltiples vías.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-peptide-reconstitution-protocol.png" alt="Research scientist reconstituting copper peptide with bacteriostatic water under sterile conditions" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-peptide-reconstitution-protocol.png" alt="Research scientist reconstituting copper peptide with bacteriostatic water under sterile conditions" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Aplicaciones de Investigación Principales del GHK-Cu</h2>
         <p className="mb-4">La literatura revisada por pares sobre el GHK-Cu se concentra en seis áreas de aplicación. Cada una se resume brevemente a continuación tal como aparece en trabajos in vitro y preclínicos publicados —no como una afirmación terapéutica.</p>
@@ -1142,7 +999,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">GHK-Cu Comparado con Otros Péptidos y Activos de Investigación</h2>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/ghk-cu-vs-bpc-157-retinol-comparison.png" alt="Comparison of GHK-Cu copper peptide versus BPC-157, retinol, and Vitamin C in research contexts" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/ghk-cu-vs-bpc-157-retinol-comparison.png" alt="Comparison of GHK-Cu copper peptide versus BPC-157, retinol, and Vitamin C in research contexts" className="w-full h-auto object-cover" />
         </div>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">GHK-Cu vs BPC-157 (Contexto de Investigación)</h3>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">GHK-Cu vs Retinol (Comparación de Mecanismos)</h3>
@@ -1156,7 +1013,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
             <p className="font-semibold text-ink"> <strong>Conclusión Clave:</strong> El GHK-Cu, el <a className="text-primary underline hover:text-primary-dark" href="/product/bpc-157">BPC-157</a>, el retinol y la Vitamina C ocupan distintos puntos en el panorama de la investigación regenerativa y dermatológica. El GHK-Cu de grado investigación se distingue de los sueros cosméticos de péptido de cobre principalmente por la documentación, la verificación de pureza y la ausencia de excipientes de formulación.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-grade-vs-cosmetic-copper-peptide.png" alt="Research-grade GHK-Cu vial versus cosmetic copper peptide serum showing documentation differences" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-grade-vs-cosmetic-copper-peptide.png" alt="Research-grade GHK-Cu vial versus cosmetic copper peptide serum showing documentation differences" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Manejo en Laboratorio: Reconstitución, Solubilidad y Estabilidad</h2>
         <p className="mb-4">Esta sección describe el manejo en laboratorio del GHK-Cu como estándar de referencia. No constituye una guía para la administración en humanos.</p>
@@ -1217,7 +1074,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
             <p className="font-semibold text-ink"> <strong>Conclusión Clave:</strong> El GHK-Cu se vende estrictamente para uso en investigación en EE. UU. y no está aprobado para uso terapéutico en humanos. El material de grado investigación difiere en categoría regulatoria, documentación y control de calidad respecto de los productos cosméticos de péptido de cobre.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/research-lab-peptide-vials.png" alt="Research laboratory bench with peptide vials and pipettes" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/research-lab-peptide-vials.png" alt="Research laboratory bench with peptide vials and pipettes" className="w-full h-auto object-cover" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Limitaciones y Consideraciones Reportadas en la Investigación del GHK-Cu</h2>
         <h3 className="text-xl font-semibold text-ink mt-12 mb-4">Vacíos en la Base de Evidencia Actual</h3>
@@ -1423,7 +1280,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
     date: '23 de junio de 2026',
     readTime: '12 min de lectura',
     excerpt: '¿Qué porcentaje de grasa visceral reduce la tesamorelina en investigación? Los ensayos clínicos de Fase 3 reportan una reducción de VAT de aproximadamente 15-18% cerca de las 26 semanas. Revisa los datos, los plazos y los estándares de referencia.',
-    imageSrc: '/99 Blog Images/tesamorelin-visceral-fat-reduction-percentage-hero.jpg',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-visceral-fat-reduction-percentage-hero.jpg',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -1463,7 +1320,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
           </div>
           <figure className="relative w-full aspect-square rounded-2xl overflow-hidden mt-2 md:mt-0 shadow-lg">
             <img
-              src="/99 Blog Images/tesamorelin-ghrh-analog-molecular-diagram.png"
+              src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/tesamorelin-ghrh-analog-molecular-diagram.png"
               alt="Tesamorelin GHRH analog 44 amino acid peptide molecular diagram"
               className="object-cover w-full h-full"
             />
@@ -1546,7 +1403,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
 
         <figure className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden mb-16 shadow-lg">
           <img
-            src="/99 Blog Images/visceral-vs-subcutaneous-fat-ct-comparison.jpg"
+            src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/visceral-vs-subcutaneous-fat-ct-comparison.jpg"
             alt="CT comparison visceral versus subcutaneous fat tesamorelin research"
             className="object-cover w-full h-full"
           />
@@ -1573,7 +1430,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
           </div>
           <figure className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg mt-2 md:mt-0">
             <img
-              src="/99 Blog Images/lyophilized-tesamorelin-vial-reconstitution.jpg"
+              src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/lyophilized-tesamorelin-vial-reconstitution.jpg"
               alt="Lyophilized tesamorelin vial reconstitution bacteriostatic water research"
               className="object-cover w-full h-full"
             />
@@ -1586,7 +1443,7 @@ export const BLOG_POSTS_PART2: { slug: string; title: string; category: string; 
         <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 items-start mb-16">
           <figure className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg hidden md:block">
             <img
-              src="/99 Blog Images/visceral-adipose-tissue-research-visualization.png"
+              src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/visceral-adipose-tissue-research-visualization.png"
               alt="Visceral adipose tissue around organs research visualization"
               className="object-cover w-full h-full"
             />

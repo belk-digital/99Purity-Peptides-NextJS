@@ -46,7 +46,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
       const product = item.product || item.productSnapshot || {}
       if (product.id) {
         const title = product.title || product.name || t('unknownProduct')
-        const imageUrl = product.images?.[0]?.image?.url || product.images?.[0]?.url || '/temp-products/product-image.png'
+        const imageUrl = product.images?.[0]?.image?.url || product.images?.[0]?.url || '/99 Images/product-image.webp'
         const price = typeof item.price === 'number' ? item.price : (product.basePrice || product.price || 0)
         addItem(
           { id: product.id, name: title, imageUrl, slug: product.slug },
@@ -190,7 +190,7 @@ export function OrderDetailClient({ order }: OrderDetailProps) {
                 const product = item.product || item.productSnapshot || {}
                 const title = product.title || product.name || t('unknownProduct')
                 const price = (typeof item.price === 'number' ? item.price : (product.basePrice || product.price || 0))
-                const imageUrl = product.images?.[0]?.image?.url || product.images?.[0]?.url || '/temp-products/product-image.png'
+                const imageUrl = product.images?.[0]?.image?.url || product.images?.[0]?.url || '/99 Images/product-image.webp'
 
                 let displayVariant = item.variant || t('standardVariant');
                 if (product?.variants?.length) {

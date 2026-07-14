@@ -18,7 +18,7 @@ export const BLOG_POSTS_PART1: {
     date: '9 de mayo de 2026',
     readTime: '6 min de lectura',
     excerpt: 'Resultados precisos de la calculadora de péptidos en segundos. Introduce el tamaño de tu vial, el volumen de agua bacteriostática y la dosis objetivo — nuestra herramienta convierte al instante tu dosificación de péptidos en unidades de jeringa precisas.',
-    imageSrc: '/99 Blog Images/peptide-reconstitution-calculator-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-calculator-hero.webp',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -45,7 +45,7 @@ export const BLOG_POSTS_PART1: {
         <p>Los resultados se actualizan al instante. No es necesario recargar. Guarda esta página en tus favoritos para un acceso rápido durante cada sesión de reconstitución.</p>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-reconstitution-calculator-inline-1.webp" alt="Técnica paso a paso de reconstitución de péptidos mostrando el manejo correcto e incorrecto del vial, la extracción con jeringa y el método de agitación" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-calculator-inline-1.webp" alt="Técnica paso a paso de reconstitución de péptidos mostrando el manejo correcto e incorrecto del vial, la extracción con jeringa y el método de agitación" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Cómo Funciona la Reconstitución de Péptidos</h2>
         <p>La reconstitución de péptidos es el proceso de disolver un polvo de péptido liofilizado (secado por congelación) en una solución líquida estéril. La mayoría de los péptidos de investigación se suministran como polvo seco en un vial sellado y presurizado al vacío. El agua bacteriostática es el diluyente preferido porque su contenido de alcohol bencílico al 0.9% inhibe el crecimiento microbiano, extendiendo la vida útil de la solución reconstituida a 28–30 días en condiciones de refrigeración.</p>
@@ -91,7 +91,7 @@ export const BLOG_POSTS_PART1: {
         <p>Para el almacenamiento a largo plazo más allá de 30 días, la re-liofilización es ideal pero poco práctica sin equipo de laboratorio. Una alternativa pragmática es preparar viales más pequeños a partir de tu stock reconstituido y congelarlos como alícuotas de un solo uso a −20°C, minimizando la exposición repetida a ciclos de congelación-descongelación en tu vial principal.</p>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-reconstitution-calculator-inline-2.webp" alt="Viales de péptidos de investigación, modelo molecular y jeringa calibrada usados para calcular con precisión la dosificación en la calculadora de reconstitución de péptidos" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-reconstitution-calculator-inline-2.webp" alt="Viales de péptidos de investigación, modelo molecular y jeringa calibrada usados para calcular con precisión la dosificación en la calculadora de reconstitución de péptidos" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Por Qué Usar una Calculadora Dedicada de Reconstitución de Péptidos?</h2>
         <p>El cálculo mental y las calculadoras genéricas introducen riesgo. Una calculadora de péptidos diseñada específicamente elimina tres puntos críticos de fallo: errores de conversión de unidades, cálculo erróneo de la concentración y lectura incorrecta de la jeringa. Para la investigación que requiere protocolos de dosificación repetibles y precisos, este nivel de precisión no es negociable.</p>
@@ -153,7 +153,7 @@ export const BLOG_POSTS_PART1: {
     date: '10 de mayo de 2026',
     readTime: '8 min de lectura',
     excerpt: '¿Requiere la Retatrutida carbohidratos para funcionar? Explora la ciencia detrás del triple agonismo, la actividad del receptor de glucagón y el metabolismo de carbohidratos en la investigación.',
-    imageSrc: '/99 Blog Images/retatrutide-and-carbs-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-hero.webp',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -169,7 +169,7 @@ export const BLOG_POSTS_PART1: {
         </p>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-and-carbs-inline-2.webp" alt="Infografía del mecanismo de triple receptor de la retatrutida en los receptores de GLP-1, GIP y glucagón y sus efectos dependientes de la glucosa" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-inline-2.webp" alt="Infografía del mecanismo de triple receptor de la retatrutida en los receptores de GLP-1, GIP y glucagón y sus efectos dependientes de la glucosa" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Esto es lo que Muestra la Investigación</h2>
         <p className="mb-4">
@@ -196,7 +196,7 @@ export const BLOG_POSTS_PART1: {
             <p className="text-ink font-medium"><strong>Perspectiva clínica clave:</strong> La pérdida de peso y las mejoras metabólicas observadas en los ensayos de retatrutida ocurrieron sin protocolos de carbohidratos estandarizados, lo que respalda la hipótesis de que este agonista triple no requiere una alta disponibilidad de carbohidratos para ejercer sus efectos centrales.</p>
         </div>
         <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-and-carbs-inline-1.webp" alt="Ilustración de investigación molecular de la estructura de triple receptor de la retatrutida y su vía de señalización metabólica" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-inline-1.webp" alt="Ilustración de investigación molecular de la estructura de triple receptor de la retatrutida y su vía de señalización metabólica" className="w-full h-auto object-cover" />
         </div>
 
         <h3 className="text-xl font-bold font-heading text-ink mt-12 mb-4">Receptor vs. Interacción con Carbohidratos</h3>
@@ -317,7 +317,7 @@ export const BLOG_POSTS_PART1: {
         </ul>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-and-carbs-inline-3.webp" alt="Ilustración de la investigación sobre retatrutida que abarca vías metabólicas, efectos hepáticos e interacciones con nutrientes en estudios de laboratorio" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-and-carbs-inline-3.webp" alt="Ilustración de la investigación sobre retatrutida que abarca vías metabólicas, efectos hepáticos e interacciones con nutrientes en estudios de laboratorio" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Resumen</h2>
         <p className="mb-4">El diseño de triple agonista de la retatrutida crea un perfil farmacodinámico que es significativamente diferente de los compuestos GLP-1 anteriores en su relación con la ingesta de carbohidratos. Sus brazos de GLP-1 y GIP son dependientes de la glucosa y reducen la actividad de secreción de insulina en estados de restricción de carbohidratos — un mecanismo protector que limita el riesgo de hipoglucemia. Su componente de receptor de glucagón, sin embargo, opera independientemente de la glucosa dietética, sosteniendo la producción hepática de glucosa, el gasto energético termogénico y la movilización del tejido adiposo incluso durante el ayuno o los protocolos de investigación bajos en carbohidratos.</p>
@@ -371,7 +371,7 @@ export const BLOG_POSTS_PART1: {
     date: '16 de mayo de 2026',
     readTime: '12 min de lectura',
     excerpt: 'Domina la reconstitución de péptidos con nuestra calculadora interactiva. Aprende las proporciones de agua bacteriostática, las conversiones de mcg a mg y las técnicas estériles para laboratorios de EE. UU.',
-    imageSrc: '/99 Blog Images/peptide-calculator-reconstitution-guide-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-hero.webp',
     content: (
       <>
         <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-ink first-letter:mt-2">
@@ -383,7 +383,7 @@ export const BLOG_POSTS_PART1: {
         <p className="mb-8 italic text-ink/70">Para los investigadores que buscan la más alta calidad: 99PurityPeptides ofrece péptidos de investigación con pureza del 99% con Certificados de Análisis completos y pruebas de laboratorio certificadas por terceros bajo norma ISO, garantizando que tus cálculos de reconstitución se basen en un contenido de péptido verificado.</p>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-calculator-reconstitution-guide-inline-1.webp" alt="Estación de trabajo de laboratorio con panel de la calculadora de péptidos, cristalería y tubos de ensayo para cálculos de dosificación en investigación" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-inline-1.webp" alt="Estación de trabajo de laboratorio con panel de la calculadora de péptidos, cristalería y tubos de ensayo para cálculos de dosificación en investigación" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Qué Es una Calculadora de Péptidos y Por Qué la Necesitan los Investigadores?</h2>
         <p className="mb-4">Una <a className="text-primary underline hover:text-primary-dark" href="/peptide-calculator">calculadora de péptidos</a> es una herramienta de cálculo especializada diseñada para determinar la cantidad exacta de agua bacteriostática necesaria para reconstituir el polvo de péptido liofilizado a una concentración deseada. A diferencia de las calculadoras de dilución estándar, las calculadoras de péptidos tienen en cuenta las características únicas de los viales de péptido, incluyendo:</p>
@@ -473,7 +473,7 @@ export const BLOG_POSTS_PART1: {
         </div>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-calculator-reconstitution-guide-inline-2.webp" alt="Diagrama del flujo de reconstitución de péptidos mostrando la preparación del vial, la extracción con jeringa y los pasos de dosificación con agua bacteriostática" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-inline-2.webp" alt="Diagrama del flujo de reconstitución de péptidos mostrando la preparación del vial, la extracción con jeringa y los pasos de dosificación con agua bacteriostática" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Proporciones de Agua Bacteriostática para Tamaños de Vial Comunes</h2>
         <p className="mb-4">Comprender las proporciones estándar de agua bacteriostática acelera la reconstitución mientras mantiene una estabilidad óptima del péptido. Estas proporciones se basan en protocolos de laboratorio de EE. UU. y en investigaciones publicadas sobre estabilidad de péptidos:</p>
@@ -524,7 +524,7 @@ export const BLOG_POSTS_PART1: {
         </div>
 
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/peptide-calculator-reconstitution-guide-inline-3.webp" alt="Diagrama paso a paso que ilustra los errores comunes de reconstitución de péptidos y la técnica correcta de dosificación con agua bacteriostática" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/peptide-calculator-reconstitution-guide-inline-3.webp" alt="Diagrama paso a paso que ilustra los errores comunes de reconstitución de péptidos y la técnica correcta de dosificación con agua bacteriostática" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Errores Comunes en la Reconstitución de Péptidos (Y Cómo Evitarlos)</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
@@ -605,7 +605,7 @@ export const BLOG_POSTS_PART1: {
     date: '16 de mayo de 2026',
     readTime: '10 min de lectura',
     excerpt: 'Descubre los principales beneficios de los péptidos de colágeno, respaldados por la ciencia, para la piel, las articulaciones, los huesos y los músculos. Colágeno hidrolizado de grado investigación disponible en 99 Purity Peptides.',
-    imageSrc: '/99 Blog Images/collagen-peptides-benefits-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-hero.webp',
     content: (
       <>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introducción</h2>
@@ -616,7 +616,7 @@ export const BLOG_POSTS_PART1: {
         <p className="mb-4">Esta guía responde exactamente eso. Encontrarás un desglose completo de los beneficios de los péptidos de colágeno respaldado por investigación revisada por pares, una explicación clara de cómo funcionan los péptidos de colágeno a nivel celular, y orientación práctica para investigadores y adultos conscientes de su salud que quieren tomar decisiones informadas.</p>
         <p className="mb-4">En 99 Purity Peptides, suministramos péptidos de colágeno hidrolizado de grado investigación con pureza verificada — porque la calidad de tus péptidos determina la calidad de tus resultados.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-benefits-inline-1.webp" alt="Diagrama que muestra las fibras de proteína de colágeno descomponiéndose en péptidos de colágeno hidrolizado disueltos en agua" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-inline-1.webp" alt="Diagrama que muestra las fibras de proteína de colágeno descomponiéndose en péptidos de colágeno hidrolizado disueltos en agua" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Qué Son los Péptidos de Colágeno?</h2>
         <p className="mb-4">Los péptidos de colágeno son aminoácidos de cadena corta derivados de la hidrólisis enzimática de la proteína de colágeno de cadena completa. Este proceso — llamado hidrólisis — descompone la larga estructura de triple hélice del colágeno en fragmentos más pequeños y de absorción rápida llamados péptidos.</p>
@@ -725,7 +725,7 @@ export const BLOG_POSTS_PART1: {
             </table>
         </div>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-benefits-inline-2.webp" alt="Comparación de péptidos de colágeno frente a proteínas de suero de leche y vegetales, mostrando beneficios de hidratación, articulaciones y digestión" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-inline-2.webp" alt="Comparación de péptidos de colágeno frente a proteínas de suero de leche y vegetales, mostrando beneficios de hidratación, articulaciones y digestión" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Son Seguros los Péptidos de Colágeno?</h2>
         </ul>
@@ -756,7 +756,7 @@ export const BLOG_POSTS_PART1: {
             <li><strong>Reducción de la celulitis:</strong> Un estudio de 2015 encontró una mejora significativa en la textura de la piel y una reducción en la apariencia de la celulitis después de 6 meses de suplementación con péptidos de colágeno</li>
             <li><strong>Disminución hormonal del colágeno:</strong> El estrógeno desempeña un papel en la síntesis de colágeno; la suplementación puede compensar parcialmente la pérdida de colágeno posmenopáusica</li>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/collagen-peptides-benefits-inline-3.webp" alt="Ilustración de la vía de absorción de péptidos de colágeno mostrando efectos en la piel, articulaciones, densidad ósea y revestimiento intestinal" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/collagen-peptides-benefits-inline-3.webp" alt="Ilustración de la vía de absorción de péptidos de colágeno mostrando efectos en la piel, articulaciones, densidad ósea y revestimiento intestinal" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Péptidos de Colágeno para Hombres: Investigación Emergente</h2>
         </ul>
@@ -902,7 +902,7 @@ export const BLOG_POSTS_PART1: {
     date: '21 de mayo de 2026',
     readTime: '12 min de lectura',
     excerpt: 'Retatrutida explicada: mecanismo de triple agonista, datos de la Fase 3 TRIUMPH-1, estado ante la FDA y manejo en laboratorio. Una referencia neutral de uso exclusivo en investigación.',
-    imageSrc: '/99 Blog Images/retatrutide-peptide-research-guide-hero.webp',
+    imageSrc: 'https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-hero.webp',
     content: (
       <>
         <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Introducción</h2>
@@ -920,7 +920,7 @@ export const BLOG_POSTS_PART1: {
         </blockquote>
         <p className="mb-4">El artículo está estructurado para que el lector pase de una definición base al mecanismo, luego a los datos de los ensayos, después a una comparación directa con tirzepatida y <a className="text-primary underline hover:text-primary-dark" href="/product/semaglutide">semaglutida</a>, y finalmente a las preguntas regulatorias y de manejo en laboratorio que los investigadores hacen con más frecuencia. Cada cifra clínica citada a continuación proviene de una fuente primaria listada al final. Nada de esto constituye una recomendación terapéutica, y la retatrutida tratada en esta guía se refiere exclusivamente a material suministrado como estándar de referencia para investigación, no como medicamento.</p>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-peptide-research-guide-inline-1.webp" alt="Vial de péptido de investigación de retatrutida y polvo liofilizado junto a un diagrama de estructura molecular de bolas y varillas" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-inline-1.webp" alt="Vial de péptido de investigación de retatrutida y polvo liofilizado junto a un diagrama de estructura molecular de bolas y varillas" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">¿Qué es la Retatrutida?</h2>
         <p className="mb-4">La retatrutida es un péptido sintético de 39 aminoácidos, con varios residuos no naturales y una conjugación de ácido graso que extiende su vida media lo suficiente como para permitir la dosificación subcutánea semanal en ensayos clínicos [3][4]. La molécula se comprende mejor no solo por su secuencia, sino por su conjunto de receptores objetivo: se une y activa el receptor del polipéptido insulinotrópico dependiente de glucosa, el receptor del péptido similar al glucagón tipo 1, y el receptor de glucagón [3]. Cada uno de estos receptores regula una palanca distinta del metabolismo energético humano, y combinarlos en una sola molécula es el fundamento mecanístico que distingue a la retatrutida de los péptidos incretínicos de generaciones anteriores [3][4].</p>
@@ -988,7 +988,7 @@ export const BLOG_POSTS_PART1: {
             <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; La retatrutida activa los receptores GLP-1, GIP y glucagón en una sola molécula, distinguiéndose de agonistas simples como la semaglutida y agonistas duales como la tirzepatida. En los datos publicados de Fase 3, el mecanismo de triple agonista se asocia con las mayores reducciones medias de peso de cualquier compuesto de la clase GLP-1 reportado hasta la fecha.</p>
         </blockquote>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-peptide-research-guide-inline-2.webp" alt="Diagrama de estructura molecular de la retatrutida destacando las regiones de unión a los receptores GLP-1R, GIPR y GCGR" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-inline-2.webp" alt="Diagrama de estructura molecular de la retatrutida destacando las regiones de unión a los receptores GLP-1R, GIPR y GCGR" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Estado Actual de los Ensayos Clínicos (Actualizado a Mayo de 2026)</h2>
         <p className="mb-4">Los programas TRIUMPH y TRANSCEND-T2D son los resultados paralelos de Fase 3 de Eli Lilly para la retatrutida. A mayo de 2026, se han reportado tres lecturas fundamentales, con resultados adicionales esperados durante el resto de 2026 [1][2][8][10].</p>
@@ -1006,7 +1006,7 @@ export const BLOG_POSTS_PART1: {
             <p className="mt-2">&lt;strong&gt;Resumen de la sección.&lt;/strong&gt; Los resultados de Fase 3 reportados hasta mayo de 2026 muestran que la retatrutida produjo una pérdida de peso media de hasta 28.3% a las 80 semanas y 30.3% a las 104 semanas en poblaciones no diabéticas, siendo los eventos adversos gastrointestinales la señal de seguridad más común reportada. Se esperan lecturas adicionales de Fase 3 en diabetes, enfermedad cardiovascular y varias otras indicaciones durante 2026.</p>
         </blockquote>
                 <div className="my-12 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-            <img src="/99 Blog Images/retatrutide-peptide-research-guide-inline-3.webp" alt="Diagrama de la molécula de retatrutida mostrando interacciones de unión con las estructuras de los receptores GLP-1, GIP y glucagón" className="w-full h-auto object-cover" />
+            <img src="https://pub-82f90d490a8048aa9629f0ae3ea6f567.r2.dev/blog-images/retatrutide-peptide-research-guide-inline-3.webp" alt="Diagrama de la molécula de retatrutida mostrando interacciones de unión con las estructuras de los receptores GLP-1, GIP y glucagón" className="w-full h-auto object-cover" />
         </div>
 <h2 className="text-2xl font-semibold text-ink mt-16 mb-6">Retatrutida vs Tirzepatida vs Semaglutida</h2>
         <p className="mb-4">Tres compuestos dominan la conversación actual de investigación de la clase GLP-1: semaglutida (agonista simple), tirzepatida (agonista dual) y retatrutida (agonista triple) [3][4][9]. Se comparan mejor por mecanismo, por eficacia publicada en ensayos, y por tolerabilidad reportada — y en las tres dimensiones las diferencias siguen el número de receptores activados [3][4][9].</p>

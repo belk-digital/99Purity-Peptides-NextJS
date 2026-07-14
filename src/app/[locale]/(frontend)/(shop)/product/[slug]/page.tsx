@@ -117,7 +117,7 @@ export default async function ProductPage({
 
   // If no images are uploaded, provide a fallback
   if (mappedImages.length === 0) {
-    mappedImages.push('/temp-products/product-image.png')
+    mappedImages.push('/99 Images/product-image.webp')
   }
 
   // Map categories
@@ -283,7 +283,7 @@ export default async function ProductPage({
       })
 
       productData.relatedProducts = relatedDocs.map((p: any) => {
-        let imageUrl = '/temp-products/product-image.png'
+        let imageUrl = '/99 Images/product-image.webp'
         let hoverImageUrl = undefined
         if (p.images && p.images.length > 0 && typeof p.images[0].image === 'object' && p.images[0].image?.url) {
           imageUrl = p.images[0].image.url
@@ -326,7 +326,7 @@ export default async function ProductPage({
     })
 
     productData.relatedProducts = recentDocs.map((p: any) => {
-      let imageUrl = '/temp-products/product-image.png'
+      let imageUrl = '/99 Images/product-image.webp'
       let hoverImageUrl = undefined
       if (p.images && p.images.length > 0 && typeof p.images[0].image === 'object' && p.images[0].image?.url) {
         imageUrl = p.images[0].image.url
@@ -366,7 +366,7 @@ export default async function ProductPage({
   })
 
   let mappedBlogs = blogDocs.map((post: any) => {
-    let imageUrl = '/temp-products/product-image.png'
+    let imageUrl = '/99 Images/product-image.webp'
     if (post.heroImage && typeof post.heroImage === 'object' && post.heroImage.url) {
       imageUrl = post.heroImage.url
     }

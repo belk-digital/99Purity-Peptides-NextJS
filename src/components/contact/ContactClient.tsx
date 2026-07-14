@@ -18,7 +18,7 @@ export function ContactClient() {
       answer: (
         <>
           {t.rich('faqs.contactInfo.answer', {
-            phone: (chunks) => <a href="tel:8437439007" className="text-primary font-bold underline underline-offset-4 hover:text-ink transition-colors !cursor-pointer pointer-events-auto" data-hide-cursor="true">{chunks}</a>,
+            phone: (chunks) => <a href="tel:+18433307365" className="text-primary font-bold underline underline-offset-4 hover:text-ink transition-colors !cursor-pointer pointer-events-auto" data-hide-cursor="true">{chunks}</a>,
             email: (chunks) => <a href="mailto:support@99puritypeptides.com" className="text-primary font-bold underline underline-offset-4 hover:text-ink transition-colors !cursor-pointer pointer-events-auto" data-hide-cursor="true">{chunks}</a>,
           })}
         </>
@@ -78,14 +78,14 @@ export function ContactClient() {
           </motion.a>
 
           <motion.a 
-            href="tel:8433307365"
+            href="tel:+18433307365"
             className="block w-full h-full cursor-pointer hover:-translate-y-2 transition-transform duration-500 ease-out"
           >
             <PinterestGlassCard
               title={t('supportPhoneTitle')}
               description={t('supportPhoneDescription')}
               icon={<Phone className="w-5 h-5" />}
-              tag="843-330-7365"
+              tag="+1 (843) 330-7365"
               microcopy={t('supportPhoneMicrocopy')}
               scrollFanning={true}
             />
