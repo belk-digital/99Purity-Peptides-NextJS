@@ -373,7 +373,7 @@ export default async function ProductPage({
     return {
       id: String(post.id),
       title: post.title,
-      slug: `blog/${post.slug}`,
+      slug: post.slug,
       author: typeof post.author === 'object' ? `${post.author.firstName || ''} ${post.author.lastName || ''}`.trim() || 'Admin' : 'Admin',
       date: new Date(post.publishedAt || post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
       readTime: '5 min read',
@@ -387,7 +387,6 @@ export default async function ProductPage({
     mappedBlogs = getBlogPosts(locale).slice(0, 3).map((post, i) => ({
       ...post,
       id: `dummy-${i}`,
-      slug: `blog/${post.slug}`,
       author: 'Admin'
     }))
   }

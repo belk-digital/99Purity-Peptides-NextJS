@@ -7,7 +7,7 @@ import { FilterSidebar } from '@/components/shop/FilterSidebar'
 import { ProductCard } from '@/components/shared/ProductCard'
 import { Product } from '@/components/shop/PrimaryProductCard' // Re-use interface for now
 import { motion, useInView } from 'framer-motion'
-import { X, Filter, Search, ShieldCheck, FlaskConical, Award, ArrowRight } from 'lucide-react'
+import { X, Filter, Search, ShieldCheck, FlaskConical, Award, ArrowRight, Flag } from 'lucide-react'
 import Image from 'next/image'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
@@ -226,8 +226,8 @@ function ShopClientInner({ initialProducts, totalPages, categories }: ShopClient
                 {[...Array(4)].map((_, i) => (
                   <div key={i} className="flex items-center">
                     <span className="flex items-center mx-4 md:mx-6">
-                      <Award className="w-4 h-4 md:w-5 md:h-5 mr-2 md:mr-3 text-primary" />
-                      {t('marqueeBuyTwoGetOne')}
+                      <Flag className="w-4 h-4 md:w-5 md:h-5 mr-2 md:mr-3 text-primary" />
+                      {t('marqueeUsaMade')}
                     </span>
                     <span className="flex items-center mx-4 md:mx-6">
                       <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 mr-2 md:mr-3 text-primary" />
