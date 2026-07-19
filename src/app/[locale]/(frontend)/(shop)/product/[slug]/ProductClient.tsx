@@ -6,7 +6,7 @@ import { Link } from '@/i18n/navigation'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useMotionValue, useSpring } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
-import { Heart, ChevronRight, ChevronLeft, Download, Check, ShieldCheck, FlaskConical, MapPin, Zap, ShoppingCart, Truck, Sparkles, Loader2, Award } from 'lucide-react'
+import { Heart, ChevronRight, ChevronLeft, Download, Check, ShieldCheck, FlaskConical, MapPin, Zap, ShoppingCart, Truck, Sparkles, Loader2, Award, Star } from 'lucide-react'
 import { Container } from '@/components/ui/container'
 import { Button } from '@/components/ui/button'
 import { PinterestGlassCard } from '@/components/home/PinterestGlassCard'
@@ -24,13 +24,14 @@ import { QuantityStepper } from '@/components/shop/QuantityStepper'
 import { ProductTabs, Tab } from '@/components/shop/ProductTabs'
 import { ProductAccordion } from '@/components/shop/ProductAccordion'
 import { ProductDetailTabs } from '@/components/shop/ProductDetailTabs'
+import { ProductReviews } from '@/components/shop/ProductReviews'
 import { PrimaryProductCard } from '@/components/shop/PrimaryProductCard'
 import { ProductCard } from '@/components/shared/ProductCard'
 import { SharedFaqSection } from '@/components/shared/SharedFaqSection'
 import { BlogPostCard } from '@/components/editorial/BlogPostCard'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { FluidButton } from '@/components/ui/fluid-button'
-
+import { trackViewItem, trackAddToCart } from '@/lib/analytics/ga4'
 interface ProductData {
   id: string
   name: string
@@ -137,6 +138,9 @@ export function ProductClient({ product }: ProductClientProps) {
   React.useEffect(() => {
     // Force scroll to top on mount to fix Next.js scroll restoration issues
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    
+    // GA4 view_item event
+    trackViewItem(product)
   }, [product.id])
 
   // Mobile Sticky Bar Logic
@@ -300,13 +304,22 @@ export function ProductClient({ product }: ProductClientProps) {
   const handleAddToCart = () => {
     if (!selectedVariant?.inStock) return
 
+    const priceSnapshot = parseFloat((selectedVariant.salePrice || selectedVariant.price).replace(/[^0-9.]/g, ''))
+
     cartStore.addItem(
       { id: product.id, name: product.name, imageUrl: selectedVariant.images?.[0] || product.images[0], slug: product.slug },
       selectedVariant.sku || selectedVariant.title,
       quantity,
-      parseFloat((selectedVariant.salePrice || selectedVariant.price).replace(/[^0-9.]/g, '')),
+      priceSnapshot,
       selectedVariant.title
     )
+
+    trackAddToCart({
+      id: product.id,
+      title: product.name,
+      variantSku: selectedVariant.sku,
+      variantTitle: selectedVariant.title
+    }, quantity, priceSnapshot)
 
     setJustAdded(true)
     toast.success(t('addedToCart'), {
@@ -363,6 +376,28 @@ export function ProductClient({ product }: ProductClientProps) {
           >
             {product.name}
           </motion.h1>
+
+          {/* Review Summary (if any) */}
+          {(product.reviewCount ?? 0) > 0 && (
+            <div 
+              className="flex items-center gap-2 mb-6 cursor-pointer hover:opacity-80 transition-opacity"
+              onClick={() => {
+                // We'll target the tab strip if it's there, or the section directly
+                const reviewTab = document.querySelector('[data-tab="reviews"]') as HTMLElement
+                if (reviewTab) reviewTab.click()
+                document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }}
+            >
+              <div className="flex text-amber-400">
+                {[1, 2, 3, 4, 5].map(i => (
+                  <Star key={i} size={14} fill={i <= Math.round(product.averageRating || 0) ? "currentColor" : "none"} strokeWidth={1} />
+                ))}
+              </div>
+              <span className="text-[10px] font-bold text-black/40 uppercase tracking-widest">
+                {product.averageRating?.toFixed(1)} ({product.reviewCount} Reviews)
+              </span>
+            </div>
+          )}
 
           {/* Price */}
           <motion.div
@@ -690,13 +725,12 @@ export function ProductClient({ product }: ProductClientProps) {
         </Container>
       </section>
 
-      {/* 2.5 FAQs Section (Moved to Bottom) */}
-      {product.faqs && product.faqs.length > 0 && (
-        <SharedFaqSection
-          title={t('frequentlyAsked')}
-          faqs={product.faqs}
-        />
-      )}
+      {/* 2.4 Reviews Section */}
+      <section id="reviews" className="w-full py-24 bg-white/50 border-t border-gray-100">
+        <Container size="wide">
+          {/* <ProductReviews productId={product.id} reviews={product.reviews} /> */}
+        </Container>
+      </section>
 
       {/* 3. Suggested Blogs Section */}
       {product.suggestedBlogs && product.suggestedBlogs.length > 0 && (
@@ -721,6 +755,14 @@ export function ProductClient({ product }: ProductClientProps) {
             </div>
           </Container>
         </section>
+      )}
+
+      {/* 2.5 FAQs Section (Moved to Bottom) */}
+      {product.faqs && product.faqs.length > 0 && (
+        <SharedFaqSection
+          title={t('frequentlyAsked')}
+          faqs={product.faqs}
+        />
       )}
 
       {/* Mobile Fixed Action Bar */}

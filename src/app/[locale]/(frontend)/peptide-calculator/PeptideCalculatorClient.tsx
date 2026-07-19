@@ -115,7 +115,6 @@ export default function PeptideCalculatorPage() {
         {/* DOSAGE CALCULATOR EXPLANATION (Missing text added) */}
         <section className="mb-32 px-4 sm:px-8 md:px-10">
           <div className="max-w-5xl mx-auto bg-white rounded-[3rem] p-8 md:p-12 border border-ink/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 z-0">
-             <div className="absolute inset-0 transform-gpu opacity-[0.08] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
              <FadeUp className="relative z-10">
                 <div className="text-center mb-10">
                   <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-bold tracking-[0.3em] uppercase mb-4">
@@ -211,7 +210,6 @@ export default function PeptideCalculatorPage() {
 
           <FadeUp delay={0.4} className="mt-24 text-center max-w-4xl mx-auto w-full px-4 md:px-0">
              <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-ink/5 relative overflow-hidden group flex flex-col md:flex-row items-center gap-6 justify-center md:justify-start text-center md:text-left z-0">
-                <div className="absolute inset-0 transform-gpu opacity-[0.08] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                 
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center relative z-10 shrink-0 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                   <CheckCircle2 className="w-8 h-8 text-primary" />
@@ -282,7 +280,7 @@ export default function PeptideCalculatorPage() {
 
             {/* ADDED: The Reconstitution Process — Step by Step */}
             <div className="bg-white rounded-3xl p-8 md:p-10 border border-ink/5 shadow-xl relative overflow-hidden h-fit self-start lg:sticky lg:top-32">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[60px]" />
+               <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(circle_at_center,rgba(0,183,168,0.05),transparent)] rounded-full" />
                <FadeUp>
                  <h3 className="text-2xl font-black text-ink uppercase tracking-tight mb-8">{t('process.title')}</h3>
                  <ul className="space-y-4">
@@ -314,7 +312,7 @@ export default function PeptideCalculatorPage() {
               
               <div className="relative">
                 <FloatingVial className="top-1/2 -translate-y-1/2 -left-48 w-[600px] h-[600px] opacity-[0.03]" rotation={-35} delay={0.5} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-white rounded-full blur-[100px] opacity-60 pointer-events-none -z-10" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.6),transparent_70%)] pointer-events-none -z-10" />
                 
                 <StaggerChildren className="flex flex-col gap-4">
                   {(t.raw('mistakes.items') as { title: string; desc: string }[]).map((mistake, i) => (
@@ -341,7 +339,6 @@ export default function PeptideCalculatorPage() {
               <FadeUp delay={0.2}>
                 <MagneticScrollWrapper>
                   <div className="bg-zinc-900 rounded-[2rem] p-8 md:p-12 shadow-lg flex flex-col group hover:-translate-y-2 transition-transform duration-500 relative overflow-hidden">
-                    <div className="absolute inset-0 transform-gpu opacity-[0.12] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                     <span className="block text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter group-hover:text-gold transition-colors relative z-10">{t('storage.title')}</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">{t('storage.subtitle')}</span>
 
@@ -370,7 +367,6 @@ export default function PeptideCalculatorPage() {
             
             {/* BAC Water Table */}
             <div className="bg-zinc-900 rounded-[3rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden flex flex-col group">
-               <div className="absolute inset-0 transform-gpu opacity-[0.12] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                
                <div className="relative z-10 flex flex-col h-full">
                 <FadeUp>
@@ -437,7 +433,6 @@ export default function PeptideCalculatorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Math */}
               <div className="bg-white rounded-[2rem] p-6 sm:p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-ink/5 relative overflow-hidden flex flex-col group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 z-0">
-                <div className="absolute inset-0 transform-gpu opacity-[0.08] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                 <FadeUp className="relative z-10">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
@@ -449,7 +444,6 @@ export default function PeptideCalculatorPage() {
                   <p className="font-medium text-ink/70 mb-6 text-sm md:text-base">{t('math.formulaIntro')}</p>
 
                   <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-2xl mb-8 border border-primary/20 relative overflow-hidden">
-                    <div className="absolute inset-0 transform-gpu opacity-[0.12] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                     <p className="font-mono text-sm font-bold text-primary mb-4 leading-relaxed relative z-10">{t('math.formula1')}</p>
                     <div className="h-px w-full bg-primary/20 mb-4" />
                     <p className="font-mono text-sm font-bold text-ink relative z-10"><span className="text-primary mr-2">{t('math.thenLabel')}</span>{t('math.formula2')}</p>
@@ -483,7 +477,6 @@ export default function PeptideCalculatorPage() {
               
               {/* Syringe Conversion */}
               <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-ink/5 relative overflow-hidden flex flex-col group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 z-0">
-                <div className="absolute inset-0 transform-gpu opacity-[0.08] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                 <FadeUp className="relative z-10">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
@@ -548,7 +541,6 @@ export default function PeptideCalculatorPage() {
                   { text: t('whyAccuracy.items.item5'), span: "lg:col-span-6 md:col-span-6" }
                 ].map((item, i) => (
                   <motion.div key={i} variants={staggerItemVariants} className={`${item.span} col-span-1 bg-white p-8 rounded-[2rem] border border-ink/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group flex flex-col justify-between min-h-[200px] z-0`}>
-                    <div className="absolute inset-0 transform-gpu opacity-[0.08] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300 relative z-10 shrink-0">
                       <CheckCircle2 className="w-6 h-6 text-primary" />
                     </div>
@@ -566,7 +558,6 @@ export default function PeptideCalculatorPage() {
 
             <FadeUp delay={0.2}>
               <div className="bg-zinc-900 rounded-[3rem] p-10 md:p-16 text-white text-left relative overflow-hidden shadow-2xl group">
-                <div className="absolute inset-0 transform-gpu opacity-[0.15] pointer-events-none z-0 mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                 
                 <div className="relative z-10 max-w-4xl">
                   <div className="flex items-center gap-4 mb-8">
@@ -606,7 +597,6 @@ export default function PeptideCalculatorPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/90 to-zinc-950/40 z-0" />
                 
                 {/* Premium Noise Overlay */}
-                <div className="absolute inset-0 transform-gpu opacity-[0.12] pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }} />
                 
                 {/* Content */}
                 <div className="relative z-10 flex flex-col items-center">

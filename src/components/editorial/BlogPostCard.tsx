@@ -54,7 +54,7 @@ export function BlogPostCard({
             </span>
           </div>
         </div>
-        <h3 className="text-xl md:text-2xl font-extrabold font-sans text-ink mb-4 group-hover:text-primary transition-colors duration-300 leading-tight tracking-tight">
+        <h3 className="text-xl md:text-2xl font-extrabold font-sans text-ink mb-4 group-hover:text-primary transition-colors duration-300 leading-tight tracking-tight line-clamp-3">
           {title}
         </h3>
         <p className="text-sm md:text-base text-ink/60 line-clamp-3 mt-auto leading-relaxed font-medium">

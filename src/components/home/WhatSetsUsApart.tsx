@@ -74,14 +74,7 @@ export function WhatSetsUsApart() {
     return () => clearInterval(interval)
   }, [activeIndex, isHoveringSection])
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 50)
-      mouseY.set(e.clientY - 50)
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
+  // Mouse movement is now handled directly on the section's onMouseMove to avoid global tracking
 
   // Node coordinates pushed outwards to fill the space, combined with precise 45-degree circuit paths
   const nodes = [
@@ -99,6 +92,10 @@ export function WhatSetsUsApart() {
     <section 
       onMouseEnter={() => setIsHoveringSection(true)}
       onMouseLeave={() => setIsHoveringSection(false)}
+      onMouseMove={(e) => {
+        mouseX.set(e.clientX - 50)
+        mouseY.set(e.clientY - 50)
+      }}
       className={`bg-gradient-to-b from-white to-cream py-24 md:py-32 relative z-30 font-sans overflow-hidden min-h-screen flex items-center ${!isHoveringClickable ? 'cursor-none' : 'cursor-auto'}`}
     >
       {/* Custom Cursor matching Categories section */}
@@ -224,7 +221,7 @@ export function WhatSetsUsApart() {
             </svg>
 
             {/* Center Core (Physical Glass Dial) */}
-            <div className="absolute z-10 w-28 h-28 lg:w-36 lg:h-36 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-full flex flex-col items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,1),_0_12px_40px_rgba(0,0,0,0.08)]" style={{ top: center.y, left: center.x, transform: 'translate(-50%, -50%)' }}>
+            <div className="absolute z-10 w-28 h-28 lg:w-36 lg:h-36 bg-white/40 backdrop-blur-sm border border-white/60 rounded-full flex flex-col items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,1),_0_12px_40px_rgba(0,0,0,0.08)]" style={{ top: center.y, left: center.x, transform: 'translate(-50%, -50%)' }}>
               {/* Inner metallic/glass rim */}
               <div className="absolute inset-2 border-2 border-white/50 rounded-full shadow-[inset_0_0_10px_rgba(0,0,0,0.05)] flex items-center justify-center">
                 <motion.div 
@@ -271,7 +268,7 @@ export function WhatSetsUsApart() {
                     onMouseEnter={() => setIsHoveringClickable(true)}
                     onMouseLeave={() => setIsHoveringClickable(false)}
                     aria-label={t(`items.${key}.shortLabel`)}
-                    className={`absolute inset-0 w-full h-full flex items-center justify-center rounded-full transition-all duration-500 backdrop-blur-2xl ${
+                    className={`absolute inset-0 w-full h-full flex items-center justify-center rounded-full transition-all duration-500 backdrop-blur-sm ${
                       isActive 
                         ? 'bg-primary border-4 border-white shadow-[0_12px_30px_rgba(0,139,139,0.25)] scale-110 z-10' 
                         : 'bg-white/40 border border-white/50 shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_8px_20px_rgba(0,0,0,0.06)] hover:bg-white/60 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_12px_30px_rgba(0,0,0,0.1)] z-10'
@@ -300,7 +297,7 @@ export function WhatSetsUsApart() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="relative bg-white/40 border border-white/60 rounded-[40px] p-8 md:p-12 backdrop-blur-[40px] shadow-[0_24px_64px_rgba(0,0,0,0.06),_inset_0_1px_1px_rgba(255,255,255,1)] overflow-hidden will-change-transform"
+                className="relative bg-white/40 border border-white/60 rounded-[40px] p-8 md:p-12 backdrop-blur-md shadow-[0_24px_64px_rgba(0,0,0,0.06),_inset_0_1px_1px_rgba(255,255,255,1)] overflow-hidden will-change-transform"
               >
                 {/* Ultra-premium glass reflection line */}
                 <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />

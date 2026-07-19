@@ -205,6 +205,7 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
           src={product.image}
           alt={product.name}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className={`object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${product.hoverImage ? 'group-hover:-translate-x-full' : 'group-hover:scale-105'}`}
         />
         {product.hoverImage && (
@@ -212,6 +213,7 @@ export function PrimaryProductCard({ product, size = 'small', id }: PrimaryProdu
             src={product.hoverImage}
             alt={`${product.name} alternate view`}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             unoptimized
             className="object-cover absolute inset-0 translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
           />

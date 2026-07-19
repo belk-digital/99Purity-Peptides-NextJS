@@ -71,6 +71,7 @@ export interface Config {
     order_counters: OrderCounter;
     users: User;
     media: Media;
+    'blog-media': BlogMedia;
     documents: Document;
     addresses: Address;
     categories: Category;
@@ -104,6 +105,7 @@ export interface Config {
     order_counters: OrderCountersSelect<false> | OrderCountersSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'blog-media': BlogMediaSelect<false> | BlogMediaSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -289,6 +291,37 @@ export interface Address {
  * via the `definition` "media".
  */
 export interface Media {
+  id: number;
+  alt: string;
+  caption?: string | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-media".
+ */
+export interface BlogMedia {
   id: number;
   alt: string;
   caption?: string | null;
@@ -907,7 +940,7 @@ export interface BlogPost {
   title: string;
   slug?: string | null;
   author: number | User;
-  featuredImage?: (number | null) | Media;
+  featuredImage?: (number | null) | BlogMedia;
   /**
    * Short summary shown on blog listing cards and used as the default SEO/social description.
    */
@@ -927,6 +960,30 @@ export interface BlogPost {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Product this post is shown on ("Further Reading" section).
+   */
+  relatedProduct?: (number | null) | Product;
+  /**
+   * Overrides the page <title>. Falls back to title if empty.
+   */
+  seoTitle?: string | null;
+  /**
+   * Overrides the meta description. Falls back to excerpt if empty.
+   */
+  seoDescription?: string | null;
+  category?:
+    ('Growth research' | 'Muscle studies' | 'Recovery protocols' | 'Metabolic research' | 'Product Guides') | null;
+  /**
+   * Rendered as an on-page FAQ section and as FAQPage JSON-LD schema.
+   */
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
   publishedAt?: string | null;
   status?: ('draft' | 'published') | null;
   meta?: {
@@ -1349,6 +1406,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'blog-media';
+        value: number | BlogMedia;
+      } | null)
+    | ({
         relationTo: 'documents';
         value: number | Document;
       } | null)
@@ -1547,6 +1608,40 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  caption?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-media_select".
+ */
+export interface BlogMediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   prefix?: T;
@@ -1954,6 +2049,17 @@ export interface BlogPostsSelect<T extends boolean = true> {
   featuredImage?: T;
   excerpt?: T;
   content?: T;
+  relatedProduct?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  category?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   publishedAt?: T;
   status?: T;
   meta?:

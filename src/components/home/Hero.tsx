@@ -108,9 +108,15 @@ export function Hero() {
         {/* Border Ring Overlay (Rendered UNDER the cutouts but OVER gradients) */}
         <div className="absolute inset-0 rounded-[2rem] md:rounded-[4rem] ring-1 ring-inset ring-white/5 pointer-events-none z-20" />
 
-        {/* Background Gradients */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[64px] -translate-y-1/2 translate-x-1/3 opacity-50 transform-gpu" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[64px] translate-y-1/3 -translate-x-1/3 opacity-50 transform-gpu" />
+        {/* Background Gradients (Optimized: Using radial-gradient instead of expensive blur filters) */}
+        <div 
+          className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full -translate-y-1/2 translate-x-1/3 opacity-50 transform-gpu pointer-events-none" 
+          style={{ background: 'radial-gradient(circle, rgba(28,228,201,0.2) 0%, transparent 60%)' }} 
+        />
+        <div 
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full translate-y-1/3 -translate-x-1/3 opacity-50 transform-gpu pointer-events-none" 
+          style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 60%)' }} 
+        />
 
         {/* Background Video */}
         <video
@@ -216,12 +222,12 @@ export function Hero() {
         </div>
 
         {/* --- Glass Product Slider (Bottom Right) --- */}
-        <div className={`absolute ${isCardClosed ? 'hidden sm:flex' : 'flex'} bottom-6 right-4 sm:bottom-4 sm:right-4 md:bottom-8 md:right-8 z-30 pointer-events-none origin-bottom-right scale-[0.60] sm:scale-[0.70] lg:scale-[0.80] xl:scale-100 sm:[@media(max-height:850px)]:!scale-[0.80] sm:[@media(max-height:750px)]:!scale-[0.70] transition-transform duration-300`}>
+        <div className={`absolute ${isCardClosed ? 'hidden sm:flex' : 'flex'} bottom-6 right-4 sm:bottom-4 sm:right-4 md:bottom-8 md:right-8 z-30 pointer-events-none origin-bottom-right scale-[0.50] sm:scale-[0.60] lg:scale-[0.70] xl:scale-[0.85] sm:[@media(max-height:850px)]:!scale-[0.70] sm:[@media(max-height:750px)]:!scale-[0.60] transition-transform duration-300`}>
           
           <div className="relative w-[320px] h-[440px] pointer-events-auto">
             
             {/* Custom SVG Shadow (Perfectly traces the cutout, without translation to avoid leaking into the cutout) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible" viewBox="0 0 320 440">
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible transform-gpu" viewBox="0 0 320 440" style={{ willChange: 'transform' }}>
               <path 
                 d="M 0 24 A 24 24 0 0 1 24 0 L 296 0 A 24 24 0 0 1 320 24 L 320 346 A 24 24 0 0 1 296 370 L 274 370 A 24 24 0 0 0 250 394 L 250 416 A 24 24 0 0 1 226 440 L 24 440 A 24 24 0 0 1 0 416 L 0 24 Z" 
                 fill="rgba(0,0,0,0.4)" 
@@ -233,6 +239,7 @@ export function Hero() {
             <div 
               className="absolute inset-0 bg-white/[0.05] backdrop-blur-sm z-10 pointer-events-none transform-gpu"
               style={{
+                willChange: 'transform',
                 maskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,
                 WebkitMaskImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22440%22%20viewBox%3D%220%200%20320%20440%22%3E%3Cpath%20d%3D%22M%200%2024%20A%2024%2024%200%200%201%2024%200%20L%20296%200%20A%2024%2024%200%200%201%20320%2024%20L%20320%20346%20A%2024%2024%200%200%201%20296%20370%20L%20274%20370%20A%2024%2024%200%200%200%20250%20394%20L%20250%20416%20A%2024%2024%200%200%201%20226%20440%20L%2024%20440%20A%2024%2024%200%200%201%200%20416%20L%200%2024%20Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")`,
                 maskSize: '100% 100%',
@@ -302,7 +309,7 @@ export function Hero() {
                   >
                     <div className="relative w-full h-[180px] mb-6 drop-shadow-2xl flex items-center justify-center pointer-events-none shrink-0">
                       {/* Subtle Glow Behind Vial */}
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] h-[120px] bg-primary/20 blur-[40px] rounded-full pointer-events-none" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] h-[120px] bg-[radial-gradient(circle_at_center,rgba(0,183,168,0.2),transparent)] rounded-full pointer-events-none" />
                       <Image 
                         src={HERO_PRODUCTS[currentSlide].image}
                         alt={HERO_PRODUCTS[currentSlide].name}

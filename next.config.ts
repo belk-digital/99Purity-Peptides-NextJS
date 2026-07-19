@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
   // Next 16 no longer runs ESLint as part of `next build` (the old `eslint.ignoreDuringBuilds`
   // option was removed from NextConfig) — lint separately with `pnpm lint`.
   images: {
-    unoptimized: true,
+    unoptimized: false,
     localPatterns: [
       {
         pathname: '/api/media/file/**',
@@ -108,8 +108,6 @@ const nextConfig: NextConfig = {
       { source: '/:locale/product/body-boost-20mg', destination: '/:locale', permanent: true },
       { source: '/product/bpc-157-500mcg', destination: '/', permanent: true },
       { source: '/:locale/product/bpc-157-500mcg', destination: '/:locale', permanent: true },
-      { source: '/product/bpc-157-spray', destination: '/', permanent: true },
-      { source: '/:locale/product/bpc-157-spray', destination: '/:locale', permanent: true },
       { source: '/product/bronchogen', destination: '/', permanent: true },
       { source: '/:locale/product/bronchogen', destination: '/:locale', permanent: true },
       { source: '/product/cartalax', destination: '/', permanent: true },
@@ -170,18 +168,12 @@ const nextConfig: NextConfig = {
       { source: '/:locale/product/power-burn-20mg', destination: '/:locale', permanent: true },
       { source: '/product/prostamax', destination: '/', permanent: true },
       { source: '/:locale/product/prostamax', destination: '/:locale', permanent: true },
-      { source: '/product/pt-141-spray', destination: '/', permanent: true },
-      { source: '/:locale/product/pt-141-spray', destination: '/:locale', permanent: true },
       { source: '/product/pump-xl-20mg', destination: '/', permanent: true },
       { source: '/:locale/product/pump-xl-20mg', destination: '/:locale', permanent: true },
       { source: '/product/pump-xxl-20mg', destination: '/', permanent: true },
       { source: '/:locale/product/pump-xxl-20mg', destination: '/:locale', permanent: true },
       { source: '/product/recovery-rush-20mg', destination: '/', permanent: true },
       { source: '/:locale/product/recovery-rush-20mg', destination: '/:locale', permanent: true },
-      { source: '/product/selank-spray', destination: '/', permanent: true },
-      { source: '/:locale/product/selank-spray', destination: '/:locale', permanent: true },
-      { source: '/product/semax-spray', destination: '/', permanent: true },
-      { source: '/:locale/product/semax-spray', destination: '/:locale', permanent: true },
       { source: '/product/sleep-mix-20mg', destination: '/', permanent: true },
       { source: '/:locale/product/sleep-mix-20mg', destination: '/:locale', permanent: true },
       { source: '/product/slu-pp-332', destination: '/', permanent: true },

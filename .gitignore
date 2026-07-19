@@ -55,3 +55,13 @@ node_modules/
 # Already hosted on Cloudflare R2 — kept locally for reference only
 /public/99pp Products images
 /public/BioTide COA
+
+# Blog import intermediate data — already fully written to the database and R2;
+# kept locally only for debugging/re-running the import, not needed in git.
+/scripts/blog-import/parsed
+/scripts/blog-import/translated
+/scripts/blog-import/category-images
+
+# Local-only Claude Code tool config, not meant to be shared
+/.claude/settings.local.json
+/.claude/scheduled_tasks.lock

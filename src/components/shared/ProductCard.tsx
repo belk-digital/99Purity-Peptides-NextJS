@@ -11,6 +11,7 @@ import { useWishlistStore } from '@/lib/wishlist/store'
 import { useCartStore } from '@/lib/cart/store'
 import { toast } from 'sonner'
 import { Product } from '@/components/shop/PrimaryProductCard' // Re-using the interface for now
+import { trackAddToCart } from '@/lib/analytics/ga4'
 
 export interface ProductCardProps {
   product: Product
@@ -91,6 +92,13 @@ export function ProductCard({ product }: ProductCardProps) {
       1,
       priceVal || 0
     )
+
+    trackAddToCart({
+      id: product.id || product.slug,
+      title: product.name,
+      price: priceVal || 0
+    }, 1, priceVal || 0)
+
     toast.success('Added to cart', { action: { label: 'VIEW', onClick: cartStore.openCart } })
     cartStore.openCart()
   }

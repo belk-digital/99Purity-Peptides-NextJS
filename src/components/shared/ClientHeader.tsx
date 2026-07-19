@@ -251,10 +251,10 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   const lastYRef = useRef(0)
 
   useMotionValueEvent(scrollY, 'change', (y) => {
-    setIsScrolled(y > 50)
+    setIsScrolled(y > 20)
     const difference = y - lastYRef.current
-    if (Math.abs(difference) > 20) {
-      if (difference > 0 && y > 150) {
+    if (Math.abs(difference) > 10) {
+      if (difference > 0 && y > 50) {
         setHidden(true)
       } else {
         setHidden(false)
@@ -270,14 +270,14 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
   const buttonBorder = 'border-white/20 hover:bg-white/10'
 
   const headerContent = (
-    <div className={`flex items-center justify-between transition-all duration-300 px-6 w-full text-white ${isTransparentHeader && !isScrolled ? 'py-4' : 'py-2'}`}>
+    <div className={`flex items-center justify-between px-6 w-full text-white py-3`}>
       {/* Left: Logo */}
       <div className="flex-1 xl:flex-none flex justify-start">
         <a 
           href="/" 
           className="flex items-center hover:opacity-80 transition-opacity gap-2"
         >
-          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" className="h-12 sm:h-16 w-auto object-contain" />
+          <img src="/99 Images/99pp-Logo.png" alt="99Purity Peptides" width={579} height={270} className="h-12 sm:h-16 w-auto object-contain" />
         </a>
       </div>
 
@@ -481,17 +481,34 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
             )}
           </AnimatePresence>
 
-          <div className={`w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto relative pointer-events-auto rounded-full transition-all duration-500 ${isTransparentHeader && !isScrolled ? 'mt-4 sm:mt-5 md:mt-8 shadow-none' : 'mt-4 shadow-[0_8px_24px_rgba(0,0,0,0.15)] ring-1 ring-white/5'}`}>
-            {isTransparentHeader && !isScrolled ? (
-              <div className="w-full transition-all duration-500 border border-transparent rounded-full">
+          <div className={`w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto relative pointer-events-auto rounded-full transition-all duration-500 mt-4 ${isTransparentHeader && !isScrolled ? 'sm:translate-y-[4px] md:translate-y-[16px] shadow-none' : 'translate-y-0 shadow-[0_8px_24px_rgba(0,0,0,0.15)] ring-1 ring-white/5'}`}>
+            <div className="w-full relative rounded-full overflow-hidden transform-gpu">
+              {/* Blurred Background Layer (fades in on scroll) */}
+              <div 
+                className={`absolute inset-0 bg-black/60 backdrop-blur-md border border-white/10 pointer-events-none transition-opacity duration-500 ${
+                  isTransparentHeader && !isScrolled ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              
+              {/* Gradient Layer (fades in on scroll) */}
+              <div 
+                className={`absolute inset-0 bg-gradient-to-r from-white/5 to-transparent pointer-events-none transition-opacity duration-500 ${
+                  isTransparentHeader && !isScrolled ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              
+              {/* Transparent border for un-scrolled state */}
+              <div 
+                className={`absolute inset-0 border border-transparent pointer-events-none transition-opacity duration-500 ${
+                  isTransparentHeader && !isScrolled ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+
+              {/* Content Layer */}
+              <div className="relative z-10 w-full">
                 {headerContent}
               </div>
-            ) : (
-              <div className="w-full transition-all duration-500 rounded-full bg-black/60 backdrop-blur-md border border-white/10 overflow-hidden transform-gpu">
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent pointer-events-none rounded-full" />
-                {headerContent}
-              </div>
-            )}
+            </div>
           </div>
         </motion.div>
 
@@ -501,7 +518,6 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
       <div 
         className="hidden lg:block fixed inset-x-0 z-[45] transition-transform duration-300 ease-out"
         style={{ 
-          position: isScrolled || (announcementClosed && !isScrolled) ? 'fixed' : 'absolute',
           top: announcementClosed ? '53px' : '97px',
           transform: hidden ? 'translateY(-100px)' : 'translateY(0)'
         }}
@@ -515,7 +531,7 @@ export function ClientHeader({ cartItemCount = 0, wishlistItemCount = 0, isLogge
 
         {/* Full-Width Mega Menu Dropdown */}
         <div 
-          className={`absolute left-0 right-0 w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto z-50 transition-all duration-300 ${isTransparentHeader && !isScrolled ? 'top-14 md:top-16' : 'top-10 md:top-12'} ${isMegaMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          className={`absolute left-0 right-0 w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] mx-auto z-50 top-14 md:top-16 transition-opacity duration-300 ${isMegaMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
           onMouseEnter={handleMenuEnter}
           onMouseLeave={handleMenuLeave}
         >

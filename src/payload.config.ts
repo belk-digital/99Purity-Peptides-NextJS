@@ -10,6 +10,7 @@ import { resendAdapter } from '@payloadcms/email-resend'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { BlogMedia } from './collections/BlogMedia'
 import { Documents } from './collections/Documents'
 import { Addresses } from './collections/Addresses'
 import { Categories } from './collections/Categories'
@@ -69,6 +70,7 @@ export default buildConfig({
     OrderCounters,
     Users,
     Media,
+    BlogMedia,
     Documents,
     Addresses,
     Categories,
@@ -155,6 +157,16 @@ export default buildConfig({
             disableLocalStorage: true,
             disablePayloadAccessControl: true,
             prefix: 'Product Images',
+            generateFileURL: ({ filename, prefix }) => {
+              const publicUrl = process.env.R2_PUBLIC_URL || ''
+              const base = publicUrl.replace(/\/$/, '')
+              return prefix ? `${base}/${prefix}/${filename}` : `${base}/${filename}`
+            },
+          },
+          'blog-media': {
+            disableLocalStorage: true,
+            disablePayloadAccessControl: true,
+            prefix: 'blog-images',
             generateFileURL: ({ filename, prefix }) => {
               const publicUrl = process.env.R2_PUBLIC_URL || ''
               const base = publicUrl.replace(/\/$/, '')

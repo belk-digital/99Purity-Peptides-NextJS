@@ -74,9 +74,9 @@ export function DifferenceSection() {
   };
 
   const vialVariants: any = {
-    hidden: { opacity: 0, scale: 0.5, filter: 'blur(20px)', y: 60 },
+    hidden: { opacity: 0, scale: 0.5, y: 60 },
     visible: {
-      opacity: 1, scale: 1, filter: 'blur(0px)', y: 0,
+      opacity: 1, scale: 1, y: 0,
       transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
     }
   };
@@ -100,8 +100,7 @@ export function DifferenceSection() {
         x: scatter[i % scatter.length].x * 1.5,
         y: scatter[i % scatter.length].y * 1.5 + 40,
         rotate: scatter[i % scatter.length].rotate * 2,
-        scale: 0.6,
-        filter: 'blur(8px)'
+        scale: 0.6
       };
     },
     visible: (i: number) => ({
@@ -110,7 +109,6 @@ export function DifferenceSection() {
       y: 0,
       rotate: 0,
       scale: 1,
-      filter: 'blur(0px)',
       transition: {
         type: 'spring',
         damping: 14,
@@ -134,14 +132,12 @@ export function DifferenceSection() {
     hidden: {
       opacity: 0,
       y: 40,
-      scale: 0.9,
-      filter: 'blur(8px)'
+      scale: 0.9
     },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       scale: 1,
-      filter: 'blur(0px)',
       transition: {
         type: 'spring',
         damping: 15,
@@ -253,7 +249,7 @@ export function DifferenceSection() {
                     strokeWidth="2" 
                     strokeDasharray="2 12"
                     strokeLinecap="round"
-                    className="drop-shadow-[0_0_6px_rgba(0,139,139,0.8)]"
+                    className="will-change-[stroke-dashoffset]"
                   />
                   
                   {/* Base End Dot */}
@@ -305,7 +301,8 @@ export function DifferenceSection() {
                 <motion.div 
                   animate={{ scale: [1, 0.7, 1], opacity: [0.8, 0.2, 0.8] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-[160px] h-[16px] bg-black blur-[8px] rounded-[100%]" 
+                  className="w-[160px] h-[16px] rounded-[100%]" 
+                  style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 70%)' }}
                 />
               </div>
               
@@ -440,7 +437,8 @@ export function DifferenceSection() {
                <motion.div 
                  animate={{ scale: [1, 0.7, 1], opacity: [0.7, 0.2, 0.7] }}
                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                 className="w-[120px] h-[12px] bg-black blur-[6px] rounded-[100%] mt-8" 
+                 className="w-[120px] h-[12px] rounded-[100%] mt-8" 
+                 style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%)' }}
                />
              </div>
              

@@ -20,8 +20,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { StripeCheckoutForm } from './StripeCheckoutForm'
 import { createPaymentIntent, getShippingMethods } from './actions'
-
-
+import { trackBeginCheckout } from '@/lib/analytics/ga4'
 // Card payments are temporarily disabled in favor of Zelle. Flip this back to re-enable Stripe —
 // the rest of the Stripe integration below is left intact, just not rendered/called while off.
 const ENABLE_STRIPE = false
@@ -134,7 +133,11 @@ export function CheckoutClient() {
         setActiveFees(active)
       }
       
+      
       setDataLoaded(true)
+      if (items && items.length > 0) {
+        trackBeginCheckout(items)
+      }
     }).catch(() => {
       setDataLoaded(true)
     })

@@ -10,7 +10,7 @@ import { FadeUp } from '@/components/motion/FadeUp'
 import { buttonVariants } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { useCartStore } from '@/lib/cart/store'
-
+import { trackPurchase } from '@/lib/analytics/ga4'
 type OrderItem = {
   id: string
   name: string
@@ -66,7 +66,21 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
   // at all means the order was placed, so clearing on mount is safe and reliable.
   React.useEffect(() => {
     useCartStore.getState().clear()
-  }, [])
+    
+    trackPurchase({
+      id: order.orderId,
+      total: order.total,
+      tax: 0,
+      shipping: order.shipping,
+      items: order.items.map(i => ({
+        id: i.id,
+        name: i.name,
+        variantTitle: i.variant,
+        price: i.price,
+        quantity: i.quantity
+      }))
+    })
+  }, [order])
 
   // CircoFlows' webhook is the source of truth for finalizing the order, but it can lag behind
   // the customer's browser redirect back from the hosted card page. This fallback re-checks

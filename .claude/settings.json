@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const d=require\\('./translated/bpc-157-peptide-the-complete-guide-to-tissue-repair-wound-healing-and-recovery.json'\\); console.log\\(Object.keys\\(d\\), d.title.slice\\(0,30\\)\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(tail -6 /tmp/shorten.log)",
+      "Read(//tmp/**)",
+      "Bash(tail -8 /tmp/shorten.log)"
+    ]
+  }
+}

@@ -11,6 +11,7 @@ import { DifferenceSection } from '@/components/home/DifferenceSection'
 import { BestSellerSection } from '@/components/home/BestSellerSection'
 import { MerchandiseSection } from '@/components/home/MerchandiseSection'
 import { MilitaryDiscountSection } from '@/components/home/MilitaryDiscountSection'
+import { HomeReviewsSection } from '@/components/home/HomeReviewsSection'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { getOgImageUrl } from '@/lib/utils'
@@ -67,17 +68,17 @@ export default async function Homepage() {
     console.error("Failed to fetch categories", e)
   }
   try {
-    const bestSellers = await getShopProducts({ limit: 8, sort: 'newest', bestSellersOnly: true })
+    const bestSellers = await getShopProducts({ limit: 12, sort: 'newest', bestSellersOnly: true })
     products = bestSellers.success && bestSellers.products ? (bestSellers.products as any[]) : []
 
     // Fill any remaining slots with other live products so the section is never sparse
     // before best sellers have been curated in the admin.
-    if (products.length < 8) {
-      const fallback = await getShopProducts({ limit: 8, sort: 'newest' })
+    if (products.length < 12) {
+      const fallback = await getShopProducts({ limit: 12, sort: 'newest' })
       if (fallback.success && fallback.products) {
         const existingIds = new Set(products.map((p: any) => p.id))
         const filler = (fallback.products as any[]).filter(p => !existingIds.has(p.id))
-        products = [...products, ...filler].slice(0, 8)
+        products = [...products, ...filler].slice(0, 12)
       }
     }
   } catch (e) {
@@ -98,6 +99,7 @@ export default async function Homepage() {
         <ParallaxImageSection />
         <WhyChooseUs />
         <BlogSection />
+        <HomeReviewsSection />
         <FaqSection />
       </div>
 

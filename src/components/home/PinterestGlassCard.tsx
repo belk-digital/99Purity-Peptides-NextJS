@@ -57,12 +57,12 @@ export function PinterestGlassCard({ title, description, icon, tag, microcopy, c
       <div className="absolute inset-0 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden z-0 pointer-events-none">
         {/* Top Right Glow (Static for performance) */}
         <div 
-          className="absolute -top-20 -right-20 w-64 h-64 bg-primary/30 rounded-full blur-[80px] pointer-events-none"
+          className="absolute -top-20 -right-20 w-64 h-64 bg-[radial-gradient(circle_at_center,rgba(0,183,168,0.3),transparent)] rounded-full pointer-events-none"
         />
         
         {/* Bottom Left Glow (Static for performance) */}
         <div 
-          className="absolute -bottom-24 -left-10 w-56 h-56 bg-emerald-500/20 rounded-full blur-[64px] pointer-events-none"
+          className="absolute -bottom-24 -left-10 w-56 h-56 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.2),transparent)] rounded-full pointer-events-none"
         />
         
         {/* Precision Dot Pattern */}

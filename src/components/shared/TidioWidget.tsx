@@ -27,11 +27,9 @@ export function TidioWidget({ publicKey }: { publicKey: string }) {
 
     const cleanup = () => {
       INTERACTION_EVENTS.forEach((event) => window.removeEventListener(event, loadTidio))
-      clearTimeout(fallbackTimer)
     }
 
     INTERACTION_EVENTS.forEach((event) => window.addEventListener(event, loadTidio, { passive: true, once: true }))
-    const fallbackTimer = setTimeout(loadTidio, FALLBACK_DELAY_MS)
 
     return cleanup
   }, [publicKey])

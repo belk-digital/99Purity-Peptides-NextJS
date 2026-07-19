@@ -8,6 +8,7 @@ import { Metadata } from 'next'
 import { BLOG_POSTS as BLOG_POSTS_EN } from '@/data/blog-posts'
 import { BLOG_POSTS as BLOG_POSTS_ES } from '@/data/blog-posts.es'
 import { getCategoryDisplayName } from '@/lib/categoryDisplay'
+import { getBlogPlaceholderImage } from '@/lib/blogPlaceholderImage'
 
 function getBlogPosts(locale: string) {
   return locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
@@ -23,7 +24,13 @@ export async function generateMetadata({
   
   const { docs } = await payload.find({
     collection: 'products',
-    where: { slug: { equals: slug } },
+    where: { 
+      and: [
+        { slug: { equals: slug } },
+        { status: { equals: 'active' } },
+        { isVisible: { equals: true } }
+      ]
+    },
     limit: 1,
     depth: 1, // Need media depth for images
     locale: locale as 'en' | 'es',
@@ -91,9 +98,11 @@ export default async function ProductPage({
   const { docs } = await payload.find({
     collection: 'products',
     where: {
-      slug: {
-        equals: slug,
-      },
+      and: [
+        { slug: { equals: slug } },
+        { status: { equals: 'active' } },
+        { isVisible: { equals: true } }
+      ]
     },
     limit: 1,
     depth: 2, // To fetch categories and media
@@ -211,6 +220,35 @@ export default async function ProductPage({
     coaFileUrl = rawProduct.coaFile.url
   }
 
+  // Fetch approved reviews for this product
+  const { docs: reviewsDocs } = await payload.find({
+    collection: 'reviews',
+    where: {
+      and: [
+        { product: { equals: rawProduct.id } },
+        { status: { equals: 'approved' } }
+      ]
+    },
+    limit: 100,
+    depth: 1, // To get the user's name
+  })
+
+  const mappedReviews = reviewsDocs.map((review: any) => {
+    const user = typeof review.user === 'object' ? review.user : null
+    return {
+      id: String(review.id),
+      author: user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Verified Buyer' : 'Verified Buyer',
+      rating: review.rating || 5,
+      date: review.createdAt || new Date().toISOString(),
+      title: review.comment ? review.comment.substring(0, 30) + '...' : 'Review',
+      content: review.comment || '',
+    }
+  })
+
+  const averageRating = mappedReviews.length > 0 
+    ? mappedReviews.reduce((sum, r) => sum + r.rating, 0) / mappedReviews.length 
+    : 5.0
+
   // Map to ProductData interface
   const productData = {
     id: String(rawProduct.id),
@@ -225,8 +263,8 @@ export default async function ProductPage({
     badges: rawProduct.status === 'active' ? [] : ['DRAFT'],
     description: rawProduct.description || '',
     shortDescription: rawProduct.description || rawProduct.seoDescription || '',
-    averageRating: rawProduct.averageRating || 5.0,
-    reviewCount: rawProduct.reviewCount || 0,
+    averageRating: Number(averageRating.toFixed(1)),
+    reviewCount: mappedReviews.length,
 
     bulkBundles: rawProduct.bulkBundles?.map((b: any) => ({
       id: b.id,
@@ -247,7 +285,7 @@ export default async function ProductPage({
     coaFile: coaFileUrl,
     tabs: mappedTabs,
     faqs: mappedFaqs,
-    reviews: [] as any[],
+    reviews: mappedReviews,
     relatedProducts: [] as any[],
     suggestedBlogs: [] as any[],
   }
@@ -351,24 +389,49 @@ export default async function ProductPage({
   }
 
   // Generate JSON-LD Schemas
-  
-  // Fetch Suggested Blogs
-  const { docs: blogDocs } = await payload.find({
+
+  // Fetch Suggested Blogs — prefer posts written specifically for this product
+  const { docs: ownBlogDocs } = await payload.find({
     collection: 'blog-posts',
     where: {
-      status: {
-        equals: 'published'
-      }
+      and: [
+        { status: { equals: 'published' } },
+        { relatedProduct: { equals: rawProduct.id } },
+      ],
     },
+    locale: locale as 'en' | 'es',
+    fallbackLocale: 'en',
     sort: '-publishedAt',
     limit: 3,
     depth: 1,
   })
 
+  // Own post(s) always come first; if there are fewer than 3, pad with the most
+  // recently published posts (excluding the product's own, to avoid duplicates) so the
+  // section always shows exactly 3 when 3+ published posts exist site-wide.
+  let blogDocs = ownBlogDocs
+  if (blogDocs.length < 3) {
+    const { docs: latestDocs } = await payload.find({
+      collection: 'blog-posts',
+      where: {
+        and: [
+          { status: { equals: 'published' } },
+          { id: { not_in: ownBlogDocs.map((d: any) => d.id) } },
+        ],
+      },
+      locale: locale as 'en' | 'es',
+      fallbackLocale: 'en',
+      sort: '-publishedAt',
+      limit: 3 - blogDocs.length,
+      depth: 1,
+    })
+    blogDocs = [...blogDocs, ...latestDocs]
+  }
+
   let mappedBlogs = blogDocs.map((post: any) => {
-    let imageUrl = '/99 Images/product-image.webp'
-    if (post.heroImage && typeof post.heroImage === 'object' && post.heroImage.url) {
-      imageUrl = post.heroImage.url
+    let imageUrl = getBlogPlaceholderImage(post.slug)
+    if (post.featuredImage && typeof post.featuredImage === 'object' && post.featuredImage.url) {
+      imageUrl = post.featuredImage.url
     }
     return {
       id: String(post.id),
@@ -377,8 +440,8 @@ export default async function ProductPage({
       author: typeof post.author === 'object' ? `${post.author.firstName || ''} ${post.author.lastName || ''}`.trim() || 'Admin' : 'Admin',
       date: new Date(post.publishedAt || post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
       readTime: '5 min read',
-      category: typeof post.categories?.[0] === 'object' ? post.categories[0].title : 'Research',
-      excerpt: post.meta?.description || post.excerpt || 'Explore the latest research and clinical studies on this compound.',
+      category: post.category || 'Product Guides',
+      excerpt: post.seoDescription || post.excerpt || 'Explore the latest research and clinical studies on this compound.',
       imageSrc: imageUrl
     }
   })

@@ -94,5 +94,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const { docs: payloadPosts } = await payload.find({
+      collection: 'blog-posts',
+      where: { status: { equals: 'published' } },
+      limit: 500,
+      depth: 0,
+    })
+
+    for (const post of payloadPosts) {
+      const path = `/${post.slug}`
+      const lastModified = post.updatedAt ? new Date(post.updatedAt) : undefined
+      for (const locale of routing.locales) {
+        entries.push(entry(path, locale, { lastModified, priority: 0.6, changeFrequency: 'monthly' }))
+      }
+    }
+  } catch (error) {
+    console.error('sitemap: failed to fetch blog-posts', error)
+    Sentry.captureException(error, { tags: { route: 'sitemap.xml' } })
+  }
+
   return entries
 }

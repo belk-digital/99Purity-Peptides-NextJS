@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
-import { motion, Variants, AnimatePresence } from 'framer-motion'
+import React from 'react'
+import { motion, Variants } from 'framer-motion'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
+import { CornerDownRight, Tag } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
@@ -15,58 +15,80 @@ export function BlogSection() {
   const t = useTranslations('home.blogSection')
   const locale = useLocale()
   const BLOG_POSTS = locale === 'es' ? BLOG_POSTS_ES : BLOG_POSTS_EN
-  const [hoveredCol, setHoveredCol] = useState<number | null>(null);
-  const [hoveredCol2, setHoveredCol2] = useState<number | null>(null);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
+      transition: { staggerChildren: 0.1 }
     }
   }
 
-  const scatterData = [
-    { x: -200, y: -150, rotate: -10 },
-    { x: 150, y: -250, rotate: 15 },
-    { x: 250, y: 150, rotate: -5 },
-    { x: -150, y: 200, rotate: 12 },
-    { x: -300, y: 50, rotate: -8 },
-    { x: 200, y: -100, rotate: 5 },
-    { x: 100, y: 250, rotate: -15 },
-    { x: -250, y: -200, rotate: 10 }
-  ]
-
   const itemVariants: Variants = {
-    hidden: (i: number) => ({ 
-      opacity: 0, 
-      x: scatterData[i % scatterData.length]?.x || 0,
-      y: scatterData[i % scatterData.length]?.y || 60,
-      rotate: scatterData[i % scatterData.length]?.rotate || 0,
-      scale: 0.85
-    }),
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
-      x: 0,
       y: 0, 
-      rotate: 0,
-      scale: 1,
-      transition: { 
-        type: 'spring',
-        damping: 25,
-        stiffness: 100,
-        mass: 1.5,
-        duration: 1.2,
-      } 
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } 
     }
+  }
+
+  // Use 6 posts to create 3 full rows
+  const posts = BLOG_POSTS.slice(0, 6)
+
+  const BlogCard = ({ post, isHorizontal }: { post: any, isHorizontal: boolean }) => {
+    
+    const TagBlock = () => (
+      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-[10px] sm:text-xs font-semibold w-max shadow-sm backdrop-blur-sm">
+        <Tag className="w-3 h-3 text-red-400" />
+        <span className="tracking-wide uppercase">{post.category} • {post.readTime}</span>
+      </div>
+    )
+
+    const TitleBlock = ({ className = "" }: { className?: string }) => (
+      <h3 className={`text-white font-bold leading-[1.2] tracking-tight group-hover:text-primary transition-colors ${className}`}>
+        {post.title}
+      </h3>
+    )
+
+    const ButtonBlock = () => (
+      <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/10 bg-white/5 text-white/80 text-[10px] uppercase tracking-widest font-bold group-hover:bg-white/10 group-hover:text-primary transition-all shadow-sm w-max">
+        <CornerDownRight className="w-3.5 h-3.5" />
+        <span>{t('ctaText') || 'Read Article'}</span>
+      </div>
+    )
+
+    return (
+      <motion.div variants={itemVariants} className={`w-full ${isHorizontal ? 'lg:col-span-2' : 'lg:col-span-1'}`}>
+        <Link href={`/${post.slug}`} className={`flex h-full bg-[#121212] rounded-[2rem] border border-white/10 hover:border-white/20 hover:bg-[#1a1a1a] transition-all duration-500 group shadow-2xl ${isHorizontal ? 'flex-col md:flex-row p-4 md:p-6 gap-6 md:gap-8 lg:gap-10' : 'flex-col p-4 md:p-5 gap-5'}`}>
+          
+          {/* Image Container */}
+          <div className={`relative rounded-2xl overflow-hidden bg-[#1a1a1a] shrink-0 ${isHorizontal ? 'w-full md:w-1/2 aspect-video md:aspect-square lg:aspect-auto' : 'w-full aspect-[4/3]'}`}>
+            <Image src={post.imageSrc} fill className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" alt={post.title} unoptimized />
+          </div>
+          
+          {/* Content Container */}
+          <div className={`flex flex-col flex-1 ${isHorizontal ? 'justify-center py-2 lg:py-6' : 'justify-between'}`}>
+            <div className="flex flex-col gap-4">
+              <TagBlock />
+              <TitleBlock className={isHorizontal ? "text-2xl md:text-3xl lg:text-[2rem]" : "text-xl md:text-2xl"} />
+              <p className={`text-white/50 text-sm leading-relaxed font-medium ${isHorizontal ? 'line-clamp-4 lg:line-clamp-5' : 'line-clamp-3'}`}>
+                {post.excerpt}
+              </p>
+            </div>
+            <div className="mt-6 md:mt-8">
+              <ButtonBlock />
+            </div>
+          </div>
+
+        </Link>
+      </motion.div>
+    )
   }
 
   return (
     <section className="bg-[#050505] py-24 md:py-32 border-t border-white/5 relative z-30 font-sans overflow-hidden">
-      <div className="container mx-auto px-4 md:px-10 max-w-7xl relative z-10">
+      <div className="container mx-auto px-4 md:px-8 max-w-[1400px] relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -91,206 +113,29 @@ export function BlogSection() {
           </div>
         </motion.div>
 
+        {/* Grid Layout matching reference image exactly */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="flex flex-col md:flex-row gap-4 md:gap-6 w-full md:h-[600px]"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-fr"
         >
-          {/* Left Column */}
-          <motion.div 
-            layout
-            onMouseEnter={() => setHoveredCol(0)}
-            onMouseLeave={() => setHoveredCol(null)}
-            transition={{ type: "spring", damping: 30, stiffness: 200 }}
-            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
-              hoveredCol === 0 ? 'md:w-1/2' : (hoveredCol === null ? 'md:w-1/4' : 'md:w-1/4')
-            }`}
-          >
-            <motion.div layout custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/${BLOG_POSTS[0].slug}`} className="block w-full h-full relative">
-                <Image 
-                  src={BLOG_POSTS[0].imageSrc} 
-                  alt={BLOG_POSTS[0].title} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end">
-                  <h3 className="text-white text-sm md:text-base font-medium leading-snug group-hover:text-primary transition-colors">
-                    {BLOG_POSTS[0].title}
-                  </h3>
-                </div>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Middle Column */}
-          <motion.div
-            layout
-            onMouseEnter={() => setHoveredCol(1)}
-            onMouseLeave={() => setHoveredCol(null)}
-            transition={{ type: "spring", damping: 30, stiffness: 200 }}
-            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
-              hoveredCol === 1 ? 'md:w-1/2' : (hoveredCol === null ? 'md:w-1/2' : 'md:w-1/4')
-            }`}
-          >
-            <motion.div layout custom={2} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-full bg-white/5 border border-white/10 w-full">
-              <Link href={`/${BLOG_POSTS[1].slug}`} className="block w-full h-full relative">
-                <Image 
-                  src={BLOG_POSTS[1].imageSrc} 
-                  alt={BLOG_POSTS[1].title} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col justify-end">
-                  <h3 className="text-white text-lg md:text-2xl font-medium leading-snug group-hover:text-primary transition-colors">
-                    {BLOG_POSTS[1].title}
-                  </h3>
-                </div>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Column */}
-          <motion.div 
-            layout
-            onMouseEnter={() => setHoveredCol(2)}
-            onMouseLeave={() => setHoveredCol(null)}
-            transition={{ type: "spring", damping: 30, stiffness: 200 }}
-            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
-              hoveredCol === 2 ? 'md:w-1/2' : (hoveredCol === null ? 'md:w-1/4' : 'md:w-1/4')
-            }`}
-          >
-            <motion.div layout custom={4} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/${BLOG_POSTS[2].slug}`} className="block w-full h-full relative">
-                <Image 
-                  src={BLOG_POSTS[2].imageSrc} 
-                  alt={BLOG_POSTS[2].title} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end">
-                  <h3 className="text-white text-sm md:text-base font-medium leading-snug group-hover:text-primary transition-colors">
-                    {BLOG_POSTS[2].title}
-                  </h3>
-                </div>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        {/* Second Row of Posts (Alternating Layout) */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="flex flex-col md:flex-row gap-4 md:gap-6 w-full md:h-[600px] mt-4 md:mt-6"
-        >
-          {/* Left Column (Alternated: Spacer first) */}
-          <motion.div 
-            layout
-            onMouseEnter={() => setHoveredCol2(0)}
-            onMouseLeave={() => setHoveredCol2(null)}
-            transition={{ type: "spring", damping: 30, stiffness: 200 }}
-            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
-              hoveredCol2 === 0 ? 'md:w-1/2' : (hoveredCol2 === null ? 'md:w-1/4' : 'md:w-1/4')
-            }`}
-          >
-            <motion.div layout custom={6} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/${BLOG_POSTS[3].slug}`} className="block w-full h-full relative">
-                <Image 
-                  src={BLOG_POSTS[3].imageSrc} 
-                  alt={BLOG_POSTS[3].title} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end">
-                  <h3 className="text-white text-sm md:text-base font-medium leading-snug group-hover:text-primary transition-colors">
-                    {BLOG_POSTS[3].title}
-                  </h3>
-                </div>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Middle Column */}
-          <motion.div 
-            layout
-            onMouseEnter={() => setHoveredCol2(1)}
-            onMouseLeave={() => setHoveredCol2(null)}
-            transition={{ type: "spring", damping: 30, stiffness: 200 }}
-            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
-              hoveredCol2 === 1 ? 'md:w-1/2' : (hoveredCol2 === null ? 'md:w-1/2' : 'md:w-1/4')
-            }`}
-          >
-            <motion.div layout custom={7} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden h-full bg-white/5 border border-white/10 w-full">
-              <Link href={`/${BLOG_POSTS[4].slug}`} className="block w-full h-full relative">
-                <Image 
-                  src={BLOG_POSTS[4].imageSrc} 
-                  alt={BLOG_POSTS[4].title} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col justify-end">
-                  <h3 className="text-white text-lg md:text-2xl font-medium leading-snug group-hover:text-primary transition-colors">
-                    {BLOG_POSTS[4].title}
-                  </h3>
-                </div>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Column (Alternated: Post first) */}
-          <motion.div 
-            layout
-            onMouseEnter={() => setHoveredCol2(2)}
-            onMouseLeave={() => setHoveredCol2(null)}
-            transition={{ type: "spring", damping: 30, stiffness: 200 }}
-            className={`w-full flex flex-col gap-4 md:gap-6 h-[400px] md:h-full overflow-hidden ${
-              hoveredCol2 === 2 ? 'md:w-1/2' : (hoveredCol2 === null ? 'md:w-1/4' : 'md:w-1/4')
-            }`}
-          >
-            <motion.div layout custom={0} variants={itemVariants} className="group cursor-pointer relative rounded-[32px] overflow-hidden flex-1 bg-white/5 border border-white/10 w-full">
-              <Link href={`/${BLOG_POSTS[5].slug}`} className="block w-full h-full relative">
-                <Image 
-                  src={BLOG_POSTS[5].imageSrc} 
-                  alt={BLOG_POSTS[5].title} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end">
-                  <h3 className="text-white text-sm md:text-base font-medium leading-snug group-hover:text-primary transition-colors">
-                    {BLOG_POSTS[5].title}
-                  </h3>
-                </div>
-              </Link>
-            </motion.div>
-          </motion.div>
+          {posts.map((post, i) => {
+            // Alternating Pattern:
+            // Row 1: 0 (Vert), 1 (Horiz)
+            // Row 2: 2 (Horiz), 3 (Vert)
+            // Row 3: 4 (Vert), 5 (Horiz)
+            const isHorizontal = i === 1 || i === 2 || i === 5;
+            return <BlogCard key={post.slug} post={post} isHorizontal={isHorizontal} />
+          })}
         </motion.div>
       </div>
 
-      {/* Background Decorative Element */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3 z-0" />
+      <div 
+        className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3 z-0" 
+        style={{ background: 'radial-gradient(circle, rgba(28,228,201,0.08) 0%, transparent 60%)' }}
+      />
     </section>
   )
 }

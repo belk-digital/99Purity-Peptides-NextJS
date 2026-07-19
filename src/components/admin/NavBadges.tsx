@@ -9,6 +9,13 @@ export default function NavBadges() {
     const fetchNotifications = async () => {
       try {
         const res = await fetch('/api/notifications')
+        
+        // If unauthorized (e.g. session expired or on login screen), stop polling to prevent server spam
+        if (res.status === 401) {
+          clearInterval(intervalId)
+          return
+        }
+        
         if (!res.ok) return
         const data = await res.json()
 
