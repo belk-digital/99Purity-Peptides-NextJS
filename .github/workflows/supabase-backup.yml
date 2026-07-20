@@ -36,7 +36,7 @@ jobs:
           
           # Run pg_dump using the connection string format
           # We use -n public to ensure ONLY the public schema (where Payload lives) is backed up.
-          pg_dump "$DATABASE_URI" -n public -F p > $BACKUP_FILE
+          /usr/lib/postgresql/17/bin/pg_dump "$DATABASE_URI" -n public -F p > $BACKUP_FILE
           
           # Check if the backup was successful
           if [ -s "$BACKUP_FILE" ]; then
