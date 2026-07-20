@@ -30,7 +30,7 @@ const ScrambleText = ({ text, activeIndex }: { text: string, activeIndex: number
         }).join('');
         setDisplayText(scrambled);
       }
-    }, 30); // Speed of character changes
+    }, 60); // Speed of character changes
     
     return () => clearInterval(interval);
   }, [text, activeIndex]);
@@ -93,10 +93,12 @@ export function WhatSetsUsApart() {
       onMouseEnter={() => setIsHoveringSection(true)}
       onMouseLeave={() => setIsHoveringSection(false)}
       onMouseMove={(e) => {
-        mouseX.set(e.clientX - 50)
-        mouseY.set(e.clientY - 50)
+        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+          mouseX.set(e.clientX - 50)
+          mouseY.set(e.clientY - 50)
+        }
       }}
-      className={`bg-gradient-to-b from-white to-cream py-24 md:py-32 relative z-30 font-sans overflow-hidden min-h-screen flex items-center ${!isHoveringClickable ? 'cursor-none' : 'cursor-auto'}`}
+      className={`bg-gradient-to-b from-white to-cream py-24 md:py-32 relative z-30 font-sans overflow-hidden min-h-screen flex items-center ${!isHoveringClickable ? 'md:cursor-none cursor-auto' : 'cursor-auto'}`}
     >
       {/* Custom Cursor matching Categories section */}
       <motion.div
@@ -221,7 +223,7 @@ export function WhatSetsUsApart() {
             </svg>
 
             {/* Center Core (Physical Glass Dial) */}
-            <div className="absolute z-10 w-28 h-28 lg:w-36 lg:h-36 bg-white/40 backdrop-blur-sm border border-white/60 rounded-full flex flex-col items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,1),_0_12px_40px_rgba(0,0,0,0.08)]" style={{ top: center.y, left: center.x, transform: 'translate(-50%, -50%)' }}>
+            <div className="absolute z-10 w-28 h-28 lg:w-36 lg:h-36 bg-white/40 md:backdrop-blur-sm border border-white/60 rounded-full flex flex-col items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,1),_0_12px_40px_rgba(0,0,0,0.08)]" style={{ top: center.y, left: center.x, transform: 'translate(-50%, -50%)' }}>
               {/* Inner metallic/glass rim */}
               <div className="absolute inset-2 border-2 border-white/50 rounded-full shadow-[inset_0_0_10px_rgba(0,0,0,0.05)] flex items-center justify-center">
                 <motion.div 
@@ -257,7 +259,7 @@ export function WhatSetsUsApart() {
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1.8, opacity: [0, 0.4, 0] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: i * 0.2 }}
-                      className="absolute inset-0 rounded-full border border-primary pointer-events-none will-change-transform"
+                      className="absolute inset-0 rounded-full border border-primary pointer-events-none md:will-change-transform"
                     />
                   )}
 
@@ -268,7 +270,7 @@ export function WhatSetsUsApart() {
                     onMouseEnter={() => setIsHoveringClickable(true)}
                     onMouseLeave={() => setIsHoveringClickable(false)}
                     aria-label={t(`items.${key}.shortLabel`)}
-                    className={`absolute inset-0 w-full h-full flex items-center justify-center rounded-full transition-all duration-500 backdrop-blur-sm ${
+                    className={`absolute inset-0 w-full h-full flex items-center justify-center rounded-full transition-all duration-500 md:backdrop-blur-sm ${
                       isActive 
                         ? 'bg-primary border-4 border-white shadow-[0_12px_30px_rgba(0,139,139,0.25)] scale-110 z-10' 
                         : 'bg-white/40 border border-white/50 shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_8px_20px_rgba(0,0,0,0.06)] hover:bg-white/60 hover:shadow-[inset_0_1px_2px_rgba(255,255,255,1),_0_12px_30px_rgba(0,0,0,0.1)] z-10'
@@ -279,7 +281,7 @@ export function WhatSetsUsApart() {
 
                   {/* Node Label */}
                   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-32 text-center pointer-events-none z-30">
-                    <span className={`inline-block px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-white/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-[10px] uppercase tracking-widest font-bold transition-colors duration-500 ${isActive ? 'text-primary' : 'text-ink-muted'}`}>
+                    <span className={`inline-block px-3 py-1 rounded-full bg-white/80 md:backdrop-blur-md border border-white/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-[10px] uppercase tracking-widest font-bold transition-colors duration-500 ${isActive ? 'text-primary' : 'text-ink-muted'}`}>
                       {t(`items.${key}.shortLabel`)}
                     </span>
                   </div>
@@ -297,7 +299,7 @@ export function WhatSetsUsApart() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="relative bg-white/40 border border-white/60 rounded-[40px] p-8 md:p-12 backdrop-blur-md shadow-[0_24px_64px_rgba(0,0,0,0.06),_inset_0_1px_1px_rgba(255,255,255,1)] overflow-hidden will-change-transform"
+                className="relative bg-white/40 border border-white/60 rounded-[40px] p-8 md:p-12 md:backdrop-blur-md shadow-[0_24px_64px_rgba(0,0,0,0.06),_inset_0_1px_1px_rgba(255,255,255,1)] overflow-hidden md:will-change-transform"
               >
                 {/* Ultra-premium glass reflection line */}
                 <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
@@ -308,7 +310,7 @@ export function WhatSetsUsApart() {
                 </div>
 
                 <div className="flex items-center gap-4 mb-8 relative z-10">
-                  <div className="w-12 h-12 rounded-full bg-white/50 border border-white shadow-sm flex items-center justify-center backdrop-blur-md">
+                  <div className="w-12 h-12 rounded-full bg-white/50 border border-white shadow-sm flex items-center justify-center md:backdrop-blur-md">
                     <ActiveIcon className="w-6 h-6 text-primary" />
                   </div>
                   <span className="text-primary font-mono text-xs tracking-widest uppercase font-bold bg-white/50 px-3 py-1 rounded-full border border-white shadow-sm">
@@ -346,5 +348,6 @@ export function WhatSetsUsApart() {
     </section>
   )
 }
+
 
 

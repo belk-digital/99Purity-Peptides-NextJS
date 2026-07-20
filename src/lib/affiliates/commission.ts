@@ -132,7 +132,7 @@ export async function attributeOrder(
     const adminHtml = generateAdminAffiliateConversionEmail(order, affiliate, isVoid ? 0 : commissionAmount)
     await sendTrackedEmail(payload, {
       to: 'support@99puritypeptides.com',
-      subject: `New Affiliate Sale! ${affiliate.displayName} made a conversion`,
+      subject: `New Affiliate Sale! ${affiliate.displayName || affiliate.referralSlug || 'Partner'} made a conversion`,
       html: adminHtml,
     })
   } catch (err) {

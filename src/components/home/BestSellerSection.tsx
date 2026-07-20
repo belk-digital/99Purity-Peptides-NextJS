@@ -1,7 +1,8 @@
 'use client'
 
-import { ShoppingCart, Heart, Loader2, ChevronLeft, ChevronRight, Play } from 'lucide-react'
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import { ShoppingCart, Heart, Loader2 } from 'lucide-react'
+import React, { useRef, useState } from 'react'
+import { useScroll, useTransform, motion, useSpring } from 'framer-motion'
 import Image from 'next/image'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
@@ -50,21 +51,25 @@ const FALLBACK_PRODUCTS = [
   }
 ]
 
-// Move helpers outside to maintain stable references for React.memo
-const getImageUrl = (prod: any) => prod.image || prod.images?.[0]?.image?.url || '/99 Images/product-image.webp';
-const getCategory = (prod: any) => prod.category || prod.categories?.[0]?.title;
-const getDescription = (prod: any) => prod.shortDescription || prod.meta?.description;
-const getPrice = (prod: any) => prod.priceRange ?? prod.price;
-
-const BestSellerCard = React.memo(function BestSellerCard({
+function BestSellerCard({
   product,
+  rotationClass,
+  y,
   isFallback,
-  isActive,
+  getImageUrl,
+  getCategory,
+  getDescription,
+  getPrice,
   t,
 }: {
   product: any
+  rotationClass: string
+  y: any
   isFallback: boolean
-  isActive: boolean
+  getImageUrl: (prod: any) => string
+  getCategory: (prod: any) => string | undefined
+  getDescription: (prod: any) => string | undefined
+  getPrice: (prod: any) => string | number
   t: ReturnType<typeof useTranslations>
 }) {
   const addWishlistItem = useWishlistStore(state => state.addItem)
@@ -120,6 +125,8 @@ const BestSellerCard = React.memo(function BestSellerCard({
     e.preventDefault()
     e.stopPropagation()
 
+    // Multi-variant products can't be added as a single "Default" line ΓÇö send the shopper
+    // to the PDP to pick a variant first, same as the rest of the shop.
     if (product.hasVariants) {
       router.push(`/product/${product.slug}`)
       return
@@ -139,26 +146,26 @@ const BestSellerCard = React.memo(function BestSellerCard({
   }
 
   return (
-    <div 
-      className={`w-[280px] sm:w-[320px] lg:w-[380px] shrink-0 will-change-transform transition-[transform,opacity] duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] origin-left ${isActive ? 'scale-100 opacity-100' : 'scale-[0.85] opacity-90'}`}
-      style={{ WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
+    <motion.div
+      style={{ y }}
+      className="w-full max-w-[380px] will-change-transform"
     >
-      <div className="w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:z-30 hover:shadow-2xl">
+      {/* CSS Transition wrapped element MUST be separate from motion.div */}
+      <div className={`w-full h-full bg-white rounded-[20px] sm:rounded-[32px] p-2 sm:p-3 shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-ink/5 group cursor-pointer relative origin-center transition-all duration-500 hover:rotate-0 hover:z-30 hover:shadow-2xl ${rotationClass}`}>
         <Link href={`/product/${product.slug}`} className="absolute inset-0 z-20" aria-label={product.name} />
 
         {/* Top Text Content & Wishlist */}
         <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative">
-          <div className="absolute top-1 sm:top-3 right-1 sm:right-3 z-30">
+          <div className="absolute top-3 sm:top-5 right-3 sm:right-5 z-30">
             <button
               disabled={isPending}
               onClick={handleWishlistClick}
-              aria-label={inWishlist ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
-              className={`transition-all duration-300 w-12 h-12 flex items-center justify-center rounded-full ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
+              className={`transition-all duration-300 ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
             >
-              {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Heart className="w-5 h-5" fill={inWishlist ? 'currentColor' : 'none'} />}
+              {isPending ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <Heart className="w-4 h-4 sm:w-5 sm:h-5" fill={inWishlist ? 'currentColor' : 'none'} />}
             </button>
           </div>
-          <div className="pr-10 sm:pr-12">
+          <div className="pr-6 sm:pr-8">
             <h3 className="text-sm sm:text-2xl font-semibold text-ink tracking-tight line-clamp-1">
               {product.name}
             </h3>
@@ -166,7 +173,7 @@ const BestSellerCard = React.memo(function BestSellerCard({
               {getCategory(product) || t('fallbackCategory')}
             </p>
           </div>
-          <p className="text-ink/60 text-[9px] sm:text-[13px] leading-tight sm:leading-relaxed line-clamp-2 min-h-[2em] sm:min-h-[3em]">
+          <p className="text-ink/60 text-[9px] sm:text-[13px] leading-tight sm:leading-relaxed line-clamp-2">
             {isFallback && product.key ? t(`products.${product.key}`) : (getDescription(product) || t('fallbackDescription'))}
           </p>
         </div>
@@ -175,9 +182,8 @@ const BestSellerCard = React.memo(function BestSellerCard({
         <div className="relative w-full aspect-[4/5] rounded-[14px] sm:rounded-[24px] overflow-hidden bg-ink/5">
           <Image
             src={getImageUrl(product)}
-            alt=""
+            alt={`${product.name} Best Seller`}
             fill
-            sizes="(max-width: 640px) 280px, (max-width: 1024px) 320px, 380px"
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
 
@@ -209,185 +215,97 @@ const BestSellerCard = React.memo(function BestSellerCard({
           {/* Action Button */}
           <button
             onClick={handleAddToCart}
-            aria-label={`Add ${product.name} to cart`}
-            className="absolute bottom-2 right-2 sm:bottom-5 sm:right-5 w-12 h-12 bg-white rounded-full flex items-center justify-center transition-all duration-300 shadow-xl group-hover:scale-110 z-30 hover:bg-ink hover:text-white pointer-events-auto"
+            className="absolute bottom-2 right-2 sm:bottom-5 sm:right-5 w-8 h-8 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center transition-all duration-300 shadow-xl group-hover:scale-110 z-30 hover:bg-ink hover:text-white pointer-events-auto"
           >
-            <ShoppingCart className="w-5 h-5 text-current transition-colors" />
+            <ShoppingCart className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-current transition-colors" />
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
-})
+}
 
 export function BestSellerSection({ products = [] }: { products?: any[] }) {
   const t = useTranslations('home.bestSeller')
+  const sectionRef = useRef<HTMLElement>(null)
   
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [slideDistance, setSlideDistance] = useState(0)
-  const [maxIndex, setMaxIndex] = useState(0)
-  
-  // Touch swipe state
-  const [touchStart, setTouchStart] = useState<number | null>(null)
-  const [touchEnd, setTouchEnd] = useState<number | null>(null)
-  const minSwipeDistance = 50
-  
-  const trackRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  })
 
+  // Smooth the scroll progress to eliminate jank
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
+
+  // Increased values so the parallax triggers more noticeably
+  const y1 = useTransform(smoothProgress, [0, 1], [80, -80])
+  const y2 = useTransform(smoothProgress, [0, 1], [-80, 80])
+
+  // Real products from getShopProducts() use flat `image`/`category`/`shortDescription`/`priceRange`
+  // fields; FALLBACK_PRODUCTS uses the older nested shape ΓÇö support both.
+  const getImageUrl = (prod: any) => prod.image || prod.images?.[0]?.image?.url || '/99 Images/product-image.webp';
+  const getCategory = (prod: any) => prod.category || prod.categories?.[0]?.title;
+  const getDescription = (prod: any) => prod.shortDescription || prod.meta?.description;
+  const getPrice = (prod: any) => prod.priceRange ?? prod.price;
+
+  // Use passed products or fallback to hardcoded ones if API is empty
   const sourceProducts = products.length > 0 ? products : FALLBACK_PRODUCTS;
   const isFallback = products.length === 0;
 
-  // 12 items for a solid infinite-feeling loop
-  const displayProducts = sourceProducts.length >= 12 
-    ? sourceProducts.slice(0, 12) 
-    : [...sourceProducts, ...sourceProducts, ...sourceProducts, ...sourceProducts].slice(0, 12);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
-
-    if (isLeftSwipe) {
-      nextSlide()
-    } else if (isRightSwipe) {
-      prevSlide()
-    }
-  }
-
-  useEffect(() => {
-    const updateMetrics = () => {
-      if (trackRef.current && containerRef.current && trackRef.current.children.length > 1) {
-        const first = trackRef.current.children[0] as HTMLElement
-        const second = trackRef.current.children[1] as HTMLElement
-        const distance = second.offsetLeft - first.offsetLeft
-        setSlideDistance(distance)
-        
-        const visibleWidth = containerRef.current.offsetWidth
-        const visibleCards = Math.floor(visibleWidth / distance)
-        
-        const calculatedMax = Math.max(0, displayProducts.length - visibleCards)
-        setMaxIndex(calculatedMax)
-        
-        setCurrentIndex(prev => Math.min(prev, calculatedMax))
-      }
-    }
-    
-    updateMetrics()
-    window.addEventListener('resize', updateMetrics)
-    return () => window.removeEventListener('resize', updateMetrics)
-  }, [displayProducts.length])
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => {
-      if (prev >= maxIndex) return 0
-      return prev + 1
-    })
-  }, [maxIndex])
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => {
-      if (prev <= 0) return maxIndex
-      return prev - 1
-    })
-  }, [maxIndex])
-
-  // 3-second auto-slider interval
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 3000)
-    return () => clearInterval(timer)
-  }, [nextSlide])
+  // Ensure we have exactly 8 products to fill a 2-row, 4-column grid perfectly
+  const displayProducts = sourceProducts.length >= 8 
+    ? sourceProducts.slice(0, 8) 
+    : [...sourceProducts, ...sourceProducts, ...sourceProducts, ...sourceProducts].slice(0, 8); // fallback loop
 
   return (
-    <section className="bg-[#fcfbf9] py-24 md:py-32 font-sans relative z-30 overflow-hidden">
-      <div className="container mx-auto px-4 md:px-10 max-w-[1600px] relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+    <section ref={sectionRef} className="bg-cream py-24 md:py-32 font-sans relative z-30 overflow-hidden">
+      <div className="container mx-auto px-4 md:px-10 max-w-[1600px] relative z-10">
         
-        {/* Left Side: Content & Navigation */}
-        <div className="w-full lg:w-[35%] flex flex-col items-center lg:items-start text-center lg:text-left shrink-0">
+        {/* Centered Header */}
+        <div className="text-center mb-20 flex flex-col items-center">
           <div className="inline-block border border-ink/10 rounded-full px-4 py-1.5 mb-6 bg-white shadow-sm">
             <span className="text-primary-dark text-xs font-bold tracking-[0.2em] uppercase">{t('eyebrow')}</span>
           </div>
-          
-          <h2 className="font-heading text-5xl lg:text-7xl font-black text-ink leading-[0.9] tracking-tighter uppercase mb-6 flex flex-col">
+          <h2 className="font-heading text-5xl lg:text-7xl font-black text-ink leading-[0.9] tracking-tighter uppercase mb-6">
             {t('title')}
           </h2>
-          
-          <p className="text-ink/70 text-base md:text-lg font-medium leading-relaxed mb-8 lg:mb-12 max-w-md">
+          <p className="text-ink/70 text-lg leading-relaxed max-w-2xl mb-10">
             {t('description')}
           </p>
-          
-          <div className="flex flex-col sm:flex-row items-center gap-6">
-            <FluidButton
-              href="/shop"
-              text={t('ctaText')}
-              variant="dark"
-            />
-          </div>
+          <FluidButton
+            href="/shop"
+            text={t('ctaText')}
+            variant="dark"
+          />
         </div>
 
-        {/* Right Side: Auto-Slider Track & Navigation */}
-        <div 
-          className="w-full lg:w-[65%] relative z-20 mt-8 lg:mt-0 flex flex-col"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div ref={containerRef} className="w-full relative">
-            {/* 
-              Clipping Wrapper:
-              - overflow-hidden prevents cards from bleeding left over the text.
-              - marginRight: '-50vw' pushes the right clipping bound off-screen.
-              - px-4 sm:px-8 -mx-4 sm:-mx-8 prevent clipping shadows while adapting to mobile edge.
-            */}
-            <div className="overflow-hidden px-4 sm:px-8 -mx-4 sm:-mx-8 py-12 -my-12" style={{ marginRight: '-50vw' }}>
-              {/* Hardware accelerated transform track for buttery smoothness */}
-              <div 
-                ref={trackRef}
-                className="flex gap-4 sm:gap-6 lg:gap-10 transition-transform duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform items-center"
-                style={{ 
-                  transform: `translate3d(-${currentIndex * slideDistance}px, 0, 0)` 
-                }}
-              >
-                {displayProducts.map((product, idx) => (
-                  <BestSellerCard
-                    key={`${product.slug}-${idx}`}
-                    product={product}
-                    isFallback={isFallback}
-                    isActive={idx === currentIndex}
-                    t={t}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+        {/* 4-Column Masonry/Staggered Grid with Parallax */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 justify-items-center">
+          {displayProducts.map((product, idx) => {
+            // Apply y1 to even columns (0, 2) and y2 to odd columns (1, 3)
+            const isEvenColumn = idx % 2 === 0;
+            // Remove rotation to keep cards straight
+            const rotationClass = '';
 
-          {/* Bottom Nav Arrows */}
-          <div className="flex justify-center sm:justify-end gap-4 mt-8 lg:mt-12 lg:pr-10">
-            <button 
-              onClick={prevSlide} 
-              className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-ink shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:scale-105 transition-all duration-300"
-              aria-label="Previous Slide"
-            >
-              <Play className="w-5 h-5 rotate-180 -ml-1" />
-            </button>
-            <button 
-              onClick={nextSlide} 
-              className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-ink shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:scale-105 transition-all duration-300"
-              aria-label="Next Slide"
-            >
-              <Play className="w-5 h-5" fill="currentColor" />
-            </button>
-          </div>
+            return (
+              <BestSellerCard
+                key={idx}
+                product={product}
+                rotationClass={rotationClass}
+                y={isEvenColumn ? y1 : y2}
+                isFallback={isFallback}
+                getImageUrl={getImageUrl}
+                getCategory={getCategory}
+                getDescription={getDescription}
+                getPrice={getPrice}
+                t={t}
+              />
+            )
+          })}
         </div>
 
       </div>

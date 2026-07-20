@@ -4,7 +4,6 @@ import React from 'react'
 import { motion, Variants } from 'framer-motion'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
-import { CornerDownRight, Tag } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import { FluidButton } from '@/components/ui/fluid-button'
 
@@ -33,61 +32,69 @@ export function BlogSection() {
     }
   }
 
-  // Use 6 posts to create 3 full rows
-  const posts = BLOG_POSTS.slice(0, 6)
+  // Use 7 posts to match the design (1 featured, 6 standard)
+  const posts = BLOG_POSTS.slice(0, 7)
 
-  const BlogCard = ({ post, isHorizontal }: { post: any, isHorizontal: boolean }) => {
+  const BlogCard = ({ post, isFeatured }: { post: any, isFeatured: boolean }) => {
     
     const TagBlock = () => (
-      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-[10px] sm:text-xs font-semibold w-max shadow-sm backdrop-blur-sm">
-        <Tag className="w-3 h-3 text-red-400" />
-        <span className="tracking-wide uppercase">{post.category} • {post.readTime}</span>
+      <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-slate-100 text-ink/70 text-[10px] font-semibold w-max mb-4">
+        <span className="tracking-wide capitalize">{post.category}</span>
       </div>
     )
 
     const TitleBlock = ({ className = "" }: { className?: string }) => (
-      <h3 className={`text-white font-bold leading-[1.2] tracking-tight group-hover:text-primary transition-colors ${className}`}>
+      <h3 className={`font-bold leading-[1.2] tracking-tight group-hover:opacity-80 transition-opacity ${className}`}>
         {post.title}
       </h3>
     )
 
-    const ButtonBlock = () => (
-      <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/10 bg-white/5 text-white/80 text-[10px] uppercase tracking-widest font-bold group-hover:bg-white/10 group-hover:text-primary transition-all shadow-sm w-max">
-        <CornerDownRight className="w-3.5 h-3.5" />
-        <span>{t('ctaText') || 'Read Article'}</span>
+    const FooterBlock = () => (
+      <div className="flex items-center justify-between w-full mt-auto pt-4 md:pt-6">
+        <div className="flex items-center gap-3">
+          {/* Author avatar */}
+          <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-200 shrink-0 relative shadow-sm">
+            <Image src="/99 Images/vial-closeup.webp" alt="Author" fill className="object-cover grayscale" />
+          </div>
+          <span className="text-xs font-bold text-ink/80">{post.author || '99 Purity Peptides'}</span>
+        </div>
+        <span className="text-[10px] sm:text-xs text-ink-muted/60 font-medium">
+          {isFeatured ? (post.date || 'May 9, 2026') : (post.readTime || '8 min read')}
+        </span>
       </div>
     )
 
     return (
-      <motion.div variants={itemVariants} className={`w-full ${isHorizontal ? 'lg:col-span-2' : 'lg:col-span-1'}`}>
-        <Link href={`/${post.slug}`} className={`flex h-full bg-[#121212] rounded-[2rem] border border-white/10 hover:border-white/20 hover:bg-[#1a1a1a] transition-all duration-500 group shadow-2xl ${isHorizontal ? 'flex-col md:flex-row p-4 md:p-6 gap-6 md:gap-8 lg:gap-10' : 'flex-col p-4 md:p-5 gap-5'}`}>
-          
+      <motion.div variants={itemVariants} className="w-full h-full">
+        <Link 
+          href={`/${post.slug}`} 
+          className={`flex h-full bg-white rounded-[2rem] border border-ink/5 hover:border-ink/10 hover:shadow-xl transition-all duration-500 group shadow-sm ${isFeatured ? 'flex-col lg:flex-row p-4 md:p-6 lg:p-8 gap-6 md:gap-8 lg:gap-12' : 'flex-col p-4 md:p-5 gap-5'}`}
+        >
           {/* Image Container */}
-          <div className={`relative rounded-2xl overflow-hidden bg-[#1a1a1a] shrink-0 ${isHorizontal ? 'w-full md:w-1/2 aspect-video md:aspect-square lg:aspect-auto' : 'w-full aspect-[4/3]'}`}>
+          <div className={`relative rounded-2xl overflow-hidden bg-slate-100 shrink-0 ${isFeatured ? 'w-full lg:w-[55%] aspect-video lg:aspect-[4/3] xl:aspect-[16/10]' : 'w-full aspect-[4/3]'}`}>
             <Image src={post.imageSrc} fill className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" alt={post.title} unoptimized />
           </div>
           
           {/* Content Container */}
-          <div className={`flex flex-col flex-1 ${isHorizontal ? 'justify-center py-2 lg:py-6' : 'justify-between'}`}>
-            <div className="flex flex-col gap-4">
+          <div className={`flex flex-col flex-1 ${isFeatured ? 'justify-center py-2 lg:py-6 lg:pr-8' : ''}`}>
+            <div>
               <TagBlock />
-              <TitleBlock className={isHorizontal ? "text-2xl md:text-3xl lg:text-[2rem]" : "text-xl md:text-2xl"} />
-              <p className={`text-white/50 text-sm leading-relaxed font-medium ${isHorizontal ? 'line-clamp-4 lg:line-clamp-5' : 'line-clamp-3'}`}>
-                {post.excerpt}
-              </p>
+              <TitleBlock className={isFeatured ? "text-ink text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6" : "text-ink text-lg md:text-xl mb-4 line-clamp-3"} />
+              {isFeatured && (
+                <p className="text-ink-muted text-sm md:text-base leading-relaxed font-medium line-clamp-4 lg:line-clamp-5 mb-8">
+                  {post.excerpt}
+                </p>
+              )}
             </div>
-            <div className="mt-6 md:mt-8">
-              <ButtonBlock />
-            </div>
+            <FooterBlock />
           </div>
-
         </Link>
       </motion.div>
     )
   }
 
   return (
-    <section className="bg-[#050505] py-24 md:py-32 border-t border-white/5 relative z-30 font-sans overflow-hidden">
+    <section className="bg-cream py-24 md:py-32 relative z-30 font-sans overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 max-w-[1400px] relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -97,10 +104,10 @@ export function BlogSection() {
           className="flex flex-col md:flex-row justify-between items-end mb-16"
         >
           <div className="w-full md:w-2/3">
-            <h2 className="font-heading text-[2.2rem] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tighter uppercase break-words mb-4">
+            <h2 className="font-heading text-[2.2rem] sm:text-4xl md:text-5xl lg:text-6xl font-black text-ink leading-[0.9] tracking-tighter uppercase break-words mb-4">
               {t('titleLine1')}<br />{t('titleLine2')}
             </h2>
-            <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-xl">
+            <p className="text-ink-muted text-sm sm:text-base md:text-lg max-w-xl">
               {t('subtitle')}
             </p>
           </div>
@@ -108,34 +115,33 @@ export function BlogSection() {
             <FluidButton
               href="/blog"
               text={t('ctaText')}
-              variant="white"
+              variant="dark"
             />
           </div>
         </motion.div>
 
-        {/* Grid Layout matching reference image exactly */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-fr"
+          className="flex flex-col gap-6"
         >
-          {posts.map((post, i) => {
-            // Alternating Pattern:
-            // Row 1: 0 (Vert), 1 (Horiz)
-            // Row 2: 2 (Horiz), 3 (Vert)
-            // Row 3: 4 (Vert), 5 (Horiz)
-            const isHorizontal = i === 1 || i === 2 || i === 5;
-            return <BlogCard key={post.slug} post={post} isHorizontal={isHorizontal} />
-          })}
+          {/* Featured Post (Index 0) */}
+          {posts.length > 0 && (
+            <BlogCard post={posts[0]} isFeatured={true} />
+          )}
+
+          {/* Grid of 6 standard posts */}
+          {posts.length > 1 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {posts.slice(1, 7).map(post => (
+                <BlogCard key={post.slug} post={post} isFeatured={false} />
+              ))}
+            </div>
+          )}
         </motion.div>
       </div>
-
-      <div 
-        className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3 z-0" 
-        style={{ background: 'radial-gradient(circle, rgba(28,228,201,0.08) 0%, transparent 60%)' }}
-      />
     </section>
   )
 }
