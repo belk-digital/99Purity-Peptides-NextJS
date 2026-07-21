@@ -80,8 +80,12 @@ function BestSellerCard({
   const cartStore = useCartStore()
   const router = useRouter()
 
-  const [inWishlist, setInWishlist] = useState(isWishlistedGlobal)
+  const [inWishlist, setInWishlist] = useState(false)
   const [isPending, setIsPending] = useState(false)
+
+  React.useEffect(() => {
+    setInWishlist(isWishlistedGlobal)
+  }, [isWishlistedGlobal])
 
   const handleWishlistClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -156,11 +160,12 @@ function BestSellerCard({
 
         {/* Top Text Content & Wishlist */}
         <div className="px-3 sm:px-5 pt-3 sm:pt-5 pb-3 sm:pb-5 flex flex-col gap-1.5 sm:gap-3 relative">
-          <div className="absolute top-3 sm:top-5 right-3 sm:right-5 z-30">
+          <div className="absolute top-1 sm:top-2 right-1 sm:right-2 z-30 pointer-events-auto">
             <button
               disabled={isPending}
               onClick={handleWishlistClick}
-              className={`transition-all duration-300 ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
+              aria-label="Wishlist"
+              className={`w-12 h-12 flex items-center justify-center transition-all duration-300 ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
             >
               {isPending ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <Heart className="w-4 h-4 sm:w-5 sm:h-5" fill={inWishlist ? 'currentColor' : 'none'} />}
             </button>

@@ -5,7 +5,8 @@
       "Bash(python -c ' *)",
       "Bash(tail -6 /tmp/shorten.log)",
       "Read(//tmp/**)",
-      "Bash(tail -8 /tmp/shorten.log)"
+      "Bash(tail -8 /tmp/shorten.log)",
+      "Read(//f/Belk Digital Projects/the-looksmaxxing-lab/**)"
     ]
   }
 }

@@ -242,6 +242,7 @@ const FooterContent = () => {
                   { label: t('navBlog'), href: '/blog' },
                   { label: t('navFaq'), href: '/faq' },
                   { label: t('navCalculator'), href: '/peptide-calculator' },
+                  { label: 'Certificates', href: '/certificates' },
                   { label: t('navAffiliates'), href: '/affiliates' }
                 ].map((item) => (
                   <li key={item.label} className="w-full">

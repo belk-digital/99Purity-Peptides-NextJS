@@ -196,6 +196,7 @@ export function MilitaryDiscountSection() {
                         <button 
                           type="button" 
                           onClick={() => fileInputRef.current?.click()}
+                          aria-label={selectedFile ? selectedFile.name : t('uploadButton')}
                           className="flex items-center gap-2 border border-dashed border-ink/30 px-3 md:px-4 py-2 rounded-lg text-ink/70 hover:text-primary hover:border-primary transition-colors text-[10px] md:text-xs font-bold uppercase tracking-wide max-w-[150px]"
                         >
                           <Upload className="w-3.5 h-3.5 flex-shrink-0" /> 

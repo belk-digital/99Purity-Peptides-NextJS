@@ -5,6 +5,8 @@ import * as Sentry from '@sentry/nextjs'
 import { BLOG_POSTS } from '@/data/blog-posts'
 import { routing } from '@/i18n/routing'
 
+export const dynamic = 'force-dynamic'
+
 const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://99puritypeptides.com'
 
 // Grouped by crawl priority rather than alphabetically, so the sitemap's own ordering

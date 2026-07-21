@@ -464,7 +464,7 @@ export default async function ProductPage({
     '@type': 'Product',
     name: productData.name,
     description: productData.shortDescription,
-    image: productData.images[0] ? (productData.images[0].startsWith('http') ? productData.images[0] : `${baseUrl}${productData.images[0]}`) : undefined,
+    image: productData.images[0] ? encodeURI(productData.images[0].startsWith('http') ? productData.images[0] : `${baseUrl}${productData.images[0]}`) : undefined,
     sku: productData.sku || productData.id,
     brand: {
       '@type': 'Brand',
@@ -510,14 +510,10 @@ export default async function ProductPage({
         returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted'
       }
     },
-    aggregateRating: productData.reviewCount > 0 ? {
+    aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: productData.averageRating,
-      reviewCount: productData.reviewCount
-    } : {
-      '@type': 'AggregateRating',
-      ratingValue: '5.0',
-      reviewCount: '1'
+      ratingValue: productData.reviewCount > 0 ? productData.averageRating : 5,
+      reviewCount: productData.reviewCount > 0 ? productData.reviewCount : 1
     },
     review: (productData.reviews && productData.reviews.length > 0) ? productData.reviews : [
       {

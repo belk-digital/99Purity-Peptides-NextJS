@@ -120,7 +120,7 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
                 <div className="absolute inset-0 w-full h-full bg-black/5">
                   <Image
                     src={CATEGORY_IMAGES[index % CATEGORY_IMAGES.length]}
-                    alt={getCategoryDisplayName(category.name)}
+                    alt=""
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />

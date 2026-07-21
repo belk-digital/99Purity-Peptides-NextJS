@@ -26,7 +26,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const isSignedIn = status === 'authenticated'
   const cartStore = useCartStore()
   
-  const [inWishlist, setInWishlist] = useState(isWishlistedGlobal)
+  const [inWishlist, setInWishlist] = useState(false)
   const [showParticles, setShowParticles] = useState(false)
   const [isPending, setIsPending] = useState(false)
 
@@ -114,7 +114,7 @@ export function ProductCard({ product }: ProductCardProps) {
             disabled={isPending}
             onClick={handleWishlistClick}
             aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-            className={`p-2 sm:p-2.5 transition-all duration-300 relative ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-300 relative ${inWishlist ? 'text-red-500' : 'text-ink/30 hover:text-red-500 hover:scale-110'}`}
           >
             {isPending ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <Heart className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={inWishlist ? 2.5 : 1.5} fill={inWishlist ? 'currentColor' : 'none'} />}
             {/* Particles */}

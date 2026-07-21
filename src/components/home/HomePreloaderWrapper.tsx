@@ -7,7 +7,14 @@ import { useGSAP } from '@gsap/react'
 const PreloaderContext = createContext({ isReady: true })
 export const usePreloader = () => useContext(PreloaderContext)
 
+// Temporarily disabled — flip back to false to re-enable the intro animation.
+const PRELOADER_DISABLED = true
+
 export function HomePreloaderWrapper({ children }: { children: React.ReactNode }) {
+  if (PRELOADER_DISABLED) {
+    return <PreloaderContext.Provider value={{ isReady: true }}>{children}</PreloaderContext.Provider>
+  }
+
   const [isReady, setIsReady] = useState(false)
   const [shouldAnimate, setShouldAnimate] = useState(true)
   const preloaderRef = useRef<HTMLDivElement>(null)
