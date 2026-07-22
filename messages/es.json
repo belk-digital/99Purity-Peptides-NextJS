@@ -1166,8 +1166,9 @@
       "zelleCheckoutNote": "Recibirás las instrucciones de pago por Zelle en la siguiente página después de realizar tu pedido.",
       "payWithAmex": "Pagar con American Express",
       "amexCheckoutNote": "Realiza tu pedido ahora. Recibirás un enlace para completar el pago en tu correo electrónico.",
-      "payWithCard": "Tarjeta de Crédito / Débito",
+      "payWithCardCircoflows": "Tarjeta de Crédito / Débito (CircoFlows)",
       "circoflowsCheckoutNote": "Serás redirigido de forma segura para ingresar los datos de tu tarjeta.",
+      "payWithCardPayzentric": "Tarjeta de Crédito / Débito (Payzentric)",
       "payzentricCheckoutNote": "Ingresa los datos de tu tarjeta a continuación para completar tu pedido de forma segura.",
       "placeOrder": "Realizar Pedido"
     },

@@ -1167,8 +1167,9 @@
       "zelleCheckoutNote": "You'll receive Zelle payment instructions on the next page after placing your order.",
       "payWithAmex": "Pay with American Express",
       "amexCheckoutNote": "Place your order now. You will receive a link to complete the payment on your email.",
-      "payWithCard": "Credit / Debit Card",
+      "payWithCardCircoflows": "Credit / Debit Card (CircoFlows)",
       "circoflowsCheckoutNote": "You'll be securely redirected to enter your card details.",
+      "payWithCardPayzentric": "Credit / Debit Card (Payzentric)",
       "payzentricCheckoutNote": "Enter your card details below to complete your order securely.",
       "placeOrder": "Place Order"
     },

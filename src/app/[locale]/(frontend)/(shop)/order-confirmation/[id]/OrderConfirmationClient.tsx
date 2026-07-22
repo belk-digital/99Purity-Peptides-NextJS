@@ -99,12 +99,14 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
     }
   }, [order.paymentMethod, order.orderId])
 
-  // Payzentric has no status-check API to fall back on (unlike CircoFlows/Stripe) — the async
-  // Status_url webhook is the only source of truth. This just polls our own order record for a
-  // little while and reloads once the webhook has landed, instead of leaving the page stuck on
-  // whatever state it had when the customer's browser first arrived back from Payzentric.
+  // Payzentric's SOAP flow finalizes synchronously before the browser ever reaches this page, so
+  // order.isFinalized is normally already true on first render here — this poll only matters for
+  // the rare case where a 3D Secure/bank redirect was needed and the result is still pending.
+  // Skipping it once already finalized is what stops an infinite reload loop: without this guard
+  // the poll would still fire, see isFinalized === true, and reload — which remounts this
+  // component and starts the same poll all over again, forever.
   React.useEffect(() => {
-    if (order.paymentMethod !== 'payzentric') return
+    if (order.paymentMethod !== 'payzentric' || order.isFinalized) return
     let attempts = 0
     const interval = setInterval(async () => {
       attempts += 1
@@ -122,8 +124,8 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
     stripe: t('paymentMethodCard'),
     zelle: t('paymentMethodZelle'),
     amex: 'American Express',
-    circoflows: t('paymentMethodCard'),
-    payzentric: t('paymentMethodCard'),
+    circoflows: 'CircoFlows',
+    payzentric: 'Payzentric',
   }
 
   return (

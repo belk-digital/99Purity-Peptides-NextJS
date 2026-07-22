@@ -60,7 +60,7 @@ export function CheckoutClient() {
   const [attemptedSubmit, setAttemptedSubmit] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'zelle' | 'amex' | 'circoflows' | 'payzentric'>(
-    ENABLE_CIRCOFLOWS ? 'circoflows' : ENABLE_PAYZENTRIC ? 'payzentric' : 'zelle'
+    ENABLE_PAYZENTRIC ? 'payzentric' : ENABLE_CIRCOFLOWS ? 'circoflows' : 'zelle'
   )
   const [formData, setFormData] = useState({
     email: '',
@@ -900,26 +900,6 @@ export function CheckoutClient() {
                 ) : (
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-3">
-                      {ENABLE_CIRCOFLOWS && (
-                        <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
-                          selectedPaymentMethod === 'circoflows' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
-                        }`}>
-                          <div className="flex items-center gap-4">
-                            <input
-                              type="radio"
-                              name="paymentMethod"
-                              value="circoflows"
-                              className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0"
-                              checked={selectedPaymentMethod === 'circoflows'}
-                              onChange={() => setSelectedPaymentMethod('circoflows')}
-                            />
-                            <div className="flex flex-col">
-                              <span className="text-sm font-bold text-ink">{t('payWithCard')}</span>
-                              <span className="text-xs text-ink/60 mt-0.5">{t('circoflowsCheckoutNote')}</span>
-                            </div>
-                          </div>
-                        </label>
-                      )}
                       {ENABLE_PAYZENTRIC && (
                         <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
                           selectedPaymentMethod === 'payzentric' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
@@ -934,8 +914,28 @@ export function CheckoutClient() {
                               onChange={() => setSelectedPaymentMethod('payzentric')}
                             />
                             <div className="flex flex-col">
-                              <span className="text-sm font-bold text-ink">{t('payWithCard')}</span>
+                              <span className="text-sm font-bold text-ink">{t('payWithCardPayzentric')}</span>
                               <span className="text-xs text-ink/60 mt-0.5">{t('payzentricCheckoutNote')}</span>
+                            </div>
+                          </div>
+                        </label>
+                      )}
+                      {ENABLE_CIRCOFLOWS && (
+                        <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
+                          selectedPaymentMethod === 'circoflows' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
+                        }`}>
+                          <div className="flex items-center gap-4">
+                            <input
+                              type="radio"
+                              name="paymentMethod"
+                              value="circoflows"
+                              className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0"
+                              checked={selectedPaymentMethod === 'circoflows'}
+                              onChange={() => setSelectedPaymentMethod('circoflows')}
+                            />
+                            <div className="flex flex-col">
+                              <span className="text-sm font-bold text-ink">{t('payWithCardCircoflows')}</span>
+                              <span className="text-xs text-ink/60 mt-0.5">{t('circoflowsCheckoutNote')}</span>
                             </div>
                           </div>
                         </label>

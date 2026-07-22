@@ -627,8 +627,8 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
       stripe: 'Card',
       zelle: 'Zelle',
       amex: 'American Express',
-      circoflows: 'Card',
-      payzentric: 'Card',
+      circoflows: 'CircoFlows',
+      payzentric: 'Payzentric',
     }
     const paymentMethod = (order.paymentMethod && paymentMethodLabels[order.paymentMethod]) || order.paymentMethod || 'N/A'
 

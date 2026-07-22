@@ -133,7 +133,8 @@ export async function generateOrderInvoiceHtml(order: any, payload?: any, custom
     stripe: 'Card',
     zelle: 'Zelle',
     amex: 'American Express',
-    circoflows: 'Card',
+    circoflows: 'CircoFlows',
+    payzentric: 'Payzentric',
   }
   const paymentMethodLabel = paymentMethodLabels[order.paymentMethod] || 'Card'
 
