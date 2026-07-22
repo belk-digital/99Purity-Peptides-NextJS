@@ -50,6 +50,7 @@ type OrderData = {
   redeemedPoints?: number
   couponCode?: string
   paymentMethod: 'stripe' | 'zelle' | 'amex' | 'circoflows' | 'payzentric'
+  isFinalized: boolean
 }
 
 const ZELLE_RECIPIENT_EMAIL = 'orders@99puritypeptides.com'
@@ -58,6 +59,12 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
   const t = useTranslations('orderConfirmation')
   const isZelle = order.paymentMethod === 'zelle'
   const isAmex = order.paymentMethod === 'amex'
+  // Zelle/Amex are manual-confirmation methods by design — they're *meant* to sit unfinalized
+  // until someone confirms the transfer, so "processing" messaging would be wrong for them.
+  // Every other method (Stripe/CircoFlows/Payzentric) is webhook-finalized, so if the order
+  // hasn't been finalized yet when this page renders, payment hasn't actually gone through —
+  // showing "Payment Successful" regardless was misleading customers (and testers).
+  const isCardProcessing = !isZelle && !isAmex && !order.isFinalized
 
   // Clearing the cart here (rather than relying solely on the checkout page's in-memory
   // success handler) is what actually guarantees it happens: Stripe's confirmPayment can
@@ -149,13 +156,15 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
           
           <FadeUp delay={0.1}>
             <h1 className="text-3xl md:text-4xl font-display font-bold text-ink mb-3">
-              {isZelle || isAmex ? t('orderPlaced') : t('paymentSuccessful')}
+              {isZelle || isAmex ? t('orderPlaced') : isCardProcessing ? t('paymentProcessing') : t('paymentSuccessful')}
             </h1>
             <p className="text-ink/60 text-sm md:text-base">
               {isZelle
                 ? t('thankYouZelle', { name: order.customerName })
                 : isAmex
                 ? t('thankYouAmex', { name: order.customerName })
+                : isCardProcessing
+                ? t('thankYouProcessing', { name: order.customerName })
                 : t('thankYouConfirmed', { name: order.customerName })}
             </p>
           </FadeUp>

@@ -18,6 +18,77 @@ function pick(fields: Record<string, string>, ...names: string[]): string | unde
 const SUCCESS_STATUSES = ['approved', 'success', 'succeeded', 'completed', 'captured']
 const FAILURE_STATUSES = ['declined', 'rejected', 'failed', 'error', 'cancelled']
 
+async function handleStatusUpdate(fields: Record<string, string>, source: 'POST' | 'GET') {
+  // Unconditional — this is the only way to see what Payzentric's sandbox is actually sending
+  // (its docs' field names/casing don't match its SOAP examples, and there's no guarantee the
+  // sandbox calls Status_url as a true async POST rather than a query-string redirect). Remove
+  // once the real field shape/delivery mechanism is confirmed.
+  console.log(`Payzentric webhook received (${source}):`, fields)
+
+  // Payzentric's docs don't define a request-signing scheme for this endpoint (unlike
+  // CircoFlows, which at least has an optional X-Signature). The CashierTransactionID we send
+  // is this order's own numeric id, so the only real guard available here is: only ever act on
+  // an order that is still pending and specifically waiting on Payzentric — never touch an
+  // order that's already finalized or belongs to a different payment method.
+  const orderId = pick(fields, 'transactionid', 'TransactionID', 'CashierTransactionID', 'TraceID')
+  const status = (pick(fields, 'status', 'Status') || '').toLowerCase()
+  const externalId = pick(fields, 'externlID', 'externalID', 'ExternalTraceID')
+  const errorDescription = pick(fields, 'errorDescription', 'Description', 'Message', 'Mesg')
+
+  if (!orderId || isNaN(Number(orderId))) {
+    console.warn('Payzentric webhook: no usable order id in payload', fields)
+    return new Response('Ignored', { status: 200 })
+  }
+
+  const payload = await getPayload({ config: configPromise })
+  const order = await payload.findByID({ collection: 'orders', id: Number(orderId), depth: 0, overrideAccess: true }).catch(() => null)
+
+  if (!order || order.paymentMethod !== 'payzentric') {
+    console.warn(`Payzentric webhook: order ${orderId} not found or not a Payzentric order`)
+    return new Response('Ignored', { status: 200 })
+  }
+
+  if (externalId && order.payzentricTransactionId !== externalId) {
+    await payload.update({ collection: 'orders', id: order.id, data: { payzentricTransactionId: externalId }, overrideAccess: true }).catch((err) => {
+      console.error(`Failed to store Payzentric transaction id for order ${orderId}:`, err)
+    })
+  }
+
+  if (FAILURE_STATUSES.includes(status)) {
+    if (!order.isFinalized && order.status === 'pending') {
+      await payload.update({ collection: 'orders', id: order.id, data: { status: 'cancelled' }, overrideAccess: true, context: { paymentFailed: true } })
+      const { notifyAdminFailedPayment } = await import('@/app/[locale]/(frontend)/(shop)/checkout/actions')
+      await notifyAdminFailedPayment(String(order.id), errorDescription || `Payzentric payment ${status || 'failed'}`).catch(console.error)
+    }
+    return new Response('Webhook handled', { status: 200 })
+  }
+
+  if (!SUCCESS_STATUSES.includes(status)) {
+    // Requested/Pending/in-flight 3D Secure challenge — nothing to finalize yet. If this logs
+    // for a transaction you expected to be a final approve/decline, the status *value* Payzentric
+    // sent doesn't match SUCCESS_STATUSES/FAILURE_STATUSES above — check the log line above for
+    // the actual string and add it to one of those lists.
+    console.log(`Payzentric webhook: unrecognized/in-flight status "${status}" for order ${orderId} — no action taken`)
+    return new Response('Acknowledged', { status: 200 })
+  }
+
+  // Amount isn't in Payzentric's documented ASYNC response fields, but re-check it anyway if
+  // they ever do send one — same defense-in-depth as the Stripe/CircoFlows handlers.
+  const paidAmount = pick(fields, 'amount', 'Amount')
+  if (paidAmount !== undefined) {
+    const expectedAmount = Number(order.total || 0).toFixed(2)
+    if (Number(paidAmount).toFixed(2) !== expectedAmount) {
+      console.error(`Payzentric webhook: amount mismatch for order ${orderId} (paid ${paidAmount}, expected ${expectedAmount})`)
+      return new Response('Amount mismatch', { status: 500 })
+    }
+  }
+
+  const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
+  await finalizeOrder(String(order.id), {})
+
+  return new Response('Webhook handled successfully', { status: 200 })
+}
+
 export async function POST(req: Request) {
   try {
     let fields: Record<string, string> = {}
@@ -25,70 +96,32 @@ export async function POST(req: Request) {
     if (contentType.includes('application/json')) {
       fields = (await req.json().catch(() => ({}))) || {}
     } else {
-      const formData = await req.formData()
-      formData.forEach((value, key) => {
+      // formData() throws on an empty/non-form body instead of returning an empty FormData —
+      // swallow that so a malformed or empty POST still gets logged rather than erroring before
+      // we ever see what Payzentric actually sent.
+      const formData = await req.formData().catch(() => null)
+      formData?.forEach((value, key) => {
         fields[key] = String(value)
       })
     }
+    return await handleStatusUpdate(fields, 'POST')
+  } catch (error: any) {
+    console.error('Payzentric webhook error:', error)
+    return new Response(`Webhook Error: ${error.message}`, { status: 400 })
+  }
+}
 
-    // Payzentric's docs don't define a request-signing scheme for this endpoint (unlike
-    // CircoFlows, which at least has an optional X-Signature). The CashierTransactionID we send
-    // is this order's own numeric id, so the only real guard available here is: only ever act on
-    // an order that is still pending and specifically waiting on Payzentric — never touch an
-    // order that's already finalized or belongs to a different payment method.
-    const orderId = pick(fields, 'transactionid', 'TransactionID', 'CashierTransactionID', 'TraceID')
-    const status = (pick(fields, 'status', 'Status') || '').toLowerCase()
-    const externalId = pick(fields, 'externlID', 'externalID', 'ExternalTraceID')
-    const errorDescription = pick(fields, 'errorDescription', 'Description', 'Message', 'Mesg')
-
-    if (!orderId || isNaN(Number(orderId))) {
-      console.warn('Payzentric webhook: no usable order id in payload', fields)
-      return new Response('Ignored', { status: 200 })
-    }
-
-    const payload = await getPayload({ config: configPromise })
-    const order = await payload.findByID({ collection: 'orders', id: Number(orderId), depth: 0, overrideAccess: true }).catch(() => null)
-
-    if (!order || order.paymentMethod !== 'payzentric') {
-      console.warn(`Payzentric webhook: order ${orderId} not found or not a Payzentric order`)
-      return new Response('Ignored', { status: 200 })
-    }
-
-    if (externalId && order.payzentricTransactionId !== externalId) {
-      await payload.update({ collection: 'orders', id: order.id, data: { payzentricTransactionId: externalId }, overrideAccess: true }).catch((err) => {
-        console.error(`Failed to store Payzentric transaction id for order ${orderId}:`, err)
-      })
-    }
-
-    if (FAILURE_STATUSES.includes(status)) {
-      if (!order.isFinalized && order.status === 'pending') {
-        await payload.update({ collection: 'orders', id: order.id, data: { status: 'cancelled' }, overrideAccess: true, context: { paymentFailed: true } })
-        const { notifyAdminFailedPayment } = await import('@/app/[locale]/(frontend)/(shop)/checkout/actions')
-        await notifyAdminFailedPayment(String(order.id), errorDescription || `Payzentric payment ${status || 'failed'}`).catch(console.error)
-      }
-      return new Response('Webhook handled', { status: 200 })
-    }
-
-    if (!SUCCESS_STATUSES.includes(status)) {
-      // Requested/Pending/in-flight 3D Secure challenge — nothing to finalize yet.
-      return new Response('Acknowledged', { status: 200 })
-    }
-
-    // Amount isn't in Payzentric's documented ASYNC response fields, but re-check it anyway if
-    // they ever do send one — same defense-in-depth as the Stripe/CircoFlows handlers.
-    const paidAmount = pick(fields, 'amount', 'Amount')
-    if (paidAmount !== undefined) {
-      const expectedAmount = Number(order.total || 0).toFixed(2)
-      if (Number(paidAmount).toFixed(2) !== expectedAmount) {
-        console.error(`Payzentric webhook: amount mismatch for order ${orderId} (paid ${paidAmount}, expected ${expectedAmount})`)
-        return new Response('Amount mismatch', { status: 500 })
-      }
-    }
-
-    const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
-    await finalizeOrder(String(order.id), {})
-
-    return new Response('Webhook handled successfully', { status: 200 })
+// Some legacy ASP.NET gateways deliver the result as a query-string redirect rather than a true
+// server-to-server POST. Handling GET here too means we catch that case even though it isn't
+// documented, without it costing anything if Payzentric only ever POSTs.
+export async function GET(req: Request) {
+  try {
+    const url = new URL(req.url)
+    const fields: Record<string, string> = {}
+    url.searchParams.forEach((value, key) => {
+      fields[key] = value
+    })
+    return await handleStatusUpdate(fields, 'GET')
   } catch (error: any) {
     console.error('Payzentric webhook error:', error)
     return new Response(`Webhook Error: ${error.message}`, { status: 400 })

@@ -136,6 +136,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
     redeemedPoints: order.redeemedPoints || 0,
     couponCode: order.couponCode || '',
     paymentMethod: order.paymentMethod || 'stripe',
+    isFinalized: !!order.isFinalized,
   }
 
   return (
