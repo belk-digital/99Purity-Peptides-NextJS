@@ -1169,6 +1169,7 @@
       "amexCheckoutNote": "Place your order now. You will receive a link to complete the payment on your email.",
       "payWithCard": "Credit / Debit Card",
       "circoflowsCheckoutNote": "You'll be securely redirected to enter your card details.",
+      "payzentricCheckoutNote": "Enter your card details below to complete your order securely.",
       "placeOrder": "Place Order"
     },
     "checkoutSummary": {
@@ -1213,6 +1214,14 @@
       "paymentSuccessRedirecting": "Payment successful! Redirecting...",
       "payAmount": "Pay ${amount}",
       "termsAcknowledgement": "By completing your purchase, you agree to our Terms of Service and strictly acknowledge these products are for Research Use Only."
+    },
+    "payzentricCheckoutForm": {
+      "nameOnCard": "Name on Card",
+      "cardNumber": "Card Number",
+      "expMonth": "MM",
+      "expYear": "YYYY",
+      "cvv": "CVV",
+      "namePlaceholder": "Jane Doe"
     }
   },
   "orderConfirmation": {

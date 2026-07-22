@@ -1168,6 +1168,7 @@
       "amexCheckoutNote": "Realiza tu pedido ahora. Recibirás un enlace para completar el pago en tu correo electrónico.",
       "payWithCard": "Tarjeta de Crédito / Débito",
       "circoflowsCheckoutNote": "Serás redirigido de forma segura para ingresar los datos de tu tarjeta.",
+      "payzentricCheckoutNote": "Ingresa los datos de tu tarjeta a continuación para completar tu pedido de forma segura.",
       "placeOrder": "Realizar Pedido"
     },
     "checkoutSummary": {
@@ -1212,6 +1213,14 @@
       "paymentSuccessRedirecting": "¡Pago exitoso! Redirigiendo...",
       "payAmount": "Pagar ${amount}",
       "termsAcknowledgement": "Al completar tu compra, aceptas nuestros Términos de Servicio y reconoces estrictamente que estos productos son solo para Uso en Investigación (Research Use Only)."
+    },
+    "payzentricCheckoutForm": {
+      "nameOnCard": "Nombre en la Tarjeta",
+      "cardNumber": "Número de Tarjeta",
+      "expMonth": "MM",
+      "expYear": "AAAA",
+      "cvv": "CVV",
+      "namePlaceholder": "Juan Pérez"
     }
   },
   "orderConfirmation": {

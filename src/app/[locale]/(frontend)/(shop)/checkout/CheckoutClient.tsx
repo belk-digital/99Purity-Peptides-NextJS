@@ -19,6 +19,7 @@ import { useSession } from 'next-auth/react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { StripeCheckoutForm } from './StripeCheckoutForm'
+import { PayzentricCheckoutForm } from './PayzentricCheckoutForm'
 import { createPaymentIntent, getShippingMethods } from './actions'
 import { trackBeginCheckout } from '@/lib/analytics/ga4'
 // Card payments are temporarily disabled in favor of Zelle. Flip this back to re-enable Stripe —
@@ -27,6 +28,10 @@ const ENABLE_STRIPE = false
 
 // Toggle to enable/disable the CircoFlows hosted-card option without touching Stripe/Zelle/Amex.
 const ENABLE_CIRCOFLOWS = true
+
+// Toggle to enable/disable the Payzentric card option without touching any other method. Flip
+// to false to pull it from checkout instantly — nothing else here depends on it being on.
+const ENABLE_PAYZENTRIC = true
 
 const stripePromise = typeof window !== 'undefined' ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '') : null
 
@@ -54,7 +59,9 @@ export function CheckoutClient() {
   // Form State
   const [attemptedSubmit, setAttemptedSubmit] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'zelle' | 'amex' | 'circoflows'>(ENABLE_CIRCOFLOWS ? 'circoflows' : 'zelle')
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'zelle' | 'amex' | 'circoflows' | 'payzentric'>(
+    ENABLE_CIRCOFLOWS ? 'circoflows' : ENABLE_PAYZENTRIC ? 'payzentric' : 'zelle'
+  )
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -913,6 +920,26 @@ export function CheckoutClient() {
                           </div>
                         </label>
                       )}
+                      {ENABLE_PAYZENTRIC && (
+                        <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
+                          selectedPaymentMethod === 'payzentric' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
+                        }`}>
+                          <div className="flex items-center gap-4">
+                            <input
+                              type="radio"
+                              name="paymentMethod"
+                              value="payzentric"
+                              className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0"
+                              checked={selectedPaymentMethod === 'payzentric'}
+                              onChange={() => setSelectedPaymentMethod('payzentric')}
+                            />
+                            <div className="flex flex-col">
+                              <span className="text-sm font-bold text-ink">{t('payWithCard')}</span>
+                              <span className="text-xs text-ink/60 mt-0.5">{t('payzentricCheckoutNote')}</span>
+                            </div>
+                          </div>
+                        </label>
+                      )}
                       <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
                         selectedPaymentMethod === 'zelle' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
                       }`}>
@@ -952,14 +979,27 @@ export function CheckoutClient() {
                       </label>
                     </div>
 
-                    <div className="w-full p-6 sm:p-8 bg-white border border-ink/10 rounded-3xl shadow-sm flex flex-col items-center gap-6 text-center mt-2">
-                      <Button onClick={
-                        selectedPaymentMethod === 'circoflows' ? handleCircoFlowsPlaceOrder :
-                        selectedPaymentMethod === 'zelle' ? handleZellePlaceOrder : handleAmexPlaceOrder
-                      } disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
-                        {isProcessing ? <Loader2 className="animate-spin" /> : t('placeOrder')}
-                      </Button>
-                    </div>
+                    {selectedPaymentMethod === 'payzentric' ? (
+                      <PayzentricCheckoutForm
+                        amount={total}
+                        items={items}
+                        shippingMethod={shippingMethod}
+                        couponCode={appliedCoupon?.code}
+                        isRedeemingPoints={isRedeemingPoints}
+                        formData={{ ...formData, email: user?.email || formData.email }}
+                        userId={user?.id}
+                        isNewAddress={selectedAddressId === 'new'}
+                      />
+                    ) : (
+                      <div className="w-full p-6 sm:p-8 bg-white border border-ink/10 rounded-3xl shadow-sm flex flex-col items-center gap-6 text-center mt-2">
+                        <Button onClick={
+                          selectedPaymentMethod === 'circoflows' ? handleCircoFlowsPlaceOrder :
+                          selectedPaymentMethod === 'zelle' ? handleZellePlaceOrder : handleAmexPlaceOrder
+                        } disabled={isProcessing} variant="dark" size="lg" className="w-full h-14 rounded-full !text-white">
+                          {isProcessing ? <Loader2 className="animate-spin" /> : t('placeOrder')}
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 )}
               </section>

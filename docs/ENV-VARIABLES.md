@@ -56,6 +56,12 @@
 | `STRIPE_SECRET_KEY`                  | 🔒    | Server-side Stripe API key (starts `sk_test_` or `sk_live_`) | Stripe Dashboard → Developers → API keys                                        |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 👁️    | Client-side Stripe key (starts `pk_`)                        | Same place                                                                      |
 | `STRIPE_WEBHOOK_SECRET`              | 🔒    | Verifies webhook signatures (starts `whsec_`)                | Dashboard → Webhooks → Endpoint → Signing secret. Local: `stripe listen` output |
+| `PAYZENTRIC_ASYNC_URL`               | 👁️    | Payzentric 3D Secure/ASYNC endpoint (test vs prod URL)        | Payzentric rep — swap for the prod URL when going live                          |
+| `PAYZENTRIC_PROVIDER_PIN`            | 🔒    | Payzentric-issued provider PIN                                | Payzentric rep                                                                  |
+| `PAYZENTRIC_PROCESSOR_USER`          | 🔒    | Payzentric processor username                                 | Payzentric rep                                                                  |
+| `PAYZENTRIC_PROCESSOR_PASS`          | 🔒    | Payzentric processor password                                 | Payzentric rep                                                                  |
+| `PAYZENTRIC_MERCHANT_USER`           | 🔒    | Payzentric merchant username                                  | Payzentric rep                                                                  |
+| `PAYZENTRIC_MERCHANT_PASSWORD`       | 🔒    | Payzentric merchant password                                  | Payzentric rep                                                                  |
 
 ---
 

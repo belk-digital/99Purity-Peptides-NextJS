@@ -49,7 +49,7 @@ type OrderData = {
   discountTotal?: number
   redeemedPoints?: number
   couponCode?: string
-  paymentMethod: 'stripe' | 'zelle' | 'amex' | 'circoflows'
+  paymentMethod: 'stripe' | 'zelle' | 'amex' | 'circoflows' | 'payzentric'
 }
 
 const ZELLE_RECIPIENT_EMAIL = 'orders@99puritypeptides.com'
@@ -92,11 +92,31 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
     }
   }, [order.paymentMethod, order.orderId])
 
+  // Payzentric has no status-check API to fall back on (unlike CircoFlows/Stripe) — the async
+  // Status_url webhook is the only source of truth. This just polls our own order record for a
+  // little while and reloads once the webhook has landed, instead of leaving the page stuck on
+  // whatever state it had when the customer's browser first arrived back from Payzentric.
+  React.useEffect(() => {
+    if (order.paymentMethod !== 'payzentric') return
+    let attempts = 0
+    const interval = setInterval(async () => {
+      attempts += 1
+      const { getPayzentricOrderStatus } = await import('../../checkout/payzentricActions')
+      const result = await getPayzentricOrderStatus(order.orderId)
+      if (result.isFinalized || attempts >= 10) {
+        clearInterval(interval)
+        if (result.isFinalized) window.location.reload()
+      }
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [order.paymentMethod, order.orderId])
+
   const PAYMENT_METHOD_LABELS: Record<OrderData['paymentMethod'], string> = {
     stripe: t('paymentMethodCard'),
     zelle: t('paymentMethodZelle'),
     amex: 'American Express',
     circoflows: t('paymentMethodCard'),
+    payzentric: t('paymentMethodCard'),
   }
 
   return (

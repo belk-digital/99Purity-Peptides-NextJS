@@ -227,6 +227,7 @@ export const Orders: CollectionConfig = {
         { label: 'Zelle', value: 'zelle' },
         { label: 'American Express', value: 'amex' },
         { label: 'Card (CircoFlows)', value: 'circoflows' },
+        { label: 'Card (Payzentric)', value: 'payzentric' },
       ],
       admin: {
         position: 'sidebar',
@@ -241,6 +242,16 @@ export const Orders: CollectionConfig = {
         readOnly: true,
         description: 'CircoFlows transaction_id, for support/reconciliation lookups.',
         condition: (data) => data?.paymentMethod === 'circoflows',
+      },
+    },
+    {
+      name: 'payzentricTransactionId',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Payzentric GTW transactionid, for support/reconciliation lookups.',
+        condition: (data) => data?.paymentMethod === 'payzentric',
       },
     },
     { name: 'couponCode', type: 'text', admin: { position: 'sidebar' } },

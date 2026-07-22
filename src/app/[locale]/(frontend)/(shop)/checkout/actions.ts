@@ -196,7 +196,7 @@ export async function createPayloadOrder(
   formData: any,
   paymentIntentId: string,
   userId?: string,
-  paymentMethod: 'stripe' | 'zelle' | 'amex' | 'circoflows' = 'stripe',
+  paymentMethod: 'stripe' | 'zelle' | 'amex' | 'circoflows' | 'payzentric' = 'stripe',
   isNewAddress = false
 ) {
   const payload = await getPayload({ config: configPromise })
@@ -628,6 +628,7 @@ export async function notifyAdminFailedPayment(orderId: string, errorMessage: st
       zelle: 'Zelle',
       amex: 'American Express',
       circoflows: 'Card',
+      payzentric: 'Card',
     }
     const paymentMethod = (order.paymentMethod && paymentMethodLabels[order.paymentMethod]) || order.paymentMethod || 'N/A'
 

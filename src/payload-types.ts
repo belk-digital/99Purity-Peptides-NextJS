@@ -805,11 +805,15 @@ export interface Order {
   /**
    * Zelle orders require manual payment confirmation before fulfillment.
    */
-  paymentMethod?: ('stripe' | 'zelle' | 'amex' | 'circoflows') | null;
+  paymentMethod?: ('stripe' | 'zelle' | 'amex' | 'circoflows' | 'payzentric') | null;
   /**
    * CircoFlows transaction_id, for support/reconciliation lookups.
    */
   circoflowsTransactionId?: string | null;
+  /**
+   * Payzentric GTW transactionid, for support/reconciliation lookups.
+   */
+  payzentricTransactionId?: string | null;
   couponCode?: string | null;
   /**
    * Affiliate ID if referred
@@ -1985,6 +1989,7 @@ export interface OrdersSelect<T extends boolean = true> {
   sendTrackingEmail?: T;
   paymentMethod?: T;
   circoflowsTransactionId?: T;
+  payzentricTransactionId?: T;
   couponCode?: T;
   affiliateId?: T;
   clickId?: T;
