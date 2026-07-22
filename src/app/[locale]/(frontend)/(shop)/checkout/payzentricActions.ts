@@ -14,9 +14,24 @@ function escapeXml(value: unknown): string {
     .replace(/'/g, '&apos;')
 }
 
-// Payzentric's xmlData schema takes a "Brand" string but doesn't document its own BIN table for
-// the ASYNC endpoint (only the separate SOAP Initiate_Deposit lists an enum) — detecting from the
-// card number keeps this working for any brand without relying on client input.
+function unescapeXmlEntities(value: string): string {
+  return value
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&')
+}
+
+// Field names in Payzentric's own docs are inconsistent in casing between the request schema,
+// the "Response" table, and the XML error example (e.g. "TraceID" vs "traceid", "Status" vs
+// "status") — matching case-insensitively means we don't have to guess which casing shows up.
+function extractXmlTag(xml: string, tagName: string): string | undefined {
+  const match = xml.match(new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)</${tagName}>`, 'i'))
+  return match ? match[1].trim() : undefined
+}
+
+// Payzentric's own SOAP examples show this enum uppercase (VISA/MASTERCARD/AMERICANEXPRESS/...).
 function detectCardBrand(cardNumber: string): string {
   const digits = cardNumber.replace(/\D/g, '')
   if (/^4/.test(digits)) return 'VISA'
@@ -36,13 +51,118 @@ export type PayzentricCardData = {
   cvv: string
 }
 
+type SoapResult = {
+  status?: string
+  transactionId?: string
+  traceId?: string
+  description?: string
+  message?: string
+  externalTraceId?: string
+  descriptor?: string
+  errorCode?: string
+  errorMessage?: string
+}
+
+const SOAP_ACTION = 'http://tempuri.org/Initiate_Deposit'
+
+/**
+ * Calls Payzentric's SOAP Initiate_Deposit endpoint directly, server-to-server — this is the
+ * "Credit Card Function" flow (API docs pages 5-7), not the ASYNC/3D Secure redirect flow this
+ * integration used during sandbox testing. It's synchronous: the card is authorized and the
+ * result (approved/rejected/needs-redirect) comes back in this same HTTP response, no webhook
+ * involved. The interesting payload arrives XML-escaped inside <Initiate_DepositResult> — it has
+ * to be unescaped before it can be parsed as its own XML document.
+ */
+async function callInitiateDeposit(fields: Record<string, string>): Promise<SoapResult> {
+  const soapUrl = process.env.PAYZENTRIC_SOAP_URL as string
+
+  // Every node from Payzentric's own example template is included, even ones we leave empty —
+  // omitting a node entirely (rather than sending it empty) is what caused the ASYNC endpoint to
+  // throw a raw NullReferenceException during sandbox testing, and there's no reason to assume
+  // this SOAP endpoint's XML deserializer is any more defensive.
+  const soapBody =
+    '<?xml version="1.0" encoding="utf-8"?>' +
+    '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+    '<soap:Body>' +
+    '<Initiate_Deposit xmlns="http://tempuri.org/">' +
+    '<objWSCreditCardBE>' +
+    `<Username>${escapeXml(fields.Username)}</Username>` +
+    `<Password>${escapeXml(fields.Password)}</Password>` +
+    `<ProviderPIN>${escapeXml(fields.ProviderPIN)}</ProviderPIN>` +
+    `<AccountID>${escapeXml(fields.AccountID)}</AccountID>` +
+    `<AccountPassword>${escapeXml(fields.AccountPassword)}</AccountPassword>` +
+    `<AccountKey>${escapeXml(fields.AccountKey)}</AccountKey>` +
+    '<ExtraHashKey></ExtraHashKey>' +
+    `<CustomerPIN>${escapeXml(fields.CustomerPIN)}</CustomerPIN>` +
+    `<TraceID>${escapeXml(fields.TraceID)}</TraceID>` +
+    `<FirstName>${escapeXml(fields.FirstName)}</FirstName>` +
+    `<LastName>${escapeXml(fields.LastName)}</LastName>` +
+    `<Address>${escapeXml(fields.Address)}</Address>` +
+    `<City>${escapeXml(fields.City)}</City>` +
+    `<StateCode>${escapeXml(fields.StateCode)}</StateCode>` +
+    `<CountryCode>${escapeXml(fields.CountryCode)}</CountryCode>` +
+    `<PostalCode>${escapeXml(fields.PostalCode)}</PostalCode>` +
+    `<Email>${escapeXml(fields.Email)}</Email>` +
+    `<Phone>${escapeXml(fields.Phone)}</Phone>` +
+    `<CreditCardHolder>${escapeXml(fields.CreditCardHolder)}</CreditCardHolder>` +
+    `<CreditCardNumber>${escapeXml(fields.CreditCardNumber)}</CreditCardNumber>` +
+    `<CreditCardExpirationMonth>${escapeXml(fields.CreditCardExpirationMonth)}</CreditCardExpirationMonth>` +
+    `<CreditCardExpirationYear>${escapeXml(fields.CreditCardExpirationYear)}</CreditCardExpirationYear>` +
+    `<CreditCardType>${escapeXml(fields.CreditCardType)}</CreditCardType>` +
+    `<CreditCardCVV>${escapeXml(fields.CreditCardCVV)}</CreditCardCVV>` +
+    `<Amount>${escapeXml(fields.Amount)}</Amount>` +
+    `<CurrencyCode>${escapeXml(fields.CurrencyCode)}</CurrencyCode>` +
+    `<IPv4Address>${escapeXml(fields.IPv4Address)}</IPv4Address>` +
+    '<Comments></Comments>' +
+    '<Descriptor></Descriptor>' +
+    `<ReturnURL>${escapeXml(fields.ReturnURL)}</ReturnURL>` +
+    '<SSN></SSN>' +
+    '<DriversLicense></DriversLicense>' +
+    `<Birthdate>${escapeXml(fields.Birthdate)}</Birthdate>` +
+    '<WhiteCode></WhiteCode>' +
+    '<Udf1></Udf1>' +
+    '</objWSCreditCardBE>' +
+    '</Initiate_Deposit>' +
+    '</soap:Body>' +
+    '</soap:Envelope>'
+
+  const response = await fetch(soapUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/xml; charset=utf-8',
+      SOAPAction: SOAP_ACTION,
+    },
+    body: soapBody,
+  })
+
+  const raw = await response.text()
+  const encodedResult = extractXmlTag(raw, 'Initiate_DepositResult')
+  if (!encodedResult) {
+    throw new Error(`Payzentric SOAP call returned no parseable result (HTTP ${response.status}): ${raw.slice(0, 500)}`)
+  }
+
+  const innerXml = unescapeXmlEntities(encodedResult)
+
+  return {
+    status: extractXmlTag(innerXml, 'Status'),
+    transactionId: extractXmlTag(innerXml, 'transactionid') || extractXmlTag(innerXml, 'TransactionID'),
+    traceId: extractXmlTag(innerXml, 'TraceID'),
+    description: extractXmlTag(innerXml, 'Description'),
+    message: extractXmlTag(innerXml, 'Message'),
+    externalTraceId: extractXmlTag(innerXml, 'ExternalTraceID'),
+    descriptor: extractXmlTag(innerXml, 'Descriptor'),
+    errorCode: extractXmlTag(innerXml, 'Code'),
+    errorMessage: extractXmlTag(innerXml, 'Mesg'),
+  }
+}
+
 /**
  * Creates the pending order (same reservation/dedupe path as every other payment method), then
- * builds the Mnet xmlData blob for Payzentric's ASYNC/3D Secure endpoint. Unlike CircoFlows, this
- * gateway is not called server-to-server — the docs require the *customer's own browser* to POST
- * this payload directly to Payzentric so any 3D Secure challenge can run in that same browser
- * session. So this action only prepares the data; PayzentricCheckoutForm.tsx is what actually
- * submits it via a real (non-fetch) form POST.
+ * calls Payzentric's SOAP endpoint directly. Unlike the ASYNC/3D Secure flow this replaces, the
+ * card number never leaves our server — Payzentric returns the approve/decline result in the
+ * same request, so there's no webhook and no browser redirect for the common case. Some cards
+ * may still come back with a Descriptor redirect URL (a 3D Secure/bank challenge) — that's the
+ * one case the caller still needs to send the browser to.
  */
 export async function createPayzentricPayment(
   items: any[],
@@ -55,9 +175,8 @@ export async function createPayzentricPayment(
   isNewAddress = false
 ): Promise<{
   orderId?: string
-  asyncUrl?: string
-  providerPIN?: string
-  xmlData?: string
+  success?: boolean
+  redirectUrl?: string
   error?: string
   updatedItems?: any[]
   priceChanged?: boolean
@@ -84,14 +203,15 @@ export async function createPayzentricPayment(
     return { error: 'Order not found after creation' }
   }
 
-  const asyncUrl = process.env.PAYZENTRIC_ASYNC_URL
+  const soapUrl = process.env.PAYZENTRIC_SOAP_URL
+  const username = process.env.PAYZENTRIC_USERNAME
+  const password = process.env.PAYZENTRIC_PASSWORD
   const providerPIN = process.env.PAYZENTRIC_PROVIDER_PIN
-  const processorUser = process.env.PAYZENTRIC_PROCESSOR_USER
-  const processorPass = process.env.PAYZENTRIC_PROCESSOR_PASS
-  const merchantUser = process.env.PAYZENTRIC_MERCHANT_USER
-  const merchantPassword = process.env.PAYZENTRIC_MERCHANT_PASSWORD
+  const accountId = process.env.PAYZENTRIC_ACCOUNT_ID
+  const accountPassword = process.env.PAYZENTRIC_ACCOUNT_PASSWORD
+  const accountKey = process.env.PAYZENTRIC_ACCOUNT_KEY
 
-  if (!asyncUrl || !providerPIN || !processorUser || !processorPass || !merchantUser || !merchantPassword) {
+  if (!soapUrl || !username || !password || !providerPIN || !accountId || !accountPassword || !accountKey) {
     await cancelUnfinalizedOrder(order.id)
     await notifyAdminFailedPayment(String(order.id), 'Payzentric is not configured (missing env vars)').catch(console.error)
     return { error: 'Card payments are temporarily unavailable. Please try another payment method.' }
@@ -100,67 +220,83 @@ export async function createPayzentricPayment(
   try {
     const headersList = await headers()
     const origin = headersList.get('origin') || `https://${headersList.get('host')}`
-    // x-forwarded-for can carry a "client, proxy1, proxy2" chain (Vercel included) — the first
-    // entry is the actual customer, the rest are intermediate proxies.
     const ipAddress = headersList.get('x-forwarded-for')?.split(',')[0].trim() || headersList.get('x-real-ip') || '127.0.0.1'
-
     const brand = detectCardBrand(cardData.cardNumber)
+    const isUS = (formData.country || 'US') === 'US'
 
-    const xmlData =
-      '<Mnet>' +
-      '<Processor>' +
-      `<ProviderPIN>${escapeXml(providerPIN)}</ProviderPIN>` +
-      `<ProcessorUser>${escapeXml(processorUser)}</ProcessorUser>` +
-      `<ProcessorPass>${escapeXml(processorPass)}</ProcessorPass>` +
-      '<ProcessorKey></ProcessorKey>' +
-      `<Status_url>${escapeXml(`${origin}/api/webhooks/payzentric`)}</Status_url>` +
-      `<Return_url>${escapeXml(`${origin}/order-confirmation/${order.id}`)}</Return_url>` +
-      '<ExtraKey1></ExtraKey1>' +
-      '</Processor>' +
-      '<Merchant>' +
-      `<MerchantUser>${escapeXml(merchantUser)}</MerchantUser>` +
-      `<MerchantPassword>${escapeXml(merchantPassword)}</MerchantPassword>` +
-      '</Merchant>' +
-      '<Transaction>' +
-      `<Amount>${Number(order.total || 0).toFixed(2)}</Amount>` +
-      '<Currency>USD</Currency>' +
-      `<CashierTransactionID>${escapeXml(String(order.id))}</CashierTransactionID>` +
-      `<Description>${escapeXml(`Order #${order.orderNumber || order.id} - 99 Purity Peptides`)}</Description>` +
-      '<CreditCard>' +
-      `<CardHolder>${escapeXml(cardData.cardHolder)}</CardHolder>` +
-      `<CardNumber>${escapeXml(cardData.cardNumber.replace(/\s+/g, ''))}</CardNumber>` +
-      `<Brand>${brand}</Brand>` +
-      `<ExpMonth>${escapeXml(cardData.expMonth)}</ExpMonth>` +
-      `<ExpYear>${escapeXml(cardData.expYear)}</ExpYear>` +
-      `<CCV>${escapeXml(cardData.cvv)}</CCV>` +
-      '</CreditCard>' +
-      '</Transaction>' +
-      '<Customer>' +
-      `<CustomerPIN>${escapeXml(String(order.id))}</CustomerPIN>` +
-      `<First>${escapeXml(formData.firstName)}</First>` +
-      `<Last>${escapeXml(formData.lastName || '')}</Last>` +
-      `<Address>${escapeXml(formData.address)}</Address>` +
-      `<Zip>${escapeXml(formData.zip)}</Zip>` +
-      `<City>${escapeXml(formData.city)}</City>` +
-      `<State>${escapeXml(formData.state)}</State>` +
-      `<Country>${escapeXml(formData.country || 'US')}</Country>` +
-      `<Email>${escapeXml(formData.email)}</Email>` +
-      // Not collected at checkout — Payzentric's own SOAP docs say to default this to the
-      // current date when there's nothing real to send, so the node is never missing/null.
-      `<BirthDate>${new Date().toISOString().slice(0, 10)}</BirthDate>` +
-      '<SSN></SSN>' +
-      '<SecureID></SecureID>' +
-      `<Phone>${escapeXml(formData.phone)}</Phone>` +
-      `<IP>${escapeXml(ipAddress)}</IP>` +
-      '</Customer>' +
-      '</Mnet>'
+    const result = await callInitiateDeposit({
+      Username: username,
+      Password: password,
+      ProviderPIN: providerPIN,
+      AccountID: accountId,
+      AccountPassword: accountPassword,
+      AccountKey: accountKey,
+      CustomerPIN: String(order.owner || order.id),
+      TraceID: String(order.id),
+      FirstName: formData.firstName,
+      LastName: formData.lastName || '',
+      Address: formData.address,
+      City: formData.city,
+      // Docs: "applies only to US, NonUS should use NA - NN" — using NN for anything non-US.
+      StateCode: isUS ? formData.state : 'NN',
+      CountryCode: formData.country || 'US',
+      PostalCode: formData.zip,
+      Email: formData.email,
+      Phone: formData.phone,
+      CreditCardHolder: cardData.cardHolder,
+      CreditCardNumber: cardData.cardNumber.replace(/\s+/g, ''),
+      CreditCardExpirationMonth: cardData.expMonth,
+      CreditCardExpirationYear: cardData.expYear,
+      CreditCardType: brand,
+      CreditCardCVV: cardData.cvv,
+      Amount: Number(order.total || 0).toFixed(2),
+      CurrencyCode: 'USD',
+      IPv4Address: ipAddress,
+      ReturnURL: `${origin}/order-confirmation/${order.id}`,
+      // Not collected at checkout — docs say to default to the current date when there's
+      // nothing real to send.
+      Birthdate: new Date().toISOString().slice(0, 10),
+    })
 
-    return { orderId: orderRes.orderId, asyncUrl, providerPIN, xmlData }
+    console.log(`Payzentric Initiate_Deposit result for order ${order.id}:`, result)
+
+    if (result.transactionId) {
+      await payload.update({ collection: 'orders', id: order.id, data: { payzentricTransactionId: result.transactionId }, overrideAccess: true }).catch((err) => {
+        console.error(`Failed to store Payzentric transaction id for order ${order.id}:`, err)
+      })
+    }
+
+    const status = (result.status || '').toLowerCase()
+
+    if (result.errorCode || status === 'rejected') {
+      await cancelUnfinalizedOrder(order.id)
+      const reason = result.errorMessage || result.message || result.description || `Payzentric declined (status: ${result.status || 'unknown'}${result.errorCode ? `, code ${result.errorCode}` : ''})`
+      await notifyAdminFailedPayment(String(order.id), reason).catch(console.error)
+      return { error: 'Your card was declined. Please try a different card or payment method.' }
+    }
+
+    if (status === 'approved') {
+      const { finalizeOrder } = await import('@/lib/orders/finalizeOrder')
+      await finalizeOrder(String(order.id), {})
+      return { orderId: orderRes.orderId, success: true }
+    }
+
+    if (result.descriptor) {
+      // Some cards still require a 3D Secure/bank redirect even through this endpoint. There's
+      // no documented status-check API for this SOAP flow, so once the customer's browser lands
+      // back on our order-confirmation page, the best we can do is what getPayzentricOrderStatus
+      // already does — poll our own order record and hope a follow-up call from Payzentric (or
+      // manual admin confirmation) lands.
+      return { orderId: orderRes.orderId, redirectUrl: result.descriptor }
+    }
+
+    // "Requested"/"Pending" with no redirect URL and no clear approve/decline.
+    return { orderId: orderRes.orderId, success: false }
   } catch (error: any) {
     await cancelUnfinalizedOrder(order.id)
-    await notifyAdminFailedPayment(String(order.id), error.message || 'Payzentric xmlData build threw').catch(console.error)
-    console.error('Payzentric payment preparation failed:', error)
-    return { error: 'Failed to prepare card payment. Please try again.' }
+    await notifyAdminFailedPayment(String(order.id), error.message || 'Payzentric SOAP call threw').catch(console.error)
+    console.error('Payzentric payment failed:', error)
+    return { error: 'Failed to process card payment. Please try again.' }
   }
 }
 
@@ -177,10 +313,10 @@ async function cancelUnfinalizedOrder(orderId: string | number) {
 }
 
 /**
- * Payzentric doesn't expose a status-check API (unlike CircoFlows/Stripe) — the only source of
- * truth is the async POST to Status_url. This just reports whatever the webhook has already
- * written, so the confirmation page can poll it and refresh once the webhook lands instead of
- * showing a stale "processing" state indefinitely.
+ * No status-check API is documented for this SOAP flow — this just reports whatever's already
+ * in our own order record, for the confirmation page's fallback poll (relevant only if a
+ * Descriptor redirect/3DS challenge was involved; the common approve/decline case finalizes
+ * synchronously before the customer ever reaches this page).
  */
 export async function getPayzentricOrderStatus(orderId: string): Promise<{ isFinalized: boolean; status?: string; paymentStatus?: string }> {
   const payload = await getPayload({ config: configPromise })

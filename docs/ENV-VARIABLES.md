@@ -56,12 +56,13 @@
 | `STRIPE_SECRET_KEY`                  | 🔒    | Server-side Stripe API key (starts `sk_test_` or `sk_live_`) | Stripe Dashboard → Developers → API keys                                        |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 👁️    | Client-side Stripe key (starts `pk_`)                        | Same place                                                                      |
 | `STRIPE_WEBHOOK_SECRET`              | 🔒    | Verifies webhook signatures (starts `whsec_`)                | Dashboard → Webhooks → Endpoint → Signing secret. Local: `stripe listen` output |
-| `PAYZENTRIC_ASYNC_URL`               | 👁️    | Payzentric 3D Secure/ASYNC endpoint (test vs prod URL)        | Payzentric rep — swap for the prod URL when going live                          |
+| `PAYZENTRIC_SOAP_URL`                | 👁️    | Payzentric SOAP Initiate_Deposit endpoint (live — no sandbox exists for this flow) | Payzentric rep                                          |
+| `PAYZENTRIC_USERNAME`                | 🔒    | Payzentric GTW API username                                   | Payzentric rep                                                                  |
+| `PAYZENTRIC_PASSWORD`                | 🔒    | Payzentric GTW API password                                   | Payzentric rep                                                                  |
 | `PAYZENTRIC_PROVIDER_PIN`            | 🔒    | Payzentric-issued provider PIN                                | Payzentric rep                                                                  |
-| `PAYZENTRIC_PROCESSOR_USER`          | 🔒    | Payzentric processor username                                 | Payzentric rep                                                                  |
-| `PAYZENTRIC_PROCESSOR_PASS`          | 🔒    | Payzentric processor password                                 | Payzentric rep                                                                  |
-| `PAYZENTRIC_MERCHANT_USER`           | 🔒    | Payzentric merchant username                                  | Payzentric rep                                                                  |
-| `PAYZENTRIC_MERCHANT_PASSWORD`       | 🔒    | Payzentric merchant password                                  | Payzentric rep                                                                  |
+| `PAYZENTRIC_ACCOUNT_ID`              | 🔒    | Payzentric merchant AccountID (sent verbatim as given — a hex-looking string, do not decode) | Payzentric rep                                    |
+| `PAYZENTRIC_ACCOUNT_PASSWORD`        | 🔒    | Payzentric merchant AccountPassword (sent verbatim as given)  | Payzentric rep                                                                  |
+| `PAYZENTRIC_ACCOUNT_KEY`             | 🔒    | Payzentric merchant AccountKey (sent verbatim as given)       | Payzentric rep                                                                  |
 
 ---
 

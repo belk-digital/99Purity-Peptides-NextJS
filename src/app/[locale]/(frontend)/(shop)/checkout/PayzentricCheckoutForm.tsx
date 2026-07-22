@@ -17,10 +17,12 @@ interface PayzentricCheckoutFormProps {
   isNewAddress: boolean
 }
 
-// Payzentric has no client-side tokenization SDK — the card fields are submitted straight from
-// the customer's own browser to Payzentric's hosted 3D Secure endpoint via a real (non-fetch)
-// form POST, never to our own API. Our server action only ever sees these values in memory long
-// enough to build that one-time xmlData payload; nothing card-related is stored or logged.
+// Payzentric has no client-side tokenization SDK, so the card fields are submitted to our own
+// server action, which calls Payzentric's SOAP endpoint directly (server-to-server) and gets an
+// approve/decline result back in the same request — no redirect for the common case. Nothing
+// card-related is stored or logged; the values only live in memory long enough for that one
+// outbound call. A small number of cards may still come back needing a 3D Secure/bank redirect,
+// which is the one case this still sends the browser away for.
 export function PayzentricCheckoutForm({
   amount, items, shippingMethod, couponCode, isRedeemingPoints, formData, userId, isNewAddress,
 }: PayzentricCheckoutFormProps) {
@@ -53,7 +55,7 @@ export function PayzentricCheckoutForm({
         isNewAddress
       )
 
-      if (res.error || !res.asyncUrl || !res.xmlData || !res.providerPIN) {
+      if (res.error || !res.orderId) {
         toast.error(res.error || t('unexpectedError'))
         if ((res as any).priceChanged && (res as any).updatedItems) {
           useCartStore.getState().setItems((res as any).updatedItems)
@@ -62,29 +64,18 @@ export function PayzentricCheckoutForm({
         return
       }
 
-      // Cart stays intact until payment is actually confirmed (webhook-driven finalize) — same
-      // as CircoFlows. Building a real <form> and submitting it (rather than fetch/redirect) is
-      // required here so the customer's own browser lands on Payzentric's 3D Secure page with
-      // its own session, able to complete an issuer ACS challenge if one is required.
-      const form = document.createElement('form')
-      form.method = 'POST'
-      form.action = res.asyncUrl
-      form.style.display = 'none'
+      if (res.redirectUrl) {
+        // The rare card that still needs a 3D Secure/bank challenge — cart stays intact until
+        // payment is actually confirmed, same as CircoFlows.
+        window.location.href = res.redirectUrl
+        return
+      }
 
-      const providerPinInput = document.createElement('input')
-      providerPinInput.type = 'hidden'
-      providerPinInput.name = 'ProviderPIN'
-      providerPinInput.value = res.providerPIN
-      form.appendChild(providerPinInput)
-
-      const xmlDataInput = document.createElement('input')
-      xmlDataInput.type = 'hidden'
-      xmlDataInput.name = 'xmlData'
-      xmlDataInput.value = res.xmlData
-      form.appendChild(xmlDataInput)
-
-      document.body.appendChild(form)
-      form.submit()
+      // Approved (or still "requested"/"pending" with no redirect) — either way the order was
+      // already finalized server-side if approved, so send the customer straight to confirmation.
+      toast.success(t('orderSuccessRedirecting'))
+      useCartStore.getState().clear()
+      window.location.href = `/order-confirmation/${res.orderId}`
     } catch {
       toast.error(t('unexpectedError'))
       setIsProcessing(false)
