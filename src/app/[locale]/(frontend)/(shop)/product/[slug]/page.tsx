@@ -70,16 +70,12 @@ export async function generateMetadata({
       images: [getOgImageUrl(title, description)],
     },
     alternates: {
-      canonical: locale === 'en' ? `/product/${slug}` : `/${locale}/product/${slug}`,
+      canonical: `/product/${slug}`,
       languages: {
         en: `/product/${slug}`,
-        es: `/es/product/${slug}`,
       },
     },
-    // Spanish product content isn't translated yet — Payload falls back to the English copy,
-    // so /es/product/* is currently a duplicate of the English page. Keep it out of Google's
-    // index until real Spanish translations exist, to avoid duplicate-content dilution.
-    robots: locale === 'es' ? { index: false, follow: true } : undefined,
+    // The canonical tag now points to the English version to prevent duplicate content indexing.
   }
 }
 

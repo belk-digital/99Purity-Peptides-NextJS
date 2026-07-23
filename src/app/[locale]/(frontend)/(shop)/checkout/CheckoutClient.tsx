@@ -33,6 +33,9 @@ const ENABLE_CIRCOFLOWS = true
 // to false to pull it from checkout instantly — nothing else here depends on it being on.
 const ENABLE_PAYZENTRIC = true
 
+// Toggle to enable/disable American Express without touching any other method.
+const ENABLE_AMEX = false
+
 const stripePromise = typeof window !== 'undefined' ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '') : null
 
 export function CheckoutClient() {
@@ -959,24 +962,26 @@ export function CheckoutClient() {
                         </div>
                       </label>
 
-                      <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
-                        selectedPaymentMethod === 'amex' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
-                      }`}>
-                        <div className="flex items-center gap-4">
-                          <input 
-                            type="radio" 
-                            name="paymentMethod" 
-                            value="amex" 
-                            className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0" 
-                            checked={selectedPaymentMethod === 'amex'} 
-                            onChange={() => setSelectedPaymentMethod('amex')} 
-                          />
-                          <div className="flex flex-col">
-                            <span className="text-sm font-bold text-ink">American Express</span>
-                            <span className="text-xs text-ink/60 mt-0.5">{t('amexCheckoutNote')}</span>
+                      {ENABLE_AMEX && (
+                        <label className={`flex items-center justify-between p-5 rounded-2xl border transition-colors cursor-pointer shadow-sm ${
+                          selectedPaymentMethod === 'amex' ? 'border-ink bg-ink/5' : 'border-slate-100 bg-white hover:border-ink/30'
+                        }`}>
+                          <div className="flex items-center gap-4">
+                            <input
+                              type="radio"
+                              name="paymentMethod"
+                              value="amex"
+                              className="w-4 h-4 accent-black text-ink border-ink/20 focus:ring-ink focus:ring-offset-0"
+                              checked={selectedPaymentMethod === 'amex'}
+                              onChange={() => setSelectedPaymentMethod('amex')}
+                            />
+                            <div className="flex flex-col">
+                              <span className="text-sm font-bold text-ink">American Express</span>
+                              <span className="text-xs text-ink/60 mt-0.5">{t('amexCheckoutNote')}</span>
+                            </div>
                           </div>
-                        </div>
-                      </label>
+                        </label>
+                      )}
                     </div>
 
                     {selectedPaymentMethod === 'payzentric' ? (

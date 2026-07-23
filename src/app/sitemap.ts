@@ -37,9 +37,10 @@ function localizedUrl(locale: string, path: string) {
   return locale === routing.defaultLocale ? `${baseUrl}${path}` : `${baseUrl}/${locale}${path}`
 }
 
-function withLocales(path: string) {
+function withLocales(path: string, excludeLocales: string[] = []) {
   const languages: Record<string, string> = {}
   for (const locale of routing.locales) {
+    if (excludeLocales.includes(locale)) continue
     languages[locale] = localizedUrl(locale, path)
   }
   return languages
@@ -48,12 +49,12 @@ function withLocales(path: string) {
 function entry(
   path: string,
   locale: string,
-  opts?: { lastModified?: Date; priority?: number; changeFrequency?: MetadataRoute.Sitemap[number]['changeFrequency'] },
+  opts?: { lastModified?: Date; priority?: number; changeFrequency?: MetadataRoute.Sitemap[number]['changeFrequency']; excludeLocales?: string[] },
 ) {
   return {
     url: localizedUrl(locale, path),
     lastModified: opts?.lastModified || new Date(),
-    alternates: { languages: withLocales(path) },
+    alternates: { languages: withLocales(path, opts?.excludeLocales) },
     ...(opts?.priority !== undefined ? { priority: opts.priority } : {}),
     ...(opts?.changeFrequency ? { changeFrequency: opts.changeFrequency } : {}),
   }
@@ -81,7 +82,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const path = `/product/${product.slug}`
       const lastModified = product.updatedAt ? new Date(product.updatedAt) : undefined
       for (const locale of routing.locales) {
-        entries.push(entry(path, locale, { lastModified, priority: 0.8, changeFrequency: 'weekly' }))
+        if (locale === 'es') continue
+        entries.push(entry(path, locale, { lastModified, priority: 0.8, changeFrequency: 'weekly', excludeLocales: ['es'] }))
       }
     }
   } catch (error) {
