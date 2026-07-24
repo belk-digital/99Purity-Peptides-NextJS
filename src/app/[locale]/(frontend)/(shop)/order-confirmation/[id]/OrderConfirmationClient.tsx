@@ -87,6 +87,28 @@ export function OrderConfirmationClient({ order }: { order: OrderData }) {
         quantity: i.quantity
       }))
     })
+
+    // Fire Google Tag Manager Purchase Event
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object
+      (window as any).dataLayer.push({
+        event: 'purchase',
+        ecommerce: {
+          transaction_id: order.orderId,
+          value: order.total,
+          tax: 0,
+          shipping: order.shipping,
+          currency: 'USD',
+          items: order.items.map(i => ({
+            item_id: i.id,
+            item_name: i.name,
+            item_variant: i.variant,
+            price: i.price,
+            quantity: i.quantity
+          }))
+        }
+      })
+    }
   }, [order])
 
   // CircoFlows' webhook is the source of truth for finalizing the order, but it can lag behind
