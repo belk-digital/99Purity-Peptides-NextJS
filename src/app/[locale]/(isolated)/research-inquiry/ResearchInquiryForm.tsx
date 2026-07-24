@@ -52,6 +52,14 @@ export function ResearchInquiryForm() {
 
       setIsSuccess(true)
       toast.success('Inquiry submitted successfully.')
+
+      // Fire Google Tag Manager Lead Event
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: 'generate_lead',
+          form_name: 'research_inquiry'
+        })
+      }
     } catch (error) {
       console.error(error)
       toast.error('An error occurred. Please try again.')
